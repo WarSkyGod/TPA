@@ -1,0 +1,14 @@
+# TPA 插件配置文件 v1.0
+# 作者：WarSkyGod
+# QQ: 3111420061
+# Github：https://github.com/KLWarGod/
+
+# 插件默认语言
+lang: zh_CN
+
+# 强制使用 Paper 模式加载插件
+# 基于 Paper 的服务端拥有一些特殊的 API，尤其是 Folia 服务端强制使用这些 API，如果您使用指令报错，请尝试切换到强制模式
+# 强制开启 Paper模式：true
+# 强制关闭 Paper模式：false
+# 让插件自动选择：auto
+force_paper_mode: auto
