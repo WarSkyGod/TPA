@@ -42,7 +42,7 @@ public final class TPA extends JavaPlugin {
                 break;
             case "auto":
             default:
-                String[] paperServers = {"Paper", "Mohist", "Purpur", "Leaves", "Folia", "DirtyFolia", "Molia", "Kaiiju", "Luminol"};
+                String[] paperServers = {"Paper", "Mohist", "Purpur", "Leaves", "Folia", "DirtyFolia", "Molia", "Kaiiju", "Luminol", "LightingLuminol"};
                 for (String paperServer : paperServers) {
                     if(sender.getServer().getName().equalsIgnoreCase(paperServer)){
                         Messages.pluginLoaded(sender);
