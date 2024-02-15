@@ -1,4 +1,4 @@
-package top.craft_hello.tpa.Command;
+package top.craft_hello.tpa.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +13,10 @@ public class ResTpSet implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             Messages.consoleUseError(sender);
+            return true;
+        }
+        if (!sender.hasPermission("tpa.restpset")){
+            Messages.notPermission(sender);
             return true;
         }
         Request request = new Request(sender, label, args);

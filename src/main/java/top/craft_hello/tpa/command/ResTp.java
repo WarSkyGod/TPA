@@ -1,4 +1,4 @@
-package top.craft_hello.tpa.Command;
+package top.craft_hello.tpa.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.Messages;
 import top.craft_hello.tpa.Request;
 
-public class TpHere implements CommandExecutor {
+public class ResTp implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -16,7 +16,7 @@ public class TpHere implements CommandExecutor {
             return true;
         }
         Request request = new Request(sender, label, args);
-        request.tphere();
+        request.restp(false);
         return true;
     }
 }

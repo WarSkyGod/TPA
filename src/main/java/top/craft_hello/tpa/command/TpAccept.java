@@ -1,4 +1,4 @@
-package top.craft_hello.tpa.Command;
+package top.craft_hello.tpa.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
