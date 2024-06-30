@@ -1,6 +1,6 @@
 # TPA
-一个支持 **Folia** 的简易传送插件，支持 **Bukkit/Spigot/Paper/Folia** 版本 **1.8-1.20.4**  
-A simple teleport plug-in that supports **Folia**, supported **Bukkit/Spigot/Paper/Folia 1.8-1.20.4**  
+一个支持 **Folia** 的简易传送插件，支持 **Bukkit/Spigot/Paper/Folia**  
+A simple teleport plug-in that supports **Folia**, supported **Bukkit/Spigot/Paper/Folia  
 
 ## 特点 - Feature
 - 简单  
