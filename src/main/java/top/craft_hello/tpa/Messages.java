@@ -44,8 +44,8 @@ public class Messages {
         MessageUtil.sendMessage(executor, langConfig.getString("offline_or_null"), target);
     }
 
-    public static void resNull(@NotNull Player executor, @NotNull String resName){
-        MessageUtil.sendMessage(executor, langConfig.getString("res_null"), resName);
+    public static void warpNull(@NotNull Player executor, @NotNull String warpName){
+        MessageUtil.sendMessage(executor, langConfig.getString("warp_null"), warpName);
     }
 
     public static void requestYou(@NotNull Player executor){
@@ -82,12 +82,12 @@ public class Messages {
     public static void tpTimeMessage(@NotNull Player executor, @NotNull String target, long delay){
         MessageUtil.sendMessage(executor, langConfig.getString("tp_time"),  target, String.valueOf(delay));
     }
-    public static void resTpMessage(@NotNull Player executor, @NotNull String resName){
-        MessageUtil.sendMessage(executor, langConfig.getString("tp_to_res"), resName);
+    public static void warpMessage(@NotNull Player executor, @NotNull String warpName){
+        MessageUtil.sendMessage(executor, langConfig.getString("tp_to_warp"), warpName);
     }
 
-    public static void resTpSet(@NotNull Player executor, @NotNull String resName){
-        MessageUtil.sendMessage(executor, langConfig.getString("set_res_loc"), resName);
+    public static void setWarp(@NotNull Player executor, @NotNull String warpName){
+        MessageUtil.sendMessage(executor, langConfig.getString("set_warp"), warpName);
     }
 
     public static void timeOverDeny(@NotNull Player executor, @NotNull Player target){
@@ -110,8 +110,8 @@ public class Messages {
         MessageUtil.sendMessage(executor, langConfig.getString("command_error"), label);
     }
 
-    public static void resTpCommandError(@NotNull Player executor, @NotNull String label){
-        MessageUtil.sendMessage(executor, langConfig.getString("restp_command_error"), label);
+    public static void warpCommandError(@NotNull Player executor, @NotNull String label){
+        MessageUtil.sendMessage(executor, langConfig.getString("warp_command_error"), label);
     }
 
     public static void consoleUseError(@NotNull CommandSender sender){

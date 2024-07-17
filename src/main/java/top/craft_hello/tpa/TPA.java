@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.command.*;
 import top.craft_hello.tpa.tabcomplete.NullList;
 import top.craft_hello.tpa.tabcomplete.OnlinePlayers;
-import top.craft_hello.tpa.tabcomplete.ResName;
+import top.craft_hello.tpa.tabcomplete.warpName;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +21,9 @@ public final class TPA extends JavaPlugin {
 
     private final FileConfiguration config = getConfig();
     private final File langFile = new File(getDataFolder(), "lang/" + config.getString("lang") + ".yml");
-    private final File resLocFile = new File(getDataFolder(), "res_loc.yml");
+    private final File warpFile = new File(getDataFolder(), "warp.yml");
     private final FileConfiguration langConfig = YamlConfiguration.loadConfiguration(langFile);
-    private final FileConfiguration resLocConfig = YamlConfiguration.loadConfiguration(resLocFile);
+    private final FileConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
     private final String lang = config.getString("lang") == null ? "zh_CN" : config.getString("lang");
 
     @Override
@@ -31,12 +31,12 @@ public final class TPA extends JavaPlugin {
         // Plugin startup logic
         HandySchedulerUtil.init(this);
         saveDefaultConfig();
-        saveResource("res_loc.yml", false);
+        saveResource("warp.yml", false);
         saveResource("lang/" + lang + ".yml", false);
         reloadConfig();
         try {
             langConfig.load(langFile);
-            resLocConfig.load(resLocFile);
+            warpConfig.load(warpFile);
         } catch (IOException | InvalidConfigurationException e) {
             Messages.configNotFound(getServer().getConsoleSender());
         }
@@ -48,10 +48,10 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("tpaccept")).setTabCompleter(new NullList());
         Objects.requireNonNull(this.getCommand("tpdeny")).setExecutor(new TpDeny());
         Objects.requireNonNull(this.getCommand("tpdeny")).setTabCompleter(new NullList());
-        Objects.requireNonNull(this.getCommand("restp")).setExecutor(new ResTp());
-        Objects.requireNonNull(this.getCommand("restp")).setTabCompleter(new ResName());
-        Objects.requireNonNull(this.getCommand("restpset")).setExecutor(new ResTpSet());
-        Objects.requireNonNull(this.getCommand("restpset")).setTabCompleter(new ResName());
+        Objects.requireNonNull(this.getCommand("warp")).setExecutor(new Warp());
+        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new warpName());
+        Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetWarp());
+        Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new warpName());
         Objects.requireNonNull(this.getCommand("tpareload")).setExecutor(new TpaReload());
         Objects.requireNonNull(this.getCommand("tpareload")).setTabCompleter(new NullList());
         Messages.pluginLoaded(getServer().getConsoleSender());
@@ -68,10 +68,10 @@ public final class TPA extends JavaPlugin {
         reloadConfig();
         try {
             langConfig.load(langFile);
-            resLocConfig.load(resLocFile);
+            warpConfig.load(warpFile);
         } catch (IOException | InvalidConfigurationException e) {
             saveDefaultConfig();
-            saveResource("res_loc.yml", false);
+            saveResource("warp.yml", false);
             saveResource("lang/" + lang + ".yml", false);
             Messages.configNotFound(getServer().getConsoleSender());
             if (isPlayer)
@@ -83,15 +83,15 @@ public final class TPA extends JavaPlugin {
             Messages.configReloaded(sender);
     }
 
-    public File getResLocFile() {
-        return resLocFile;
+    public File getWarpFile() {
+        return warpFile;
     }
 
     public FileConfiguration getLangConfig() {
         return langConfig;
     }
 
-    public FileConfiguration getResLocConfig() {
-        return  resLocConfig;
+    public FileConfiguration getWarpConfig() {
+        return warpConfig;
     }
 }

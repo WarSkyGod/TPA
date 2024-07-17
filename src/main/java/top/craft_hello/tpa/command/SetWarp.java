@@ -8,15 +8,19 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.Messages;
 import top.craft_hello.tpa.Request;
 
-public class ResTp implements CommandExecutor {
+public class SetWarp implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             Messages.consoleUseError(sender);
             return true;
         }
+        if (!sender.hasPermission("tpa.setwarp")){
+            Messages.notPermission(sender);
+            return true;
+        }
         Request request = new Request(sender, label, args);
-        request.restp(false);
+        request.setwarp();
         return true;
     }
 }

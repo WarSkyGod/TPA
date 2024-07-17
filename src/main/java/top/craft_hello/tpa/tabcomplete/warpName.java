@@ -12,15 +12,15 @@ import top.craft_hello.tpa.TPA;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResName implements TabCompleter {
+public class warpName implements TabCompleter {
     private static final FileConfiguration langConfig = TPA.getPlugin(TPA.class).getLangConfig();
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player){
-            List<String> resName = new ArrayList<>();
-            resName.add(langConfig.getString("res_Name"));
-            if (args.length == 0 || args.length == 1) return resName;
+            List<String> warpName = new ArrayList<>();
+            warpName.add(langConfig.getString("warp_name"));
+            if (args.length == 0 || args.length == 1) return warpName;
             return new ArrayList<>();
         }
         return null;

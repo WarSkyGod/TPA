@@ -16,7 +16,7 @@ public class Request {
     private Player target;
     private boolean commandError;
     private String playerName;
-    private String resName;
+    private String warpName;
     private final String label;
     private boolean offlineOrNull;
 
@@ -24,7 +24,7 @@ public class Request {
     private static boolean isTpHere;
     private final FileConfiguration config = TPA.getPlugin(TPA.class).getConfig();
 
-    private final FileConfiguration resLocConfig = TPA.getPlugin(TPA.class).getResLocConfig();
+    private final FileConfiguration warpConfig = TPA.getPlugin(TPA.class).getWarpConfig();
 
     private final long acceptDelay = config.getLong("accept_delay") < 0L ? 30000L : config.getLong("accept_delay") * 1000L;
     private final long teleportDelay = config.getLong("teleport_delay") < 0L ? 3000L : config.getLong("teleport_delay") * 1000L;
@@ -35,7 +35,7 @@ public class Request {
             this.commandError = args.length != 1;
 
             if (!this.commandError) {
-                this.resName = args[args.length - 1];
+                this.warpName = args[args.length - 1];
                 this.playerName = args[(args.length - 1)];
                 this.target = this.executor.getServer().getPlayerExact(this.playerName);
                 this.offlineOrNull = this.target == null;
@@ -128,18 +128,18 @@ public class Request {
             this.target = target;
         }
 
-        if (this.label.equals("restp") || this.label.equals("tpa:restp") || this.label.equals("restpset") || this.label.equals("tpa:restpset")) {
+        if (this.label.equals("warp") || this.label.equals("tpa:warp") || this.label.equals("setwarp") || this.label.equals("tpa:setwarp")) {
             if (this.commandError){
-                Messages.resTpCommandError(this.executor, label);
+                Messages.warpCommandError(this.executor, label);
                 return true;
             }
             try {
-                resLocConfig.save(TPA.getPlugin(TPA.class).getResLocFile());
+                warpConfig.save(TPA.getPlugin(TPA.class).getWarpFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            if (this.label.equals("restp") | this.label.equals("tpa:restp") && resLocConfig.getLocation(this.resName) == null){
-                Messages.resNull(this.executor, this.resName);
+            if (this.label.equals("warp") | this.label.equals("tpa:warp") && warpConfig.getLocation(this.warpName) == null){
+                Messages.warpNull(this.executor, this.warpName);
                 return true;
             }
         }
@@ -151,8 +151,8 @@ public class Request {
 
         HandySchedulerUtil.runTaskLaterAsynchronously(() ->{
             switch (TimerName){
-                case "timeOverResTp":
-                    restp(true);
+                case "timeOverWarpTp":
+                    warp(true);
                     break;
                 case "timeOverTp":
                     tpaccept(true);
@@ -238,38 +238,38 @@ public class Request {
         HandySchedulerUtil.cancelTask();
     }
 
-    public void restp(boolean isTimeOverTp) {
+    public void warp(boolean isTimeOverTp) {
         if (this.errorCheck()) {
             return;
         }
         if(!isTimeOverTp) {
-            Messages.tpTimeMessage(this.executor, this.resName, teleportDelay / 1000L);
+            Messages.tpTimeMessage(this.executor, this.warpName, teleportDelay / 1000L);
 
             Location location = this.executor.getLocation();
             HandySchedulerUtil.runTaskTimerAsynchronously(() ->
                 isMove(location, this.executor, this.executor), teleportDelay / 1000L, teleportDelay / 1000L);
-            setTimer(teleportDelay, "timeOverResTp");
+            setTimer(teleportDelay, "timeOverWarpTp");
             return;
         }
 
         HandySchedulerUtil.cancelTask();
-        Location location = resLocConfig.getLocation(this.resName);
+        Location location = warpConfig.getLocation(this.warpName);
         this.tp(this.executor, location);
-        Messages.resTpMessage(this.executor, this.resName);
+        Messages.warpMessage(this.executor, this.warpName);
     }
 
-    public void restpset(){
+    public void setwarp(){
         if (this.errorCheck()) {
             return;
         }
         Location loc = this.executor.getLocation();
-        resLocConfig.set(this.resName, loc);
+        warpConfig.set(this.warpName, loc);
         try {
-            resLocConfig.save(TPA.getPlugin(TPA.class).getResLocFile());
+            warpConfig.save(TPA.getPlugin(TPA.class).getWarpFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Messages.resTpSet(this.executor, this.resName);
+        Messages.setWarp(this.executor, this.warpName);
     }
 
     public void isMove(Location location, Player executor, Player target) {

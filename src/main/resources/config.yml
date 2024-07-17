@@ -2,7 +2,7 @@
 ## Github：https://github.com/WarSkyGod/TPA
 
 # 插件版本，请勿自行修改
-version: 1.1
+version: 1.2
 
 # 插件默认语言，自带 zh_CN 和 en_US，您也可以按照格式添加其他语言
 lang: zh_CN
