@@ -36,8 +36,8 @@ Set the teleport point (The **tpa.setwarp** permission is required)
 Reload the configuration file (The **tpa.reload** permission is required)
 
 ## 注意 - WARN
-从1.1以下版本更新到1.2请删除配置文件和语言文件，重新生成后修改  
-To update from version 1.1 or below to 1.2, please delete the configuration file and language file, and modify them after regeneration.
+从1.1及以下版本更新到1.2请删除配置文件和语言文件，重新生成后修改  
+To update from version 1.1 and below to 1.2, please delete the configuration file and language file, and modify them after regeneration. 
 
 ## 感谢 - Thank
 本插件使用了 [FoliaLib](https://github.com/handyplus/FoliaLib) 来做 **Folia** 兼容  
