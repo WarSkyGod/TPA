@@ -33,7 +33,7 @@ Teleport to the Teleport point
 Set the teleport point (The **tpa.setwarp** permission is required)
 - **/back**  
 传送到上一次的位置（需要 **tpa.back** 权限）  
-Set the teleport point (The **tpa.setwarp** permission is required)
+Teleport to the Last location (The **tpa.back** permission is required)
 - **/tpa reload**  
 重新加载配置文件（需要 **tpa.reload** 权限）
 Reload the configuration file (The **tpa.reload** permission is required)
