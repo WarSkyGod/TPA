@@ -25,15 +25,19 @@ Accept a teleport request (You can click on the **[Accept/tpaccept]** in the cha
 - **/tpdeny**  
 拒绝传送请求（你可以点击聊天框里的 **[拒绝/tpdeny]** 来直接拒绝）  
 Reject teleport request (You can directly reject by clicking on the **[Deny/tpdeny]** in the chat box)
-- **/restp <领地传送点 - Teleport point>**  
-传送到领地传送点（**Folia** 版的领地插件传送有问题，所以我做了这个指令，不需要的话可以无视这个）  
-Teleport to the Resident Teleport point (**Folia** version of the Residence plugin teleport issues, so I made this instruction, Ignore it if you don't need i)
-- **/restpset <领地传送点 - Teleport point>**  
-设置领地传送点（需要 **tpa.restpset** 权限，不需要的话可以无视这个）  
-Set the Residence teleport point (The **tpa.restpset** permission is required, Ignore it if you don't need i)
+- **/warp <传送点 - Teleport point>**  
+传送到传送点
+Teleport to the Teleport point
+- **/setwarp <传送点 - Teleport point>**  
+设置传送点（需要 **tpa.setwarp** 权限）  
+Set the teleport point (The **tpa.setwarp** permission is required)
 - **/tpareload**  
 重新加载配置文件（需要 **tpa.reload** 权限）
 Reload the configuration file (The **tpa.reload** permission is required)
+
+## 注意 - WARN
+从1.1及以下版本更新到1.2请删除配置文件和语言文件，重新生成后修改  
+To update from version 1.1 and below to 1.2, please delete the configuration file and language file, and modify them after regeneration. 
 
 ## 感谢 - Thank
 本插件使用了 [FoliaLib](https://github.com/handyplus/FoliaLib) 来做 **Folia** 兼容  
