@@ -14,6 +14,7 @@ import java.util.*;
 
 public class Request {
     private static final Map<Player, List<Player>> tpa = new HashMap<>();
+    public static final Map<Player, Location> lastLocationMap = new HashMap<>();
     private final Player executor;
     private Player target;
     private boolean commandError;
@@ -27,13 +28,18 @@ public class Request {
     private final FileConfiguration config = TPA.getPlugin(TPA.class).getConfig();
 
     private final FileConfiguration warpConfig = TPA.getPlugin(TPA.class).getWarpConfig();
-    private Location lastLocation = PlayerDeathEvent.lastLocation == null ? PlayerTeleportEvent.lastLocation : PlayerDeathEvent.lastLocation;
+    private Location lastLocation;
 
     private final long acceptDelay = config.getLong("accept_delay") < 0L ? 30000L : config.getLong("accept_delay") * 1000L;
     private final long teleportDelay = config.getLong("teleport_delay") < 0L ? 3000L : config.getLong("teleport_delay") * 1000L;
 
     public Request(CommandSender sender, String label, String[] args) {
         this.executor = (Player) sender;
+
+
+        if (lastLocationMap.containsKey(executor)) {
+            lastLocation = lastLocationMap.get(executor);
+        }
         if (args != null){
             this.commandError = args.length != 1;
 
