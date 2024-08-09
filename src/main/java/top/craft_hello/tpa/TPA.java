@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import top.craft_hello.tpa.Event.PlayerDeathEvent;
+import top.craft_hello.tpa.Event.PlayerTeleportEvent;
 import top.craft_hello.tpa.command.*;
 import top.craft_hello.tpa.tabcomplete.NullList;
 import top.craft_hello.tpa.tabcomplete.OnlinePlayers;
@@ -52,8 +54,9 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new warpName());
         Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetWarp());
         Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new warpName());
-        Objects.requireNonNull(this.getCommand("tpareload")).setExecutor(new TpaReload());
-        Objects.requireNonNull(this.getCommand("tpareload")).setTabCompleter(new NullList());
+        Objects.requireNonNull(this.getCommand("back")).setExecutor(new Back());
+        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(),this);
+        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(),this);
         Messages.pluginLoaded(getServer().getConsoleSender());
     }
 
@@ -67,6 +70,7 @@ public final class TPA extends JavaPlugin {
         boolean isPlayer = sender instanceof Player;
         reloadConfig();
         try {
+            config.load(new File(getDataFolder(), "config.yml"));
             langConfig.load(langFile);
             warpConfig.load(warpFile);
         } catch (IOException | InvalidConfigurationException e) {

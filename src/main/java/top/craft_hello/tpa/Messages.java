@@ -80,6 +80,10 @@ public class Messages {
     }
 
     public static void tpTimeMessage(@NotNull Player executor, @NotNull String target, long delay){
+        if (target.equals("last_location")){
+            MessageUtil.sendMessage(executor, langConfig.getString("tp_time"),  langConfig.getString(target), String.valueOf(delay));
+            return;
+        }
         MessageUtil.sendMessage(executor, langConfig.getString("tp_time"),  target, String.valueOf(delay));
     }
     public static void warpMessage(@NotNull Player executor, @NotNull String warpName){
@@ -136,5 +140,14 @@ public class Messages {
 
     public static void notPermission(@NotNull CommandSender sender){
         MessageUtil.sendMessage(sender, langConfig.getString("not_permission"));
+    }
+
+    public static void lastLocationNull(@NotNull CommandSender sender){
+        MessageUtil.sendMessage(sender, langConfig.getString("last_location_null"));
+    }
+
+
+    public static void backMessage(@NotNull CommandSender sender, @NotNull String target){
+        MessageUtil.sendMessage(sender, langConfig.getString("tp_to_last_location"), langConfig.getString(target));
     }
 }
