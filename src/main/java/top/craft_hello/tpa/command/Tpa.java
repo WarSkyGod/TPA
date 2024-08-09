@@ -14,7 +14,7 @@ public class Tpa implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if (args.length == 1 || args[0].equals("reload")){
+        if (args.length == 1 && args[0].equals("reload")){
             if (!sender.hasPermission("tpa.reload")){
                 Messages.notPermission(sender);
                 return true;
