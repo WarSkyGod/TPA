@@ -31,13 +31,16 @@ Teleport to the Teleport point
 - **/setwarp <传送点 - Teleport point>**  
 设置传送点（需要 **tpa.setwarp** 权限）  
 Set the teleport point (The **tpa.setwarp** permission is required)
-- **/tpareload**  
+- **/back**  
+传送到上一次的位置（需要 **tpa.back** 权限）  
+Set the teleport point (The **tpa.setwarp** permission is required)
+- **/tpa reload**  
 重新加载配置文件（需要 **tpa.reload** 权限）
 Reload the configuration file (The **tpa.reload** permission is required)
 
 ## 注意 - WARN
-从1.1及以下版本更新到1.2请删除配置文件和语言文件，重新生成后修改  
-To update from version 1.1 and below to 1.2, please delete the configuration file and language file, and modify them after regeneration. 
+从1.2及以下版本更新到1.3请删除配置文件和语言文件，重新生成后修改  
+To update from version 1.2 and below to 1.3, please delete the configuration file and language file, and modify them after regeneration. 
 
 ## 感谢 - Thank
 本插件使用了 [FoliaLib](https://github.com/handyplus/FoliaLib) 来做 **Folia** 兼容  
