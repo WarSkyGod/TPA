@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import top.craft_hello.tpa.Event.PlayerDeathEvent;
+import top.craft_hello.tpa.Event.PlayerTeleportEvent;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,6 +27,7 @@ public class Request {
     private final FileConfiguration config = TPA.getPlugin(TPA.class).getConfig();
 
     private final FileConfiguration warpConfig = TPA.getPlugin(TPA.class).getWarpConfig();
+    private Location lastLocation = PlayerDeathEvent.lastLocation == null ? PlayerTeleportEvent.lastLocation : PlayerDeathEvent.lastLocation;
 
     private final long acceptDelay = config.getLong("accept_delay") < 0L ? 30000L : config.getLong("accept_delay") * 1000L;
     private final long teleportDelay = config.getLong("teleport_delay") < 0L ? 3000L : config.getLong("teleport_delay") * 1000L;
@@ -143,6 +146,13 @@ public class Request {
                 return true;
             }
         }
+
+        if (this.label.equals("back") || this.label.equals("tpa:back")){
+            if (this.lastLocation == null){
+                Messages.lastLocationNull(this.executor);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -153,6 +163,9 @@ public class Request {
             switch (TimerName){
                 case "timeOverWarpTp":
                     warp(true);
+                    break;
+                case "timeOverBackTp":
+                    back(true);
                     break;
                 case "timeOverTp":
                     tpaccept(true);
@@ -242,6 +255,7 @@ public class Request {
         if (this.errorCheck()) {
             return;
         }
+
         if(!isTimeOverTp) {
             Messages.tpTimeMessage(this.executor, this.warpName, teleportDelay / 1000L);
 
@@ -270,6 +284,26 @@ public class Request {
             throw new RuntimeException(e);
         }
         Messages.setWarp(this.executor, this.warpName);
+    }
+
+    public void back(boolean isTimeOverTp){
+        if (this.errorCheck()) {
+            return;
+        }
+
+        if(!isTimeOverTp) {
+            Messages.tpTimeMessage(this.executor,"last_location",teleportDelay / 1000L);
+
+            Location location = this.executor.getLocation();
+            HandySchedulerUtil.runTaskTimerAsynchronously(() ->
+                    isMove(location, this.executor, this.executor), teleportDelay / 1000L, teleportDelay / 1000L);
+            setTimer(teleportDelay, "timeOverBackTp");
+            return;
+        }
+
+        HandySchedulerUtil.cancelTask();
+        this.tp(this.executor, lastLocation);
+        Messages.backMessage(this.executor, "last_location");
     }
 
     public void isMove(Location location, Player executor, Player target) {

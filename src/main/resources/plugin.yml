@@ -25,6 +25,9 @@ commands:
   setwarp:
     usage: /setwarp <传送点>
     description: 设置传送点（需要 tpa.setwarp 权限）
-  tpareload:
-    usage: /tpareload
+  back:
+    usage: /back
+    description: 传送到上一次的位置（需要 tpa.back 权限）
+  tpa reload:
+    usage: /tpa reload
     description: 重新加载配置文件（需要 tpa.reload 权限）
