@@ -1,5 +1,6 @@
 package top.craft_hello.tpa;
 
+import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class Messages {
     private static final FileConfiguration langConfig = TPA.getPlugin(TPA.class).getLangConfig();
 
     public static void acceptOrDeny(@NotNull Player target){
-        MessageUtil.syncPerformOpCommand(target, new JsonMessage(target, Objects.requireNonNull(langConfig.getString("prefix")))
+        PlayerSchedulerUtil.syncPlayerPerformOpCommand(target, new JsonMessage(target, Objects.requireNonNull(langConfig.getString("prefix")))
                 .addText(Objects.requireNonNull(langConfig.getString("tpaccept")))
                 .addInsertion("/tpaccept")
                 .addClickEvent(ClickEvent.RUN_COMMAND, "/tpaccept")

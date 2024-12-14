@@ -1,8 +1,5 @@
 package top.craft_hello.tpa.util;
 
-import cn.handyplus.lib.adapter.HandySchedulerUtil;
-
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -20,35 +17,6 @@ public class MessageUtil {
     private static final String prefix = langConfig.getString("prefix") == null ? "§a&l> " : langConfig.getString("prefix");
     private static final String consolePrefix = langConfig.getString("console_prefix") == null ? "§7[TPA] " : langConfig.getString("console_prefix");
     private static final String error = langConfig.getString("error") == null ? "§c§l插件出错！" : langConfig.getString("error");
-
-    protected static void runTask(@NotNull Runnable task) {
-        Bukkit.getScheduler().runTask(TPA.getPlugin(TPA.class), task);
-    }
-
-    public static void syncPerformOpCommand(@NotNull Player player, @NotNull String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(TPA.getPlugin(TPA.class), (a) -> opCommand(player, command), () -> {});
-        } else {
-            runTask(() -> opCommand(player, command));
-        }
-    }
-
-    public static void command(@NotNull Player target, @NotNull String command) {
-        target.performCommand(command);
-    }
-
-    public static void opCommand(@NotNull Player target, @NotNull String command) {
-        boolean op = target.isOp();
-
-        try {
-            if (!op) {
-                target.setOp(true);
-            }
-            command(target, command);
-        } finally {
-            target.setOp(op);
-        }
-    }
 
     public static String formatText(@NotNull String text){
         return text.replaceAll("&", "§");

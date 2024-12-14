@@ -24,24 +24,12 @@ public final class TPA extends JavaPlugin {
     private final FileConfiguration config = getConfig();
     private final File langFile = new File(getDataFolder(), "lang/" + config.getString("lang") + ".yml");
     private final File warpFile = new File(getDataFolder(), "warp.yml");
-    private final FileConfiguration langConfig = YamlConfiguration.loadConfiguration(langFile);
-    private final FileConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
     private final String lang = config.getString("lang") == null ? "zh_CN" : config.getString("lang");
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         HandySchedulerUtil.init(this);
-        saveDefaultConfig();
-        saveResource("warp.yml", false);
-        saveResource("lang/" + lang + ".yml", false);
-        reloadConfig();
-        try {
-            langConfig.load(langFile);
-            warpConfig.load(warpFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            Messages.configNotFound(getServer().getConsoleSender());
-        }
         Objects.requireNonNull(this.getCommand("tpa")).setExecutor(new Tpa());
         Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new OnlinePlayers());
         Objects.requireNonNull(this.getCommand("tphere")).setExecutor(new TpHere());
@@ -58,7 +46,19 @@ public final class TPA extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(),this);
         getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(),this);
         Messages.pluginLoaded(getServer().getConsoleSender());
+        saveDefaultConfig();
+        saveResource("warp.yml", false);
+        saveResource("lang/" + lang + ".yml", false);
+        reloadConfig();
+        try {
+            getLangConfig().load(langFile);
+            getWarpConfig().load(warpFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            Messages.configNotFound(getServer().getConsoleSender());
+        }
     }
+
+
 
     @Override
     public void onDisable() {
@@ -71,8 +71,8 @@ public final class TPA extends JavaPlugin {
         reloadConfig();
         try {
             config.load(new File(getDataFolder(), "config.yml"));
-            langConfig.load(langFile);
-            warpConfig.load(warpFile);
+            getLangConfig().load(langFile);
+            getWarpConfig().load(warpFile);
         } catch (IOException | InvalidConfigurationException e) {
             saveDefaultConfig();
             saveResource("warp.yml", false);
@@ -92,10 +92,10 @@ public final class TPA extends JavaPlugin {
     }
 
     public FileConfiguration getLangConfig() {
-        return langConfig;
+        return YamlConfiguration.loadConfiguration(langFile);
     }
 
     public FileConfiguration getWarpConfig() {
-        return warpConfig;
+        return YamlConfiguration.loadConfiguration(warpFile);
     }
 }

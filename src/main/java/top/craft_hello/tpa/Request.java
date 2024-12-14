@@ -6,8 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import top.craft_hello.tpa.Event.PlayerDeathEvent;
-import top.craft_hello.tpa.Event.PlayerTeleportEvent;
 
 import java.io.IOException;
 import java.util.*;
@@ -55,109 +53,112 @@ public class Request {
     }
 
     private boolean errorCheck() {
-        if (this.label.equals("tpa") || this.label.equals("tpa:tpa") || this.label.equals("tphere") || this.label.equals("tpa:tpahere")) {
-            if (this.commandError) {
-                Messages.commandError(this.executor, this.label);
-                return true;
-            }
+        switch (label){
+            case "tpa":
+            case "tpa:tpa":
+            case "tphere":
+            case "tpa:tphere":
+                if (this.commandError) {
+                    Messages.commandError(this.executor, this.label);
+                    return true;
+                }
 
-            if (this.offlineOrNull) {
-                Messages.offlineOrNull(this.executor, this.playerName);
-                return true;
-            }
+                if (this.offlineOrNull) {
+                    Messages.offlineOrNull(this.executor, this.playerName);
+                    return true;
+                }
 
-            if (this.youToYou) {
-                Messages.requestYou(this.executor);
-                return true;
-            }
+                if (this.youToYou) {
+                    Messages.requestYou(this.executor);
+                    return true;
+                }
 
-            List<Player> targetList = tpa.get(this.executor);
+                List<Player> targetList = tpa.get(this.executor);
 
-            if (tpa.containsKey(this.executor) || tpa.containsKey(this.target)) {
-                Messages.requestLock(this.executor);
-                return true;
-            }
-
-            if (targetList !=  null) {
-                Player target = targetList.get(targetList.size() - 1);
-                if (tpa.containsKey(target))
+                if (tpa.containsKey(this.executor) || tpa.containsKey(this.target)) {
                     Messages.requestLock(this.executor);
-                return true;
-            }
-            return false;
-        }
+                    return true;
+                }
 
-        if (this.label.equals("tpaccept") || this.label.equals("tpa:tpaccept")) {
-            boolean flag = tpa.containsKey(this.executor);
-            List<Player> targetList = tpa.get(this.executor);
+                if (targetList !=  null) {
+                    Player target = targetList.get(targetList.size() - 1);
+                    if (tpa.containsKey(target))
+                        Messages.requestLock(this.executor);
+                    return true;
+                }
+                break;
+            case "tpaccept":
+            case "tpa:tpaccept":
+                boolean flag = tpa.containsKey(this.executor);
+                targetList = tpa.get(this.executor);
 
-            if (!flag) {
-                Messages.noRequestAccept(this.executor);
-                return true;
-            }
+                if (!flag) {
+                    Messages.noRequestAccept(this.executor);
+                    return true;
+                }
 
-            if (targetList == null) {
-                Messages.noRequestAccept(this.executor);
-                return true;
-            }
+                if (targetList == null) {
+                    Messages.noRequestAccept(this.executor);
+                    return true;
+                }
 
-            Player target = targetList.get(targetList.size() - 1);
-            if (!target.isOnline()) {
-                Messages.offlineOrNull(this.executor, target.getName());
-                tpa.remove(this.executor);
-                HandySchedulerUtil.cancelTask();
-                return true;
-            }
-            this.target = target;
-            return false;
-        }
+                Player target = targetList.get(targetList.size() - 1);
+                if (!target.isOnline()) {
+                    Messages.offlineOrNull(this.executor, target.getName());
+                    tpa.remove(this.executor);
+                    HandySchedulerUtil.cancelTask();
+                    return true;
+                }
+                this.target = target;
+                break;
+            case "tpdeny":
+            case "tpa:tpdeny":
+                flag = tpa.containsKey(this.executor);
+                targetList = tpa.get(this.executor);
 
+                if (!flag) {
+                    Messages.noRequestDeny(this.executor);
+                    return true;
+                }
 
-        if (this.label.equals("tpdeny") || this.label.equals("tpa:tpdeny")) {
-            boolean flag = tpa.containsKey(this.executor);
-            List<Player> targetList = tpa.get(this.executor);
+                if (targetList == null) {
+                    Messages.noRequestDeny(this.executor);
+                    return true;
+                }
 
-            if (!flag) {
-                Messages.noRequestDeny(this.executor);
-                return true;
-            }
-
-            if (targetList == null) {
-                Messages.noRequestDeny(this.executor);
-                return true;
-            }
-
-            Player target = targetList.get(targetList.size() - 1);
-            if (!target.isOnline()) {
-                Messages.offlineOrNull(this.executor, target.getName());
-                tpa.remove(this.executor);
-                HandySchedulerUtil.cancelTask();
-                return true;
-            }
-            this.target = target;
-        }
-
-        if (this.label.equals("warp") || this.label.equals("tpa:warp") || this.label.equals("setwarp") || this.label.equals("tpa:setwarp")) {
-            if (this.commandError){
-                Messages.warpCommandError(this.executor, label);
-                return true;
-            }
-            try {
-                warpConfig.save(TPA.getPlugin(TPA.class).getWarpFile());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (this.label.equals("warp") | this.label.equals("tpa:warp") && warpConfig.getLocation(this.warpName) == null){
-                Messages.warpNull(this.executor, this.warpName);
-                return true;
-            }
-        }
-
-        if (this.label.equals("back") || this.label.equals("tpa:back")){
-            if (this.lastLocation == null){
-                Messages.lastLocationNull(this.executor);
-                return true;
-            }
+                target = targetList.get(targetList.size() - 1);
+                if (!target.isOnline()) {
+                    Messages.offlineOrNull(this.executor, target.getName());
+                    tpa.remove(this.executor);
+                    HandySchedulerUtil.cancelTask();
+                    return true;
+                }
+                this.target = target;
+                break;
+            case "warp":
+            case "tpa:warp":
+            case "setwarp":
+            case "tpa:setwarp":
+                if (this.commandError){
+                    Messages.warpCommandError(this.executor, label);
+                    return true;
+                }
+                try {
+                    warpConfig.save(TPA.getPlugin(TPA.class).getWarpFile());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (this.label.equals("warp") | this.label.equals("tpa:warp") && warpConfig.getLocation(this.warpName) == null){
+                    Messages.warpNull(this.executor, this.warpName);
+                    return true;
+                }
+                break;
+            case "back":
+            case "tpa:back":
+                if (this.lastLocation == null){
+                    Messages.lastLocationNull(this.executor);
+                    return true;
+                }
         }
         return false;
     }

@@ -25,7 +25,8 @@ public class OnlinePlayers implements TabCompleter {
                     playerList.add(onlinePlayer.getName());
                 }
             }
-            if (playerList.size() == 0) playerList.add(langConfig.getString("no_online_player"));
+
+            if (playerList.isEmpty()) playerList.add(langConfig.getString("no_online_player"));
             if (args.length == 0 || args.length == 1) return playerList;
             return new ArrayList<>();
         }
