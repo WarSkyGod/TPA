@@ -30,6 +30,20 @@ public final class TPA extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         HandySchedulerUtil.init(this);
+        saveDefaultConfig();
+        if (!langFile.exists()) {
+            saveResource("lang/" + lang + ".yml", false);
+        }
+        if (!warpFile.exists()) {
+            saveResource("warp.yml", false);
+        }
+        reloadConfig();
+        try {
+            getLangConfig().load(langFile);
+            getWarpConfig().load(warpFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            Messages.configNotFound(getServer().getConsoleSender());
+        }
         Objects.requireNonNull(this.getCommand("tpa")).setExecutor(new Tpa());
         Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new OnlinePlayers());
         Objects.requireNonNull(this.getCommand("tphere")).setExecutor(new TpHere());
@@ -46,18 +60,6 @@ public final class TPA extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(), this);
         Messages.pluginLoaded(getServer().getConsoleSender());
-        saveDefaultConfig();
-        if (!langFile.exists()) {
-            saveResource("warp.yml", false);
-            saveResource("lang/" + lang + ".yml", false);
-        }
-        reloadConfig();
-        try {
-            getLangConfig().load(langFile);
-            getWarpConfig().load(warpFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            Messages.configNotFound(getServer().getConsoleSender());
-        }
     }
 
 
@@ -76,8 +78,12 @@ public final class TPA extends JavaPlugin {
             getWarpConfig().load(warpFile);
         } catch (IOException | InvalidConfigurationException e) {
             saveDefaultConfig();
-            saveResource("warp.yml", false);
-            saveResource("lang/" + lang + ".yml", false);
+            if (!langFile.exists()) {
+                saveResource("lang/" + lang + ".yml", false);
+            }
+            if (!warpFile.exists()) {
+                saveResource("warp.yml", false);
+            }
             Messages.configNotFound(getServer().getConsoleSender());
             if (isPlayer)
                 Messages.configNotFound(sender);
