@@ -43,12 +43,14 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetWarp());
         Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new warpName());
         Objects.requireNonNull(this.getCommand("back")).setExecutor(new Back());
-        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(),this);
-        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(),this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(), this);
         Messages.pluginLoaded(getServer().getConsoleSender());
         saveDefaultConfig();
-        saveResource("warp.yml", false);
-        saveResource("lang/" + lang + ".yml", false);
+        if (!langFile.exists()) {
+            saveResource("warp.yml", false);
+            saveResource("lang/" + lang + ".yml", false);
+        }
         reloadConfig();
         try {
             getLangConfig().load(langFile);
@@ -57,7 +59,6 @@ public final class TPA extends JavaPlugin {
             Messages.configNotFound(getServer().getConsoleSender());
         }
     }
-
 
 
     @Override
