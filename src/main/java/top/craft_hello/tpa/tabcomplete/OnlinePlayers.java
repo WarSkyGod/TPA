@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnlinePlayers implements TabCompleter {
-    private static final FileConfiguration langConfig = TPA.getPlugin(TPA.class).getLangConfig();
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player){
+            FileConfiguration langConfig = TPA.getPlugin(TPA.class).loadLangConfig(((Player) sender).getLocale());
             List<String> playerList = new ArrayList<>();
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (!sender.getName().equals(onlinePlayer.getName())){

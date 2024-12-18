@@ -19,31 +19,31 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public final class TPA extends JavaPlugin {
 
-    private final FileConfiguration config = getConfig();
-    private final File langFile = new File(getDataFolder(), "lang/" + config.getString("lang") + ".yml");
-    private final File warpFile = new File(getDataFolder(), "warp.yml");
-    private final String lang = config.getString("lang") == null ? "zh_CN" : config.getString("lang");
+public final class TPA extends JavaPlugin {
+    private FileConfiguration config = getConfig();
+    private File langFile = new File(getDataFolder(), "lang/" + this.config.getString("lang") + ".yml");
+    private File warpFile = new File(getDataFolder(), "warp.yml");
+    private String lang = this.config.getString("lang") == null ? "zh_CN" : this.config.getString("lang");
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         HandySchedulerUtil.init(this);
-        saveDefaultConfig();
-        if (!langFile.exists()) {
-            saveResource("lang/" + lang + ".yml", false);
-        }
-        if (!warpFile.exists()) {
-            saveResource("warp.yml", false);
-        }
-        reloadConfig();
-        try {
-            getLangConfig().load(langFile);
-            getWarpConfig().load(warpFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            Messages.configNotFound(getServer().getConsoleSender());
-        }
+        loadAllConfig(this.getServer().getConsoleSender());
+        registerCommands();
+        registerEvents();
+        Messages.pluginLoaded(getServer().getConsoleSender());
+    }
+
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+        Messages.pluginUnLoaded(getServer().getConsoleSender());
+    }
+
+    public void registerCommands(){
         Objects.requireNonNull(this.getCommand("tpa")).setExecutor(new Tpa());
         Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new OnlinePlayers());
         Objects.requireNonNull(this.getCommand("tphere")).setExecutor(new TpHere());
@@ -57,52 +57,104 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetWarp());
         Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new warpName());
         Objects.requireNonNull(this.getCommand("back")).setExecutor(new Back());
-        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(), this);
-        Messages.pluginLoaded(getServer().getConsoleSender());
     }
 
+    public void registerEvents(){
+        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(), this);
+    }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-        Messages.pluginUnLoaded(getServer().getConsoleSender());
+    public void loadAllConfig(@NotNull CommandSender sender){
+        boolean isPlayer = sender instanceof Player;
+        saveDefaultConfig();
+        reloadConfig();
+        loadLangConfig(this.lang);
+        if (!this.warpFile.exists()) {
+            saveResource("warp.yml", false);
+        }
+        try {
+            getLangConfig().load(this.langFile);
+            getWarpConfig().load(this.warpFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            Messages.configNotFound(getServer().getConsoleSender());
+            if (isPlayer) Messages.configNotFound(sender);
+            loadAllConfig(sender);
+        }
+    }
+
+    public FileConfiguration loadLangConfig(String lang){
+        String lang2 = lang.substring(0, lang.length() - 2) + lang.substring(lang.length() - 2).toUpperCase();
+        File langFile;
+
+        langFile = new File(getDataFolder(), "lang/" + lang2 + ".yml");
+        //this.lang = lang2;
+        this.langFile = langFile;
+        try {
+            if (!langFile.exists()) {
+                saveResource("lang/" + lang2 + ".yml", false);
+            }
+        } catch (IllegalArgumentException e){
+            langFile =  new File(getDataFolder(), "lang/" + lang + ".yml");
+            //this.lang = lang;
+            this.langFile = langFile;
+            try {
+                if (!langFile.exists()) {
+                    saveResource("lang/" + lang + ".yml", false);
+                }
+            } catch (IllegalArgumentException e2){
+                langFile =  new File(getDataFolder(), "lang/" + this.lang + ".yml");
+                this.langFile = langFile;
+                try {
+                    if (!langFile.exists()) {
+                        saveResource("lang/" + this.lang + ".yml", false);
+                    }
+                } catch (IllegalArgumentException e3) {
+                    Messages.pluginError(getServer().getConsoleSender(), "在尝试使用配置文件中lang设置的语言时出现错误，请检查您是否创建了此语言的yml，正在尝试为您使用插件默认语言（zh_CN）");
+                    langFile =  new File(getDataFolder(), "lang/" + "zh_CN" + ".yml");
+                    this.lang = "zh_CN";
+                    this.langFile = langFile;
+                    try {
+                        if (!langFile.exists()) {
+                            saveResource("lang/" + "zh_CN" + ".yml", false);
+                        }
+                    } catch (IllegalArgumentException e4) {
+                        Messages.pluginError(getServer().getConsoleSender(), "在尝试使用插件默认语言时出现错误，请向在Github向作者反馈问题");
+                    }
+                }
+            }
+        }
+        return YamlConfiguration.loadConfiguration(langFile);
     }
 
     public void reloadAllConfig(@NotNull CommandSender sender) {
         boolean isPlayer = sender instanceof Player;
-        reloadConfig();
-        try {
-            config.load(new File(getDataFolder(), "config.yml"));
-            getLangConfig().load(langFile);
-            getWarpConfig().load(warpFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            saveDefaultConfig();
-            if (!langFile.exists()) {
-                saveResource("lang/" + lang + ".yml", false);
-            }
-            if (!warpFile.exists()) {
-                saveResource("warp.yml", false);
-            }
-            Messages.configNotFound(getServer().getConsoleSender());
-            if (isPlayer)
-                Messages.configNotFound(sender);
-            return;
-        }
+        loadAllConfig(sender);
+        registerCommands();
         Messages.configReloaded(getServer().getConsoleSender());
-        if (isPlayer)
+
+        if (isPlayer){
             Messages.configReloaded(sender);
+        }
+    }
+
+    public File getLangFile() {
+        return this.langFile;
     }
 
     public File getWarpFile() {
-        return warpFile;
+        return this.warpFile;
+    }
+
+    public String getLang(){
+        return this.lang;
     }
 
     public FileConfiguration getLangConfig() {
-        return YamlConfiguration.loadConfiguration(langFile);
+        return YamlConfiguration.loadConfiguration(this.langFile);
     }
 
     public FileConfiguration getWarpConfig() {
-        return YamlConfiguration.loadConfiguration(warpFile);
+        return YamlConfiguration.loadConfiguration(this.warpFile);
     }
+
 }
