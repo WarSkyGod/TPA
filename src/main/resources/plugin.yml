@@ -13,21 +13,45 @@ commands:
   tphere:
     usage: /tphere <玩家名称>
     description: 请求玩家传送到你身边
+  tpall:
+    usage: /tpall
+    description: 强制将所有在线玩家传送到你身边
   tpaccept:
     usage: /tpaccept
-    description: 接受传送请求（你可以点击聊天框里的 [接受/tpaccept] 来直接接受）
+    description: 接受传送请求
   tpdeny:
     usage: /tpdeny
-    description: 拒绝传送请求（你可以点击聊天框里的 [拒绝/tpdeny] 来直接拒绝）
+    description: 拒绝传送请求
   warp:
     usage: /warp <传送点>
     description: 传送到传送点
   setwarp:
     usage: /setwarp <传送点>
-    description: 设置传送点（需要 tpa.setwarp 权限）
+    description: 设置传送点
+  delwarp:
+    usage: /delwarp <传送点>
+    description: 删除传送点
+  home:
+    usage: /home <家>
+    description: 传送到家
+  sethome:
+    usage: /sethome <家>
+    description: 设置家
+  delhome:
+    usage: /delhome <家>
+    description: 删除家
+  spawn:
+    usage: /spawan
+    description: 传送到主城
+  setspawn:
+    usage: /setspawn
+    description: 设置主城
+  delspawn:
+    usage: /delspawn
+    description: 删除主城
   back:
     usage: /back
-    description: 传送到上一次的位置（需要 tpa.back 权限）
+    description: 传送到上一次的位置
   tpa reload:
     usage: /tpa reload
-    description: 重新加载配置文件（需要 tpa.reload 权限）
+    description: 重新加载配置文件

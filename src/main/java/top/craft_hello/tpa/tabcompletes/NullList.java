@@ -1,4 +1,4 @@
-package top.craft_hello.tpa.tabcomplete;
+package top.craft_hello.tpa.tabcompletes;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,9 +14,7 @@ public class NullList implements TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player){
-            return new ArrayList<>();
-        }
+        if (sender instanceof Player) return new ArrayList<>();
         return null;
     }
 }

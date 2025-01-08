@@ -1,11 +1,11 @@
-package top.craft_hello.tpa.util;
+package top.craft_hello.tpa.utils;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import top.craft_hello.tpa.util.enums.ClickEvent;
-import top.craft_hello.tpa.util.enums.HoverEvent;
+import top.craft_hello.tpa.enums.ClickEventType;
+import top.craft_hello.tpa.enums.HoverEventType;
 
-public final class JsonMessage {
+public final class JsonMessageUtil {
     private String jsonCommand;
     private String text;
     private String value;
@@ -14,31 +14,31 @@ public final class JsonMessage {
     private final String[] formatCodes = {"&k", "&l", "&m", "&n", "&o"};
     private final String[] formats = {",\"obfuscated\":true", ",\"bold\":true", ",\"strikethrough\":true", ",\"underlined\":true", ",\"italic\":true"};
 
-    public JsonMessage(@NotNull Player target, @NotNull String text) {
+    public JsonMessageUtil(@NotNull Player target, @NotNull String text) {
         this.text = formatText(text);
         this.jsonCommand = "tellraw " + target.getName() + " [{\"text\":\"" + this.text;
     }
 
-    public JsonMessage addText(){
+    public JsonMessageUtil addText(){
         addText(" \"");
         return this;
     }
 
-    public JsonMessage addText(@NotNull String text){
+    public JsonMessageUtil addText(@NotNull String text){
         this.text= formatText(text);
         this.jsonCommand = this.jsonCommand + "},{\"text\":\"" + this.text;
         return this;
     }
 
-    public JsonMessage addInsertion(@NotNull String value){
+    public JsonMessageUtil addInsertion(@NotNull String value){
         this.value = value;
         this.jsonCommand = this.jsonCommand + ",\"insertion\":\"" + this.value + "\"";
         return this;
     }
 
-    public JsonMessage addClickEvent(@NotNull ClickEvent clickEvent, @NotNull String value){
+    public JsonMessageUtil addClickEvent(@NotNull ClickEventType clickEventType, @NotNull String value){
         this.value = value;
-        switch (clickEvent){
+        switch (clickEventType){
             case OPEN_URL:
                 this.jsonCommand = this.jsonCommand + ",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + this.value + "\"}";
                 break;
@@ -60,9 +60,9 @@ public final class JsonMessage {
         return this;
     }
 
-    public JsonMessage addHoverEvent(@NotNull HoverEvent hoverEvent, @NotNull String value){
+    public JsonMessageUtil addHoverEvent(@NotNull HoverEventType hoverEventType, @NotNull String value){
         this.value = MessageUtil.formatText(value);
-        switch (hoverEvent){
+        switch (hoverEventType){
             case SHOW_TEXT:
                 this.jsonCommand = this.jsonCommand + ",\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"" + this.value + "\"}";
                 break;

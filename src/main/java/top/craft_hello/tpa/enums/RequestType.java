@@ -1,0 +1,5 @@
+package top.craft_hello.tpa.enums;
+
+public enum RequestType {
+    TPA, TPHERE, TPALL, TPACCEPT, TPDENY, WARP, SETWARP, DELWARP, HOME, SETHOME, DELHOME, SPAWN, SETSPAWN, DELSPAWN, BACK, RELOAD, VERSION
+}
