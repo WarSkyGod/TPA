@@ -180,12 +180,12 @@ public class Messages {
         if (isTphere){
             MessageUtil.sendMessage(setLang(executor), lang.getString("you_accept"), target.getName());
             MessageUtil.sendMessage(setLang(target), lang.getString("target_accept"), executor.getName());
-            teleportCountdown(executor, executor.getName(), delay);
+            teleportCountdown(executor, target.getName(), delay);
             return;
         }
         MessageUtil.sendMessage(setLang(target), lang.getString("you_accept"), executor.getName());
         MessageUtil.sendMessage(setLang(executor), lang.getString("target_accept"), target.getName());
-        teleportCountdown(executor, executor.getName(), delay);
+        teleportCountdown(executor, target.getName(), delay);
     }
 
     // 拒绝传送消息
