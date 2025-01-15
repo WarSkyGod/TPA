@@ -5,23 +5,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import top.craft_hello.tpa.enums.RequestType;
-import top.craft_hello.tpa.utils.ErrorCheckUtil;
 import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
 import top.craft_hello.tpa.utils.TeleportUtil;
-import top.craft_hello.tpa.utils.VersionUtil;
 
-public class PlayerJoinEvent implements Listener {
+public class PlayerRespawnEvent implements Listener {
     @EventHandler
-    public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent playerJoinEvent){
-        Player player = playerJoinEvent.getPlayer();
-        LoadingConfigFileUtil.getPlayerData(player.getName());
+    public void onPlayerRespawn(org.bukkit.event.player.PlayerRespawnEvent playerRespawnEvent){
+        Player player = playerRespawnEvent.getPlayer();
         Location location = LoadingConfigFileUtil.getLocation(RequestType.SPAWN, null, "spawn");
         if (LoadingConfigFileUtil.getConfig().getBoolean("force_spawn") && location != null){
             TeleportUtil.tp(player, location);
         }
 
-        if (ErrorCheckUtil.version(player, RequestType.VERSION) ){
-            VersionUtil.updateCheck(player);
-        }
     }
 }

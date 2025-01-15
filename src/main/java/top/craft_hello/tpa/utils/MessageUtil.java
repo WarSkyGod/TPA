@@ -11,8 +11,6 @@ import java.util.List;
 
 public class MessageUtil {
     private static FileConfiguration lang = LoadingConfigFileUtil.getLang();
-    private static String prefix = lang.getString("prefix") == null ? "§a&l> " : lang.getString("prefix");
-    private static String consolePrefix = lang.getString("console_prefix") == null ? "§a&l> " : lang.getString("console_prefix");
     private static String error = lang.getString("error") == null ? "§c§l插件出错！" : lang.getString("error");
 
     // 将字符串中的&自动替换为§
@@ -39,6 +37,9 @@ public class MessageUtil {
 
     // 发送消息
     public static void sendMessage(CommandSender sender, String text, String... vars){
+        FileConfiguration lang = LoadingConfigFileUtil.getLang(sender);
+        String prefix = lang.getString("prefix") == null ? "§a&l> " : lang.getString("prefix");
+        String consolePrefix = lang.getString("console_prefix") == null ? "§a&l> " : lang.getString("console_prefix");
         List<String> lists = new ArrayList<>(Arrays.asList(vars));
         sender.sendMessage(formatText(((sender instanceof Player) ? prefix : consolePrefix) + text, lists));
     }

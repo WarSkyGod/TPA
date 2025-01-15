@@ -1,5 +1,6 @@
 package top.craft_hello.tpa.tabcompletes;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -13,15 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WarpName implements TabCompleter {
+public class WarpTabCompletes implements TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        FileConfiguration lang = LoadingConfigFileUtil.getLang(((Player) sender).locale().getLanguage() + "_" + ((Player) sender).locale().getCountry());
+        if (args.length == 2){
+            List<String> list = new ArrayList<>();
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                list.add(onlinePlayer.getName());
+            }
+            if (list.isEmpty()) list.add(LoadingConfigFileUtil.getLang(sender).getString("not_online_player"));
+            return list;
+        }
+        FileConfiguration lang = LoadingConfigFileUtil.getLang(sender);
         FileConfiguration warp = LoadingConfigFileUtil.getWarp();
-        List<String> warpNameList = new ArrayList<>(warp.getKeys(false));
-        if (warpNameList.isEmpty()) warpNameList.add(lang.getString("warp_name"));
-        if (args.length == 0 || args.length == 1) return warpNameList;
-        return new ArrayList<>();
+        List<String> list = new ArrayList<>(warp.getKeys(false));
+        if (list.isEmpty()) list.add(lang.getString("warp_name"));
+        return list;
     }
 }

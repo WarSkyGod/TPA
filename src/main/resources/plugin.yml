@@ -1,6 +1,7 @@
 name: TPA
 version: '${project.version}'
 main: top.craft_hello.tpa.TPA
+description: 一个支持 Folia 的简易传送插件，支持 Bukkit/Spigot/Paper/Folia
 api-version: '1.13'
 author: WarSkyGod
 website: https://github.com/WarSkyGod/TPA
@@ -14,14 +15,20 @@ commands:
     usage: /tphere <玩家名称>
     description: 请求玩家传送到你身边
   tpall:
-    usage: /tpall
-    description: 强制将所有在线玩家传送到你身边
+    usage: /tpall [player/warp/spawn] [玩家名称/传送点名称]
+    description: 强制将所有在线玩家传送到目标位置（如果不加参数默认传送到使用者身边）
+  tplogout:
+    usage: /tplogout <玩家名称>
+    description: 传送到该玩家最后一次下线的位置
   tpaccept:
     usage: /tpaccept
     description: 接受传送请求
   tpdeny:
     usage: /tpdeny
     description: 拒绝传送请求
+  denys:
+    usage: /denys [add/remove] [玩家名称]
+    description: 列出玩家的黑名单列表
   warp:
     usage: /warp <传送点>
     description: 传送到传送点
@@ -34,9 +41,15 @@ commands:
   home:
     usage: /home <家>
     description: 传送到家
+  homes:
+    usage: /homes
+    description: 列出你设置的家
   sethome:
     usage: /sethome <家>
     description: 设置家
+  setdefaulthome:
+    usage: /setdefaulthome <家>
+    description: 设置默认的家
   delhome:
     usage: /delhome <家>
     description: 删除家
@@ -52,6 +65,3 @@ commands:
   back:
     usage: /back
     description: 传送到上一次的位置
-  tpa reload:
-    usage: /tpa reload
-    description: 重新加载配置文件

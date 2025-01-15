@@ -1,12 +1,10 @@
 package top.craft_hello.tpa.utils;
 
-import io.papermc.paper.plugin.configuration.PluginMeta;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.craft_hello.tpa.Messages;
-import top.craft_hello.tpa.TPA;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Objects;
+
 
 
 /*
@@ -25,6 +24,13 @@ import java.util.Objects;
 * Fork：https://github.com/WarSkyGod/easy-gui-shop
 * */
 public class VersionUtil {
+   private static String PLUGIN_NAME;
+
+   public static void init(String pluginName){
+      PLUGIN_NAME = pluginName;
+   }
+
+
    public static @Nullable String readFirstLine(URL url) throws IOException {
       if (url == null) {
          throw new NullPointerException();
@@ -40,10 +46,9 @@ public class VersionUtil {
       String latestVersion1;
       FileConfiguration config = LoadingConfigFileUtil.getConfig();
       String version = Objects.requireNonNull(config.getString("version"));
-      PluginMeta pluginMeta = TPA.getPlugin(TPA.class).getPluginMeta();
       try {
          String urlStringPart1 = "https://warskygod.github.io/";
-         String urlStringPart2 =  pluginMeta.getName();
+         String urlStringPart2 =  PLUGIN_NAME;
          String urlStringPart3 =  "/latest.html";
          latestVersion1 = readFirstLine(new URL(urlStringPart1 + urlStringPart2 + urlStringPart3));
       } catch (Throwable var5) {

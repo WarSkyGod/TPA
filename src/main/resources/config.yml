@@ -8,6 +8,10 @@ version: ${project.version}
 # 关闭后服务器后台和拥有 tpa.version 或 tpa.admin 权限的玩家将不会收到插件更新提醒
 update_check: true
 
+# 是否为旧版本（1.12）以下服务端
+# 如果是将关闭客户端自动选择语言功能（玩家默认使用服务端显示语言，可以使用 /tpa setlang <语言> 设置客户端显示语言）
+old_server: false
+
 # 服务端显示语言，自带 zh_CN 和 en_US，您也可以按照格式添加其他语言
 # 客户端会自动根据客户端的语言选择合适的语言脚本，如果不存在对应的语言脚本默认使用这里设置的语言
 lang: zh_CN
@@ -18,10 +22,19 @@ accept_delay: 30
 # 传送前需要等待多长时间？单位是秒
 teleport_delay: 3
 
+# 是否每次进入服务器或死亡都强制传送到spawn
+force_spawn: true
+
+# 是否启用 title 命令来显示传送消息（1.12 以下版本将自动关闭）
+enable_title_message: true
+
+# 是否启用音效（需要 enable_title_message 为 true）
+enable_playsound: true
+
 # 启用命令
 enable_command:
   # 是否开启 tpa 命令
-  # 如果 tpa 和 tphere 命令都未启用，将自动关闭 /tpaccept 和 /tpdeny 命令
+  # 如果 tpa 和 tphere 命令都未启用，将自动关闭 /tpaccept，/tpdeny，/denys 命令
   tpa: true
 
   # 是否开启 tphere 命令
@@ -30,12 +43,15 @@ enable_command:
   # 是否开启 tpall 命令
   tpall: true
 
+  # 是否开启 tplogout 命令
+  tplogout: true
+
   # 是否开启 warp 命令
   # 影响 /warp，/setwarp，/delwarp 的使用
   warp: true
 
   # 是否开启 home 命令
-  # 影响 /home，/sethome，/delhome 的使用
+  # 影响 /home，/homes，/sethome，/delhome 的使用
   home: true
 
   # 是否开启 spawn 命令
@@ -44,6 +60,9 @@ enable_command:
 
   # 是否开启 back 命令
   back: true
+
+  # 是否开启 setlang 命令（服务端版本为 1.12 或更高版本时将自动关闭）
+  setlang: false
 
 # 使用命令是否需要权限
 enable_permission:
@@ -55,11 +74,15 @@ enable_permission:
   # permission: tpa.tphere
   tphere: false
 
+  # 使用 denys 命令
+  # permission: tpa.denys
+  denys: false
+
   # 使用 warp 命令
   # permission: tpa.warp
   warp: false
 
-  # 使用 home, sethome, delhome 命令
+  # 使用 home, homes, sethome, setdefaulthome, delhome 命令
   # permission: tpa.home
   home: false
 
@@ -70,6 +93,10 @@ enable_permission:
   # 使用 back 命令
   # permission: tpa.back
   back: false
+
+  # 使用 setlang 命令
+  # permission: tpa.lang
+  setlang: false
 
 # 最大可设置多少个家（-1为不限制）
 home_amount:

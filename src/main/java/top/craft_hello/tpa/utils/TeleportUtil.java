@@ -5,6 +5,7 @@ import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class TeleportUtil {
     }
 
     // 传送方法
-    private static void tp(@NotNull Player executor, @NotNull Location location) {
+    public static void tp(@NotNull Player executor, @NotNull Location location) {
         PlayerSchedulerUtil.syncTeleport(executor, location);
     }
 
@@ -131,8 +132,7 @@ public class TeleportUtil {
         request.getTimer().cancel();
         timer.cancel();
         String warpName = request.getTarget();
-        FileConfiguration warp = LoadingConfigFileUtil.getWarp();
-        Location location = warp.getLocation(warpName);
+        Location location = LoadingConfigFileUtil.getLocation(RequestType.WARP,null , warpName);
         REQUEST_QUEUE.remove(executor);
         tp((Player) executor, location);
         Messages.tpToWarpMessage(executor, warpName);
@@ -144,8 +144,7 @@ public class TeleportUtil {
         request.getTimer().cancel();
         timer.cancel();
         String homeName = request.getTarget();
-        FileConfiguration home = LoadingConfigFileUtil.getHome();
-        Location location = home.getLocation(executor.getName() + "." + homeName);
+        Location location = LoadingConfigFileUtil.getLocation(RequestType.HOME, executor.getName(), "homes." + homeName);
         REQUEST_QUEUE.remove(executor);
         tp((Player) executor, location);
         Messages.tpToHomeMessage(executor, homeName);
@@ -156,8 +155,7 @@ public class TeleportUtil {
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
-        FileConfiguration spawn = LoadingConfigFileUtil.getSpawn();
-        Location location = spawn.getLocation("spawn");
+        Location location = LoadingConfigFileUtil.getLocation(RequestType.SPAWN, null, "spawn");
         REQUEST_QUEUE.remove(executor);
         tp(((Player) executor), location);
         Messages.backSpawnSuccessMessage(executor, "spawn_point");
@@ -168,8 +166,7 @@ public class TeleportUtil {
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
-        FileConfiguration lastLocation = LoadingConfigFileUtil.getLastLocation();
-        Location location = lastLocation.getLocation(executor.getName());
+        Location location = LoadingConfigFileUtil.getLocation(RequestType.BACK, executor.getName(), "last_location");
         REQUEST_QUEUE.remove(executor);
         tp(((Player) executor), location);
         Messages.backLastLocationSuccessMessage(executor, "last_location");
@@ -205,18 +202,65 @@ public class TeleportUtil {
                 }
                 return;
             case TPALL:
-                if (ErrorCheckUtil.tpAll(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.tpAll(executor, args, REQUEST_TYPE)){
                     Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-                    onlinePlayers.remove(executor);
-                    for (Player onlinePlayer : onlinePlayers) {
-                        tp(onlinePlayer, ((Player) executor).getLocation());
-                        Messages.adminTpYouToMessage(onlinePlayer, executor.getName());
+                    if (args.length == 0){
+                        onlinePlayers.remove(executor);
+                        for (Player onlinePlayer : onlinePlayers) {
+                            tp(onlinePlayer, ((Player) executor).getLocation());
+                            Messages.adminTpYouToMessage(onlinePlayer, executor.getName());
+                        }
+                        Messages.tpAllCommandSuccess(executor, executor.getName());
                     }
-                    Messages.tpAllCommandSuccess(executor, executor.getName());
+
+                    if (args.length == 1 && args[args.length - 1].equals("spawn")){
+                        Location location = LoadingConfigFileUtil.getLocation(RequestType.SPAWN, null, "spawn");
+                        for (Player onlinePlayer : onlinePlayers) {
+                            tp(onlinePlayer, location);
+                            Messages.adminTpYouToMessage(onlinePlayer, Objects.requireNonNull(LoadingConfigFileUtil.getLang(onlinePlayer).getString("spawn_point")));
+                        }
+                        Messages.tpAllCommandSuccess(executor, Objects.requireNonNull(LoadingConfigFileUtil.getLang(executor).getString("spawn_point")));
+                        return;
+                    }
+
+                    if (args.length == 2){
+                        switch (args[args.length - 2]){
+                            case "player":
+                                Player target = Bukkit.getPlayer(args[args.length - 1]);
+                                String targetName = target.getName();
+                                Location location = target.getLocation();
+                                onlinePlayers.remove(target);
+                                for (Player onlinePlayer : onlinePlayers) {
+                                    tp(onlinePlayer, location);
+                                    Messages.adminTpYouToMessage(onlinePlayer, targetName);
+                                }
+                                Messages.tpAllCommandSuccess(executor, targetName);
+                                Messages.adminTpAllPlayerToYouMessage(target);
+                                return;
+                            case "warp":
+                                location = LoadingConfigFileUtil.getLocation(RequestType.WARP, null, args[args.length - 1]);
+                                for (Player onlinePlayer : onlinePlayers) {
+                                    tp(onlinePlayer, location);
+                                    Messages.adminTpYouToMessage(onlinePlayer, args[args.length - 1]);
+                                }
+                                Messages.tpAllCommandSuccess(executor, args[args.length - 1]);
+                                return;
+                            default:
+                                Messages.pluginError(executor, "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
+                                return;
+                        }
+                    }
+                }
+                return;
+            case TPLOGOUT:
+                if (ErrorCheckUtil.tpLogout(executor, args, REQUEST_TYPE)){
+                    Location location = LoadingConfigFileUtil.getLocation(REQUEST_TYPE, args[args.length - 1], "logout_location");
+                    tp((Player) executor, location);
+                    Messages.tpLogoutCommandSuccess(executor, args[args.length - 1]);
                 }
                 return;
             case TPACCEPT:
-                if (ErrorCheckUtil.tpAccept(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.tpAccept(executor, args, REQUEST_TYPE)){
                     Request request = REQUEST_QUEUE.get(executor);
                     request.getTimer().cancel();
                     Player player1;
@@ -241,17 +285,21 @@ public class TeleportUtil {
                     }
                     Location location = player1.getLocation();
                     HandyRunnable timer = new HandyRunnable() {
+                        long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
                                 isMove(location, player1, player2);
+                                if (--sec < 0){
+                                    this.cancel();
+                                }
                             } catch (Exception ignored) {
                                 this.cancel();
                             }
                         }
                     };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 3, (teleportDelay < 0L ? 3L : teleportDelay));
+                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
                     request.setTimer(timer);
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.TELEPORT);
                     Messages.acceptMessage(player1, player2, (teleportDelay < 0L ? 3L : teleportDelay), isTphere);
@@ -259,7 +307,7 @@ public class TeleportUtil {
 
                 return;
             case TPDENY:
-                if (ErrorCheckUtil.tpDeny(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.tpDeny(executor, args, REQUEST_TYPE)){
                     Request request = REQUEST_QUEUE.get(executor);
                     request.getTimer().cancel();
                     Player player1;
@@ -287,23 +335,34 @@ public class TeleportUtil {
                 return;
             case WARP:
                 if (ErrorCheckUtil.warp(executor, args, REQUEST_TYPE)){
+                    if (args.length == 0){
+                        FileConfiguration warp = LoadingConfigFileUtil.getWarp();
+                        List<String> list = new ArrayList<>(warp.getKeys(false));
+                        Messages.warpListMessage(executor, list);
+                        return;
+                    }
+
                     Player requestPlayer = (Player) executor;
                     String warpName = args[args.length - 1];
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
                     HandyRunnable timer = new HandyRunnable() {
+                        long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
                                 isMove(location, requestPlayer, requestPlayer);
+                                if (--sec < 0){
+                                    this.cancel();
+                                }
                             } catch (Exception ignored) {
                                 this.cancel();
                             }
                         }
                     };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 3, (teleportDelay < 0L ? 3L : teleportDelay));
+                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
                     Request request = new Request(REQUEST_TYPE, requestPlayer, warpName, timer);
                     REQUEST_QUEUE.put((Player) executor, request);
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.WARP_TELEPORT);
@@ -314,36 +373,48 @@ public class TeleportUtil {
                 if (ErrorCheckUtil.setWarp(executor, args, REQUEST_TYPE)){
                     Location location = ((Player) executor).getLocation();
                     String warpName = args[args.length - 1];
-                    LoadingConfigFileUtil.setWarp(executor, warpName, location);
+                    LoadingConfigFileUtil.setWarp(warpName, location);
                     Messages.setWarpSuccess(executor, warpName);
                 }
                 return;
             case DELWARP:
                 if (ErrorCheckUtil.delWarp(executor, args, REQUEST_TYPE)){
                     String warpName = args[args.length - 1];
-                    LoadingConfigFileUtil.delWarp(executor, warpName);
+                    LoadingConfigFileUtil.delWarp(warpName);
                     Messages.delWarpSuccess(executor, warpName);
                 }
                 return;
             case HOME:
                 if (ErrorCheckUtil.home(executor, args, REQUEST_TYPE)){
                     Player requestPlayer = (Player) executor;
-                    String homeName = args[args.length - 1];
+                    String homeName;
+                    if (args.length == 0){
+                        FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
+                        String defaultHome = playerData.getString("default_home");
+                        homeName = defaultHome;
+                    } else {
+                        homeName = args[args.length - 1];
+                    }
+
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
                     HandyRunnable timer = new HandyRunnable() {
                         @Override
                         public void run() {
+                            long sec = teleportDelay * 20;
                             try {
                                 // 执行逻辑
                                 isMove(location, requestPlayer, requestPlayer);
+                                if (--sec < 0){
+                                    this.cancel();
+                                }
                             } catch (Exception ignored) {
                                 this.cancel();
                             }
                         }
                     };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 3, (teleportDelay < 0L ? 3L : teleportDelay));
+                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
                     Request request = new Request(REQUEST_TYPE, requestPlayer, homeName, timer);
                     REQUEST_QUEUE.put((Player) executor, request);
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.HOME_TELEPORT);
@@ -353,37 +424,74 @@ public class TeleportUtil {
             case SETHOME:
                 if (ErrorCheckUtil.setHome(executor, args, REQUEST_TYPE)){
                     Location location = ((Player) executor).getLocation();
+                    FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
+                    String defaultHome = playerData.getString("default_home");
+                    if (args.length == 0){
+                        String homeName = "default";
+                        if (defaultHome != null){
+                            homeName = defaultHome;
+                        } else {
+                            LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", homeName);
+                        }
+
+                        LoadingConfigFileUtil.setHome(executor, homeName, location);
+                        Messages.setHomeSuccess(executor, homeName);
+                        return;
+                    }
+
                     String homeName = args[args.length - 1];
+                    if (defaultHome == null){
+                        LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", homeName);
+                    }
                     LoadingConfigFileUtil.setHome(executor, homeName, location);
                     Messages.setHomeSuccess(executor, homeName);
                 }
                 return;
             case DELHOME:
                 if (ErrorCheckUtil.delHome(executor, args, REQUEST_TYPE)){
+                    FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
+                    String defaultHome = playerData.getString("default_home");
                     String homeName = args[args.length - 1];
+                    if (defaultHome != null && defaultHome.equals(homeName)){
+                        Set<String> homeSet = playerData.getKeys(true);
+                        List<String> list = new ArrayList<>();
+                        for (String home : homeSet) {
+                            if (home.contains("homes.")) {
+                                String home2 = home.substring(home.indexOf(".") + 1);
+                                if (!home2.contains(".") && !home2.equals(defaultHome)) list.add(home2);
+                            }
+                        }
+                        defaultHome = list.isEmpty() ? null : list.get(0);
+                        LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", defaultHome);
+                    }
                     LoadingConfigFileUtil.delHome(executor, homeName);
                     Messages.delHomeSuccess(executor, homeName);
                 }
                 return;
             case SPAWN:
-                if (ErrorCheckUtil.spawn(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.spawn(executor, args, REQUEST_TYPE)){
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     Player requestPlayer = (Player) executor;
                     String spawnPoint = "spawn_point";
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
+
                     HandyRunnable timer = new HandyRunnable() {
+                        long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
                                 isMove(location, requestPlayer, requestPlayer);
+                                if (--sec < 0){
+                                    this.cancel();
+                                }
                             } catch (Exception ignored) {
                                 this.cancel();
                             }
                         }
                     };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 3, (teleportDelay < 0L ? 3L : teleportDelay));
+                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
                     Request request = new Request(REQUEST_TYPE, requestPlayer, spawnPoint, timer);
                     REQUEST_QUEUE.put((Player) executor, request);
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.SPAWN_TELEPORT);
@@ -391,37 +499,44 @@ public class TeleportUtil {
                 }
                 return;
             case SETSPAWN:
-                if (ErrorCheckUtil.setSpawn(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.setSpawn(executor, args, REQUEST_TYPE)){
                     Location location = ((Player) executor).getLocation();
-                    LoadingConfigFileUtil.setSpawn(executor, location);
+                    LoadingConfigFileUtil.setSpawn(location);
+                    World world = ((Player) executor).getWorld();
+                    world.setSpawnLocation(location);
+                    Bukkit.setSpawnRadius(0);
                     Messages.setSpawnSuccess(executor);
                 }
                 return;
             case DELSPAWN:
                 if (ErrorCheckUtil.delSpawn(executor, REQUEST_TYPE)){
-                    LoadingConfigFileUtil.delSpawn(executor);
+                    LoadingConfigFileUtil.delSpawn();
                     Messages.delSpawnSuccess(executor);
                 }
                 return;
             case BACK:
-                if (ErrorCheckUtil.back(executor, REQUEST_TYPE)){
+                if (ErrorCheckUtil.back(executor, args, REQUEST_TYPE)){
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     Player requestPlayer = (Player) executor;
                     String lastLocation = "last_location";
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
                     HandyRunnable timer = new HandyRunnable() {
+                        long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
                                 isMove(location, requestPlayer, requestPlayer);
+                                if (--sec < 0){
+                                    this.cancel();
+                                }
                             } catch (Exception ignored) {
                                 this.cancel();
                             }
                         }
                     };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 3, (teleportDelay < 0L ? 3L : teleportDelay));
+                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
                     Request request = new Request(REQUEST_TYPE, requestPlayer, lastLocation, timer);
                     REQUEST_QUEUE.put((Player) executor, request);
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.BACK_TELEPORT);
