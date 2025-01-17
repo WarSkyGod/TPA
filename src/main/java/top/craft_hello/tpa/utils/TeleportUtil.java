@@ -5,7 +5,6 @@ import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -176,7 +175,7 @@ public class TeleportUtil {
     public static void addRequest(@NotNull CommandSender executor, @NotNull String[] args, RequestType REQUEST_TYPE){
         switch (REQUEST_TYPE){
             case TPA:
-                if (ErrorCheckUtil.tpa(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Player requestPlayer = (Player) executor;
                     String target = args[args.length - 1];
                     Player targetPlayer = Bukkit.getPlayerExact(target);
@@ -189,7 +188,7 @@ public class TeleportUtil {
                 }
                 return;
             case TPHERE:
-                if (ErrorCheckUtil.tpHere(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Player requestPlayer = (Player) executor;
                     String target = args[args.length - 1];
                     Player targetPlayer = Bukkit.getPlayerExact(target);
@@ -202,7 +201,7 @@ public class TeleportUtil {
                 }
                 return;
             case TPALL:
-                if (ErrorCheckUtil.tpAll(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
                     if (args.length == 0){
                         onlinePlayers.remove(executor);
@@ -253,14 +252,14 @@ public class TeleportUtil {
                 }
                 return;
             case TPLOGOUT:
-                if (ErrorCheckUtil.tpLogout(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Location location = LoadingConfigFileUtil.getLocation(REQUEST_TYPE, args[args.length - 1], "logout_location");
                     tp((Player) executor, location);
                     Messages.tpLogoutCommandSuccess(executor, args[args.length - 1]);
                 }
                 return;
             case TPACCEPT:
-                if (ErrorCheckUtil.tpAccept(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Request request = REQUEST_QUEUE.get(executor);
                     request.getTimer().cancel();
                     Player player1;
@@ -307,7 +306,7 @@ public class TeleportUtil {
 
                 return;
             case TPDENY:
-                if (ErrorCheckUtil.tpDeny(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Request request = REQUEST_QUEUE.get(executor);
                     request.getTimer().cancel();
                     Player player1;
@@ -334,7 +333,7 @@ public class TeleportUtil {
 
                 return;
             case WARP:
-                if (ErrorCheckUtil.warp(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     if (args.length == 0){
                         FileConfiguration warp = LoadingConfigFileUtil.getWarp();
                         List<String> list = new ArrayList<>(warp.getKeys(false));
@@ -369,23 +368,8 @@ public class TeleportUtil {
                     Messages.teleportCountdown(executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
                 }
                 return;
-            case SETWARP:
-                if (ErrorCheckUtil.setWarp(executor, args, REQUEST_TYPE)){
-                    Location location = ((Player) executor).getLocation();
-                    String warpName = args[args.length - 1];
-                    LoadingConfigFileUtil.setWarp(warpName, location);
-                    Messages.setWarpSuccess(executor, warpName);
-                }
-                return;
-            case DELWARP:
-                if (ErrorCheckUtil.delWarp(executor, args, REQUEST_TYPE)){
-                    String warpName = args[args.length - 1];
-                    LoadingConfigFileUtil.delWarp(warpName);
-                    Messages.delWarpSuccess(executor, warpName);
-                }
-                return;
             case HOME:
-                if (ErrorCheckUtil.home(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Player requestPlayer = (Player) executor;
                     String homeName;
                     if (args.length == 0){
@@ -421,55 +405,8 @@ public class TeleportUtil {
                     Messages.teleportCountdown(executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
                 }
                 return;
-            case SETHOME:
-                if (ErrorCheckUtil.setHome(executor, args, REQUEST_TYPE)){
-                    Location location = ((Player) executor).getLocation();
-                    FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
-                    String defaultHome = playerData.getString("default_home");
-                    if (args.length == 0){
-                        String homeName = "default";
-                        if (defaultHome != null){
-                            homeName = defaultHome;
-                        } else {
-                            LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", homeName);
-                        }
-
-                        LoadingConfigFileUtil.setHome(executor, homeName, location);
-                        Messages.setHomeSuccess(executor, homeName);
-                        return;
-                    }
-
-                    String homeName = args[args.length - 1];
-                    if (defaultHome == null){
-                        LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", homeName);
-                    }
-                    LoadingConfigFileUtil.setHome(executor, homeName, location);
-                    Messages.setHomeSuccess(executor, homeName);
-                }
-                return;
-            case DELHOME:
-                if (ErrorCheckUtil.delHome(executor, args, REQUEST_TYPE)){
-                    FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
-                    String defaultHome = playerData.getString("default_home");
-                    String homeName = args[args.length - 1];
-                    if (defaultHome != null && defaultHome.equals(homeName)){
-                        Set<String> homeSet = playerData.getKeys(true);
-                        List<String> list = new ArrayList<>();
-                        for (String home : homeSet) {
-                            if (home.contains("homes.")) {
-                                String home2 = home.substring(home.indexOf(".") + 1);
-                                if (!home2.contains(".") && !home2.equals(defaultHome)) list.add(home2);
-                            }
-                        }
-                        defaultHome = list.isEmpty() ? null : list.get(0);
-                        LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", defaultHome);
-                    }
-                    LoadingConfigFileUtil.delHome(executor, homeName);
-                    Messages.delHomeSuccess(executor, homeName);
-                }
-                return;
             case SPAWN:
-                if (ErrorCheckUtil.spawn(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     Player requestPlayer = (Player) executor;
                     String spawnPoint = "spawn_point";
@@ -498,24 +435,8 @@ public class TeleportUtil {
                     Messages.teleportCountdown(executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
                 }
                 return;
-            case SETSPAWN:
-                if (ErrorCheckUtil.setSpawn(executor, args, REQUEST_TYPE)){
-                    Location location = ((Player) executor).getLocation();
-                    LoadingConfigFileUtil.setSpawn(location);
-                    World world = ((Player) executor).getWorld();
-                    world.setSpawnLocation(location);
-                    Bukkit.setSpawnRadius(0);
-                    Messages.setSpawnSuccess(executor);
-                }
-                return;
-            case DELSPAWN:
-                if (ErrorCheckUtil.delSpawn(executor, REQUEST_TYPE)){
-                    LoadingConfigFileUtil.delSpawn();
-                    Messages.delSpawnSuccess(executor);
-                }
-                return;
             case BACK:
-                if (ErrorCheckUtil.back(executor, args, REQUEST_TYPE)){
+                if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     Player requestPlayer = (Player) executor;
                     String lastLocation = "last_location";

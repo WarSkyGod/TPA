@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.enums.ClickEventType;
 import top.craft_hello.tpa.enums.HoverEventType;
 import top.craft_hello.tpa.objects.JsonMessage;
+import top.craft_hello.tpa.utils.ErrorCheckUtil;
 import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
 import top.craft_hello.tpa.utils.MessageUtil;
 
@@ -188,7 +189,7 @@ public class Messages {
                         .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_setting"));
             }
 
-            if (settingDefaultHomeButton && command.equals("home") && (defaultHome == null || !defaultHome.equals(targetName))){
+            if (settingDefaultHomeButton && command.equals("home") && (ErrorCheckUtil.isNull(defaultHome) || !defaultHome.equals(targetName))){
                 jsonMessage.addText(lang.getString("setting_default_home_button"))
                         .addInsertion(settingDefaultHomeCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, settingDefaultHomeCommand + targetName)
@@ -448,7 +449,7 @@ public class Messages {
     }
 
     // 不能添加自己
-    public static void youDenyYouError(@NotNull CommandSender executor){
+    public static void youDenysYouError(@NotNull CommandSender executor){
         MessageUtil.sendMessage(setLang(executor), lang.getString("you_denys_you_error"));
     }
 

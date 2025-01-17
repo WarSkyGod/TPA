@@ -12,7 +12,7 @@ import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
 public class SetDefaultHome implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (ErrorCheckUtil.setDefaultHome(executor, args, RequestType.SETDEFAULTHOME)){
+        if (ErrorCheckUtil.check(executor, args, RequestType.SETDEFAULTHOME)){
             String defaultHome = args[args.length - 1];
             LoadingConfigFileUtil.setPlayerDataString(executor, "default_home", defaultHome);
             Messages.setDefaultHomeSuccess(executor, defaultHome);

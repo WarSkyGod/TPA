@@ -23,6 +23,7 @@ public final class TPA extends JavaPlugin {
         PluginDescriptionFile pluginDescriptionFile;
         String pluginName;
         String version;
+
         try {
             pluginDescriptionFile = this.getPluginLoader().getPluginDescription(this.getFile());
             pluginName = pluginDescriptionFile.getName();
@@ -30,9 +31,9 @@ public final class TPA extends JavaPlugin {
 
         } catch (Exception ex) {
             pluginName = "TPA";
-            version = "3.1.0";
+            version = "3.1.1";
         }
-        LoadingConfigFileUtil.init(this, "3.1.0");
+        LoadingConfigFileUtil.init(this, version);
         VersionUtil.init(pluginName);
         CommandSender sender = getServer().getConsoleSender();
         registerCommands();
@@ -40,7 +41,7 @@ public final class TPA extends JavaPlugin {
 
 
         Messages.pluginLoaded(version);
-        if (ErrorCheckUtil.version(sender, RequestType.VERSION)){
+        if (ErrorCheckUtil.check(sender, null, RequestType.VERSION)){
             VersionUtil.updateCheck(sender);
         }
     }

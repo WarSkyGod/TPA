@@ -32,7 +32,7 @@ public class VersionUtil {
 
 
    public static @Nullable String readFirstLine(URL url) throws IOException {
-      if (url == null) {
+      if (ErrorCheckUtil.isNull(url)) {
          throw new NullPointerException();
       } else {
          InputStream is = url.openStream();

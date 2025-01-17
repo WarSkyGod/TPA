@@ -41,7 +41,7 @@ public class LoadingConfigFileUtil {
         PLUGIN.reloadConfig();
         config = PLUGIN.getConfig();
         String configVersion = config.getString("version");
-        if (configVersion == null || !configVersion.equals(version)) {
+        if (ErrorCheckUtil.isNull(configVersion) || !configVersion.equals(version)) {
             configVersionUpdate(configVersion);
         } else {
             saveAllDefaultLang();
@@ -98,6 +98,14 @@ public class LoadingConfigFileUtil {
     }
 
     public static void configVersionUpdate(String configVersion){
+        if (configVersion.equals("3.1.0")){
+            config.set("version", VERSION);
+            PLUGIN.saveConfig();
+            PLUGIN.reloadConfig();
+            config = PLUGIN.getConfig();
+            return;
+        }
+
         String langStr = formatLangStr(config.getString("lang"));
         int acceptDelay = config.getInt("accept_delay");
         int teleportDelay = config.getInt("teleport_delay");
@@ -118,7 +126,7 @@ public class LoadingConfigFileUtil {
         int homeAmountVip = config.getInt("home_amount.vip");
         int homeAmountSvip = config.getInt("home_amount.svip");
         int homeAmountAdmin = config.getInt("home_amount.admin");
-        configVersion = configVersion == null ? "1.0" : configVersion;
+        configVersion =  ErrorCheckUtil.isNull(configVersion) ? "1.0" : configVersion;
         new File(PLUGIN.getDataFolder(), "backup/" + configVersion +"/lang").mkdirs();
         File configFile = new File(PLUGIN.getDataFolder(), "config.yml");
         configFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/config.yml"));
@@ -135,7 +143,7 @@ public class LoadingConfigFileUtil {
             }
         }
         saveAllDefaultLang();
-        LoadingConfigFileUtil.lang = loadingLangConfig(langStr == null ? "zh_CN" : langStr);
+        LoadingConfigFileUtil.lang = loadingLangConfig(langStr);
         Messages.configVersionUpdate(Bukkit.getConsoleSender());
         switch (configVersion){
             case "3.0.0":
@@ -201,7 +209,7 @@ public class LoadingConfigFileUtil {
                 resLocFile.delete();
                 break;
             default:
-                LoadingConfigFileUtil.lang = loadingLangConfig(langStr == null ? "zh_CN" : langStr);
+                LoadingConfigFileUtil.lang = loadingLangConfig(langStr);
                 Messages.pluginError(Bukkit.getConsoleSender(), "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                 return;
         }
@@ -223,7 +231,7 @@ public class LoadingConfigFileUtil {
             } catch (Exception ignored) {}
         }
 
-        LoadingConfigFileUtil.lang = loadingLangConfig(langStr == null ? "zh_CN" : langStr);
+        LoadingConfigFileUtil.lang = loadingLangConfig(langStr);
         Messages.configVersionUpdateSuccess(Bukkit.getConsoleSender());
     }
 
@@ -328,6 +336,19 @@ public class LoadingConfigFileUtil {
         return playerData;
     }
 
+    public static List<String> getDenysList(@NotNull String playerName) {
+        FileConfiguration playerData = getPlayerData(playerName);
+        Set<String> denySet = playerData.getKeys(true);
+        List<String> denys = new ArrayList<>();
+        for (String deny : denySet) {
+            if (deny.contains("denys.")) {
+                String deny2 = deny.substring(deny.indexOf(".") + 1);
+                if (!deny2.contains(".")) denys.add(deny2);
+            }
+        }
+        return denys;
+    }
+
     public static Location getLocation(RequestType REQUEST_TYPE, String playerName, String locationName){
         FileConfiguration config;
         switch (REQUEST_TYPE){
@@ -346,13 +367,13 @@ public class LoadingConfigFileUtil {
                 Messages.pluginError(Bukkit.getConsoleSender(), "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                 return null;
         }
-        World world = config.getString(locationName + ".world") == null ? null : Bukkit.getWorld(config.getString(locationName + ".world"));
+        World world = ErrorCheckUtil.isNull(config.getString(locationName + ".world")) ? null : Bukkit.getWorld(config.getString(locationName + ".world"));
         double x = config.getDouble(locationName + ".x");
         double y = config.getDouble(locationName + ".y");
         double z = config.getDouble(locationName + ".z");
         float pitch = (float) config.getDouble(locationName + ".pitch");
         float yaw = (float) config.getDouble(locationName + ".yaw");
-        return world == null ? null : new Location(world, x, y, z, yaw, pitch);
+        return ErrorCheckUtil.isNull(world) ? null : new Location(world, x, y, z, yaw, pitch);
     }
 
     public static FileConfiguration getConfig() {
@@ -427,7 +448,7 @@ public class LoadingConfigFileUtil {
 
     public static FileConfiguration setConfigLocation(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, Location location){
 
-        if (location == null) {
+        if (ErrorCheckUtil.isNull(location)) {
             config.set(target, null);
             while (!saveConfig(Bukkit.getConsoleSender(), config, file)) {
                 config.set(target, null);
@@ -485,7 +506,7 @@ public class LoadingConfigFileUtil {
 
         int denysAmount = playerData.getInt("denys_amount") + 1;
 
-        if (playerData.get("denys." + uuid) == null) setPlayerDataInteger(sender, "denys_amount", denysAmount);
+        if (ErrorCheckUtil.isNull(playerData.get("denys." + uuid))) setPlayerDataInteger(sender, "denys_amount", denysAmount);
 
         return setPlayerDataString(sender, "denys." + uuid, playerName);
     }
@@ -502,7 +523,7 @@ public class LoadingConfigFileUtil {
 
         int homeAmount = playerData.getInt("home_amount") + 1;
 
-        if (playerData.get("homes." + homeName) == null) setPlayerDataInteger(sender, "home_amount", homeAmount);
+        if (ErrorCheckUtil.isNull(playerData.get("homes." + homeName))) setPlayerDataInteger(sender, "home_amount", homeAmount);
 
         return setPlayerDataLocation(sender, "homes." + homeName, location);
     }

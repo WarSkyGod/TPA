@@ -18,7 +18,7 @@ public class Tpa implements CommandExecutor {
 
         // 判断是否是重新加载命令
         if (args.length == 1 && args[args.length - 1].equals("reload")){
-            if (ErrorCheckUtil.reload(executor, RequestType.RELOAD)){
+            if (ErrorCheckUtil.check(executor, args, RequestType.RELOAD)){
                 LoadingConfigFileUtil.reloadALLConfig(executor);
             }
             return true;
@@ -26,7 +26,7 @@ public class Tpa implements CommandExecutor {
 
         // 判断是否是设置显示语言命令
         if (args.length == 2 && args[args.length - 2].equals("setlang")){
-            if (ErrorCheckUtil.setLang(executor, args, RequestType.SETLANG)){
+            if (ErrorCheckUtil.check(executor, args, RequestType.SETLANG)){
                 LoadingConfigFileUtil.setClientLang(executor, args[args.length - 1]);
                 Messages.setLangCommandSuccess(executor, args[args.length - 1]);
             }
