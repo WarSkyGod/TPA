@@ -638,7 +638,7 @@ public class ErrorCheckUtil{
     public static void notOnlinePlayerError(@NotNull CommandSender executor, String[] args) throws Exception{
         if (args.length == 0){
             Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-            onlinePlayers.remove(executor);
+            onlinePlayers.remove((Player) executor);
             if (onlinePlayers.isEmpty()) throw new NotOnlinePlayerErrorException(executor);
             return;
         }
@@ -650,9 +650,10 @@ public class ErrorCheckUtil{
         }
 
         if (args.length == 2){
+            Collection<? extends Player> onlinePlayers;
             switch (args[args.length - 2]){
                 case "player":
-                    Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
+                    onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
                     onlinePlayers.remove(Bukkit.getPlayer(args[args.length - 1]));
                     if (onlinePlayers.isEmpty()) throw new NotOnlinePlayerErrorException(executor);
                     break;
@@ -711,7 +712,7 @@ public class ErrorCheckUtil{
             case TPACCEPT:
             case TPDENY:
                 Map<Player, Request> REQUEST_QUEUE = TeleportUtil.getREQUEST_QUEUE();
-                Request request = REQUEST_QUEUE.get(executor);
+                Request request = REQUEST_QUEUE.get((Player) executor);
                 if (isNull(request.getRequestPlayer()) || !request.getRequestPlayer().isOnline()) {
                     request.getTimer().cancel();
                     REQUEST_QUEUE.remove(executor);
@@ -732,12 +733,12 @@ public class ErrorCheckUtil{
     // 自己或对方有尚未结束的请求错误
     public static void requestLockError(@NotNull CommandSender executor, @NotNull String[] args) throws Exception{
         String target = args[args.length - 1];
-        if (TeleportUtil.getREQUEST_QUEUE().containsKey(executor) || TeleportUtil.getREQUEST_QUEUE().containsKey(Bukkit.getPlayer(target))) throw new RequestLockErrorException(executor);
+        if (TeleportUtil.getREQUEST_QUEUE().containsKey((Player) executor) || TeleportUtil.getREQUEST_QUEUE().containsKey(Bukkit.getPlayer(target))) throw new RequestLockErrorException(executor);
     }
 
     // 没有请求
     public static boolean notRequest(@NotNull CommandSender executor){
-        return !TeleportUtil.getREQUEST_QUEUE().containsKey(executor) || isNull(TeleportUtil.getREQUEST_QUEUE().get(executor));
+        return !TeleportUtil.getREQUEST_QUEUE().containsKey((Player) executor) || isNull(TeleportUtil.getREQUEST_QUEUE().get(executor));
     }
 
     // 没有待接受的请求
@@ -770,7 +771,7 @@ public class ErrorCheckUtil{
             homeName = args[args.length - 1];
         }
 
-        if (isNull(playerData.get("homes." + homeName))) throw new NotHomeErrorException(executor, homeName);
+        if (isNull(playerData.get("homes." + homeName))) throw new NotHomeErrorException(executor, homeName == null ? "" : homeName);
     }
 
     // 已是默认的家错误
@@ -814,12 +815,15 @@ public class ErrorCheckUtil{
 
         if (executor.hasPermission("tpa.admin")){
             if (!(adminHomeAmount == -1 || homeAmount < adminHomeAmount)) throw new HomeAmountMaxErrorException(executor, adminHomeAmount);
+            return;
         }
         if (executor.hasPermission("tpa.svip")){
             if (!(svipHomeAmount == -1 || homeAmount < svipHomeAmount)) throw new HomeAmountMaxErrorException(executor, svipHomeAmount);
+            return;
         }
         if (executor.hasPermission("tpa.vip")) {
             if (!(vipHomeAmount == -1 || homeAmount < vipHomeAmount)) throw new HomeAmountMaxErrorException(executor, vipHomeAmount);
+            return;
         }
         if (!(defaultHomeAmount == -1 || homeAmount < defaultHomeAmount)) throw new HomeAmountMaxErrorException(executor, defaultHomeAmount);
     }

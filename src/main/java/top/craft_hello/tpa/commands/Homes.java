@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class Homes implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
 
         if (ErrorCheckUtil.check(executor, args, RequestType.HOMES)){
             FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());

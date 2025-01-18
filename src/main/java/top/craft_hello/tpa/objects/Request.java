@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.enums.RequestType;
 
 public class Request {
-    private RequestType REQUEST_TYPE;
-    private Player requestPlayer;
+    private final RequestType REQUEST_TYPE;
+    private final Player requestPlayer;
     private String target;
     private HandyRunnable timer;
 

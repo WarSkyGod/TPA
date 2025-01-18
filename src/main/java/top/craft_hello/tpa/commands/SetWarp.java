@@ -13,7 +13,7 @@ import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
 
 public class SetWarp implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (ErrorCheckUtil.check(executor, args, RequestType.SETWARP)){
             Location location = ((Player) executor).getLocation();
             String warpName = args[args.length - 1];

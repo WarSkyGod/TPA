@@ -9,7 +9,7 @@ import top.craft_hello.tpa.utils.TeleportUtil;
 
 public class TpDeny implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         TeleportUtil.addRequest(executor, args, RequestType.TPDENY);
         return true;
     }

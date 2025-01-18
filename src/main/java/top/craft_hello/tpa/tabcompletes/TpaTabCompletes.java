@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class TpaTabCompletes implements TabCompleter {
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         List<String> list = new ArrayList<>();
         FileConfiguration lang = LoadingConfigFileUtil.getLang(sender);
         FileConfiguration config = LoadingConfigFileUtil.getConfig();

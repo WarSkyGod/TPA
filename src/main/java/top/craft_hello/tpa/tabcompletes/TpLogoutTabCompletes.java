@@ -15,7 +15,7 @@ import java.util.List;
 public class TpLogoutTabCompletes implements TabCompleter {
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         List<String> list = new ArrayList<>();
         if (args.length != 1) return list;
 

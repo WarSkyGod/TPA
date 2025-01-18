@@ -27,7 +27,7 @@ public class TeleportUtil {
     }
 
     // 传送方法
-    public static void tp(@NotNull Player executor, @NotNull Location location) {
+    public static void tp(@NotNull Player executor, Location location) {
         PlayerSchedulerUtil.syncTeleport(executor, location);
     }
 
@@ -91,7 +91,7 @@ public class TeleportUtil {
                             back(executor, this);
                             break;
                         case DENY:
-                            tpDeny(executor, true);
+                            tpDeny(executor, this);
                             break;
                         default:
                             break;
@@ -107,7 +107,7 @@ public class TeleportUtil {
 
     // 接受传送
     private static void tpAccept(@NotNull CommandSender executor, @NotNull HandyRunnable timer){
-        Request request = REQUEST_QUEUE.get(executor);
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
         timer.cancel();
         Player player1;
@@ -135,13 +135,10 @@ public class TeleportUtil {
     }
 
     // 拒绝传送
-    private static void tpDeny(@NotNull CommandSender executor, boolean isTimerOverDeny) {
-        Request request = REQUEST_QUEUE.get(executor);
+    private static void tpDeny(@NotNull CommandSender executor, @NotNull HandyRunnable timer) {
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
-        if (ErrorCheckUtil.isNull(executor)){
-            REQUEST_QUEUE.remove(executor);
-            return;
-        }
+        timer.cancel();
         Player player1;
         Player player2;
         boolean isTphere = false;
@@ -160,7 +157,7 @@ public class TeleportUtil {
                 return;
         }
         REQUEST_QUEUE.remove(executor);
-        if (isTimerOverDeny && isTphere){
+        if (isTphere){
             Messages.timeOverDeny(player2, player1);
             return;
         }
@@ -169,11 +166,11 @@ public class TeleportUtil {
 
     // 传送到传送点
     private static void warp(CommandSender executor, @NotNull HandyRunnable timer){
-        Request request = REQUEST_QUEUE.get(executor);
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
         timer.cancel();
         if (ErrorCheckUtil.isNull(executor)){
-            REQUEST_QUEUE.remove(executor);
+            REQUEST_QUEUE.remove((Player) executor);
             return;
         }
         String warpName = request.getTarget();
@@ -185,11 +182,11 @@ public class TeleportUtil {
 
     // 传送到家
     private static void home(CommandSender executor, @NotNull HandyRunnable timer){
-        Request request = REQUEST_QUEUE.get(executor);
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
         timer.cancel();
         if (ErrorCheckUtil.isNull(executor)){
-            REQUEST_QUEUE.remove(executor);
+            REQUEST_QUEUE.remove((Player) executor);
             return;
         }
         String homeName = request.getTarget();
@@ -201,11 +198,11 @@ public class TeleportUtil {
 
     // 传送到主城
     private static void spawn(CommandSender executor, @NotNull HandyRunnable timer){
-        Request request = REQUEST_QUEUE.get(executor);
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
         timer.cancel();
         if (ErrorCheckUtil.isNull(executor)){
-            REQUEST_QUEUE.remove(executor);
+            REQUEST_QUEUE.remove((Player) executor);
             return;
         }
         Location location = LoadingConfigFileUtil.getLocation(RequestType.SPAWN, null, "spawn");
@@ -216,11 +213,11 @@ public class TeleportUtil {
 
     // 传送到上一次的位置
     private static void back(CommandSender executor, @NotNull HandyRunnable timer){
-        Request request = REQUEST_QUEUE.get(executor);
+        Request request = REQUEST_QUEUE.get((Player) executor);
         request.getTimer().cancel();
         timer.cancel();
         if (ErrorCheckUtil.isNull(executor)){
-            REQUEST_QUEUE.remove(executor);
+            REQUEST_QUEUE.remove((Player) executor);
             return;
         }
         Location location = LoadingConfigFileUtil.getLocation(RequestType.BACK, executor.getName(), "last_location");
@@ -262,7 +259,7 @@ public class TeleportUtil {
                 if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
                     Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
                     if (args.length == 0){
-                        onlinePlayers.remove(executor);
+                        onlinePlayers.remove((Player) executor);
                         for (Player onlinePlayer : onlinePlayers) {
                             tp(onlinePlayer, ((Player) executor).getLocation());
                             Messages.adminTpYouToMessage(onlinePlayer, executor.getName());
@@ -281,11 +278,15 @@ public class TeleportUtil {
                     }
 
                     if (args.length == 2){
+                        Location location;
                         switch (args[args.length - 2]){
                             case "player":
                                 Player target = Bukkit.getPlayer(args[args.length - 1]);
-                                String targetName = target.getName();
-                                Location location = target.getLocation();
+                                String targetName = null;
+                                if (target != null) {
+                                    targetName = target.getName();
+                                }
+                                location = target.getLocation();
                                 onlinePlayers.remove(target);
                                 for (Player onlinePlayer : onlinePlayers) {
                                     tp(onlinePlayer, location);
@@ -318,7 +319,7 @@ public class TeleportUtil {
                 return;
             case TPACCEPT:
                 if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
-                    Request request = REQUEST_QUEUE.get(executor);
+                    Request request = REQUEST_QUEUE.get((Player) executor);
                     request.getTimer().cancel();
                     Player player1;
                     Player player2;
@@ -365,7 +366,7 @@ public class TeleportUtil {
                 return;
             case TPDENY:
                 if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
-                    Request request = REQUEST_QUEUE.get(executor);
+                    Request request = REQUEST_QUEUE.get((Player) executor);
                     request.getTimer().cancel();
                     Player player1;
                     Player player2;
@@ -431,8 +432,7 @@ public class TeleportUtil {
                     String homeName;
                     if (args.length == 0){
                         FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
-                        String defaultHome = playerData.getString("default_home");
-                        homeName = defaultHome;
+                        homeName = playerData.getString("default_home");
                     } else {
                         homeName = args[args.length - 1];
                     }

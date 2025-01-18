@@ -9,7 +9,6 @@ import top.craft_hello.tpa.Messages;
 import top.craft_hello.tpa.enums.RequestType;
 import top.craft_hello.tpa.utils.ErrorCheckUtil;
 import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
-import top.craft_hello.tpa.utils.TeleportUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.Set;
 
 public class DelHome implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (ErrorCheckUtil.check(executor, args, RequestType.DELHOME)){
             FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
             String defaultHome = playerData.getString("default_home");

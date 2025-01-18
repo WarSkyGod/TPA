@@ -13,7 +13,7 @@ import top.craft_hello.tpa.utils.TeleportUtil;
 
 public class Tpa implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
 
 
         // 判断是否是重新加载命令

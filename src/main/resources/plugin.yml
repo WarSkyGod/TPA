@@ -6,6 +6,61 @@ api-version: '1.13'
 author: WarSkyGod
 website: https://github.com/WarSkyGod/TPA
 folia-supported: true
+permissions:
+  tpa.admin:
+    default: op
+    description: "最高权限，可执行所有操作"
+  tpa.reload:
+    default: op
+    description: "可使用/reload命令重新加载配置文件"
+  tpa.version:
+    default: op
+    description: "拥有这个权限的玩家会收到插件更新通知"
+  tpa.setwarp:
+    default: op
+    description: "可使用 /setwarp 命令设置传送点"
+  tpa.delwarp:
+    default: op
+    description: "可使用 /delwarp 命令删除传送点"
+  tpa.setspawn:
+    default: op
+    description: "可使用 /setspawn 命令设置主城"
+  tpa.delspawn:
+    default: op
+    description: "可使用 /delspawn 命令删除主城"
+  tpa.tpall:
+    default: op
+    description: "可使用 /tpall 命令强行将所有在线玩家传送到你的位置"
+  tpa.tplogout:
+    default: op
+    description: "可使用 /tplogout 传送到玩家最后的下线位置"
+  tpa.tpa:
+    default: false
+    description: "可使用 /tpa 命令请求传送到指定玩家的位置（默认关闭权限检查）"
+  tpa.tphere:
+    default: false
+    description: "可使用 /tphere 命令请求指定玩家传送到你的位置（默认关闭权限检查）"
+  tpa.denys:
+    default: false
+    description: "可使用 /denys 管理黑名单"
+  tpa.warp:
+    default: false
+    description: "可使用 /warp 命令传送到传送点（默认关闭权限检查）"
+  tpa.home:
+    default: false
+    description: "可使用 /home 命令传送到家，可使用 /homes 列出所有可用的家，可使用 /sethome 设置家，可使用 /setdefaulthome 设置默认的家，可使用 /delhome 删除家（默认关闭权限检查）"
+  tpa.vip:
+    default: false
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+  tpa.svip:
+    default: false
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+  tpa.spawan:
+    default: false
+    description: "可使用 /spawn 命令传送到主城（默认关闭权限检查）"
+  tpa.back:
+    default: false
+    description: "可使用 /back 命令传送到上一次的位置（默认关闭权限检查）"
 
 commands:
   tpa:

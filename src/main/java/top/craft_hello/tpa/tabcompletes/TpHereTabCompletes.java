@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TpHereTabCompletes implements TabCompleter {
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         List<String> list = new ArrayList<>();
         FileConfiguration lang = LoadingConfigFileUtil.getLang(sender);
         if (args.length == 0){

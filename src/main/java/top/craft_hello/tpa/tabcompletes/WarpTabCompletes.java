@@ -17,7 +17,7 @@ import java.util.List;
 public class WarpTabCompletes implements TabCompleter {
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 2){
             List<String> list = new ArrayList<>();
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

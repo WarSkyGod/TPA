@@ -173,38 +173,38 @@ public class Messages {
 
             jsonMessage = new JsonMessage(executor, Objects.requireNonNull(lang.getString("prefix")));
             if (teleportButton){
-                jsonMessage.addText(lang.getString("teleport_button"))
+                jsonMessage.addText(Objects.requireNonNull(lang.getString("teleport_button")))
                         .addInsertion(teleportCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, teleportCommand + targetName)
-                        .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_teleport"));
+                        .addHoverEvent(HoverEventType.SHOW_TEXT, Objects.requireNonNull(lang.getString("click_teleport")));
             }
 
             if (settingButton){
-                jsonMessage.addText(lang.getString("setting_button"))
+                jsonMessage.addText(Objects.requireNonNull(lang.getString("setting_button")))
                         .addInsertion(settingCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, settingCommand + targetName)
-                        .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_setting"));
+                        .addHoverEvent(HoverEventType.SHOW_TEXT, Objects.requireNonNull(lang.getString("click_setting")));
             }
 
             if (settingDefaultHomeButton && command.equals("home") && (ErrorCheckUtil.isNull(defaultHome) || !defaultHome.equals(targetName))){
-                jsonMessage.addText(lang.getString("setting_default_home_button"))
+                jsonMessage.addText(Objects.requireNonNull(lang.getString("setting_default_home_button")))
                         .addInsertion(settingDefaultHomeCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, settingDefaultHomeCommand + targetName)
-                        .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_setting_default_home"));
+                        .addHoverEvent(HoverEventType.SHOW_TEXT, Objects.requireNonNull(lang.getString("click_setting_default_home")));
             }
 
             if (deleteButton){
-                jsonMessage.addText(lang.getString("delete_button"))
+                jsonMessage.addText(Objects.requireNonNull(lang.getString("delete_button")))
                         .addInsertion(deleteCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, deleteCommand + targetName)
-                        .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_delete"));
+                        .addHoverEvent(HoverEventType.SHOW_TEXT, Objects.requireNonNull(lang.getString("click_delete")));
             }
 
             if (removeDenysButton){
-                jsonMessage.addText(lang.getString("remove_denys_button"))
+                jsonMessage.addText(Objects.requireNonNull(lang.getString("remove_denys_button")))
                         .addInsertion(removeDenysCommand + targetName)
                         .addClickEvent(ClickEventType.RUN_COMMAND, removeDenysCommand + targetName)
-                        .addHoverEvent(HoverEventType.SHOW_TEXT, lang.getString("click_remove_denys"));
+                        .addHoverEvent(HoverEventType.SHOW_TEXT, Objects.requireNonNull(lang.getString("click_remove_denys")));
             }
             PlayerSchedulerUtil.syncDispatchCommand(jsonMessage.toString());
         }
@@ -238,17 +238,17 @@ public class Messages {
         }
 
         if (!(executor instanceof Player)){
-            String warps = "";
+            StringBuilder warps = new StringBuilder();
             int count = 0;
             for (String warp : warpList) {
                 if (++count > 1){
-                    warps = warps + "&e&l, ";
+                    warps.append("&e&l, ");
                 }
-                warps = warps + "&a&l" + warp;
+                warps.append("&a&l").append(warp);
             }
 
             MessageUtil.sendMessage(setLang(executor), lang.getString("warps"));
-            MessageUtil.sendMessage(setLang(executor), warps);
+            MessageUtil.sendMessage(setLang(executor), warps.toString());
             return;
         }
 
@@ -343,15 +343,15 @@ public class Messages {
             args.add(target);
             args.add(delay);
         }
-        String title = MessageUtil.formatText(lang.getString("teleport_countdown"), args);
-        String subTitle = MessageUtil.formatText(lang.getString("move_cancel_message"));
+        String title = MessageUtil.formatText(Objects.requireNonNull(lang.getString("teleport_countdown")), args);
+        String subTitle = MessageUtil.formatText(Objects.requireNonNull(lang.getString("move_cancel_message")));
         executor.sendTitle(title, subTitle);
 
     }
 
     // title 样式的传送倒计时结束消息
     public static void titleCountdownOverMessage(@NotNull Player executor, List<String> args){
-        String title = MessageUtil.formatText(lang.getString("you_teleported_to_message"), args);
+        String title = MessageUtil.formatText(Objects.requireNonNull(lang.getString("you_teleported_to_message")), args);
         executor.sendTitle(title, "");
     }
 

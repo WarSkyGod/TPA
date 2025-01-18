@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MessageUtil {
-    private static FileConfiguration lang = LoadingConfigFileUtil.getLang();
-    private static String error = lang.getString("error") == null ? "§c§l插件出错！" : lang.getString("error");
+    private final static FileConfiguration lang = LoadingConfigFileUtil.getLang();
+    private final static String error = lang.getString("error") == null ? "§c§l插件出错！" : lang.getString("error");
 
     // 将字符串中的&自动替换为§
     public static String formatText(@NotNull String text){
@@ -20,7 +20,7 @@ public class MessageUtil {
 
     // 用于自定义变量的替换
     public static String formatText(@NotNull String text, @NotNull List<String> vars){
-        if (vars.size() == 0) {
+        if (vars.isEmpty()) {
             return formatText(text);
         }
         else if (vars.size() == 1) {

@@ -27,7 +27,6 @@ public class LoadingConfigFileUtil {
     private static FileConfiguration warp;
     private static File spawnFile;
     private static FileConfiguration spawn;
-    private static File langFile;
 
     private static FileConfiguration lang;
 
@@ -62,7 +61,7 @@ public class LoadingConfigFileUtil {
         PLUGIN.saveConfig();
         PLUGIN.reloadConfig();
         config = PLUGIN.getConfig();
-        String langStr = formatLangStr(config.getString("lang"));
+        String langStr = formatLangStr(Objects.requireNonNull(config.getString("lang")));
         lang = loadingLangConfig(langStr);
         langs.put(langStr, lang);
         warp = loadingWarpConfig();
@@ -98,9 +97,11 @@ public class LoadingConfigFileUtil {
     }
 
     public static void configVersionUpdate(String configVersion){
+        configVersion =  ErrorCheckUtil.isNull(configVersion) ? "1.0" : configVersion;
         switch (configVersion){
             case "3.1.0":
             case "3.1.1":
+            case "3.1.2":
                 config.set("version", VERSION);
                 PLUGIN.saveConfig();
                 PLUGIN.reloadConfig();
@@ -108,7 +109,7 @@ public class LoadingConfigFileUtil {
                 return;
         }
 
-        String langStr = formatLangStr(config.getString("lang"));
+        String langStr = formatLangStr(Objects.requireNonNull(config.getString("lang")));
         int acceptDelay = config.getInt("accept_delay");
         int teleportDelay = config.getInt("teleport_delay");
         boolean enableCommandTpa = config.getBoolean("enable_command.tpa");
@@ -128,8 +129,7 @@ public class LoadingConfigFileUtil {
         int homeAmountVip = config.getInt("home_amount.vip");
         int homeAmountSvip = config.getInt("home_amount.svip");
         int homeAmountAdmin = config.getInt("home_amount.admin");
-        configVersion =  ErrorCheckUtil.isNull(configVersion) ? "1.0" : configVersion;
-        new File(PLUGIN.getDataFolder(), "backup/" + configVersion +"/lang").mkdirs();
+        new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/lang").mkdirs();
         File configFile = new File(PLUGIN.getDataFolder(), "config.yml");
         configFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/config.yml"));
         configFile.delete();
@@ -147,6 +147,7 @@ public class LoadingConfigFileUtil {
         saveAllDefaultLang();
         LoadingConfigFileUtil.lang = loadingLangConfig(langStr);
         Messages.configVersionUpdate(Bukkit.getConsoleSender());
+        File resLocFile;
         switch (configVersion){
             case "3.0.0":
                 config.set("lang", langStr);
@@ -198,7 +199,7 @@ public class LoadingConfigFileUtil {
                 config.set("lang", langStr);
                 config.set("accept_delay", acceptDelay);
                 config.set("teleport_delay", teleportDelay);
-                File resLocFile = new File(PLUGIN.getDataFolder(), "res_loc.yml");
+                resLocFile = new File(PLUGIN.getDataFolder(), "res_loc.yml");
                 warpFile = new File(PLUGIN.getDataFolder(), "warp.yml");
                 resLocFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion +"/res_loc.yml"));
                 resLocFile.delete();
@@ -244,12 +245,12 @@ public class LoadingConfigFileUtil {
             String langStr3 = langStr.substring(langStr.indexOf("_")).toUpperCase();
             return langStr2 + langStr3;
         } else {
-            return formatLangStr(config.getString("lang"));
+            return formatLangStr(Objects.requireNonNull(config.getString("lang")));
         }
     }
 
     public static FileConfiguration loadingLangConfig(@NotNull String langStr){
-        langFile = new File(PLUGIN.getDataFolder(), "lang/" + langStr + ".yml");
+        File langFile = new File(PLUGIN.getDataFolder(), "lang/" + langStr + ".yml");
         if (!langFile.exists()) {
             try {
                 PLUGIN.saveResource("lang/" + langStr + ".yml", false);
@@ -297,7 +298,6 @@ public class LoadingConfigFileUtil {
 
         } else {
             uuid = offlinePlayer.getUniqueId();
-            langStr = "";
         }
         String fileName = uuid + ".yml";
         File playerDataFile = new File(PLUGIN.getDataFolder(),"playerdata/" + fileName);
@@ -305,9 +305,13 @@ public class LoadingConfigFileUtil {
 
         if (!playerDataFile.exists()){
             if (isOldServer){
-                langStr = formatLangStr(config.getString("lang"));
+                langStr = formatLangStr(Objects.requireNonNull(config.getString("lang")));
             } else {
-                langStr = formatLangStr(player.getLocale());
+                if (player != null) {
+                    langStr = formatLangStr(player.getLocale());
+                } else {
+                    langStr = formatLangStr(Objects.requireNonNull(config.getString("lang")));
+                }
             }
 
             try {
@@ -320,18 +324,22 @@ public class LoadingConfigFileUtil {
             saveConfig(Bukkit.getConsoleSender(), playerData, playerDataFile);
         }
         playerData = YamlConfiguration.loadConfiguration(playerDataFile);
-        if (!playerData.getString("player_name").equals(playerName)){
+        if (!playerName.equals(playerData.getString("player_name"))){
             playerData.set("player_name", playerName);
             saveConfig(Bukkit.getConsoleSender(), playerData, playerDataFile);
         }
 
         if (isOldServer){
-            langStr = formatLangStr(playerData.getString("lang"));
+            langStr = formatLangStr(Objects.requireNonNull(playerData.getString("lang")));
         } else {
-            langStr = formatLangStr(player.getLocale());
+            if (player != null) {
+                langStr = formatLangStr(player.getLocale());
+            } else {
+                langStr = formatLangStr(Objects.requireNonNull(lang.getString("lang")));
+            }
         }
 
-        if (langStr != null && !langStr.isEmpty() && !formatLangStr(playerData.getString("lang")).equals(langStr)){
+        if (!langStr.isEmpty() && !langStr.equals(formatLangStr(Objects.requireNonNull(playerData.getString("lang"))))){
             playerData.set("lang", langStr);
             saveConfig(Bukkit.getConsoleSender(), playerData, playerDataFile);
         }
@@ -369,7 +377,7 @@ public class LoadingConfigFileUtil {
                 Messages.pluginError(Bukkit.getConsoleSender(), "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                 return null;
         }
-        World world = ErrorCheckUtil.isNull(config.getString(locationName + ".world")) ? null : Bukkit.getWorld(config.getString(locationName + ".world"));
+        World world = ErrorCheckUtil.isNull(config.getString(locationName + ".world")) ? null : Bukkit.getWorld(Objects.requireNonNull(config.getString(locationName + ".world")));
         double x = config.getDouble(locationName + ".x");
         double y = config.getDouble(locationName + ".y");
         double z = config.getDouble(locationName + ".z");
@@ -400,7 +408,7 @@ public class LoadingConfigFileUtil {
         boolean isOldServer = config.getBoolean("old_server");
         if (isOldServer){
             FileConfiguration playerData = LoadingConfigFileUtil.getPlayerData(executor.getName());
-            langStr = config.getString("lang").equals(playerData.getString("lang")) ? config.getString("lang") : playerData.getString("lang");
+            langStr = Objects.equals(config.getString("lang"), playerData.getString("lang")) ? config.getString("lang") : playerData.getString("lang");
         } else {
             langStr = ((Player) executor).getLocale();
         }
@@ -432,135 +440,121 @@ public class LoadingConfigFileUtil {
     }
 
 
-    public static FileConfiguration setConfigString(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, String str){
-        config.set(target, str);
-        while (!saveConfig(Bukkit.getConsoleSender(), config, file)) {
+    public static void setConfigString(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, String str){
+        do {
             config.set(target, str);
-        }
-        return config;
+        } while (!saveConfig(Bukkit.getConsoleSender(), config, file));
     }
 
-    public static FileConfiguration setConfigInteger(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, int count){
-        config.set(target, count);
-        while (!saveConfig(Bukkit.getConsoleSender(), config, file)) {
+    public static void setConfigInteger(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, int count){
+        do {
             config.set(target, count);
-        }
-        return config;
+        } while (!saveConfig(Bukkit.getConsoleSender(), config, file));
     }
 
-    public static FileConfiguration setConfigLocation(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, Location location){
+    public static void setConfigLocation(@NotNull FileConfiguration config, @NotNull File file, @NotNull String target, Location location){
 
         if (ErrorCheckUtil.isNull(location)) {
-            config.set(target, null);
-            while (!saveConfig(Bukkit.getConsoleSender(), config, file)) {
+            do {
                 config.set(target, null);
-            }
-            return config;
+            } while (!saveConfig(Bukkit.getConsoleSender(), config, file));
+            return;
         }
 
-        config.set(target +".world", location.getWorld().getName());
-        config.set(target +".x", location.getX());
-        config.set(target +".y", location.getY());
-        config.set(target +".z", location.getZ());
-        config.set(target +".pitch", location.getPitch());
-        config.set(target +".yaw", location.getYaw());
-        while (!saveConfig(Bukkit.getConsoleSender(), config, file)) {
-            config.set(target +".world", location.getWorld().getName());
-            config.set(target +".x", location.getX());
-            config.set(target +".y", location.getY());
-            config.set(target +".z", location.getZ());
-            config.set(target +".pitch", location.getPitch());
-            config.set(target +".yaw", location.getYaw());
-        }
-        return config;
+        do {
+            config.set(target + ".world", location.getWorld().getName());
+            config.set(target + ".x", location.getX());
+            config.set(target + ".y", location.getY());
+            config.set(target + ".z", location.getZ());
+            config.set(target + ".pitch", location.getPitch());
+            config.set(target + ".yaw", location.getYaw());
+        } while (!saveConfig(Bukkit.getConsoleSender(), config, file));
     }
 
-    public static FileConfiguration setPlayerDataString(@NotNull CommandSender sender, @NotNull String target, String str){
+    public static void setPlayerDataString(@NotNull CommandSender sender, @NotNull String target, String str){
         FileConfiguration playerData = getPlayerData(sender.getName());
         File playerDataFile = new File(PLUGIN.getDataFolder(), "playerdata/" + ((Player) sender).getUniqueId() + ".yml");
 
-        return setConfigString(playerData, playerDataFile, target, str);
+        setConfigString(playerData, playerDataFile, target, str);
     }
 
-    public static FileConfiguration setPlayerDataInteger(@NotNull CommandSender sender, @NotNull String target, int count){
+    public static void setPlayerDataInteger(@NotNull CommandSender sender, @NotNull String target, int count){
         FileConfiguration playerData = getPlayerData(sender.getName());
         File playerDataFile = new File(PLUGIN.getDataFolder(), "playerdata/" + ((Player) sender).getUniqueId() + ".yml");
-        return setConfigInteger(playerData, playerDataFile, target, count);
+        setConfigInteger(playerData, playerDataFile, target, count);
     }
 
-    public static FileConfiguration setPlayerDataLocation(@NotNull CommandSender sender, @NotNull String target, Location location){
+    public static void setPlayerDataLocation(@NotNull CommandSender sender, @NotNull String target, Location location){
         FileConfiguration playerData = getPlayerData(sender.getName());
         File playerDataFile = new File(PLUGIN.getDataFolder(), "playerdata/" + ((Player) sender).getUniqueId() + ".yml");
 
-        return setConfigLocation(playerData, playerDataFile, target, location);
+        setConfigLocation(playerData, playerDataFile, target, location);
     }
 
-    public static FileConfiguration setWarp(@NotNull String warpName, @NotNull Location location){
-        return setConfigLocation(warp, warpFile, warpName, location);
+    public static void setWarp(@NotNull String warpName, @NotNull Location location){
+        setConfigLocation(warp, warpFile, warpName, location);
     }
 
-    public static FileConfiguration delWarp(@NotNull String warpName){
-        return setConfigLocation(warp, warpFile, warpName, null);
+    public static void delWarp(@NotNull String warpName){
+        setConfigLocation(warp, warpFile, warpName, null);
     }
 
-    public static FileConfiguration setDenys(@NotNull CommandSender sender, @NotNull String uuid, @NotNull String playerName){
+    public static void setDenys(@NotNull CommandSender sender, @NotNull String uuid, @NotNull String playerName){
         FileConfiguration playerData = getPlayerData(sender.getName());
 
         int denysAmount = playerData.getInt("denys_amount") + 1;
 
         if (ErrorCheckUtil.isNull(playerData.get("denys." + uuid))) setPlayerDataInteger(sender, "denys_amount", denysAmount);
 
-        return setPlayerDataString(sender, "denys." + uuid, playerName);
+        setPlayerDataString(sender, "denys." + uuid, playerName);
     }
 
-    public static FileConfiguration delDenys(@NotNull CommandSender sender, @NotNull String uuid){
+    public static void delDenys(@NotNull CommandSender sender, @NotNull String uuid){
         FileConfiguration playerData = getPlayerData(sender.getName());
         int denysAmount = playerData.getInt("denys_amount") - 1;
         setPlayerDataInteger(sender, "denys_amount", denysAmount);
-        return setPlayerDataString(sender, "denys." + uuid, null);
+        setPlayerDataString(sender, "denys." + uuid, null);
     }
 
-    public static FileConfiguration setHome(@NotNull CommandSender sender, @NotNull String homeName, @NotNull Location location){
+    public static void setHome(@NotNull CommandSender sender, @NotNull String homeName, @NotNull Location location){
         FileConfiguration playerData = getPlayerData(sender.getName());
 
         int homeAmount = playerData.getInt("home_amount") + 1;
 
         if (ErrorCheckUtil.isNull(playerData.get("homes." + homeName))) setPlayerDataInteger(sender, "home_amount", homeAmount);
 
-        return setPlayerDataLocation(sender, "homes." + homeName, location);
+        setPlayerDataLocation(sender, "homes." + homeName, location);
     }
 
-    public static FileConfiguration delHome(@NotNull CommandSender sender, @NotNull String homeName){
+    public static void delHome(@NotNull CommandSender sender, @NotNull String homeName){
         FileConfiguration playerData = getPlayerData(sender.getName());
         int homeAmount = playerData.getInt("home_amount") - 1;
         setPlayerDataInteger(sender, "home_amount", homeAmount);
-        return setPlayerDataLocation(sender, "homes." + homeName, null);
+        setPlayerDataLocation(sender, "homes." + homeName, null);
     }
 
-    public static FileConfiguration setLastLocation(@NotNull CommandSender sender, @NotNull Location location){
-        return setPlayerDataLocation(sender, "last_location", location);
+    public static void setLastLocation(@NotNull CommandSender sender, @NotNull Location location){
+        setPlayerDataLocation(sender, "last_location", location);
     }
 
-    public static FileConfiguration setLogoutLocation(@NotNull CommandSender sender, @NotNull Location location){
-        return setPlayerDataLocation(sender, "logout_location", location);
+    public static void setLogoutLocation(@NotNull CommandSender sender, @NotNull Location location){
+        setPlayerDataLocation(sender, "logout_location", location);
     }
 
-    public static FileConfiguration setSpawn(@NotNull Location location){
-        return setConfigLocation(spawn, spawnFile, "spawn", location);
+    public static void setSpawn(@NotNull Location location){
+        setConfigLocation(spawn, spawnFile, "spawn", location);
     }
 
-    public static FileConfiguration delSpawn(){
-        return setConfigLocation(spawn, spawnFile, "spawn", null);
+    public static void delSpawn(){
+        setConfigLocation(spawn, spawnFile, "spawn", null);
     }
 
-    public static FileConfiguration setClientLang(@NotNull CommandSender sender, String langName){
+    public static void setClientLang(@NotNull CommandSender sender, String langName){
         FileConfiguration playerData = getPlayerData(sender.getName());
         File playerDataFile = new File(PLUGIN.getDataFolder(), "playerdata/" + ((Player) sender).getUniqueId() + ".yml");
-        playerData.set("lang", langName);
-        while (!saveConfig(Bukkit.getConsoleSender(), playerData, playerDataFile)) {
+        do {
             playerData.set("lang", langName);
-        }
-        return playerData;
+        } while (!saveConfig(Bukkit.getConsoleSender(), playerData, playerDataFile));
     }
 
     public static void reloadALLConfig(@NotNull CommandSender sender){

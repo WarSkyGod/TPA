@@ -17,7 +17,7 @@ import java.util.Set;
 public class HomeTabCompletes implements TabCompleter {
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (sender instanceof Player){
             Player player = (Player) sender;
             FileConfiguration lang = LoadingConfigFileUtil.getLang(player);

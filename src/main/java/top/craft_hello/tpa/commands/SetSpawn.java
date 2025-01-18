@@ -15,7 +15,7 @@ import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
 
 public class SetSpawn implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (ErrorCheckUtil.check(executor, args, RequestType.SETSPAWN)){
             Location location = ((Player) executor).getLocation();
             LoadingConfigFileUtil.setSpawn(location);
