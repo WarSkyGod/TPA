@@ -351,6 +351,13 @@ public class Messages {
 
     // title 样式的传送倒计时结束消息
     public static void titleCountdownOverMessage(@NotNull Player executor, List<String> args){
+        setLang(executor);
+        String target = args.get(args.size() - 1);
+        if (target.equals("last_location") || target.equals("spawn_point")){
+            target = lang.getString(target);
+            args.clear();
+            args.add(target);
+        }
         String title = MessageUtil.formatText(Objects.requireNonNull(lang.getString("you_teleported_to_message")), args);
         executor.sendTitle(title, "");
     }

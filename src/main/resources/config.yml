@@ -95,7 +95,7 @@ enable_permission:
   back: false
 
   # 使用 setlang 命令
-  # permission: tpa.lang
+  # permission: tpa.setlang
   setlang: false
 
 # 最大可设置多少个家（-1为不限制）
