@@ -31,7 +31,7 @@ public final class TPA extends JavaPlugin {
 
         } catch (Exception ex) {
             pluginName = "TPA";
-            version = "3.1.1";
+            version = "3.1.2";
         }
         LoadingConfigFileUtil.init(this, version);
         VersionUtil.init(pluginName);

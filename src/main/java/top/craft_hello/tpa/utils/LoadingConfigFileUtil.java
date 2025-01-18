@@ -98,12 +98,14 @@ public class LoadingConfigFileUtil {
     }
 
     public static void configVersionUpdate(String configVersion){
-        if (configVersion.equals("3.1.0")){
-            config.set("version", VERSION);
-            PLUGIN.saveConfig();
-            PLUGIN.reloadConfig();
-            config = PLUGIN.getConfig();
-            return;
+        switch (configVersion){
+            case "3.1.0":
+            case "3.1.1":
+                config.set("version", VERSION);
+                PLUGIN.saveConfig();
+                PLUGIN.reloadConfig();
+                config = PLUGIN.getConfig();
+                return;
         }
 
         String langStr = formatLangStr(config.getString("lang"));

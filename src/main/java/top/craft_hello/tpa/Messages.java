@@ -1,11 +1,8 @@
 package top.craft_hello.tpa;
 
-import cn.handyplus.lib.adapter.HandyRunnable;
-import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -335,28 +332,27 @@ public class Messages {
         MessageUtil.sendMessage(setLang(executor), lang.getString("target_deny"), target.getName());
     }
 
-    // title 样式的倒计时消息
-    public static void titleCountdownMessage(@NotNull Player executor, @NotNull String target, long delay){
-        HandyRunnable timer = new HandyRunnable() {
-            long sec = delay;
-            @Override
-            public void run() {
-                List<String> args = new ArrayList<>();
-                args.add(target);
-                args.add(String.valueOf(sec--));
-                String title = MessageUtil.formatText(lang.getString("teleport_countdown"), args);
-                String subTitle = MessageUtil.formatText(lang.getString("move_cancel_message"));
-                executor.sendTitle(title, subTitle);
-                if (LoadingConfigFileUtil.getConfig().getBoolean("enable_playsound")) executor.playSound(executor.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                if (sec < 0){
-                    args = new ArrayList<>();
-                    args.add(target);
-                    executor.sendTitle(MessageUtil.formatText(lang.getString("you_teleported_to_message"), args), "");
-                    this.cancel();
-                }
-            }
-        };
-        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 20);
+    // title 样式的传送倒计时消息
+    public static void titleCountdownMessage(@NotNull Player executor, List<String> args){
+        setLang(executor);
+        String target = args.get(args.size() - 2);
+        String delay = args.get(args.size() - 1);
+        if (target.equals("last_location") || target.equals("spawn_point")){
+            target = lang.getString(target);
+            args.clear();
+            args.add(target);
+            args.add(delay);
+        }
+        String title = MessageUtil.formatText(lang.getString("teleport_countdown"), args);
+        String subTitle = MessageUtil.formatText(lang.getString("move_cancel_message"));
+        executor.sendTitle(title, subTitle);
+
+    }
+
+    // title 样式的传送倒计时结束消息
+    public static void titleCountdownOverMessage(@NotNull Player executor, List<String> args){
+        String title = MessageUtil.formatText(lang.getString("you_teleported_to_message"), args);
+        executor.sendTitle(title, "");
     }
 
 
@@ -366,12 +362,10 @@ public class Messages {
         if (target.equals("last_location") || target.equals("spawn_point")){
             MessageUtil.sendMessage(setLang(executor), lang.getString("teleport_countdown"),  lang.getString(target), String.valueOf(delay));
             MessageUtil.sendMessage(setLang(executor), lang.getString("move_cancel_message"));
-            if (LoadingConfigFileUtil.getConfig().getBoolean("enable_title_message")) titleCountdownMessage((Player) executor, lang.getString(target), delay);
             return;
         }
         MessageUtil.sendMessage(setLang(executor), lang.getString("teleport_countdown"), target, String.valueOf(delay));
         MessageUtil.sendMessage(setLang(executor), lang.getString("move_cancel_message"));
-        if (LoadingConfigFileUtil.getConfig().getBoolean("enable_title_message")) titleCountdownMessage((Player) executor, target, delay);
     }
 
     // 因移动而取消传送消息

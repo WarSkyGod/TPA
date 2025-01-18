@@ -5,6 +5,7 @@ import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -31,13 +32,39 @@ public class TeleportUtil {
     }
 
     // 检测玩家是否移动，如果移动将取消传送请求
-    public static void isMove(@NotNull Location lastLocation, @NotNull Player executor, @NotNull Player target) {
+    public static void isMove(@NotNull Location lastLocation, @NotNull Player executor, @NotNull Player target, HandyRunnable timer, HandyRunnable countdownMessageTimer) {
         if (executor.getLocation().getX() != lastLocation.getX() || executor.getLocation().getY() != lastLocation.getY() || executor.getLocation().getZ() != lastLocation.getZ()){
-            HandySchedulerUtil.cancelTask();
+            timer.cancel();
+            countdownMessageTimer.cancel();
             Messages.move(executor, target);
             REQUEST_QUEUE.remove(executor);
             REQUEST_QUEUE.remove(target);
         }
+    }
+
+    // 倒计时消息
+    private static HandyRunnable setTitleCountdownMessageTimer(@NotNull Player executor, @NotNull String target, long delay){
+        HandyRunnable timer = new HandyRunnable() {
+            long sec = delay;
+            @Override
+            public void run() {
+                if (LoadingConfigFileUtil.getConfig().getBoolean("enable_title_message")){
+                    List<String> args = new ArrayList<>();
+                    args.add(target);
+                    args.add(String.valueOf(sec--));
+                    Messages.titleCountdownMessage(executor, args);
+                    if (LoadingConfigFileUtil.getConfig().getBoolean("enable_playsound")) executor.playSound(executor.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    if (sec < 0){
+                        args = new ArrayList<>();
+                        args.add(target);
+                        Messages.titleCountdownOverMessage(executor, args);
+                        this.cancel();
+                    }
+                }
+            }
+        };
+        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 20);
+        return timer;
     }
 
     // 计时器
@@ -64,7 +91,7 @@ public class TeleportUtil {
                             back(executor, this);
                             break;
                         case DENY:
-                            tpDeny(executor);
+                            tpDeny(executor, true);
                             break;
                         default:
                             break;
@@ -98,16 +125,26 @@ public class TeleportUtil {
                 Messages.pluginError(executor, "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                 return;
         }
+        if (ErrorCheckUtil.isNull(player1) || ErrorCheckUtil.isNull(player2)){
+            REQUEST_QUEUE.remove(player1);
+            REQUEST_QUEUE.remove(player2);
+            return;
+        }
         REQUEST_QUEUE.remove(executor);
         tp(player1, player2.getLocation());
     }
 
     // 拒绝传送
-    private static void tpDeny(@NotNull CommandSender executor) {
+    private static void tpDeny(@NotNull CommandSender executor, boolean isTimerOverDeny) {
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
+        if (ErrorCheckUtil.isNull(executor)){
+            REQUEST_QUEUE.remove(executor);
+            return;
+        }
         Player player1;
         Player player2;
+        boolean isTphere = false;
         switch (request.getREQUEST_TYPE()){
             case TPA:
                 player1 = request.getRequestPlayer();
@@ -116,20 +153,29 @@ public class TeleportUtil {
             case TPHERE:
                 player1 = (Player) executor;
                 player2 = request.getRequestPlayer();
+                isTphere = true;
                 break;
             default:
                 Messages.pluginError(executor, "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                 return;
         }
         REQUEST_QUEUE.remove(executor);
+        if (isTimerOverDeny && isTphere){
+            Messages.timeOverDeny(player2, player1);
+            return;
+        }
         Messages.timeOverDeny(player1, player2);
     }
 
     // 传送到传送点
-    private static void warp(@NotNull CommandSender executor, @NotNull HandyRunnable timer){
+    private static void warp(CommandSender executor, @NotNull HandyRunnable timer){
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
+        if (ErrorCheckUtil.isNull(executor)){
+            REQUEST_QUEUE.remove(executor);
+            return;
+        }
         String warpName = request.getTarget();
         Location location = LoadingConfigFileUtil.getLocation(RequestType.WARP,null , warpName);
         REQUEST_QUEUE.remove(executor);
@@ -138,10 +184,14 @@ public class TeleportUtil {
     }
 
     // 传送到家
-    private static void home(@NotNull CommandSender executor, @NotNull HandyRunnable timer){
+    private static void home(CommandSender executor, @NotNull HandyRunnable timer){
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
+        if (ErrorCheckUtil.isNull(executor)){
+            REQUEST_QUEUE.remove(executor);
+            return;
+        }
         String homeName = request.getTarget();
         Location location = LoadingConfigFileUtil.getLocation(RequestType.HOME, executor.getName(), "homes." + homeName);
         REQUEST_QUEUE.remove(executor);
@@ -150,10 +200,14 @@ public class TeleportUtil {
     }
 
     // 传送到主城
-    private static void spawn(@NotNull CommandSender executor, @NotNull HandyRunnable timer){
+    private static void spawn(CommandSender executor, @NotNull HandyRunnable timer){
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
+        if (ErrorCheckUtil.isNull(executor)){
+            REQUEST_QUEUE.remove(executor);
+            return;
+        }
         Location location = LoadingConfigFileUtil.getLocation(RequestType.SPAWN, null, "spawn");
         REQUEST_QUEUE.remove(executor);
         tp(((Player) executor), location);
@@ -161,17 +215,21 @@ public class TeleportUtil {
     }
 
     // 传送到上一次的位置
-    private static void back(@NotNull CommandSender executor, @NotNull HandyRunnable timer){
+    private static void back(CommandSender executor, @NotNull HandyRunnable timer){
         Request request = REQUEST_QUEUE.get(executor);
         request.getTimer().cancel();
         timer.cancel();
+        if (ErrorCheckUtil.isNull(executor)){
+            REQUEST_QUEUE.remove(executor);
+            return;
+        }
         Location location = LoadingConfigFileUtil.getLocation(RequestType.BACK, executor.getName(), "last_location");
         REQUEST_QUEUE.remove(executor);
         tp(((Player) executor), location);
         Messages.backLastLocationSuccessMessage(executor, "last_location");
     }
 
-    // 添加一条新的传送请求
+    // 添加一条新传送请求
     public static void addRequest(@NotNull CommandSender executor, @NotNull String[] args, RequestType REQUEST_TYPE){
         switch (REQUEST_TYPE){
             case TPA:
@@ -283,13 +341,14 @@ public class TeleportUtil {
                             return;
                     }
                     Location location = player1.getLocation();
+                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer(player1, player2.getName(), (teleportDelay < 0L ? 3L : teleportDelay));
                     HandyRunnable timer = new HandyRunnable() {
                         long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
-                                isMove(location, player1, player2);
+                                isMove(location, player1, player2, this, countdownMessageTimer);
                                 if (--sec < 0){
                                     this.cancel();
                                 }
@@ -303,7 +362,6 @@ public class TeleportUtil {
                     setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.TELEPORT);
                     Messages.acceptMessage(player1, player2, (teleportDelay < 0L ? 3L : teleportDelay), isTphere);
                 }
-
                 return;
             case TPDENY:
                 if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
@@ -330,7 +388,6 @@ public class TeleportUtil {
                     REQUEST_QUEUE.remove(executor);
                     Messages.denyMessage(player1, player2, isTphere);
                 }
-
                 return;
             case WARP:
                 if (ErrorCheckUtil.check(executor, args, REQUEST_TYPE)){
@@ -340,19 +397,19 @@ public class TeleportUtil {
                         Messages.warpListMessage(executor, list);
                         return;
                     }
-
                     Player requestPlayer = (Player) executor;
                     String warpName = args[args.length - 1];
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
+                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
                     HandyRunnable timer = new HandyRunnable() {
                         long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer);
+                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
                                 if (--sec < 0){
                                     this.cancel();
                                 }
@@ -383,13 +440,14 @@ public class TeleportUtil {
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
+                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
                     HandyRunnable timer = new HandyRunnable() {
                         @Override
                         public void run() {
                             long sec = teleportDelay * 20;
                             try {
                                 // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer);
+                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
                                 if (--sec < 0){
                                     this.cancel();
                                 }
@@ -412,14 +470,14 @@ public class TeleportUtil {
                     String spawnPoint = "spawn_point";
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
-
+                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
                     HandyRunnable timer = new HandyRunnable() {
                         long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer);
+                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
                                 if (--sec < 0){
                                     this.cancel();
                                 }
@@ -442,13 +500,14 @@ public class TeleportUtil {
                     String lastLocation = "last_location";
                     long teleportDelay = config.getLong("teleport_delay");
                     Location location = requestPlayer.getLocation();
+                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, lastLocation, (teleportDelay < 0L ? 3L : teleportDelay));
                     HandyRunnable timer = new HandyRunnable() {
                         long sec = teleportDelay * 20;
                         @Override
                         public void run() {
                             try {
                                 // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer);
+                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
                                 if (--sec < 0){
                                     this.cancel();
                                 }
