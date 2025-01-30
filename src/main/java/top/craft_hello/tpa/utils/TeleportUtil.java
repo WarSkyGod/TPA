@@ -341,27 +341,32 @@ public class TeleportUtil {
                             Messages.pluginError(executor, "请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
                             return;
                     }
-                    Location location = player1.getLocation();
-                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer(player1, player2.getName(), (teleportDelay < 0L ? 3L : teleportDelay));
-                    HandyRunnable timer = new HandyRunnable() {
-                        long sec = teleportDelay * 20;
-                        @Override
-                        public void run() {
-                            try {
-                                // 执行逻辑
-                                isMove(location, player1, player2, this, countdownMessageTimer);
-                                if (--sec < 0){
+                    if (teleportDelay == 0) {
+                        setTimer(executor, 0, TimerType.TELEPORT);
+                        Messages.acceptMessage(player1, player2, 0, isTphere);
+                    } else {
+                        Location location = player1.getLocation();
+                        HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer(player1, player2.getName(), (teleportDelay < 0L ? 3L : teleportDelay));
+                        HandyRunnable timer = new HandyRunnable() {
+                            long sec = teleportDelay * 20;
+                            @Override
+                            public void run() {
+                                try {
+                                    // 执行逻辑
+                                    isMove(location, player1, player2, this, countdownMessageTimer);
+                                    if (--sec < 0){
+                                        this.cancel();
+                                    }
+                                } catch (Exception ignored) {
                                     this.cancel();
                                 }
-                            } catch (Exception ignored) {
-                                this.cancel();
                             }
-                        }
-                    };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
-                    request.setTimer(timer);
-                    setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.TELEPORT);
-                    Messages.acceptMessage(player1, player2, (teleportDelay < 0L ? 3L : teleportDelay), isTphere);
+                        };
+                        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
+                        request.setTimer(timer);
+                        setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.TELEPORT);
+                        Messages.acceptMessage(player1, player2, (teleportDelay < 0L ? 3L : teleportDelay), isTphere);
+                    }
                 }
                 return;
             case TPDENY:
@@ -402,28 +407,33 @@ public class TeleportUtil {
                     String warpName = args[args.length - 1];
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
-                    Location location = requestPlayer.getLocation();
-                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
-                    HandyRunnable timer = new HandyRunnable() {
-                        long sec = teleportDelay * 20;
-                        @Override
-                        public void run() {
-                            try {
-                                // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
-                                if (--sec < 0){
+                    if (teleportDelay == 0) {
+                        setTimer(executor, 0, TimerType.WARP_TELEPORT);
+                        Messages.teleportCountdown(executor, warpName, 0);
+                    } else {
+                        Location location = requestPlayer.getLocation();
+                        HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
+                        HandyRunnable timer = new HandyRunnable() {
+                            long sec = teleportDelay * 20;
+                            @Override
+                            public void run() {
+                                try {
+                                    // 执行逻辑
+                                    isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
+                                    if (--sec < 0){
+                                        this.cancel();
+                                    }
+                                } catch (Exception ignored) {
                                     this.cancel();
                                 }
-                            } catch (Exception ignored) {
-                                this.cancel();
                             }
-                        }
-                    };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
-                    Request request = new Request(REQUEST_TYPE, requestPlayer, warpName, timer);
-                    REQUEST_QUEUE.put((Player) executor, request);
-                    setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.WARP_TELEPORT);
-                    Messages.teleportCountdown(executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
+                        };
+                        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
+                        Request request = new Request(REQUEST_TYPE, requestPlayer, warpName, timer);
+                        REQUEST_QUEUE.put((Player) executor, request);
+                        setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.WARP_TELEPORT);
+                        Messages.teleportCountdown(executor, warpName, (teleportDelay < 0L ? 3L : teleportDelay));
+                    }
                 }
                 return;
             case HOME:
@@ -439,28 +449,33 @@ public class TeleportUtil {
 
                     FileConfiguration config = LoadingConfigFileUtil.getConfig();
                     long teleportDelay = config.getLong("teleport_delay");
-                    Location location = requestPlayer.getLocation();
-                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
-                    HandyRunnable timer = new HandyRunnable() {
-                        @Override
-                        public void run() {
-                            long sec = teleportDelay * 20;
-                            try {
-                                // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
-                                if (--sec < 0){
+                    if (teleportDelay == 0) {
+                        setTimer(executor, 0, TimerType.HOME_TELEPORT);
+                        Messages.teleportCountdown(executor, homeName, 0);
+                    } else {
+                        Location location = requestPlayer.getLocation();
+                        HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
+                        HandyRunnable timer = new HandyRunnable() {
+                            @Override
+                            public void run() {
+                                long sec = teleportDelay * 20;
+                                try {
+                                    // 执行逻辑
+                                    isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
+                                    if (--sec < 0){
+                                        this.cancel();
+                                    }
+                                } catch (Exception ignored) {
                                     this.cancel();
                                 }
-                            } catch (Exception ignored) {
-                                this.cancel();
                             }
-                        }
-                    };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
-                    Request request = new Request(REQUEST_TYPE, requestPlayer, homeName, timer);
-                    REQUEST_QUEUE.put((Player) executor, request);
-                    setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.HOME_TELEPORT);
-                    Messages.teleportCountdown(executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
+                        };
+                        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
+                        Request request = new Request(REQUEST_TYPE, requestPlayer, homeName, timer);
+                        REQUEST_QUEUE.put((Player) executor, request);
+                        setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.HOME_TELEPORT);
+                        Messages.teleportCountdown(executor, homeName, (teleportDelay < 0L ? 3L : teleportDelay));
+                    }
                 }
                 return;
             case SPAWN:
@@ -469,28 +484,33 @@ public class TeleportUtil {
                     Player requestPlayer = (Player) executor;
                     String spawnPoint = "spawn_point";
                     long teleportDelay = config.getLong("teleport_delay");
-                    Location location = requestPlayer.getLocation();
-                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
-                    HandyRunnable timer = new HandyRunnable() {
-                        long sec = teleportDelay * 20;
-                        @Override
-                        public void run() {
-                            try {
-                                // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
-                                if (--sec < 0){
+                    if (teleportDelay == 0) {
+                        setTimer(executor, 0, TimerType.SPAWN_TELEPORT);
+                        Messages.teleportCountdown(executor, spawnPoint, 0);
+                    } else {
+                        Location location = requestPlayer.getLocation();
+                        HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
+                        HandyRunnable timer = new HandyRunnable() {
+                            long sec = teleportDelay * 20;
+                            @Override
+                            public void run() {
+                                try {
+                                    // 执行逻辑
+                                    isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
+                                    if (--sec < 0){
+                                        this.cancel();
+                                    }
+                                } catch (Exception ignored) {
                                     this.cancel();
                                 }
-                            } catch (Exception ignored) {
-                                this.cancel();
                             }
-                        }
-                    };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
-                    Request request = new Request(REQUEST_TYPE, requestPlayer, spawnPoint, timer);
-                    REQUEST_QUEUE.put((Player) executor, request);
-                    setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.SPAWN_TELEPORT);
-                    Messages.teleportCountdown(executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
+                        };
+                        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
+                        Request request = new Request(REQUEST_TYPE, requestPlayer, spawnPoint, timer);
+                        REQUEST_QUEUE.put((Player) executor, request);
+                        setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.SPAWN_TELEPORT);
+                        Messages.teleportCountdown(executor, spawnPoint, (teleportDelay < 0L ? 3L : teleportDelay));
+                    }
                 }
                 return;
             case BACK:
@@ -499,28 +519,33 @@ public class TeleportUtil {
                     Player requestPlayer = (Player) executor;
                     String lastLocation = "last_location";
                     long teleportDelay = config.getLong("teleport_delay");
-                    Location location = requestPlayer.getLocation();
-                    HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, lastLocation, (teleportDelay < 0L ? 3L : teleportDelay));
-                    HandyRunnable timer = new HandyRunnable() {
-                        long sec = teleportDelay * 20;
-                        @Override
-                        public void run() {
-                            try {
-                                // 执行逻辑
-                                isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
-                                if (--sec < 0){
+                    if (teleportDelay == 0) {
+                        setTimer(executor, 0, TimerType.BACK_TELEPORT);
+                        Messages.teleportCountdown(executor, lastLocation, 0);
+                    } else {
+                        Location location = requestPlayer.getLocation();
+                        HandyRunnable countdownMessageTimer = setTitleCountdownMessageTimer((Player) executor, lastLocation, (teleportDelay < 0L ? 3L : teleportDelay));
+                        HandyRunnable timer = new HandyRunnable() {
+                            long sec = teleportDelay * 20;
+                            @Override
+                            public void run() {
+                                try {
+                                    // 执行逻辑
+                                    isMove(location, requestPlayer, requestPlayer, this, countdownMessageTimer);
+                                    if (--sec < 0){
+                                        this.cancel();
+                                    }
+                                } catch (Exception ignored) {
                                     this.cancel();
                                 }
-                            } catch (Exception ignored) {
-                                this.cancel();
                             }
-                        }
-                    };
-                    HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
-                    Request request = new Request(REQUEST_TYPE, requestPlayer, lastLocation, timer);
-                    REQUEST_QUEUE.put((Player) executor, request);
-                    setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.BACK_TELEPORT);
-                    Messages.teleportCountdown(executor, lastLocation, (teleportDelay < 0L ? 3L : teleportDelay));
+                        };
+                        HandySchedulerUtil.runTaskTimerAsynchronously(timer, 0, 1);
+                        Request request = new Request(REQUEST_TYPE, requestPlayer, lastLocation, timer);
+                        REQUEST_QUEUE.put((Player) executor, request);
+                        setTimer(executor, (teleportDelay < 0L ? 3000L : teleportDelay * 1000L), TimerType.BACK_TELEPORT);
+                        Messages.teleportCountdown(executor, lastLocation, (teleportDelay < 0L ? 3L : teleportDelay));
+                    }
                 }
                 return;
             default:
