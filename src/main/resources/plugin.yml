@@ -1,5 +1,5 @@
-name: TPA
-version: '${project.version}'
+name: ${project.name}
+version: ${project.version}
 main: top.craft_hello.tpa.TPA
 description: 一个支持 Folia 的简易传送插件，支持 Bukkit/Spigot/Paper/Folia
 api-version: '1.13'
@@ -12,10 +12,13 @@ permissions:
     description: "最高权限，可执行所有操作"
   tpa.reload:
     default: op
-    description: "可使用/reload命令重新加载配置文件"
+    description: "可使用 /reload 命令重新加载配置文件"
   tpa.version:
     default: op
-    description: "拥有这个权限的玩家会收到插件更新通知"
+    description: "拥有这个权限的玩家会收到插件更新通知，可使用 /tpa version 来检查插件更新"
+  tpa.nodelay:
+    default: false
+    description: "拥有这个权限的玩家传送将不受命令使用后的等待时间限制"
   tpa.setwarp:
     default: op
     description: "可使用 /setwarp 命令设置传送点"
@@ -40,6 +43,9 @@ permissions:
   tpa.tphere:
     default: false
     description: "可使用 /tphere 命令请求指定玩家传送到你的位置（默认关闭权限检查）"
+  tpa.rtp:
+    default: false
+    description: "可使用 /rtp 命令随机在一定范围内传送（默认关闭权限检查）"
   tpa.denys:
     default: false
     description: "可使用 /denys 管理黑名单"
@@ -48,14 +54,26 @@ permissions:
     description: "可使用 /warp 命令传送到传送点（默认关闭权限检查）"
   tpa.home:
     default: false
-    description: "可使用 /home 命令传送到家，可使用 /homes 列出所有可用的家，可使用 /sethome 设置家，可使用 /setdefaulthome 设置默认的家，可使用 /delhome 删除家（默认关闭权限检查）"
+    description: "可使用 `/home`、`/homes`、`/sethome`、`/setdefaulthome`、`/delhome`（默认关闭权限检查）"
+  tpa.default:
+    default: true
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
   tpa.vip:
     default: false
     description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
-  tpa.svip:
+  tpa.vip+:
     default: false
     description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
-  tpa.spawan:
+  tpa.mvp:
+    default: false
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+  tpa.mvp+:
+    default: false
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+  tpa.mvp++:
+    default: false
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+  tpa.spawn:
     default: false
     description: "可使用 /spawn 命令传送到主城（默认关闭权限检查）"
   tpa.back:
@@ -72,6 +90,9 @@ commands:
   tpall:
     usage: /tpall [player/warp/spawn] [玩家名称/传送点名称]
     description: 强制将所有在线玩家传送到目标位置（如果不加参数默认传送到使用者身边）
+  rtp:
+    usage: /rtp
+    description: 随机传送
   tplogout:
     usage: /tplogout <玩家名称>
     description: 传送到该玩家最后一次下线的位置

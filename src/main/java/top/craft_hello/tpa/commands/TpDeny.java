@@ -4,13 +4,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import top.craft_hello.tpa.enums.RequestType;
-import top.craft_hello.tpa.utils.TeleportUtil;
+import top.craft_hello.tpa.utils.ErrorCheckUtil;
 
 public class TpDeny implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender executor, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
-        TeleportUtil.addRequest(executor, args, RequestType.TPDENY);
+        ErrorCheckUtil.executeCommand(executor, args, command.getName());
         return true;
     }
 }

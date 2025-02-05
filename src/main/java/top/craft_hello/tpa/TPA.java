@@ -2,55 +2,44 @@ package top.craft_hello.tpa;
 
 import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.craft_hello.tpa.commands.*;
-import top.craft_hello.tpa.enums.RequestType;
 import top.craft_hello.tpa.events.*;
-import top.craft_hello.tpa.tabcompletes.*;
+import top.craft_hello.tpa.tabcompleters.*;
 import top.craft_hello.tpa.utils.ErrorCheckUtil;
-import top.craft_hello.tpa.utils.LoadingConfigFileUtil;
+import top.craft_hello.tpa.utils.LoadingConfigUtil;
+import top.craft_hello.tpa.utils.SendMessageUtil;
 import top.craft_hello.tpa.utils.VersionUtil;
 
 import java.util.Objects;
 
+import static top.craft_hello.tpa.utils.VersionUtil.getPluginVersion;
+
 
 public final class TPA extends JavaPlugin {
+    private final CommandSender CONSOLE = getServer().getConsoleSender();
+    private final PluginManager PLUGIN_MANAGER = getServer().getPluginManager();
+    
     @Override
     public void onEnable() {
-        // 插件加载时执行
         HandySchedulerUtil.init(this);
-        PluginDescriptionFile pluginDescriptionFile;
-        String pluginName;
-        String version;
-
-        try {
-            pluginDescriptionFile = this.getPluginLoader().getPluginDescription(this.getFile());
-            pluginName = pluginDescriptionFile.getName();
-            version = pluginDescriptionFile.getVersion();
-
-        } catch (Exception ex) {
-            pluginName = "TPA";
-            version = "3.1.3";
-        }
-        LoadingConfigFileUtil.init(this, version);
-        VersionUtil.init(pluginName);
-        CommandSender sender = getServer().getConsoleSender();
-        registerCommands();
-        registerEvents();
-
-
-        Messages.pluginLoaded(version);
-        if (ErrorCheckUtil.check(sender, null, RequestType.VERSION)){
-            VersionUtil.updateCheck(sender);
-        }
+        HandySchedulerUtil.runTaskAsynchronously(() -> {
+            // 插件加载时执行
+            LoadingConfigUtil.init(this);
+            VersionUtil.init(this);
+            registerCommands();
+            registerEvents();
+            SendMessageUtil.pluginLoaded(CONSOLE, getPluginVersion());
+            if (LoadingConfigUtil.getConfig().isUpdateCheck()) ErrorCheckUtil.executeCommand(CONSOLE, null, "version");
+        });
     }
 
 
     @Override
     public void onDisable() {
         // 插件卸载时执行
-        Messages.pluginUnLoaded();
+        SendMessageUtil.pluginUnLoaded(CONSOLE);
     }
 
     // 注册命令
@@ -58,6 +47,7 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("tpa")).setExecutor(new Tpa());
         Objects.requireNonNull(this.getCommand("tphere")).setExecutor(new TpHere());
         Objects.requireNonNull(this.getCommand("tpall")).setExecutor(new TpAll());
+        Objects.requireNonNull(this.getCommand("rtp")).setExecutor(new Rtp());
         Objects.requireNonNull(this.getCommand("tplogout")).setExecutor(new TpLogout());
         Objects.requireNonNull(this.getCommand("tpaccept")).setExecutor(new TpAccept());
         Objects.requireNonNull(this.getCommand("tpdeny")).setExecutor(new TpDeny());
@@ -75,33 +65,35 @@ public final class TPA extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("delspawn")).setExecutor(new DelSpawn());
         Objects.requireNonNull(this.getCommand("back")).setExecutor(new Back());
 
-        Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new TpaTabCompletes());
-        Objects.requireNonNull(this.getCommand("tphere")).setTabCompleter(new TpHereTabCompletes());
-        Objects.requireNonNull(this.getCommand("tpall")).setTabCompleter(new TpAllTabCompletes());
-        Objects.requireNonNull(this.getCommand("tplogout")).setTabCompleter(new TpLogoutTabCompletes());
-        Objects.requireNonNull(this.getCommand("tpaccept")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("tpdeny")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("denys")).setTabCompleter(new DenysTabCompletes());
-        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpTabCompletes());
-        Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new WarpTabCompletes());
-        Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new WarpTabCompletes());
-        Objects.requireNonNull(this.getCommand("home")).setTabCompleter(new HomeTabCompletes());
-        Objects.requireNonNull(this.getCommand("homes")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("sethome")).setTabCompleter(new HomeTabCompletes());
-        Objects.requireNonNull(this.getCommand("setdefaulthome")).setTabCompleter(new SerDefaultHomeTabCompletes());
-        Objects.requireNonNull(this.getCommand("delhome")).setTabCompleter(new HomeTabCompletes());
-        Objects.requireNonNull(this.getCommand("spawn")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("setspawn")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("delspawn")).setTabCompleter(new EmptyListTabCompletes());
-        Objects.requireNonNull(this.getCommand("back")).setTabCompleter(new EmptyListTabCompletes());
+        Objects.requireNonNull(this.getCommand("tpa")).setTabCompleter(new TpaTabCompleter());
+        Objects.requireNonNull(this.getCommand("tphere")).setTabCompleter(new TpHereTabCompleter());
+        Objects.requireNonNull(this.getCommand("tpall")).setTabCompleter(new TpAllTabCompleter());
+        Objects.requireNonNull(this.getCommand("rtp")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("tplogout")).setTabCompleter(new TpLogoutTabCompleter());
+        Objects.requireNonNull(this.getCommand("tpaccept")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("tpdeny")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("denys")).setTabCompleter(new DenysTabCompleter());
+        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpTabCompleter());
+        Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new WarpTabCompleter());
+        Objects.requireNonNull(this.getCommand("delwarp")).setTabCompleter(new WarpTabCompleter());
+        Objects.requireNonNull(this.getCommand("home")).setTabCompleter(new HomeTabCompleter());
+        Objects.requireNonNull(this.getCommand("homes")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("sethome")).setTabCompleter(new HomeTabCompleter());
+        Objects.requireNonNull(this.getCommand("setdefaulthome")).setTabCompleter(new SetDefaultHomeTabCompleter());
+        Objects.requireNonNull(this.getCommand("delhome")).setTabCompleter(new HomeTabCompleter());
+        Objects.requireNonNull(this.getCommand("spawn")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("setspawn")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("delspawn")).setTabCompleter(new EmptyListTabCompleter());
+        Objects.requireNonNull(this.getCommand("back")).setTabCompleter(new EmptyListTabCompleter());
     }
 
     // 注册事件
     public void registerEvents(){
-        getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerTeleportEvent(), this);
+        PLUGIN_MANAGER.registerEvents(new TPAPlayerJoinEvent(), this);
+        PLUGIN_MANAGER.registerEvents(new TPAPlayerQuitEvent(), this);
+        PLUGIN_MANAGER.registerEvents(new TPAPlayerDeathEvent(), this);
+        PLUGIN_MANAGER.registerEvents(new TPAPlayerRespawnEvent(), this);
+        PLUGIN_MANAGER.registerEvents(new TPAPlayerTeleportEvent(), this);
+        if (!LoadingConfigUtil.getConfig().isOldServer()) PLUGIN_MANAGER.registerEvents(new TPAPlayerLocaleChangeEvent(), this);
     }
 }

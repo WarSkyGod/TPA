@@ -1,10 +1,10 @@
 package top.craft_hello.tpa.objects;
 
+import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.enums.ClickEventType;
 import top.craft_hello.tpa.enums.HoverEventType;
-import top.craft_hello.tpa.utils.MessageUtil;
 
 public final class JsonMessage {
     private String jsonCommand;
@@ -15,7 +15,7 @@ public final class JsonMessage {
     private final String[] formatCodes = {"&k", "&l", "&m", "&n", "&o"};
     private final String[] formats = {",\"obfuscated\":true", ",\"bold\":true", ",\"strikethrough\":true", ",\"underlined\":true", ",\"italic\":true"};
 
-    public JsonMessage(@NotNull CommandSender target, @NotNull String text) {
+    public JsonMessage(CommandSender target, String text){
         this.text = formatText(text);
         this.jsonCommand = "tellraw " + target.getName() + " [{\"text\":\"" + this.text;
     }
@@ -26,19 +26,19 @@ public final class JsonMessage {
     }
 
 
-    public JsonMessage addText(@NotNull String text){
+    public JsonMessage addText(String text){
         this.text= formatText(text);
         this.jsonCommand = this.jsonCommand + "},{\"text\":\"" + this.text;
         return this;
     }
 
-    public JsonMessage addInsertion(@NotNull String value){
+    public JsonMessage addInsertion(String value){
         this.value = value;
         this.jsonCommand = this.jsonCommand + ",\"insertion\":\"" + this.value + "\"";
         return this;
     }
 
-    public JsonMessage addClickEvent(@NotNull ClickEventType clickEventType, @NotNull String value){
+    public JsonMessage addClickEvent(@NotNull ClickEventType clickEventType, String value){
         this.value = value;
         switch (clickEventType){
             case OPEN_URL:
@@ -62,8 +62,9 @@ public final class JsonMessage {
         return this;
     }
 
-    public JsonMessage addHoverEvent(@NotNull HoverEventType hoverEventType, @NotNull String value){
-        this.value = MessageUtil.formatText(value);
+    public JsonMessage addHoverEvent(@NotNull HoverEventType hoverEventType, String value){
+        //this.value = MessageUtil.formatText(value);
+        this.value = value;
         switch (hoverEventType){
             case SHOW_TEXT:
                 this.jsonCommand = this.jsonCommand + ",\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"" + this.value + "\"}";
@@ -97,6 +98,10 @@ public final class JsonMessage {
             index++;
         }
         return value;
+    }
+
+    public void sendMessage(){
+        PlayerSchedulerUtil.syncDispatchCommand(this.toString());
     }
 
     @Override
