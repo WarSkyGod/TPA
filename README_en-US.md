@@ -157,5 +157,3 @@ This plugin uses [FoliaLib](https://github.com/handyplus/FoliaLib) for **Folia**
 - [DeepSeek](https://www.deepseek.com/)
 
 --- 
-
-This translation maintains the structure and formatting of the original document while ensuring clarity and readability in English.
