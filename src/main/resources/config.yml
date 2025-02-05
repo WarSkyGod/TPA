@@ -4,110 +4,201 @@
 # 插件版本，请勿自行修改
 version: ${project.version}
 
+# 服务端显示语言，自带 zh_CN 和 en_US，您也可以按照格式添加其他语言
+# 客户端会自动根据客户端的语言选择合适的语言脚本，如果不存在对应的语言脚本默认使用这里设置的语言
+language: zh_CN
+
+# 开启后将在后台显示详细的报错信息以便提供给开发者排错
+# 如果没有任何问题请勿开启，会在后台产生大量垃圾信息
+debug: false
+
 # 插件更新检查
 # 关闭后服务器后台和拥有 tpa.version 或 tpa.admin 权限的玩家将不会收到插件更新提醒
 update_check: true
 
-# 是否为旧版本（1.12）以下服务端
-# 如果是将关闭客户端自动选择语言功能（玩家默认使用服务端显示语言，可以使用 /tpa setlang <语言> 设置客户端显示语言）
-old_server: false
-
-# 服务端显示语言，自带 zh_CN 和 en_US，您也可以按照格式添加其他语言
-# 客户端会自动根据客户端的语言选择合适的语言脚本，如果不存在对应的语言脚本默认使用这里设置的语言
-lang: zh_CN
-
-# 对方最晚可以在多长时间内接受？单位是秒
-accept_delay: 30
-
-# 传送前需要等待多长时间？单位是秒
-teleport_delay: 3
-
-# 是否每次进入服务器或死亡都强制传送到spawn
+# 是否每次进入服务器或死亡都强制传送到 spawn
 force_spawn: true
 
-# 是否启用 title 命令来显示传送消息（1.12 以下版本将自动关闭）
+# 是否启用 title 传送消息（1.12 以下版本将自动关闭）
 enable_title_message: true
 
-# 是否启用音效（需要 enable_title_message 为 true）
-enable_playsound: true
+# 是否启用传送音效（需要 enable_title_message 为 true）
+enable_sound: true
 
-# 启用命令
-enable_command:
-  # 是否开启 tpa 命令
-  # 如果 tpa 和 tphere 命令都未启用，将自动关闭 /tpaccept，/tpdeny，/denys 命令
-  tpa: true
+# 延迟设置（单位：秒）
+delay:
+  # 对方最晚可以在多长时间内接受？（最低不能小于3秒）
+  accept: 30
 
-  # 是否开启 tphere 命令
-  tphere: true
+  # 是否启用传送前间隔（传送前需要等待指定时间才能传送）
+  enable_teleport: true
 
-  # 是否开启 tpall 命令
-  tpall: true
+  # 是否启用命令执行间隔（使用命令后需要等待指定时间才能再次使用命令）
+  enable_command: true
 
-  # 是否开启 tplogout 命令
-  tplogout: true
+  # 使用 warp，home，spawn，back 命令是否绕过等待时间检测
+  non_tpa_or_tphere_disable_check: false
 
-  # 是否开启 warp 命令
-  # 影响 /warp，/setwarp，/delwarp 的使用
-  warp: true
-
-  # 是否开启 home 命令
-  # 影响 /home，/homes，/sethome，/delhome 的使用
-  home: true
-
-  # 是否开启 spawn 命令
-  # 影响 /spawn，/setspawn，/delspawn 的使用
-  spawn: true
-
-  # 是否开启 back 命令
-  back: true
-
-  # 是否开启 setlang 命令（服务端版本为 1.12 或更高版本时将自动关闭）
-  setlang: false
-
-# 使用命令是否需要权限
-enable_permission:
-  # 使用 tpa 命令
-  # permission: tpa.tpa
-  tpa: false
-
-  # 使用 tphere 命令
-  # permission: tpa.tphere
-  tphere: false
-
-  # 使用 denys 命令
-  # permission: tpa.denys
-  denys: false
-
-  # 使用 warp 命令
-  # permission: tpa.warp
-  warp: false
-
-  # 使用 home, homes, sethome, setdefaulthome, delhome 命令
-  # permission: tpa.home
-  home: false
-
-  # 使用 spawn 命令
-  # permission: tpa.spawn
-  spawn: false
-
-  # 使用 back 命令
-  # permission: tpa.back
-  back: false
-
-  # 使用 setlang 命令
-  # permission: tpa.setlang
-  setlang: false
-
-# 最大可设置多少个家（-1为不限制）
-home_amount:
   # 没有任何权限的玩家
-  default: 3
+  default:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 30
 
   # 拥有 tpa.vip 权限的玩家
-  vip: 5
+  vip:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
 
-  # 拥有 tpa.svip 权限的玩家
-  svip: 10
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 25
+
+  # 拥有 tpa.vip+ 权限的玩家
+  vip+:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 20
+
+  # 拥有 tpa.mvp 权限的玩家
+  mvp:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 15
+
+  # 拥有 tpa.mvp+ 权限的玩家
+  mvp+:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 10
+
+  # 拥有 tpa.mvp++ 权限的玩家
+  mvp++:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 5
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 5
 
   # 拥有 tpa.admin 权限的玩家
-  admin: -1
+  admin:
+    # 传送前需要等待多长时间？（为 0 关闭）
+    teleport: 0
+
+    # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
+    command: 0
+
+# tpa 命令设置
+tpa:
+  # 是否开启 tpa 命令
+  # 如果 tpa 和 tphere 命令都未启用，将自动关闭 /tpaccept，/tpdeny，/denys 命令
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.tpa
+  permission: false
+
+# tphere 命令设置
+tphere:
+  # 是否开启 tphere 命令
+  # 如果 tpa 和 tphere 命令都未启用，将自动关闭 /tpaccept，/tpdeny，/denys 命令
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.tphere
+  permission: false
+
+# denys 命令设置
+denys:
+  # 是否检测权限
+  # permission: tpa.denys
+  permission: false
+
+# rtp 命令设置
+rtp:
+  # 是否开启 rtp 命令
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.rtp
+  permission: false
+
+  # 在哪些世界无法使用该命令
+  disable_worlds:
+    - disableWorld1
+    - disableWorld2
+
+  # 随机传送的最大范围（半径）
+  # 以使用命令的玩家为中心
+  limit:
+    x: 500
+    z: 500
+
+# warp 命令设置
+warp:
+  # 是否开启 warp 命令
+  # 影响 /warp，/setwarp，/delwarp 的使用
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.warp
+  permission: false
+
+# home 命令设置
+home:
+  # 是否开启 home 命令
+  # 影响 /home，/homes，/sethome，/setdefaulthome，/delhome 的使用
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.home
+  permission: false
+
+  # 最大可设置多少个家（-1为不限制）
+  amount:
+    # 没有任何权限的玩家
+    default: 3
+
+    # 拥有 tpa.vip 权限的玩家
+    vip: 5
+
+    # 拥有 tpa.vip+ 权限的玩家
+    vip+: 10
+
+    # 拥有 tpa.mvp 权限的玩家
+    mvp: 15
+
+    # 拥有 tpa.mvp+ 权限的玩家
+    mvp+: 20
+
+    # 拥有 tpa.mvp++ 权限的玩家
+    mvp++: 25
+
+    # 拥有 tpa.admin 权限的玩家
+    admin: -1
+
+# spawn 命令设置
+spawn:
+  # 是否开启 spawn 命令
+  # 影响 /spawn，/setspawn，/delspawn 的使用
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.spawn
+  permission: false
+
+# back 命令设置
+back:
+  # 是否开启 back 命令
+  enable: true
+
+  # 是否检测权限
+  # permission: tpa.back
+  permission: false
