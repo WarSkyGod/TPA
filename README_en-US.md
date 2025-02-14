@@ -8,7 +8,7 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
 
 - **Simple**: Easy to use and configure.
 - **Configurable**: Supports custom configuration files.
-- **Chinese/English Support**: Built-in Chinese and English language files.
+- **Multilingual Support**: Built-in multiple language files.
 - **Customizable Language Files**: Allows users to customize language files.
 
 ## Commands
@@ -64,8 +64,8 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
   Random teleportation.
 - **/tpa version**  
   Check for plugin updates.
-- **/tpa setlang <language>**  
-  Set the client display language (only available for servers below version 1.12; for version 1.12 and above, it is automatically set based on the client).
+- **/tpa setlang <clear/language>**  
+  Set the client display language.
 - **/tpa reload**  
   Reload the configuration file.
 
