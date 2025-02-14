@@ -5,7 +5,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.craft_hello.tpa.exceptions.CannotGetTheLatestVersionErrorException;
+import top.craft_hello.tpa.exceptions.UpdateFailedException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class VersionUtil {
          String urlStringPart3 =  "/latest.html";
          latestVersion1 = readFirstLine(new URL(urlStringPart1 + urlStringPart2 + urlStringPart3));
       } catch (Throwable var5) {
-         throw new CannotGetTheLatestVersionErrorException(sender);
+         throw new UpdateFailedException(sender);
       }
 
       latestVersion = latestVersion1;

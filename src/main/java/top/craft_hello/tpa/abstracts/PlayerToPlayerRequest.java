@@ -45,7 +45,7 @@ public abstract class PlayerToPlayerRequest extends Request {
             countdownMessageTimer.cancel();
             if (getConfig().isEnableTitleMessage()){
                 LanguageConfig language = getLanguage(requestPlayer);
-                String title = language.getFormatMessage("move_canceled_error");
+                String title = language.getFormatMessage("teleport.canceled.self");
                 if (getConfig().isEnableSound()) PlayerSchedulerUtil.playSound(requestPlayer, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 requestPlayer.sendTitle(title, "");
             }
@@ -81,19 +81,19 @@ public abstract class PlayerToPlayerRequest extends Request {
     protected void checkError(CommandSender requestObject, String[] args, CommandType commandType)   {
         String command = commandType == CommandType.TPA ? "tpa" : "tphere";
         PermissionType permissionType = commandType == CommandType.TPA ? PermissionType.TPA : PermissionType.TP_HERE;
-        if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+        if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
         requestPlayer = ((Player) requestObject);
         requestPlayerName = requestPlayer.getName();
-        if (!getConfig().isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-        if (!getConfig().hasPermission(requestPlayer, permissionType)) throw new NotPermissionErrorException(requestPlayer);
-        if (args.length != 1) throw new TpaCommandErrorException(requestPlayer, command);
+        if (!getConfig().isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+        if (!getConfig().hasPermission(requestPlayer, permissionType)) throw new ErrorPermissionDeniedException(requestPlayer);
+        if (args.length != 1) throw new ErrorSyntaxTpaException(requestPlayer, command);
         targetPlayerName = args[args.length - 1];
         targetPlayer = Bukkit.getPlayerExact(targetPlayerName);
-        if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-        if (REQUEST_QUEUE.containsKey(requestPlayer) || REQUEST_QUEUE.containsKey(targetPlayer)) throw new RequestLockErrorException(requestPlayer);
-        if (requestPlayer.equals(targetPlayer)) throw new SelfRequestedErrorException(requestPlayer);
-        if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new OfflineOrNullErrorException(requestPlayer);
-        if (PlayerDataConfig.getPlayerData(targetPlayer).isDeny(requestPlayer.getUniqueId().toString())) throw new IsDenysErrorException(requestPlayer);
+        if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+        if (REQUEST_QUEUE.containsKey(requestPlayer) || REQUEST_QUEUE.containsKey(targetPlayer)) throw new ErrorRequestPendingException(requestPlayer);
+        if (requestPlayer.equals(targetPlayer)) throw new ErrorSelfOperationException(requestPlayer);
+        if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new ErrorTargetOfflineException(requestPlayer, targetPlayerName);
+        if (PlayerDataConfig.getPlayerData(targetPlayer).isDeny(requestPlayer.getUniqueId().toString())) throw new ErrorBlockedByTargetException(requestPlayer);
     }
 
     protected void setTimer(long delay, TimerType timerType){

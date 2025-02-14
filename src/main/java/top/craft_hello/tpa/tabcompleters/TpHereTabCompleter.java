@@ -27,7 +27,7 @@ public class TpHereTabCompleter implements TabCompleter {
                     list.add(player.getName());
                 }
             }
-            if (list.isEmpty()) list.add(language.getMessage("not_online_player"));
+            if (list.isEmpty()) list.add(language.getMessage("not_online_players"));
         }
         return list;
     }

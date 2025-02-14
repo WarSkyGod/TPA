@@ -26,6 +26,7 @@ public class PlayerDataConfig extends Configuration {
     private Player player;
     private String playerName;
     private String defaultHomeName;
+    private boolean setlang;
     private final Map<String, Location> HOMES = new HashMap<>();
     private List<String> denyList = new ArrayList<>();
     private UUID playerUUID;
@@ -69,6 +70,7 @@ public class PlayerDataConfig extends Configuration {
             configuration = YamlConfiguration.loadConfiguration(configurationFile);
             configuration.set("player_name", Bukkit.getOfflinePlayer(playerUUID).getName());
             configuration.set("language", getConfig().getDefaultLanguageStr());
+            configuration.set("setlang", false);
             saveConfiguration(null);
         }
         configuration = YamlConfiguration.loadConfiguration(configurationFile);
@@ -95,7 +97,8 @@ public class PlayerDataConfig extends Configuration {
         HandySchedulerUtil.runTaskTimerAsynchronously(loadPlayerTimer, 0, 1);
         this.playerName = configuration.getString("player_name");
         this.languageStr = configuration.getString("language");
-        defaultHomeName = configuration.getString("default_home");
+        this.defaultHomeName = configuration.getString("default_home");
+        this.setlang =  configuration.getBoolean("setlang");
         Set<String> homeSet = configuration.getKeys(true);
         for (String homeName : homeSet) {
             if (homeName.contains("homes.")) {
@@ -107,12 +110,12 @@ public class PlayerDataConfig extends Configuration {
                 }
             }
         }
-        denyList = configuration.getStringList("deny_list");
+        this.denyList = configuration.getStringList("deny_list");
         Location location = loadLocation("last_location");
-        if (!isNull(location)) lastLocation = location;
+        if (!isNull(location)) this.lastLocation = location;
 
         location = loadLocation("logout_location");
-        if (!isNull(location)) logoutLocation = location;
+        if (!isNull(location)) this.logoutLocation = location;
     }
 
     private void updateConfiguration() {
@@ -308,21 +311,21 @@ public class PlayerDataConfig extends Configuration {
     }
 
     public void checkHomeAmountIsMax()  {
-        if (isNull(player) || !player.isOnline()) throw new OfflineOrNullErrorException(null);
+        if (isNull(player) || !player.isOnline()) throw new ErrorTargetOfflineException(null, "null");
         PermissionType permissionType = getPermissionType(player);
         int homeAmount = HOMES.size();
         int maxHomeAmount = getConfig().getHomeAmountMax(permissionType);
         if (maxHomeAmount < 1) return;
-        if (homeAmount >= maxHomeAmount) throw new HomeAmountMaxErrorException(player, maxHomeAmount);
+        if (homeAmount >= maxHomeAmount) throw new HomeMaxLimitErrorException(player, maxHomeAmount);
     }
 
     public Location getHomeLocation()  {
-        if (isNull(defaultHomeName)) throw new NotDefaultHomeErrorException(player);
+        if (isNull(defaultHomeName)) throw new ErrorNoDefaultHomeException(player);
         return getHomeLocation(defaultHomeName);
     }
 
     public Location getHomeLocation(String homeName)  {
-        if (!containsHomeLocation(homeName)) throw new NotHomeErrorException(player, homeName);
+        if (!containsHomeLocation(homeName)) throw new ErrorHomeNotFoundException(player, homeName);
         return HOMES.get(homeName);
     }
 
@@ -331,7 +334,7 @@ public class PlayerDataConfig extends Configuration {
     }
 
     public Location getLastLocation()  {
-        if (!containsLastLocation()) throw new NotLastLocationErrorException(player);
+        if (!containsLastLocation()) throw new ErrorLastLocationMissingException(player);
         return lastLocation;
     }
 
@@ -340,7 +343,7 @@ public class PlayerDataConfig extends Configuration {
     }
 
     public Location getLogoutLocation(Player executor)  {
-        if (!containsLogoutLocation()) throw new NotLogoutLocationErrorException(executor);
+        if (!containsLogoutLocation()) throw new ErrorLogoutLocationMissingException(executor);
         return logoutLocation;
     }
 
@@ -350,11 +353,11 @@ public class PlayerDataConfig extends Configuration {
 
 
     public void checkIsNoDeny(String playerUUID, Player executor)  {
-        if (!isDeny(playerUUID)) throw new TargetIsNoDenysErrorException(executor);
+        if (!isDeny(playerUUID)) throw new ErrorNotBlacklistedException(executor);
     }
 
     public List<String> getDenyList(CommandSender sender)  {
-        if (denyList.isEmpty()) throw new NotAddDenysErrorException(sender);
+        if (denyList.isEmpty()) throw new ErrorNotBlockedException(sender);
         return denyList;
     }
 
@@ -382,6 +385,16 @@ public class PlayerDataConfig extends Configuration {
         return this.languageStr.equalsIgnoreCase(languageStr);
     }
 
+    public boolean isSetlang(){
+        return setlang;
+    }
+
+    public void setSetlang(boolean setlang) {
+        this.setlang = setlang;
+        configuration.set("setlang", setlang);
+        saveConfiguration(null);
+    }
+
     public void setLanguage(String languageStr) {
         if (isNull(languageStr) || equalsLanguageStr(languageStr)) return;
         this.languageStr = formatLangStr(languageStr);
@@ -391,8 +404,8 @@ public class PlayerDataConfig extends Configuration {
     }
 
     public void setDefaultHomeName(String homeName)  {
-        if (isNull(homeName) || !containsHomeLocation(homeName)) throw new NotHomeErrorException(player, homeName);
-        if (homeName.equalsIgnoreCase(defaultHomeName)) throw new IsDefaultHomeErrorException(player, homeName);
+        if (isNull(homeName) || !containsHomeLocation(homeName)) throw new ErrorHomeNotFoundException(player, homeName);
+        if (homeName.equalsIgnoreCase(defaultHomeName)) throw new ErrorDefaultHomeAlreadySetException(player, homeName);
         defaultHomeName = homeName;
         SendMessageUtil.setDefaultHomeSuccess(player, homeName);
     }
@@ -434,7 +447,7 @@ public class PlayerDataConfig extends Configuration {
             SendMessageUtil.delHomeSuccess(player, homeName);
             return;
         }
-        throw new NotHomeErrorException(player, homeName);
+        throw new ErrorHomeNotFoundException(player, homeName);
     }
 
     public void setLastLocation(Location location) {
@@ -452,7 +465,7 @@ public class PlayerDataConfig extends Configuration {
     }
 
     public List<String> getHomeNameList(CommandSender sender)  {
-        if (HOMES.isEmpty()) throw new NotSetHomesErrorException(sender);
+        if (HOMES.isEmpty()) throw new ErrorNoHomesSetException(sender);
         List<String> homeNameList = new ArrayList<>();
         for (Map.Entry<String, Location> homeMap : HOMES.entrySet()){
             homeNameList.add(homeMap.getKey());

@@ -1,0 +1,180 @@
+## TPA-Plugin Deutsch Sprachdatei
+
+#=======================
+# Grundkonfiguration
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Keine Spieler online"
+not_warps: "Keine Warps verfügbar"
+not_homes: "Keine Häuser verfügbar"
+spawn: "Spawn"
+last_location: "Letzte Position"
+rtp: "Zufälliger Teleportpunkt"
+lang.set_success: "&a&lClient-Sprache auf &6&l<target> &a&lgesetzt"
+
+#=======================
+# Schaltflächen-Interaktion
+#=======================
+## Schaltflächentext
+accept_button: "&a&l[Akzeptieren]"
+deny_button: "&c&l[Ablehnen]"
+blacklist.add_button: "&c&l[Ablehnen und blockieren]"
+blacklist.remove_button: "&a&l[Entblockieren]"
+teleport_button: "&a&l[Teleportieren]"
+location_set_button: "&6&l[Position setzen]"
+default_home_set_button: "&e&l[Als Standardheim festlegen]"
+delete_button: "&c&l[Löschen]"
+
+## Schaltflächenhinweise
+accept_click_hint: "&a&lKlicken zum Akzeptieren"
+deny_click_hint: "&c&lKlicken zum Ablehnen"
+blacklist.add_hint: "&c&lSpieler blockieren"
+blacklist.remove_hint: "&a&lSpieler entblockieren"
+teleport_click_hint: "&a&lKlicken zum Teleportieren"
+set_location_hint: "&6&lAktuelle Position setzen"
+set_default_home_hint: "&e&lAls Standardheim festlegen"
+delete_click_hint: "&c&lKlicken zum Löschen"
+
+#=======================
+# Teleportanfragen
+#=======================
+request.to_here: "&a&lSpieler &6&l<target> &a&lmöchte zu dir teleportieren! (&6&l<seconds>s&a&l)"
+request.to_target: "&a&lSpieler &6&l<target> &a&leinladet dich zu sich! (&6&l<seconds>s&a&l)"
+request.sent_success: "&a&lAnfrage an &6&l<target> &a&lgesendet!"
+request.timeout_notice: "&a&lAnfrage läuft in &6&l<seconds>s &a&lab!"
+request.expired_from: "&c&lAnfrage von &6&l<target> &c&labgelaufen"
+request.expired_to: "&c&lDeine Anfrage an &6&l<target> &c&lveraltet"
+
+#=======================
+# Häuser
+#=======================
+home.list_header: "&a&lVerfügbare Häuser:"
+home.set_success: "&a&lHome &6&l<target> &a&lgesetzt"
+home.default_set_success: "&a&lStandardheim auf &6&l<target> &a&lgesetzt"
+home.delete_success: "&a&lHome &6&l<target> &a&lgelöscht"
+home.teleport_success: "&a&lZum Home &6&l<target> &a&lteleportiert"
+home.max_limit_error: "&c&lMaximal &6&l<max_home_amount> &c&lHäuser erlaubt!"
+error.default_home_already_set: "&6&l<target> &c&list bereits Standardheim"
+
+#=======================
+# Warps
+#=======================
+warp.list_header: "&a&lVerfügbare Warps:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lgesetzt"
+warp.delete_success: "&a&lWarp &6&l<target> &a&lgelöscht"
+warp.teleport_success: "&a&lZum Warp &6&l<target> &a&lteleportiert"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn gesetzt"
+spawn.delete_success: "&a&lSpawn gelöscht"
+spawn.teleport_success: "&a&lZum Spawn teleportiert!"
+
+#=======================
+# Letzte Position
+#=======================
+back.teleport_success: "&a&lZur letzten Position teleportiert!"
+
+#=======================
+# Zufälliger Teleport
+#=======================
+rtp.generating: "&a&lGeneriere zufälligen Punkt..."
+rtp.success: "&a&lZufälliger Teleport erfolgreich!"
+rtp.failed: "&c&lZufälliger Teleport fehlgeschlagen!"
+
+#=======================
+# Blacklist
+#=======================
+blacklist.list_header: "&a&lDeine Blockierliste:"
+blacklist.add_success: "&a&l&6&l<target> &a&lgeblockt"
+blacklist.remove_success: "&a&l&6&l<target> &a&lentblockt"
+
+#=======================
+# Fehlermeldungen
+#=======================
+## Befehlsstatus
+error.command_disabled: "&c&lBefehl deaktiviert!"
+error.world_disabled: "&c&lIn dieser Welt nicht verfügbar!"
+error.command_cooldown: "&c&lWarte &6&l<seconds>s &c&lvor erneuter Nutzung!"
+
+## Berechtigungen
+error.console_restricted: "&c&lNur für Spieler!"
+error.permission_denied: "&c&lKeine Berechtigung!"
+
+## Spielerstatus
+error.no_online_players: "&c&lKeine Spieler online!"
+error.target_offline: "&c&l&6&l<target> &c&list offline!"
+error.self_operation: "&c&lNicht auf dich selbst anwendbar!"
+
+## Anfragestatus
+error.no_pending_request: "&c&lKeine ausstehenden Anfragen!"
+error.request_pending: "&c&lAusstehende Anfrage vorhanden"
+
+## Blacklist
+error.already_blacklisted: "&c&lBereits blockiert!"
+error.blocked_by_target: "&c&lDu wurdest blockiert!"
+error.blacklist_empty: "&c&lBlockierliste ist leer!"
+error.not_blacklisted: "&c&lNicht blockiert!"
+
+## Häuser
+error.home_not_found: "&c&lHome &6&l<target> &c&lnicht gefunden!"
+error.no_homes_set: "&c&lKeine Häuser gesetzt!"
+error.no_default_home: "&c&lKein Standardheim gesetzt!"
+
+## Warps
+error.warp_not_found: "&c&lWarp &6&l<target> &c&lnicht gefunden!"
+error.no_warps_set: "&c&lKeine Warps verfügbar!"
+
+## Positionen
+error.last_location_missing: "&c&lKeine letzte Position gespeichert!"
+error.logout_location_missing: "&c&lKeine Abmeldeposition verfügbar!"
+error.spawn_not_set: "&c&lSpawn nicht gesetzt!"
+
+## Befehlssyntax
+error.syntax_generic: "&c&lSyntaxfehler! Benutze: /<command>"
+error.syntax_tpa: "&c&lSyntaxfehler! Benutze: /<command> <Spieler>"
+error.syntax_tpall: "&c&lSyntaxfehler! Benutze: /<command> [player/warp/spawn] [Name]"
+error.syntax_warp: "&c&lSyntaxfehler! Benutze: /<command> <Warp>"
+error.syntax_home: "&c&lSyntaxfehler! Benutze: /<command> <Home>"
+
+## Systemfehler
+error.config_not_found: "&c&lKonfig neu generiert!"
+error.runtime: "&c&lPluginfehler: <message>"
+error.forwarded_error: "&c&lFehler von &6&l<target>&c&l:"
+
+#=======================
+# Teleportprozess
+#=======================
+teleport.accept.self: "&a&lAnfrage von &6&l<target> &a&lakzeptiert!"
+teleport.accept.target: "&a&l&6&l<target> &a&lhat angenommen!"
+teleport.deny.self: "&c&lAnfrage von &6&l<target> &c&labgelehnt!"
+teleport.deny.target: "&c&l&6&l<target> &c&lhat abgelehnt!"
+teleport.countdown: "&a&lTeleport in &6&l<seconds>s"
+teleport.cancel_on_move: "&a&lBewegung bricht Teleport ab!"
+teleport.canceled.self: "&c&lTeleport abgebrochen!"
+teleport.canceled.target: "&c&lTeleport wurde abgebrochen!"
+teleport.generic_success: "&a&lZu &6&l<target> &a&lteleportiert"
+teleport.tpall.to_target: "&a&lAdmin hat dich zu &6&l<target> &a&lteleportiert"
+teleport.tpall.to_self: "&a&lAdmin hat alle zu dir teleportiert"
+teleport.tpall.success: "&a&lAlle zu &6&l<target> &a&lteleportiert"
+teleport.logout_location: "&a&lZu &6&l<target>s &a&lAbmeldeposition teleportiert"
+
+#=======================
+# Systemnachrichten
+#=======================
+system.config_reloaded: "&a&lKonfig neu geladen!"
+system.plugin_loaded: "&a&lPlugin geladen! Version: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin entladen!"
+system.config_migrated_success: "&a&lKonfig migriert!"
+system.config_migrated: "&a&lAlte Konfig wird migriert (Backup erstellt)"
+system.debug_warning: "&c&lDebug-Modus aktiv - nach Gebrauch deaktivieren!"
+
+#=======================
+# Updates
+#=======================
+update.checking: "&a&lSuche nach Updates..."
+update.available: "&a&lNeue Version &6&lTPA-v<target> &a&lverfügbar: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lAktuelle Version installiert"
+update.failed: "&c&lUpdateprüfung fehlgeschlagen!"

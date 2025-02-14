@@ -24,7 +24,7 @@ public class LoadingConfigUtil {
         warpConfig = WarpConfig.getInstance();
         spawnConfig = SpawnConfig.getInstance();
         PlayerDataConfig.loadAllPlayerData();
-        if (config.isDebug()) Bukkit.getServer().getLogger().warning("[TPA] " + getLanguage().getMessage("debug_mode_on"));
+        if (config.isDebug()) Bukkit.getServer().getLogger().warning("[TPA] " + getLanguage().getMessage("system.debug_warning"));
     }
 
     public static Plugin getPlugin() {
@@ -53,7 +53,7 @@ public class LoadingConfigUtil {
             spawnConfig.reloadConfiguration();
             PlayerDataConfig.reloadAllPlayerData();
             SendMessageUtil.configReloaded(sender);
-            if (config.isDebug()) Bukkit.getServer().getLogger().warning("[TPA] " + getLanguage().getMessage("debug_mode_on"));
+            if (config.isDebug()) Bukkit.getServer().getLogger().warning("[TPA] " + getLanguage().getMessage("system.debug_warning"));
         });
     }
 }

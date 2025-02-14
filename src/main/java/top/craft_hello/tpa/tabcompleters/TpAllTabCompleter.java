@@ -32,17 +32,18 @@ public class TpAllTabCompleter implements TabCompleter {
 
         if (args.length == 2){
             String subCommand = args[args.length - 2].toLowerCase();
+            LanguageConfig language = LanguageConfig.getLanguage(sender);
             switch (subCommand) {
                 case "player":
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         list.add(player.getName());
                     }
+                    if (list.isEmpty()) list.add(language.getMessage("not_online_players"));
                     return list;
                 case "warp":
-                    LanguageConfig language = LanguageConfig.getLanguage(sender);
                     WarpConfig warp = LoadingConfigUtil.getWarpConfig();
                     list = warp.getWarpNameList();
-                    if (list.isEmpty()) list.add(language.getMessage("warp_name"));
+                    if (list.isEmpty()) list.add(language.getMessage("not_warps"));
                     return list;
             }
         }

@@ -1,107 +1,180 @@
 ## TPA 插件简体中文语言文件
+
+#=======================
+# 基础配置
+#=======================
 prefix: "&a&l> "
 console_prefix: "&7&l[TPA] "
-not_online_player: "无在线玩家"
-warp_name: "当前无可用传送点"
-home_name: "当前无可用的家"
+not_online_players: "无在线玩家"
+not_warps: "当前无可用传送点"
+not_homes: "当前无可用的家"
 spawn: "主城"
 last_location: "上一次的位置"
 rtp: "随机传送点"
+lang.set_success: "&a&l您已设置客户端显示语言为 &6&l<target>"
+
+#=======================
+# 按钮交互
+#=======================
+## 按钮文本
 accept_button: "&a&l[接受]"
 deny_button: "&c&l[拒绝]"
-deny_and_add_denys_button: "&c&l[拒绝并拉黑]"
-remove_denys_button: "&a&l[取消拉黑]"
-click_accept: "&a&l点击此处接受传送"
-click_deny: "&c&l点击此处拒绝传送"
-click_deny_and_add_denys: "&c&l点击此处拒绝并拉黑该玩家"
-click_remove_denys: "&a&l点击此处取消拉黑该玩家"
-teleport_button: "&a&l[传送] "
-setting_button: "&6&l[设置位置] "
-setting_default_home_button: "&e&l[设置为默认的家] "
-delete_button: "&c&l[删除] "
-click_teleport: "&a&l点击传送"
-click_setting: "&6&l点击设置为当前位置"
-click_setting_default_home: "&e&l点击设置为默认的家"
-click_delete: "&c&l点击删除"
-not_add_deny_error: "&c&l您当前没有拉黑任何人！"
-not_set_warps_error: "&c&l当前没有设置传送点！"
-not_set_homes_error: "&c&l您当前没有设置家！"
-not_default_home_error: "&c&l您当前没有默认的家！"
-denys: "&a&l您的黑名单："
-warps: "&a&l当前可用的传送点："
-homes: "&a&l当前可用的家："
-config_version_update: "&a&l检测到旧版本的配置文件，正在为您迁移（旧版配置文件会自动为您复制到backup目录中）"
-config_version_update_success: "&a&l配置文件已迁移完成！"
-plugin_loaded: "&a&l插件已成功加载！当前版本为：&6&l<target>"
-check_update: "&a&l正在检查更新..."
-plugin_update_message: "&a&l发现新版本：&6&lTPA-v<target>，&a&l请前往&6&l https://modrinth.com/plugin/tpa.66666/versions &a&l查看更新！"
-plugin_latest_version: "&a&l当前已是最新版本"
-plugin_unloaded: "&c&l插件已成功卸载！"
-config_reloaded: "&a&l配置文件已重新加载！"
-plugin_error: "&c&l插件出错！<message>"
-cannot_get_the_latest_version_error: "&c&l无法获取最新版本！请检查网络连接情况！"
-disable_command_error: "&c&l服务器未启用此命令！"
-disable_world_use_command_error: "&c&l在此世界中无法使用该命令！"
-command_delay_not_end_error: "&c&l您还需要等待 <seconds> 秒才能使用此命令！"
-not_permission_error: "&c&l您没有权限执行该命令！"
-console_use_error: "&c&l此命令只能由玩家执行！"
-command_error: "&c&l您输入的命令不正确！正确的命令为：/<target>"
-tpa_command_error: "&c&l您输入的命令不正确！正确的命令为：/<target> <玩家名称>"
-tpall_command_error: "&c&l您输入的命令不正确！正确的命令为：/<target> [player/warp/spawn] [玩家名称/传送点名称]"
-warp_command_error: "&c&l您输入的命令不正确！正确的命令为：/<target> <传送点>"
-home_command_error: "&c&l您输入的命令不正确！正确的命令为：/<target> <家>"
-offline_or_null_error: "&c&l对方不在线或不存在！"
-you_denys_you_error: "&c&l您不能添加自己！"
-is_denys_error: "&c&l对方已将您拉黑！"
-target_is_denys_error: "&c&l对方已经在您的黑名单中了！"
-target_is_no_denys_error: "&c&l对方不在您的黑名单中！"
-add_denys_success: "&a&l已将 &6&l<target> &a&l拉黑"
-remove_denys_success: "&a&l已将 &6&l<target> &a&l取消拉黑"
-self_requested_error: "&c&l您不能对自己发送传送请求！"
-request_lock_error: "&c&l对方或您有待处理的请求，暂时无法使用该命令"
-request_teleport_to_target: "&a&l玩家 &6&l<target> &a&l想传送到您的位置，该请求 &6&l<seconds> &a&l秒后失效！"
-request_target_teleport_to_here: "&a&l玩家 &6&l<target> &a&l邀请您传送到对方的位置，该请求 &6&l<seconds> &a&l秒后失效！"
-success_sent_request: "&a&l您已向 &6&l<target> &a&l发送了传送请求！"
-target_seconds: "&a&l请求在 &6&l<seconds> &a&l秒内有效！"
-you_accept: "&a&l您接受了来自 &6&l<target> &a&l的传送请求！"
-target_accept: "&a&l玩家 &6&l<target> &a&l接受了您的传送请求！"
-you_deny: "&c&l您拒绝了来自 &6&l<target> &c&l的传送请求！"
-target_deny: "&c&l玩家 &6&l<target> &c&l拒绝了您的传送请求！"
-teleport_countdown: "&a&l您将在 &6&l<seconds> &a&l秒后传送到 &6&l<target>"
-move_cancel_message: "&a&l移动可取消传送"
-move_canceled_error: "&c&l因为您移动了，传送被取消！"
-from_target_expired: "&c&l来自 &6&l<target> &c&l的传送请求已失效！"
-to_target_expired: "&c&l您发送给 &6&l<target> &c&l的传送请求已失效！"
-not_request_accept: "&c&l您当前没有传送请求可以接受！"
-not_request_deny: "&c&l您当前没有传送请求可以拒绝！"
-admin_tp_you_to_message: "&a&l管理员将您传送至 &6&l<target>"
-admin_tp_all_player_to_you_message: "&a&l管理员将所有玩家传送至您的位置"
-tpall_command_success: "&a&l已将在线玩家传送至 &6&l<target>"
-tplogout_command_success: "&a&l您已传送至 &6&l<target> &a&l最后下线的位置"
-setlang_command_success: "&a&l您已设置客户端显示语言为 &6&l<target>"
-not_online_player_error: "&c&l当前没有在线玩家！"
-not_warp_error: "&c&l传送点 <target> 不存在！"
-not_home_error: "&c&l家 <target> 不存在！"
-home_amount_max_error: "&c&l您最多只能拥有 <max_home_amount> 个家！"
-is_default_home_error: "&6&l<target> &c&l已是默认的家"
-tp_to_warp_message: "&a&l您已传送至传送点 &6&l<target>"
-you_teleported_to_message: "&a&l您已传送至 &6&l<target>"
-set_warp_success: "&a&l您已设置传送点 &6&l<target>"
-del_warp_success: "&a&l您已删除传送点 &6&l<target>"
-set_home_success: "&a&l您已设置家 &6&l<target>"
-set_default_home_success: "&a&l您已将 &6&l<target> &a&l设置为默认的家"
-del_home_success: "&a&l您已删除家 &6&l<target>"
-set_spawn_success: "&a&l您已设置 &6&l<target>"
-del_spawn_success: "&a&l您已删除 &6&l<target>"
-target_canceled_teleport: "&c&l对方取消了传送！"
-not_last_location_error: "&c&l您目前没有上一次的位置！"
-not_logout_location_error: "&c&l该玩家没有最后下线的位置！"
-not_set_spawn_error: "&c&l服务器未设置主城传送点！"
-back_spawn_success_message: "&a&l您已传送到 &6&l<target>！"
-back_last_location_success_message: "&a&l您已传送到 &6&l<target>！"
-rtp_success_message: "&a&l您已传送到 &6&l<target>！"
-config_not_found_error: "&c&l检测到配置文件不存在！已为您重新生成配置文件！"
-debug_mode_on: "注意，您已开启 debug 模式，请务必在使用完毕后在配置文件中关闭 debug 模式！"
-form_target_error_message: "&c&l来自 &6&l<target> &c&l的错误信息："
-generate_random_location_message: "&a&l正在生成随机传送点，请稍候..."
-generate_random_location_error: "&c&l生成随机传送点失败！"
+blacklist.add_button: "&c&l[拒绝并加入黑名单]"
+blacklist.remove_button: "&a&l[移出黑名单]"
+teleport_button: "&a&l[传送]"
+location_set_button: "&6&l[设置位置]"
+default_home_set_button: "&e&l[设为默认家]"
+delete_button: "&c&l[删除]"
+
+## 按钮提示
+accept_click_hint: "&a&l点击此处接受传送"
+deny_click_hint: "&c&l点击此处拒绝传送"
+blacklist.add_hint: "&c&l点击拒绝并加入黑名单"
+blacklist.remove_hint: "&a&l点击将玩家移出黑名单"
+teleport_click_hint: "&a&l点击传送"
+set_location_hint: "&6&l点击设置为当前位置"
+set_default_home_hint: "&e&l点击设置为默认的家"
+delete_click_hint: "&c&l点击删除"
+
+#=======================
+# 传送请求
+#=======================
+request.to_here: "&a&l玩家 &6&l<target> &a&l想传送到您的位置，该请求 &6&l<seconds> &a&l秒后失效！"
+request.to_target: "&a&l玩家 &6&l<target> &a&l邀请您传送到对方的位置，该请求 &6&l<seconds> &a&l秒后失效！"
+request.sent_success: "&a&l您已向 &6&l<target> &a&l发送了传送请求！"
+request.timeout_notice: "&a&l请求在 &6&l<seconds> &a&l秒内有效！"
+request.expired_from: "&c&l来自 &6&l<target> &c&l的传送请求已失效！"
+request.expired_to: "&c&l您发送给 &6&l<target> &c&l的传送请求已失效！"
+
+#=======================
+# 家
+#=======================
+home.list_header: "&a&l当前可用的家："
+home.set_success: "&a&l您已设置家 &6&l<target>"
+home.default_set_success: "&a&l您已将 &6&l<target> &a&l设置为默认的家"
+home.delete_success: "&a&l您已删除家 &6&l<target>"
+home.teleport_success: "&a&l您已传送至家 &6&l<target>"
+home.max_limit_error: "&c&l您最多只能拥有 <max_home_amount> 个家！"
+error.default_home_already_set: "&6&l<target> &c&l已是默认的家"
+
+#=======================
+# 传送点
+#=======================
+warp.list_header: "&a&l当前可用的传送点："
+warp.set_success: "&a&l您已设置传送点 &6&l<target>"
+warp.delete_success: "&a&l您已删除传送点 &6&l<target>"
+warp.teleport_success: "&a&l您已传送至传送点 &6&l<target>"
+
+#=======================
+# 主城
+#=======================
+spawn.set_success: "&a&l您已设置 &6&l主城"
+spawn.delete_success: "&a&l您已删除 &6&l主城"
+spawn.teleport_success: "&a&l您已传送到 &6&l主城！"
+
+#=======================
+# 上一次的位置
+#=======================
+back.teleport_success: "&a&l您已传送到 &6&l上一次的位置！"
+
+#=======================
+# 随机传送
+#=======================
+rtp.generating: "&a&l正在生成随机传送点，请稍候..."
+rtp.success: "&a&l您已传送到随机传送点！"
+rtp.failed: "&c&l生成随机传送点失败！"
+
+#=======================
+# 黑名单
+#=======================
+blacklist.list_header: "&a&l您的黑名单："
+blacklist.add_success: "&a&l已将 &6&l<target> &a&l加入黑名单"
+blacklist.remove_success: "&a&l已将 &6&l<target> &a&l移出黑名单"
+
+#=======================
+# 错误提示
+#=======================
+## 命令状态
+error.command_disabled: "&c&l服务器未启用此命令！"
+error.world_disabled: "&c&l在此世界中无法使用该命令！"
+error.command_cooldown: "&c&l您还需要等待 <seconds> 秒才能使用此命令！"
+
+## 权限与执行
+error.console_restricted: "&c&l此命令只能由玩家执行！"
+error.permission_denied: "&c&l您没有权限执行该命令！"
+
+## 玩家状态
+error.no_online_players: "&c&l当前没有在线玩家！"
+error.target_offline: "&c&l玩家 &6&l<target> &c&l不在线！"
+error.self_operation: "&c&l此命令不能对自己执行！"
+
+## 请求状态
+error.no_pending_request: "&c&l当前没有待处理的传送请求！"
+error.request_pending: "&c&l对方或您有待处理的请求，暂时无法使用该命令"
+
+## 黑名单
+error.already_blacklisted: "&c&l对方已在您的黑名单中！"
+error.blocked_by_target: "&c&l对方已将您拉黑！"
+error.blacklist_empty: "&c&l您的黑名单为空！"
+error.not_blacklisted: "&c&l对方不在您的黑名单中！"
+
+## 家
+error.home_not_found: "&c&l家 <target> 不存在！"
+error.no_homes_set: "&c&l您当前没有设置家！"
+error.no_default_home: "&c&l您当前没有默认的家！"
+
+## 传送点
+error.warp_not_found: "&c&l传送点 <target> 不存在！"
+error.no_warps_set: "&c&l当前没有可用传送点！"
+
+## 位置记录
+error.last_location_missing: "&c&l当前没有可用的上一次的位置！"
+error.logout_location_missing: "&c&l该玩家没有最后下线位置记录！"
+error.spawn_not_set: "&c&l服务器未设置主城传送点！"
+
+## 命令语法
+error.syntax_generic: "&c&l命令语法错误！正确用法：/<command>"
+error.syntax_tpa: "&c&l命令语法错误！正确用法：/<command> <玩家名称>"
+error.syntax_tpall: "&c&l命令语法错误！正确用法：/<command> [player/warp/spawn] [名称]"
+error.syntax_warp: "&c&l命令语法错误！正确用法：/<command> <传送点>"
+error.syntax_home: "&c&l命令语法错误！正确用法：/<command> <家名称>"
+
+## 系统错误
+error.config_not_found: "&c&l配置文件不存在，已重新生成！"
+error.runtime: "&c&l插件错误：<message>"
+error.forwarded_error: "&c&l来自 &6&l<target> &c&l的错误信息："
+
+#=======================
+# 传送过程提示
+#=======================
+teleport.accept.self: "&a&l您接受了来自 &6&l<target> &a&l的传送请求！"
+teleport.accept.target: "&a&l玩家 &6&l<target> &a&l接受了您的传送请求！"
+teleport.deny.self: "&c&l您拒绝了来自 &6&l<target> &c&l的传送请求！"
+teleport.deny.target: "&c&l玩家 &6&l<target> &c&l拒绝了您的传送请求！"
+teleport.countdown: "&a&l您将在 &6&l<seconds> &a&l秒后传送到 &6&l<target>"
+teleport.cancel_on_move: "&a&l移动将取消传送！"
+teleport.canceled.self: "&c&l您取消了传送！"
+teleport.canceled.target: "&c&l对方取消了传送！"
+teleport.generic_success: "&a&l您已传送至 &6&l<target>"
+teleport.tpall.to_target: "&a&l管理员已将您传送至 &6&l<target>"
+teleport.tpall.to_self: "&a&l管理员将所有玩家传送到您的位置"
+teleport.tpall.success: "&a&l已将在线玩家传送至 &6&l<target>"
+teleport.logout_location: "&a&l您已传送至 &6&l<target> &a&l最后下线的位置"
+
+#=======================
+# 系统消息
+#=======================
+system.config_reloaded: "&a&l配置文件已重新加载！"
+system.plugin_loaded: "&a&l插件已成功加载！当前版本为：&6&l<target>"
+system.plugin_unloaded: "&c&l插件已成功卸载！"
+system.config_migrated_success: "&a&l配置文件已迁移完成！"
+system.config_migrated: "&a&l检测到旧版本的配置文件，正在为您迁移（旧版配置文件会自动为您备份到backup目录中）"
+system.debug_warning: "注意，您已开启 debug 模式，请务必在使用完毕后关闭！"
+
+#=======================
+# 更新
+#=======================
+update.checking: "&a&l正在检查更新..."
+update.available: "&a&l发现新版本：&6&lTPA-v<target>，&a&l请前往&6&l https://modrinth.com/plugin/tpa.66666/versions &a&l查看更新！"
+update.latest: "&a&l当前已是最新版本"
+update.failed: "&c&l更新检查失败，请检查网络连接！"

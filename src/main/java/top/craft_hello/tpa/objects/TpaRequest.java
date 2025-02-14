@@ -7,7 +7,7 @@ import top.craft_hello.tpa.utils.SendMessageUtil;
 import top.craft_hello.tpa.abstracts.PlayerToPlayerRequest;
 import top.craft_hello.tpa.enums.CommandType;
 import top.craft_hello.tpa.enums.TimerType;
-import top.craft_hello.tpa.exceptions.OfflineOrNullErrorException;
+import top.craft_hello.tpa.exceptions.ErrorTargetOfflineException;
 
 import static java.util.Objects.isNull;
 import static top.craft_hello.tpa.utils.LoadingConfigUtil.getConfig;
@@ -35,8 +35,8 @@ public class TpaRequest extends PlayerToPlayerRequest {
     }
 
     public void checkError() {
-        if (isNull(requestPlayer) || !requestPlayer.isOnline()) throw new OfflineOrNullErrorException(requestPlayer);
-        if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new OfflineOrNullErrorException(requestPlayer);
+        if (isNull(requestPlayer) || !requestPlayer.isOnline()) throw new ErrorTargetOfflineException(requestPlayer, "null");
+        if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new ErrorTargetOfflineException(requestPlayer, targetPlayerName);
     }
 
     @Override

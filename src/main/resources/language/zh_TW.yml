@@ -1,0 +1,180 @@
+## TPA 插件繁體中文（中國台灣）語言檔案
+
+#=======================
+# 基礎設定
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "無線上玩家"
+not_warps: "目前無可用傳送點"
+not_homes: "目前無可用家園"
+spawn: "主城"
+last_location: "上次位置"
+rtp: "隨機傳送點"
+lang.set_success: "&a&l已設定客戶端顯示語言為 &6&l<target>"
+
+#=======================
+# 按鈕互動
+#=======================
+## 按鈕文字
+accept_button: "&a&l[接受]"
+deny_button: "&c&l[拒絕]"
+blacklist.add_button: "&c&l[拒絕並加入黑名單]"
+blacklist.remove_button: "&a&l[移出黑名單]"
+teleport_button: "&a&l[傳送]"
+location_set_button: "&6&l[設定位置]"
+default_home_set_button: "&e&l[設為預設家]"
+delete_button: "&c&l[刪除]"
+
+## 按鈕提示
+accept_click_hint: "&a&l點擊此處接受傳送"
+deny_click_hint: "&c&l點擊此處拒絕傳送"
+blacklist.add_hint: "&c&l點擊拒絕並加入黑名單"
+blacklist.remove_hint: "&a&l點擊將玩家移出黑名單"
+teleport_click_hint: "&a&l點擊傳送"
+set_location_hint: "&6&l點擊設定目前位置"
+set_default_home_hint: "&e&l點擊設為預設家園"
+delete_click_hint: "&c&l點擊刪除"
+
+#=======================
+# 傳送請求
+#=======================
+request.to_here: "&a&l玩家 &6&l<target> &a&l想傳送到您的位置，該請求 &6&l<seconds> &a&l秒後失效！"
+request.to_target: "&a&l玩家 &6&l<target> &a&l邀請您傳送到對方位置，該請求 &6&l<seconds> &a&l秒後失效！"
+request.sent_success: "&a&l已向 &6&l<target> &a&l發送傳送請求！"
+request.timeout_notice: "&a&l請求將在 &6&l<seconds> &a&l秒內有效！"
+request.expired_from: "&c&l來自 &6&l<target> &c&l的傳送請求已失效！"
+request.expired_to: "&c&l傳送給 &6&l<target> &c&l的請求已失效！"
+
+#=======================
+# 家園系統
+#=======================
+home.list_header: "&a&l可用家園："
+home.set_success: "&a&l已設定家園 &6&l<target>"
+home.default_set_success: "&a&l已將 &6&l<target> &a&l設為預設家園"
+home.delete_success: "&a&l已刪除家園 &6&l<target>"
+home.teleport_success: "&a&l已傳送至家園 &6&l<target>"
+home.max_limit_error: "&c&l最多只能擁有 <max_home_amount> 個家園！"
+error.default_home_already_set: "&6&l<target> &c&l已是預設家園"
+
+#=======================
+# 傳送點系統
+#=======================
+warp.list_header: "&a&l可用傳送點："
+warp.set_success: "&a&l已設定傳送點 &6&l<target>"
+warp.delete_success: "&a&l已刪除傳送點 &6&l<target>"
+warp.teleport_success: "&a&l已傳送至傳送點 &6&l<target>"
+
+#=======================
+# 主城系統
+#=======================
+spawn.set_success: "&a&l已設定 &6&l主城位置"
+spawn.delete_success: "&a&l已移除 &6&l主城設定"
+spawn.teleport_success: "&a&l已傳送至 &6&l主城！"
+
+#=======================
+# 位置記錄
+#=======================
+back.teleport_success: "&a&l已傳送至 &6&l上次位置！"
+
+#=======================
+# 隨機傳送
+#=======================
+rtp.generating: "&a&l正在產生隨機傳送點..."
+rtp.success: "&a&l已傳送至隨機位置！"
+rtp.failed: "&c&l產生隨機傳送點失敗！"
+
+#=======================
+# 黑名單系統
+#=======================
+blacklist.list_header: "&a&l您的黑名單："
+blacklist.add_success: "&a&l已將 &6&l<target> &a&l加入黑名單"
+blacklist.remove_success: "&a&l已將 &6&l<target> &a&l移出黑名單"
+
+#=======================
+# 錯誤提示
+#=======================
+## 指令狀態
+error.command_disabled: "&c&l伺服器未啟用此指令！"
+error.world_disabled: "&c&l此世界無法使用此指令！"
+error.command_cooldown: "&c&l請等待 &6&l<seconds> &c&l秒後再使用！"
+
+## 權限相關
+error.console_restricted: "&c&l此指令限玩家使用！"
+error.permission_denied: "&c&l您沒有執行權限！"
+
+## 玩家狀態
+error.no_online_players: "&c&l目前沒有線上玩家！"
+error.target_offline: "&c&l玩家 &6&l<target> &c&l不在線上！"
+error.self_operation: "&c&l無法對自己執行此操作！"
+
+## 請求狀態
+error.no_pending_request: "&c&l沒有待處理的傳送請求！"
+error.request_pending: "&c&l您或對方有未處理的請求！"
+
+## 黑名單
+error.already_blacklisted: "&c&l對方已在您的黑名單！"
+error.blocked_by_target: "&c&l您已被對方封鎖！"
+error.blacklist_empty: "&c&l黑名單是空的！"
+error.not_blacklisted: "&c&l對方不在黑名單中！"
+
+## 家園
+error.home_not_found: "&c&l家園 &6&l<target> &c&l不存在！"
+error.no_homes_set: "&c&l尚未設定任何家園！"
+error.no_default_home: "&c&l未設定預設家園！"
+
+## 傳送點
+error.warp_not_found: "&c&l傳送點 &6&l<target> &c&l不存在！"
+error.no_warps_set: "&c&l目前沒有傳送點！"
+
+## 位置記錄
+error.last_location_missing: "&c&l沒有上次位置記錄！"
+error.logout_location_missing: "&c&l該玩家沒有登出位置記錄！"
+error.spawn_not_set: "&c&l尚未設定主城位置！"
+
+## 指令語法
+error.syntax_generic: "&c&l指令語法錯誤！正確用法：/<command>"
+error.syntax_tpa: "&c&l指令語法錯誤！正確用法：/<command> <玩家名稱>"
+error.syntax_tpall: "&c&l指令語法錯誤！正確用法：/<command> [player/warp/spawn] [名稱]"
+error.syntax_warp: "&c&l指令語法錯誤！正確用法：/<command> <傳送點>"
+error.syntax_home: "&c&l指令語法錯誤！正確用法：/<command> <家園名稱>"
+
+## 系統錯誤
+error.config_not_found: "&c&l設定檔不存在，已重新建立！"
+error.runtime: "&c&l插件錯誤：<message>"
+error.forwarded_error: "&c&l來自 &6&l<target> &c&l的錯誤訊息："
+
+#=======================
+# 傳送過程提示
+#=======================
+teleport.accept.self: "&a&l您已接受 &6&l<target> &a&l的傳送請求！"
+teleport.accept.target: "&a&l玩家 &6&l<target> &a&l接受了您的請求！"
+teleport.deny.self: "&c&l您已拒絕 &6&l<target> &c&l的傳送請求！"
+teleport.deny.target: "&c&l玩家 &6&l<target> &c&l拒絕了您的請求！"
+teleport.countdown: "&a&l將於 &6&l<seconds> &a&l秒後傳送至 &6&l<target>"
+teleport.cancel_on_move: "&a&l移動會取消傳送！"
+teleport.canceled.self: "&c&l您已取消傳送！"
+teleport.canceled.target: "&c&l對方已取消傳送！"
+teleport.generic_success: "&a&l已成功傳送至 &6&l<target>"
+teleport.tpall.to_target: "&a&l管理員已將您傳送至 &6&l<target>"
+teleport.tpall.to_self: "&a&l所有玩家已傳送至您的位置"
+teleport.tpall.success: "&a&l已傳送所有線上玩家至 &6&l<target>"
+teleport.logout_location: "&a&l已傳送至 &6&l<target> &a&l最後登出位置"
+
+#=======================
+# 系統訊息
+#=======================
+system.config_reloaded: "&a&l設定檔已重新載入！"
+system.plugin_loaded: "&a&l插件已啟用！目前版本：&6&l<target>"
+system.plugin_unloaded: "&c&l插件已停用！"
+system.config_migrated_success: "&a&l設定檔遷移完成！"
+system.config_migrated: "&a&l偵測到舊版設定檔，正在遷移（舊檔備份於backup目錄）"
+system.debug_warning: "&c&l偵錯模式已啟用，使用後請務必關閉！"
+
+#=======================
+# 更新系統
+#=======================
+update.checking: "&a&l正在檢查更新..."
+update.available: "&a&l發現新版本：&6&lTPA-v<target>&a&l 請至 &6&lhttps://modrinth.com/plugin/tpa.66666/versions &a&l查看"
+update.latest: "&a&l目前已是最新版本"
+update.failed: "&c&l檢查更新失敗，請確認網路連線！"

@@ -43,7 +43,7 @@ public abstract class PlayerToLocationRequest extends Request {
     }
 
     protected void checkError() {
-        if (isNull(requestPlayer) || !requestPlayer.isOnline()) throw new OfflineOrNullErrorException(requestPlayer);
+        if (isNull(requestPlayer) || !requestPlayer.isOnline()) throw new ErrorTargetOfflineException(requestPlayer, "null");
     }
 
     protected void checkError(CommandSender requestObject, String[] args)  {
@@ -53,30 +53,30 @@ public abstract class PlayerToLocationRequest extends Request {
         switch (commandType) {
             case WARP:
                 command = "warp";
-                if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+                if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = (Player) requestObject;
                 requestPlayerName = requestPlayer.getName();
                 this.delay = LoadingConfigUtil.getConfig().getTeleportDelay(requestPlayer);
-                if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-                if (!config.hasPermission(requestPlayer, PermissionType.WARP)) throw new NotPermissionErrorException(requestPlayer);
-                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new RequestLockErrorException(requestPlayer);
-                if (args.length > 1) throw new WarpCommandErrorException(requestPlayer, command);
+                if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+                if (!config.hasPermission(requestPlayer, PermissionType.WARP)) throw new ErrorPermissionDeniedException(requestPlayer);
+                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
+                if (args.length > 1) throw new ErrorSyntaxWarpException(requestPlayer, command);
                 targetName = args[args.length - 1];
-                if (!LoadingConfigUtil.getWarpConfig().containsWarpLocation(targetName)) throw new NotWarpErrorException(requestPlayer, targetName);
+                if (!LoadingConfigUtil.getWarpConfig().containsWarpLocation(targetName)) throw new ErrorWarpNotFoundException(requestPlayer, targetName);
                 location = LoadingConfigUtil.getWarpConfig().getWarpLocation(requestPlayer, targetName);
                 break;
             case HOME:
                 command = "home";
-                if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+                if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = (Player) requestObject;
                 requestPlayerName = requestPlayer.getName();
                 this.delay = LoadingConfigUtil.getConfig().getTeleportDelay(requestPlayer);
-                if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-                if (!config.hasPermission(requestPlayer, PermissionType.HOME)) throw new NotPermissionErrorException(requestPlayer);
-                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new RequestLockErrorException(requestPlayer);
-                if (args.length > 1) throw new HomeCommandErrorException(requestPlayer, command);
+                if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+                if (!config.hasPermission(requestPlayer, PermissionType.HOME)) throw new ErrorPermissionDeniedException(requestPlayer);
+                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
+                if (args.length > 1) throw new ErrorSyntaxHomeException(requestPlayer, command);
                 playerDataConfig = PlayerDataConfig.getPlayerData(requestPlayer);
                 if (args.length == 0){
                     location = playerDataConfig.getHomeLocation();
@@ -87,43 +87,43 @@ public abstract class PlayerToLocationRequest extends Request {
                 location = PlayerDataConfig.getPlayerData(requestPlayer).getHomeLocation(targetName);
                 break;
             case SPAWN:
-                if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+                if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = (Player) requestObject;
                 requestPlayerName = requestPlayer.getName();
                 this.delay = LoadingConfigUtil.getConfig().getTeleportDelay(requestPlayer);
-                if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-                if (!config.hasPermission(requestPlayer, PermissionType.SPAWN)) throw new NotPermissionErrorException(requestPlayer);
-                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new RequestLockErrorException(requestPlayer);
-                if (!LoadingConfigUtil.getSpawnConfig().containsSpawnLocation()) throw new NotSetSpawnErrorException(requestPlayer);
+                if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+                if (!config.hasPermission(requestPlayer, PermissionType.SPAWN)) throw new ErrorPermissionDeniedException(requestPlayer);
+                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
+                if (!LoadingConfigUtil.getSpawnConfig().containsSpawnLocation()) throw new ErrorSpawnNotSetException(requestPlayer);
                 location = LoadingConfigUtil.getSpawnConfig().getSpawnLocation(requestPlayer);
                 targetName = "spawn";
                 break;
             case BACK:
-                if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+                if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = (Player) requestObject;
                 requestPlayerName = requestPlayer.getName();
                 this.delay = LoadingConfigUtil.getConfig().getTeleportDelay(requestPlayer);
-                if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-                if (!config.hasPermission(requestPlayer, PermissionType.BACK)) throw new NotPermissionErrorException(requestPlayer);
-                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new RequestLockErrorException(requestPlayer);
+                if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+                if (!config.hasPermission(requestPlayer, PermissionType.BACK)) throw new ErrorPermissionDeniedException(requestPlayer);
+                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
                 location = PlayerDataConfig.getPlayerData(requestPlayer).getLastLocation();
                 targetName = "last_location";
                 break;
             case RTP:
                 random.setSeed((long) (System.currentTimeMillis() + Bukkit.getTPS()[0]));
-                if (!(requestObject instanceof Player)) throw new ConsoleUseErrorException(requestObject);
+                if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = ((Player) requestObject);
                 requestPlayerName = requestPlayer.getName();
                 this.delay = LoadingConfigUtil.getConfig().getTeleportDelay(requestPlayer);
-                if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(requestPlayer);
-                if (!config.hasPermission(requestPlayer, PermissionType.RTP)) throw new NotPermissionErrorException(requestPlayer);
-                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new CommandDelayNotEndErrorException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
-                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new RequestLockErrorException(requestPlayer);
+                if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(requestPlayer);
+                if (!config.hasPermission(requestPlayer, PermissionType.RTP)) throw new ErrorPermissionDeniedException(requestPlayer);
+                if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
+                if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
                 targetName = "rtp";
                 World world = requestPlayer.getWorld();
-                if (config.isRtpDisableWorld(world)) throw new DisableWorldUseCommandErrorException(requestPlayer);
+                if (config.isRtpDisableWorld(world)) throw new ErrorWorldDisabledException(requestPlayer);
                 SendMessageUtil.generateRandomLocationMessage(requestPlayer);
                 if (config.isEnableTitleMessage()) {
                     SendMessageUtil.titleGenerateRandomLocationMessage(requestPlayer);
@@ -141,7 +141,7 @@ public abstract class PlayerToLocationRequest extends Request {
                 location.setY(y);
                 break;
             default:
-                throw new PluginErrorException(requestObject, "在 objects.PlayerToLocationRequest : 35行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
+                throw new ErrorRuntimeException(requestObject, "在 objects.PlayerToLocationRequest : 35行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
         }
     }
 
@@ -170,7 +170,7 @@ public abstract class PlayerToLocationRequest extends Request {
             countdownMessageTimer.cancel();
             if (LoadingConfigUtil.getConfig().isEnableTitleMessage()){
                 LanguageConfig language = LanguageConfig.getLanguage(requestPlayer);
-                String title = language.getFormatMessage("move_canceled_error");
+                String title = language.getFormatMessage("teleport.canceled.self");
                 if (LoadingConfigUtil.getConfig().isEnableSound()) PlayerSchedulerUtil.playSound(requestPlayer, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 requestPlayer.sendTitle(title, "");
             }
@@ -257,7 +257,7 @@ public abstract class PlayerToLocationRequest extends Request {
                                 this.cancel();
                             }
                             if (--sec < 0) {
-                                throw new GenerateRandomLocationErrorException(requestPlayer);
+                                throw new RtpFailedException(requestPlayer);
                             }
                         } catch (Exception ignored) {
                             this.cancel();
@@ -274,12 +274,12 @@ public abstract class PlayerToLocationRequest extends Request {
 
     @Override
     public void tpaccept()  {
-        throw new NotRequestAcceptException(requestPlayer);
+        throw new ErrorNoPendingRequestException(requestPlayer);
     }
 
     @Override
     public void tpdeny()  {
-        throw new NotRequestDenyException(requestPlayer);
+        throw new ErrorNoPendingRequestException(requestPlayer);
     }
 
 }

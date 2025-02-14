@@ -26,7 +26,7 @@ public class SetDefaultHomeTabCompleter implements TabCompleter {
             try {
                 homeNameList = PlayerDataConfig.getPlayerData(player).getHomeNameList(null);
             } catch (Exception exception) {
-                homeNameList.add(language.getMessage("home_name"));
+                homeNameList.add(language.getMessage("not_homes"));
                 if (getConfig().isDebug()) exception.printStackTrace();
             }
             return homeNameList;

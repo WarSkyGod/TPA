@@ -1,0 +1,180 @@
+## TPA Eklentisi Türkçe Dil Dosyası
+
+#=======================
+# Temel Ayarlar
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Çevrimiçi oyuncu yok"
+not_warps: "Mevcut ışınlanma noktası yok"
+not_homes: "Mevcut ev bulunamadı"
+spawn: "Spawn"
+last_location: "Son konum"
+rtp: "Rastgele ışınlanma"
+lang.set_success: "&a&lİstemci dili &6&l<target> &a&lolarak ayarlandı"
+
+#=======================
+# Düğme Etkileşimleri
+#=======================
+## Düğme Metinleri
+accept_button: "&a&l[Kabul Et]"
+deny_button: "&c&l[Reddet]"
+blacklist.add_button: "&c&l[Kara Listeye Ekle]"
+blacklist.remove_button: "&a&l[Listeden Çıkar]"
+teleport_button: "&a&l[Işınlan]"
+location_set_button: "&6&l[Konum Belirle]"
+default_home_set_button: "&e&l[Varsayılan Ev]"
+delete_button: "&c&l[Sil]"
+
+## Düğme İpuçları
+accept_click_hint: "&a&lTıklayarak kabul et"
+deny_click_hint: "&c&lTıklayarak reddet"
+blacklist.add_hint: "&c&lKara listeye ekle"
+blacklist.remove_hint: "&a&lKara listeden çıkar"
+teleport_click_hint: "&a&lHemen ışınlan"
+set_location_hint: "&6&lMevcut konumu ayarla"
+set_default_home_hint: "&e&lVarsayılan ev yap"
+delete_click_hint: "&c&lKalıcı olarak sil"
+
+#=======================
+# Işınlanma Talepleri
+#=======================
+request.to_here: "&a&l&6&l<target> &a&lsana ışınlanmak istiyor! (&6&l<seconds>s&a&l)"
+request.to_target: "&a&l&6&l<target> &a&lseni davet ediyor! (&6&l<seconds>s&a&l)"
+request.sent_success: "&a&l&6&l<target> &a&l'adlı oyuncuya talep gönderildi"
+request.timeout_notice: "&a&lTalep &6&l<seconds>s&a&l içinde geçerli"
+request.expired_from: "&c&l&6&l<target> &c&l'den gelen talep süresi doldu"
+request.expired_to: "&c&l&6&l<target> &c&l'e gönderdiğin talep süresi doldu"
+
+#=======================
+# Evler
+#=======================
+home.list_header: "&a&lMevcut Evler:"
+home.set_success: "&a&l&6&l<target> &a&levi oluşturuldu"
+home.default_set_success: "&a&lVarsayılan ev &6&l<target> &a&lolarak ayarlandı"
+home.delete_success: "&a&l&6&l<target> &a&levi silindi"
+home.teleport_success: "&a&l&6&l<target> &a&levine ışınlandın"
+home.max_limit_error: "&c&lMaksimum &6&l<max_home_amount> &c&lev sınırı"
+error.default_home_already_set: "&6&l<target> &c&lzaten varsayılan ev"
+
+#=======================
+# Işınlanma Noktaları
+#=======================
+warp.list_header: "&a&lMevcut Warpler:"
+warp.set_success: "&a&l&6&l<target> &a&lwarp noktası oluşturuldu"
+warp.delete_success: "&a&l&6&l<target> &a&lwarp noktası silindi"
+warp.teleport_success: "&a&l&6&l<target> &a&lwarp noktasına ışınlandın"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn noktası ayarlandı"
+spawn.delete_success: "&a&lSpawn noktası kaldırıldı"
+spawn.teleport_success: "&a&lSpawn noktasına ışınlandın!"
+
+#=======================
+# Son Konum
+#=======================
+back.teleport_success: "&a&lSon konuma dönüldü!"
+
+#=======================
+# Rastgele Işınlanma
+#=======================
+rtp.generating: "&a&lRastgele konum oluşturuluyor..."
+rtp.success: "&a&lRastgele ışınlanma başarılı!"
+rtp.failed: "&c&lRastgele ışınlanma başarısız!"
+
+#=======================
+# Kara Liste
+#=======================
+blacklist.list_header: "&a&lKara Listeniz:"
+blacklist.add_success: "&a&l&6&l<target> &a&lkara listeye eklendi"
+blacklist.remove_success: "&a&l&6&l<target> &a&lkara listeden çıkarıldı"
+
+#=======================
+# Hata Mesajları
+#=======================
+## Komut Durumu
+error.command_disabled: "&c&lBu komut devre dışı"
+error.world_disabled: "&c&lBu dünyada kullanılamaz"
+error.command_cooldown: "&c&lTekrar denemeden önce &6&l<seconds>s&c&l bekle"
+
+## Yetkilendirme
+error.console_restricted: "&c&lSadece oyuncular kullanabilir"
+error.permission_denied: "&c&lYetkiniz yok!"
+
+## Oyuncu Durumu
+error.no_online_players: "&c&lÇevrimiçi oyuncu yok"
+error.target_offline: "&c&l&6&l<target> &c&lçevrimdışı"
+error.self_operation: "&c&lKendine uygulanamaz"
+
+## Talep Durumu
+error.no_pending_request: "&c&lBekleyen talep yok"
+error.request_pending: "&c&lİşlenmekte olan talep var"
+
+## Kara Liste
+error.already_blacklisted: "&c&lZaten kara listede"
+error.blocked_by_target: "&c&lEngellendiniz"
+error.blacklist_empty: "&c&lKara liste boş"
+error.not_blacklisted: "&c&lKara listede değil"
+
+## Evler
+error.home_not_found: "&c&l&6&l<target> &c&levi bulunamadı"
+error.no_homes_set: "&c&lAyarlı ev yok"
+error.no_default_home: "&c&lVarsayılan ev ayarlanmamış"
+
+## Warpler
+error.warp_not_found: "&c&l&6&l<target> &c&lwarp noktası yok"
+error.no_warps_set: "&c&lMevcut warp yok"
+
+## Konum Kayıtları
+error.last_location_missing: "&c&lSon konum kaydı yok"
+error.logout_location_missing: "&c&lÇıkış konumu kaydedilmemiş"
+error.spawn_not_set: "&c&lSpawn noktası ayarlanmamış"
+
+## Sözdizimi
+error.syntax_generic: "&c&lSözdizimi hatası! Doğru kullanım: /<command>"
+error.syntax_tpa: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <oyuncu>"
+error.syntax_tpall: "&c&lSözdizimi hatası! Doğru kullanım: /<command> [player/warp/spawn] [isim]"
+error.syntax_warp: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <warp>"
+error.syntax_home: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <ev>"
+
+## Sistem Hataları
+error.config_not_found: "&c&lYapılandırma dosyası yeniden oluşturuldu"
+error.runtime: "&c&lEklenti hatası: <message>"
+error.forwarded_error: "&c&l&6&l<target>&c&l'den hata:"
+
+#=======================
+# Işınlanma Süreci
+#=======================
+teleport.accept.self: "&a&l&6&l<target> &a&l'ın talebi kabul edildi"
+teleport.accept.target: "&a&l&6&l<target> &a&ltalebinizi kabul etti"
+teleport.deny.self: "&c&l&6&l<target> &c&l'ın talebi reddedildi"
+teleport.deny.target: "&c&l&6&l<target> &c&ltalebinizi reddetti"
+teleport.countdown: "&a&l&6&l<seconds>s&a&l sonra ışınlanacaksın"
+teleport.cancel_on_move: "&a&lHareket edersen iptal olur!"
+teleport.canceled.self: "&c&lIşınlanma iptal edildi"
+teleport.canceled.target: "&c&lKarşı taraf iptal etti"
+teleport.generic_success: "&a&l&6&l<target> &a&l'adlı yere ışınlandın"
+teleport.tpall.to_target: "&a&lYönetici seni &6&l<target> &a&l'adlı yere ışınladı"
+teleport.tpall.to_self: "&a&lYönetici herkesi sana getirdi"
+teleport.tpall.success: "&a&lTüm oyuncular &6&l<target> &a&l'adlı yere ışınlandı"
+teleport.logout_location: "&a&l&6&l<target> &a&l'ın son çıkış konumuna ışınlandın"
+
+#=======================
+# Sistem Mesajları
+#=======================
+system.config_reloaded: "&a&lYapılandırma yeniden yüklendi!"
+system.plugin_loaded: "&a&lEklenti yüklendi! Sürüm: &6&l<target>"
+system.plugin_unloaded: "&c&lEklenti kaldırıldı!"
+system.config_migrated_success: "&a&lYapılandırma taşıması tamamlandı!"
+system.config_migrated: "&a&lEski yapılandırma taşınıyor (otomatik yedekleme aktif)"
+system.debug_warning: "&c&lDebug modu aktif - kullanım sonrası kapatın!"
+
+#=======================
+# Güncellemeler
+#=======================
+update.checking: "&a&lGüncellemeler kontrol ediliyor..."
+update.available: "&a&lYeni sürüm &6&lTPA-v<target>&a&l mevcut: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lEn son sürüm kullanılıyor"
+update.failed: "&c&lGüncelleme kontrolü başarısız"

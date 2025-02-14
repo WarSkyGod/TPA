@@ -1,0 +1,180 @@
+## TPAプラグイン日本語言語ファイル
+
+#=======================
+# 基本設定
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "オンラインプレイヤーがいません"
+not_warps: "利用可能なワープポイントがありません"
+not_homes: "設定されたホームがありません"
+spawn: "スポーン地点"
+last_location: "直前の位置"
+rtp: "ランダムテレポート"
+lang.set_success: "&a&lクライアント表示言語を &6&l<target> &a&lに設定しました"
+
+#=======================
+# ボタン操作
+#=======================
+## ボタンテキスト
+accept_button: "&a&l[承諾]"
+deny_button: "&c&l[拒否]"
+blacklist.add_button: "&c&l[拒否してブラックリスト追加]"
+blacklist.remove_button: "&a&l[ブラックリスト解除]"
+teleport_button: "&a&l[テレポート]"
+location_set_button: "&6&l[位置設定]"
+default_home_set_button: "&e&l[デフォルトホーム設定]"
+delete_button: "&c&l[削除]"
+
+## ボタンヒント
+accept_click_hint: "&a&lクリックでテレポート承諾"
+deny_click_hint: "&c&lクリックでテレポート拒否"
+blacklist.add_hint: "&c&lクリックでブラックリスト追加"
+blacklist.remove_hint: "&a&lクリックでブラックリスト解除"
+teleport_click_hint: "&a&lクリックでテレポート"
+set_location_hint: "&6&l現在地を設定"
+set_default_home_hint: "&e&lデフォルトホームに設定"
+delete_click_hint: "&c&lクリックで削除"
+
+#=======================
+# テレポートリクエスト
+#=======================
+request.to_here: "&a&lプレイヤー &6&l<target> &a&lがあなたの位置へテレポートを希望しています（&6&l<seconds>秒&a&l後期限切れ）"
+request.to_target: "&a&lプレイヤー &6&l<target> &a&lが自分の位置へ招待しています（&6&l<seconds>秒&a&l後期限切れ）"
+request.sent_success: "&a&l&6&l<target> &a&lへリクエストを送信しました"
+request.timeout_notice: "&a&lリクエスト有効時間 &6&l<seconds>秒"
+request.expired_from: "&c&l&6&l<target> &c&lからのリクエストが期限切れました"
+request.expired_to: "&c&l&6&l<target> &c&lへのリクエストが期限切れました"
+
+#=======================
+# ホーム
+#=======================
+home.list_header: "&a&l利用可能なホーム："
+home.set_success: "&a&lホーム &6&l<target> &a&lを設定しました"
+home.default_set_success: "&a&lデフォルトホームを &6&l<target> &a&lに設定しました"
+home.delete_success: "&a&lホーム &6&l<target> &a&lを削除しました"
+home.teleport_success: "&a&lホーム &6&l<target> &a&lへテレポートしました"
+home.max_limit_error: "&c&lホームは最大 &6&l<max_home_amount> &c&l個までです"
+error.default_home_already_set: "&6&l<target> &c&lは既にデフォルトホームです"
+
+#=======================
+# ワープポイント
+#=======================
+warp.list_header: "&a&l利用可能なワープポイント："
+warp.set_success: "&a&lワープポイント &6&l<target> &a&lを設定しました"
+warp.delete_success: "&a&lワープポイント &6&l<target> &a&lを削除しました"
+warp.teleport_success: "&a&lワープポイント &6&l<target> &a&lへテレポートしました"
+
+#=======================
+# スポーン地点
+#=======================
+spawn.set_success: "&a&lスポーン地点を設定しました"
+spawn.delete_success: "&a&lスポーン地点を削除しました"
+spawn.teleport_success: "&a&lスポーン地点へテレポートしました！"
+
+#=======================
+# 直前の位置
+#=======================
+back.teleport_success: "&a&l直前の位置へテレポートしました！"
+
+#=======================
+# ランダムテレポート
+#=======================
+rtp.generating: "&a&lランダム地点を生成中..."
+rtp.success: "&a&lランダム地点へテレポートしました！"
+rtp.failed: "&c&lランダムテレポートに失敗しました！"
+
+#=======================
+# ブラックリスト
+#=======================
+blacklist.list_header: "&a&lブラックリスト："
+blacklist.add_success: "&a&l&6&l<target> &a&lをブラックリストに追加しました"
+blacklist.remove_success: "&a&l&6&l<target> &a&lをブラックリストから解除しました"
+
+#=======================
+# エラーメッセージ
+#=======================
+## コマンド状態
+error.command_disabled: "&c&lこのコマンドは無効です"
+error.world_disabled: "&c&lこのワールドでは使用できません"
+error.command_cooldown: "&c&l再使用まで &6&l<seconds>秒&c&l待ってください"
+
+## 権限
+error.console_restricted: "&c&lプレイヤーのみ実行可能です"
+error.permission_denied: "&c&l権限がありません！"
+
+## プレイヤー状態
+error.no_online_players: "&c&lオンラインプレイヤーがいません"
+error.target_offline: "&c&lプレイヤー &6&l<target> &c&lはオフラインです"
+error.self_operation: "&c&l自分自身には実行できません"
+
+## リクエスト状態
+error.no_pending_request: "&c&l保留中のリクエストがありません"
+error.request_pending: "&c&l処理中のリクエストがあります"
+
+## ブラックリスト
+error.already_blacklisted: "&c&l既にブラックリストに登録されています"
+error.blocked_by_target: "&c&l相手にブロックされています"
+error.blacklist_empty: "&c&lブラックリストが空です"
+error.not_blacklisted: "&c&lブラックリストに登録されていません"
+
+## ホーム
+error.home_not_found: "&c&lホーム &6&l<target> &c&lは存在しません"
+error.no_homes_set: "&c&l設定されたホームがありません"
+error.no_default_home: "&c&lデフォルトホームが設定されていません"
+
+## ワープポイント
+error.warp_not_found: "&c&lワープポイント &6&l<target> &c&lは存在しません"
+error.no_warps_set: "&c&l利用可能なワープポイントがありません"
+
+## 位置情報
+error.last_location_missing: "&c&l直前の位置が記録されていません"
+error.logout_location_missing: "&c&l最終ログアウト位置がありません"
+error.spawn_not_set: "&c&lスポーン地点が設定されていません"
+
+## コマンド構文
+error.syntax_generic: "&c&l構文エラー！正しい使い方：/<command>"
+error.syntax_tpa: "&c&l構文エラー！正しい使い方：/<command> <プレイヤー名>"
+error.syntax_tpall: "&c&l構文エラー！正しい使い方：/<command> [player/warp/spawn] [名前]"
+error.syntax_warp: "&c&l構文エラー！正しい使い方：/<command> <ワープポイント>"
+error.syntax_home: "&c&l構文エラー！正しい使い方：/<command> <ホーム名>"
+
+## システムエラー
+error.config_not_found: "&c&l設定ファイルを再生成しました"
+error.runtime: "&c&lプラグインエラー：<message>"
+error.forwarded_error: "&c&l&6&l<target> &c&lからのエラー："
+
+#=======================
+# テレポート処理
+#=======================
+teleport.accept.self: "&a&l&6&l<target> &a&lのリクエストを承諾しました"
+teleport.accept.target: "&a&l&6&l<target> &a&lがリクエストを承諾しました"
+teleport.deny.self: "&c&l&6&l<target> &c&lのリクエストを拒否しました"
+teleport.deny.target: "&c&l&6&l<target> &c&lがリクエストを拒否しました"
+teleport.countdown: "&a&l&6&l<seconds>秒&a&l後に &6&l<target> &a&lへテレポートします"
+teleport.cancel_on_move: "&a&l移動するとキャンセルされます"
+teleport.canceled.self: "&c&lテレポートをキャンセルしました"
+teleport.canceled.target: "&c&l相手がキャンセルしました"
+teleport.generic_success: "&a&l&6&l<target> &a&lへテレポートしました"
+teleport.tpall.to_target: "&a&l管理者があなたを &6&l<target> &a&lへテレポートさせました"
+teleport.tpall.to_self: "&a&l管理者が全プレイヤーをあなたの位置へテレポートさせました"
+teleport.tpall.success: "&a&l全プレイヤーを &6&l<target> &a&lへテレポートしました"
+teleport.logout_location: "&a&l&6&l<target> &a&lの最終ログアウト位置へテレポートしました"
+
+#=======================
+# システムメッセージ
+#=======================
+system.config_reloaded: "&a&l設定ファイルをリロードしました"
+system.plugin_loaded: "&a&lプラグイン読み込み完了！バージョン：&6&l<target>"
+system.plugin_unloaded: "&c&lプラグインをアンロードしました"
+system.config_migrated_success: "&a&l設定ファイルの移行が完了しました"
+system.config_migrated: "&a&l旧設定ファイルを検出、自動バックアップ後に移行します"
+system.debug_warning: "&c&lデバッグモードが有効です（使用後は無効にしてください）"
+
+#=======================
+# アップデート
+#=======================
+update.checking: "&a&lアップデート確認中..."
+update.available: "&a&l新しいバージョン &6&lTPA-v<target> &a&lが利用可能です：https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&l最新バージョンです"
+update.failed: "&c&lアップデート確認に失敗しました"

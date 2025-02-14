@@ -1,0 +1,180 @@
+## Αρχείο γλώσσας TPA Plugin (Ελληνικά)
+
+#=======================
+# Βασικές ρυθμίσεις
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Δεν υπάρχουν συνδεδεμένοι παίκτες"
+not_warps: "Δεν υπάρχουν διαθέσιμα σημεία μεταφοράς"
+not_homes: "Δεν υπάρχουν διαθέσιμα σπίτια"
+spawn: "Κεντρικό σημείο"
+last_location: "Τελευταία τοποθεσία"
+rtp: "Τυχαία μεταφορά"
+lang.set_success: "&a&lΟρίσατε τη γλώσσα ως &6&l<target>"
+
+#=======================
+# Διαδραστικά κουμπιά
+#=======================
+## Κείμενο κουμπιών
+accept_button: "&a&l[Αποδοχή]"
+deny_button: "&c&l[Απόρριψη]"
+blacklist.add_button: "&c&l[Απόρριψη και μπλακλίστ]"
+blacklist.remove_button: "&a&l[Αφαίρεση από μπλακλίστ]"
+teleport_button: "&a&l[Μεταφορά]"
+location_set_button: "&6&l[Ορισμός τοποθεσίας]"
+default_home_set_button: "&e&l[Προεπιλεγμένο σπίτι]"
+delete_button: "&c&l[Διαγραφή]"
+
+## Υποδείξεις κλικ
+accept_click_hint: "&a&lΚάντε κλικ για αποδοχή μεταφοράς"
+deny_click_hint: "&c&lΚάντε κλικ για απόρριψη μεταφοράς"
+blacklist.add_hint: "&c&lΚάντε κλικ για απόρριψη και μπλακλίστ"
+blacklist.remove_hint: "&a&lΚάντε κλικ για αφαίρεση από μπλακλίστ"
+teleport_click_hint: "&a&lΚάντε κλικ για μεταφορά"
+set_location_hint: "&6&lΚάντε κλικ για ορισμό τρέχουσας τοποθεσίας"
+set_default_home_hint: "&e&lΚάντε κλικ για προεπιλεγμένο σπίτι"
+delete_click_hint: "&c&lΚάντε κλικ για διαγραφή"
+
+#=======================
+# Αιτήματα μεταφοράς
+#=======================
+request.to_here: "&a&lΟ παίκτης &6&l<target> &a&lθέλει να μεταφερθεί σε εσάς! Λήγει σε &6&l<seconds> &a&lδευτερόλεπτα!"
+request.to_target: "&a&lΟ παίκτης &6&l<target> &a&lσας προσκαλεί! Λήγει σε &6&l<seconds> &a&lδευτερόλεπτα!"
+request.sent_success: "&a&lΑίτημα μεταφοράς στάλθηκε στον &6&l<target>!"
+request.timeout_notice: "&a&lΤο αίτημα ισχύει για &6&l<seconds> &a&lδευτερόλεπτα!"
+request.expired_from: "&c&lΑίτημα από &6&l<target> &c&lέληξε!"
+request.expired_to: "&c&lΤο αίτημά σας στον &6&l<target> &c&lέληξε!"
+
+#=======================
+# Σπίτια
+#=======================
+home.list_header: "&a&lΔιαθέσιμα σπίτια:"
+home.set_success: "&a&lΟρίσατε το σπίτι &6&l<target>"
+home.default_set_success: "&a&lΟρίσατε προεπιλεγμένο σπίτι το &6&l<target>"
+home.delete_success: "&a&lΔιαγράψατε το σπίτι &6&l<target>"
+home.teleport_success: "&a&lΜεταφερθήκατε στο σπίτι &6&l<target>"
+home.max_limit_error: "&c&lΜέγιστο όριο <max_home_amount> σπιτιών!"
+error.default_home_already_set: "&6&l<target> &c&lείναι ήδη προεπιλεγμένο"
+
+#=======================
+# Σημεία μεταφοράς
+#=======================
+warp.list_header: "&a&lΔιαθέσιμα σημεία:"
+warp.set_success: "&a&lΟρίσατε το σημείο &6&l<target>"
+warp.delete_success: "&a&lΔιαγράψατε το σημείο &6&l<target>"
+warp.teleport_success: "&a&lΜεταφερθήκατε στο &6&l<target>"
+
+#=======================
+# Κεντρικό σημείο
+#=======================
+spawn.set_success: "&a&lΟρίσατε το κεντρικό σημείο"
+spawn.delete_success: "&a&lΔιαγράψατε το κεντρικό σημείο"
+spawn.teleport_success: "&a&lΜεταφερθήκατε στο κεντρικό σημείο!"
+
+#=======================
+# Τελευταία τοποθεσία
+#=======================
+back.teleport_success: "&a&lΜεταφερθήκατε στην τελευταία σας τοποθεσία!"
+
+#=======================
+# Τυχαία μεταφορά
+#=======================
+rtp.generating: "&a&lΔημιουργία τυχαίας τοποθεσίας..."
+rtp.success: "&a&lΜεταφερθήκατε τυχαία!"
+rtp.failed: "&c&lΑποτυχία δημιουργίας!"
+
+#=======================
+# Μαύρη λίστα
+#=======================
+blacklist.list_header: "&a&lΜαύρη λίστα:"
+blacklist.add_success: "&a&lΠροστέθηκε ο &6&l<target> &a&lστη μαύρη λίστα"
+blacklist.remove_success: "&a&lΑφαιρέθηκε ο &6&l<target> &a&lαπό τη μαύρη λίστα"
+
+#=======================
+# Μηνύματα σφάλματος
+#=======================
+## Κατάσταση εντολής
+error.command_disabled: "&c&lΗ εντολή είναι απενεργοποιημένη!"
+error.world_disabled: "&c&lΜη διαθέσιμο σε αυτόν τον κόσμο!"
+error.command_cooldown: "&c&lΠεριμένετε &6&l<seconds> &c&lδευτερόλεπτα!"
+
+## Δικαιώματα
+error.console_restricted: "&c&lΜόνο για παίκτες!"
+error.permission_denied: "&c&lΔεν έχετε δικαίωμα!"
+
+## Κατάσταση παίκτη
+error.no_online_players: "&c&lΔεν υπάρχουν συνδεδεμένοι παίκτες!"
+error.target_offline: "&c&lΟ παίκτης &6&l<target> &c&lείναι εκτός σύνδεσης!"
+error.self_operation: "&c&lΔεν επιτρέπεται στον εαυτό σας!"
+
+## Κατάσταση αιτήματος
+error.no_pending_request: "&c&lΔεν υπάρχουν εκκρεμή αιτήματα!"
+error.request_pending: "&c&lΥπάρχει ενεργό αίτημα"
+
+## Μαύρη λίστα
+error.already_blacklisted: "&c&lΕίναι ήδη στη μαύρη λίστα!"
+error.blocked_by_target: "&c&lΣας μπλόκαραν!"
+error.blacklist_empty: "&c&lΗ μαύρη λίστα είναι άδεια!"
+error.not_blacklisted: "&c&lΔεν είναι στη μαύρη λίστα!"
+
+## Σπίτια
+error.home_not_found: "&c&lΤο σπίτι <target> δεν υπάρχει!"
+error.no_homes_set: "&c&lΔεν έχετε ορίσει σπίτια!"
+error.no_default_home: "&c&lΔεν έχετε προεπιλεγμένο σπίτι!"
+
+## Σημεία μεταφοράς
+error.warp_not_found: "&c&lΤο σημείο <target> δεν υπάρχει!"
+error.no_warps_set: "&c&lΔεν υπάρχουν σημεία μεταφοράς!"
+
+## Τοποθεσίες
+error.last_location_missing: "&c&lΔεν υπάρχει τελευταία τοποθεσία!"
+error.logout_location_missing: "&c&lΔεν υπάρχει τοποθεσία αποσύνδεσης!"
+error.spawn_not_set: "&c&lΔεν έχει οριστεί κεντρικό σημείο!"
+
+## Σύνταξη εντολής
+error.syntax_generic: "&c&lΣυντακτικό λάθος! Χρήση: /<command>"
+error.syntax_tpa: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <παίκτης>"
+error.syntax_tpall: "&c&lΣυντακτικό λάθος! Χρήση: /<command> [player/warp/spawn] [όνομα]"
+error.syntax_warp: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <σημείο>"
+error.syntax_home: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <σπίτι>"
+
+## Σφάλματα συστήματος
+error.config_not_found: "&c&lΔημιουργήθηκε νέο αρχείο ρυθμίσεων!"
+error.runtime: "&c&lΣφάλμα πρόσθετου: <message>"
+error.forwarded_error: "&c&lΣφάλμα από &6&l<target>:"
+
+#=======================
+# Διαδικασία μεταφοράς
+#=======================
+teleport.accept.self: "&a&lΔέχτηκε αίτημα από &6&l<target>!"
+teleport.accept.target: "&a&lΟ &6&l<target> &a&lδέχτηκε το αίτημά σας!"
+teleport.deny.self: "&c&lΑπορρίψατε αίτημα από &6&l<target>!"
+teleport.deny.target: "&c&lΟ &6&l<target> &c&lαπέρριψε το αίτημά σας!"
+teleport.countdown: "&a&lΜεταφορά σε &6&l<seconds> &a&lδευτερόλεπτα προς &6&l<target>"
+teleport.cancel_on_move: "&a&lΚίνηση ακυρώνει τη μεταφορά!"
+teleport.canceled.self: "&c&lΑκυρώσατε τη μεταφορά!"
+teleport.canceled.target: "&c&lΑκυρώθηκε από τον άλλο παίκτη!"
+teleport.generic_success: "&a&lΜεταφερθήκατε στο &6&l<target>"
+teleport.tpall.to_target: "&a&lΔιαχειριστής σας μετέφερε στο &6&l<target>"
+teleport.tpall.to_self: "&a&lΔιαχειριστής μετέφερε όλους σε εσάς"
+teleport.tpall.success: "&a&lΌλοι μεταφέρθηκαν στο &6&l<target>"
+teleport.logout_location: "&a&lΜεταφερθήκατε στην τοποθεσία αποσύνδεσης του &6&l<target>"
+
+#=======================
+# Συστημικά μηνύματα
+#=======================
+system.config_reloaded: "&a&lΕπαναφόρτωση ρυθμίσεων!"
+system.plugin_loaded: "&a&lΤο πρόσθετο φορτώθηκε! Έκδοση: &6&l<target>"
+system.plugin_unloaded: "&c&lΤο πρόσθετο απενεργοποιήθηκε!"
+system.config_migrated_success: "&a&lΕπιτυχής μετεγκατάσταση ρυθμίσεων!"
+system.config_migrated: "&a&lΕντοπίστηκε παλιά έκδοση ρυθμίσεων (δημιουργήθηκε αντίγραφο)"
+system.debug_warning: "Προσοχή: Ενεργή λειτουργία debug!"
+
+#=======================
+# Ενημερώσεις
+#=======================
+update.checking: "&a&lΈλεγχος για ενημερώσεις..."
+update.available: "&a&lΝέα έκδοση &6&lTPA-v<target> &a&lδιαθέσιμη: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lΈχετε την τελευταία έκδοση"
+update.failed: "&c&lΑποτυχία ελέγχου ενημερώσεων!"

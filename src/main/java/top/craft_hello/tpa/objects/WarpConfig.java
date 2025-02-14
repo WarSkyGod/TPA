@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import top.craft_hello.tpa.abstracts.Configuration;
-import top.craft_hello.tpa.exceptions.NotWarpErrorException;
+import top.craft_hello.tpa.exceptions.ErrorWarpNotFoundException;
 
 import java.io.File;
 import java.util.*;
@@ -94,7 +94,7 @@ public class WarpConfig extends Configuration {
     }
 
     public Location getWarpLocation(CommandSender sender, String warpName)  {
-        if (!containsWarpLocation(warpName)) throw new NotWarpErrorException(sender, warpName);
+        if (!containsWarpLocation(warpName)) throw new ErrorWarpNotFoundException(sender, warpName);
         return LOCATIONS.get(warpName);
     }
 

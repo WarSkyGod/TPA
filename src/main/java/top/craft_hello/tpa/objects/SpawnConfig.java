@@ -3,7 +3,7 @@ package top.craft_hello.tpa.objects;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import top.craft_hello.tpa.abstracts.Configuration;
-import top.craft_hello.tpa.exceptions.NotSetSpawnErrorException;
+import top.craft_hello.tpa.exceptions.ErrorSpawnNotSetException;
 
 import java.io.File;
 
@@ -51,7 +51,7 @@ public class SpawnConfig extends Configuration {
     }
 
     public Location getSpawnLocation(CommandSender sender)  {
-        if (!containsSpawnLocation()) throw new NotSetSpawnErrorException(sender);
+        if (!containsSpawnLocation()) throw new ErrorSpawnNotSetException(sender);
         return location;
     }
 

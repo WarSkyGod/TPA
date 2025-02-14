@@ -1,0 +1,180 @@
+## TPA-plugin svenskt språkpaket
+
+#=======================
+# Grundinställningar
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Inga spelare online"
+not_warps: "Inga warp-punkter tillgängliga"
+not_homes: "Inga hem inställda"
+spawn: "Spawn"
+last_location: "Senaste position"
+rtp: "Slumpmässig teleportering"
+lang.set_success: "&a&lKlientens språk satt till &6&l<target>"
+
+#=======================
+# Knappinteraktioner
+#=======================
+## Knapptexter
+accept_button: "&a&l[Acceptera]"
+deny_button: "&c&l[Avvisa]"
+blacklist.add_button: "&c&l[Blockera]"
+blacklist.remove_button: "&a&l[Avblockera]"
+teleport_button: "&a&l[Teleportera]"
+location_set_button: "&6&l[Sätt position]"
+default_home_set_button: "&e&l[Standardhem]"
+delete_button: "&c&l[Radera]"
+
+## Knapptips
+accept_click_hint: "&a&lKlicka för att acceptera"
+deny_click_hint: "&c&lKlicka för att avvisa"
+blacklist.add_hint: "&c&lLägg till i svartlista"
+blacklist.remove_hint: "&a&lTa bort från svartlista"
+teleport_click_hint: "&a&lTeleportera nu"
+set_location_hint: "&6&lSätt nuvarande position"
+set_default_home_hint: "&e&lSätt som standardhem"
+delete_click_hint: "&c&lRadera permanent"
+
+#=======================
+# Teleportförfrågningar
+#=======================
+request.to_here: "&a&lSpelare &6&l<target> &a&lvill teleportera till dig! (&6&l<seconds>s&a&l)"
+request.to_target: "&a&lSpelare &6&l<target> &a&lbjuder in dig! (&6&l<seconds>s&a&l)"
+request.sent_success: "&a&lFörfrågan skickad till &6&l<target>"
+request.timeout_notice: "&a&lGiltig i &6&l<seconds> sekunder"
+request.expired_from: "&c&lFörfrågan från &6&l<target> &c&lutgick"
+request.expired_to: "&c&lDin förfrågan till &6&l<target> &c&lutgick"
+
+#=======================
+# Hem
+#=======================
+home.list_header: "&a&lTillgängliga hem:"
+home.set_success: "&a&lHem &6&l<target> &a&lskapades"
+home.default_set_success: "&a&lStandardhem satt till &6&l<target>"
+home.delete_success: "&a&lHem &6&l<target> &a&lraderades"
+home.teleport_success: "&a&lTeleporterad till &6&l<target>"
+home.max_limit_error: "&c&lMax &6&l<max_home_amount> &c&lhem tillåtna"
+error.default_home_already_set: "&6&l<target> &c&lär redan standardhem"
+
+#=======================
+# Warp-punkter
+#=======================
+warp.list_header: "&a&lTillgängliga warps:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lskapades"
+warp.delete_success: "&a&lWarp &6&l<target> &a&lraderades"
+warp.teleport_success: "&a&lTeleporterad till &6&l<target>"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn satt"
+spawn.delete_success: "&a&lSpawn borttaget"
+spawn.teleport_success: "&a&lTeleporterad till spawn!"
+
+#=======================
+# Senaste position
+#=======================
+back.teleport_success: "&a&lÅtervänd till senaste position!"
+
+#=======================
+# Slumpmässig teleport
+#=======================
+rtp.generating: "&a&lGenererar slumpmässig position..."
+rtp.success: "&a&lSlumpmässig teleport lyckades!"
+rtp.failed: "&c&lSlumpmässig teleport misslyckades!"
+
+#=======================
+# Svartlista
+#=======================
+blacklist.list_header: "&a&lDin svartlista:"
+blacklist.add_success: "&a&l&6&l<target> &a&lblev svartlistad"
+blacklist.remove_success: "&a&l&6&l<target> &a&ltogs bort från svartlistan"
+
+#=======================
+# Felmeddelanden
+#=======================
+## Kommandostatus
+error.command_disabled: "&c&lKommandot är inaktiverat"
+error.world_disabled: "&c&lInte tillgängligt i denna värld"
+error.command_cooldown: "&c&lVänta &6&l<seconds>s"
+
+## Behörigheter
+error.console_restricted: "&c&lEndast spelare"
+error.permission_denied: "&c&lDu har inte behörighet!"
+
+## Spelarstatus
+error.no_online_players: "&c&lInga spelare online"
+error.target_offline: "&c&lSpelare &6&l<target> &c&lär offline"
+error.self_operation: "&c&lKan inte användas på dig själv"
+
+## Förfrågningsstatus
+error.no_pending_request: "&c&lInga väntande förfrågningar"
+error.request_pending: "&c&lPågående förfrågan"
+
+## Svartlista
+error.already_blacklisted: "&c&lRedan svartlistad"
+error.blocked_by_target: "&c&lDu är blockerad"
+error.blacklist_empty: "&c&lSvartlistan är tom"
+error.not_blacklisted: "&c&lInte svartlistad"
+
+## Hem
+error.home_not_found: "&c&lHem &6&l<target> &c&lfinns inte"
+error.no_homes_set: "&c&lInga hem inställda"
+error.no_default_home: "&c&lInget standardhem"
+
+## Warps
+error.warp_not_found: "&c&lWarp &6&l<target> &c&lfinns inte"
+error.no_warps_set: "&c&lInga warps tillgängliga"
+
+## Positioner
+error.last_location_missing: "&c&lIngen senaste position"
+error.logout_location_missing: "&c&lIngen utloggningsposition"
+error.spawn_not_set: "&c&lSpawn inte inställt"
+
+## Syntax
+error.syntax_generic: "&c&lFel syntax! Använd: /<command>"
+error.syntax_tpa: "&c&lFel syntax! Använd: /<command> <spelare>"
+error.syntax_tpall: "&c&lFel syntax! Använd: /<command> [player/warp/spawn] [namn]"
+error.syntax_warp: "&c&lFel syntax! Använd: /<command> <warp>"
+error.syntax_home: "&c&lFel syntax! Använd: /<command> <hem>"
+
+## Systemfel
+error.config_not_found: "&c&lKonfiguration återskapades"
+error.runtime: "&c&lPluginfel: <message>"
+error.forwarded_error: "&c&lFel från &6&l<target>&c&l:"
+
+#=======================
+# Teleportprocess
+#=======================
+teleport.accept.self: "&a&lAccepterade förfrågan från &6&l<target>"
+teleport.accept.target: "&a&l&6&l<target> &a&laccepterade din förfrågan"
+teleport.deny.self: "&c&lAvvisade förfrågan från &6&l<target>"
+teleport.deny.target: "&c&l&6&l<target> &c&lavvisade din förfrågan"
+teleport.countdown: "&a&lTeleporterar om &6&l<seconds>s"
+teleport.cancel_on_move: "&a&lRörelse avbryter teleport"
+teleport.canceled.self: "&c&lTeleport avbruten"
+teleport.canceled.target: "&c&lMotparten avbröt"
+teleport.generic_success: "&a&lTeleporterad till &6&l<target>"
+teleport.tpall.to_target: "&a&lAdmin teleporterade dig till &6&l<target>"
+teleport.tpall.to_self: "&a&lAdmin hämtade alla spelare"
+teleport.tpall.success: "&a&lAlla teleporterade till &6&l<target>"
+teleport.logout_location: "&a&lTeleporterad till &6&l<target>s utloggningsposition"
+
+#=======================
+# Systemmeddelanden
+#=======================
+system.config_reloaded: "&a&lKonfiguration laddades om!"
+system.plugin_loaded: "&a&lPlugin laddad! Version: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin avinstallerat!"
+system.config_migrated_success: "&a&lKonfigmigration klar!"
+system.config_migrated: "&a&lMigrerar gammal konfig (automatisk backup)"
+system.debug_warning: "&c&lDebug-läge aktivt - stäng av efter användning!"
+
+#=======================
+# Uppdateringar
+#=======================
+update.checking: "&a&lSöker uppdateringar..."
+update.available: "&a&lNy version &6&lTPA-v<target>&a&l tillgänglig: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lSenaste version installerad"
+update.failed: "&c&lUppdateringskontroll misslyckades"

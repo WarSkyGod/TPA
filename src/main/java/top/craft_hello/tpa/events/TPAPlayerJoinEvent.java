@@ -20,7 +20,8 @@ public class TPAPlayerJoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent){
         Player player = playerJoinEvent.getPlayer();
-        PlayerDataConfig.getPlayerData(player);
+        PlayerDataConfig playerDataConfig = PlayerDataConfig.getPlayerData(player);
+        if (!getConfig().isOldServer() && !playerDataConfig.isSetlang() && playerDataConfig.getLanguageStr().equalsIgnoreCase(player.getLocale())) playerDataConfig.setLanguage(player.getLocale());
         Config config = getConfig();
         try {
             Location location = getSpawnConfig().getSpawnLocation(null);

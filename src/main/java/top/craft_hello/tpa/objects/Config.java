@@ -99,7 +99,6 @@ public class Config extends Configuration {
         ENABLE_PERMISSIONS.put(PermissionType.SPAWN, configuration.getBoolean("spawn.permission"));
         ENABLE_COMMANDS.put(CommandType.BACK, configuration.getBoolean("back.enable"));
         ENABLE_PERMISSIONS.put(PermissionType.BACK, configuration.getBoolean("back.permission"));
-        ENABLE_COMMANDS.put(CommandType.SET_LANG, isOldServer);
 
         rtpDisableWorlds = configuration.getStringList("rtp.disable_worlds");
         rtpLimitX = configuration.getInt("rtp.limit.x");
@@ -157,6 +156,10 @@ public class Config extends Configuration {
         HOME_AMOUNTS.put(PermissionType.ADMIN, configuration.getInt("home_amount.admin"));
 
         switch (configVersion) {
+            case "3.2.0":
+                configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/" + configurationFile.getName()));
+                configuration.set("version", VERSION);
+                break;
             case "3.1.3":
             case "3.1.2":
             case "3.1.1":

@@ -43,16 +43,16 @@ public class ErrorCheckUtil{
                     new RtpRequest(sender, args);
                     break;
                 case TP_ALL:
-                    if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(sender);
-                    if (!config.hasPermission(sender, PermissionType.TP_ALL)) throw new NotPermissionErrorException(sender);
+                    if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(sender);
+                    if (!config.hasPermission(sender, PermissionType.TP_ALL)) throw new ErrorPermissionDeniedException(sender);
                     Collection<? extends Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
 
                     if (args.length == 0){
-                        if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                        if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                         executorPlayer = (Player) sender;
                         executorPlayerName = executorPlayer.getName();
                         onlinePlayers.remove(executorPlayer);
-                        if (onlinePlayers.isEmpty()) throw new NotOnlinePlayerErrorException(executorPlayer);
+                        if (onlinePlayers.isEmpty()) throw new ErrorNoOnlinePlayersException(executorPlayer);
                         location = executorPlayer.getLocation();
                         for (Player onlinePlayer : onlinePlayers) {
                             teleport(onlinePlayer, location);
@@ -85,7 +85,7 @@ public class ErrorCheckUtil{
                             case "player":
                                 targetPlayerName = args[args.length - 1];
                                 targetPlayer = Bukkit.getPlayerExact(targetPlayerName);
-                                if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new OfflineOrNullErrorException(sender);
+                                if (isNull(targetPlayer) || !targetPlayer.isOnline()) throw new ErrorTargetOfflineException(sender, targetPlayerName);
                                 location = targetPlayer.getLocation();
                                 onlinePlayers.remove(targetPlayer);
                                 for (Player onlinePlayer : onlinePlayers) {
@@ -115,13 +115,13 @@ public class ErrorCheckUtil{
                         }
                     }
 
-                    throw new TpAllCommandErrorException(sender, command);
+                    throw new ErrorSyntaxTpAllException(sender, command);
                 case TP_LOGOUT:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.TP_LOGOUT)) throw new NotPermissionErrorException(executorPlayer);
-                    if (args.length != 1) throw new TpaCommandErrorException(executorPlayer, command);
+                    if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.TP_LOGOUT)) throw new ErrorPermissionDeniedException(executorPlayer);
+                    if (args.length != 1) throw new ErrorSyntaxTpaException(executorPlayer, command);
                     targetPlayerName = args[args.length - 1];
                     location = PlayerDataConfig.getPlayerData(Bukkit.getPlayerUniqueId(targetPlayerName)).getLogoutLocation(executorPlayer);
                     teleport(executorPlayer, location);
@@ -132,26 +132,26 @@ public class ErrorCheckUtil{
                     SendMessageUtil.tpLogoutCommandSuccess(executorPlayer, targetPlayerName);
                     break;
                 case TP_ACCEPT:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!REQUEST_QUEUE.containsKey(executorPlayer)) throw new NotRequestAcceptException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!REQUEST_QUEUE.containsKey(executorPlayer)) throw new ErrorNoPendingRequestException(executorPlayer);
                     request = REQUEST_QUEUE.get(executorPlayer);
                     request.tpaccept();
                     break;
                 case TP_DENY:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!REQUEST_QUEUE.containsKey(executorPlayer)) throw new NotRequestDenyException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!REQUEST_QUEUE.containsKey(executorPlayer)) throw new ErrorNoPendingRequestException(executorPlayer);
                     request = REQUEST_QUEUE.get(executorPlayer);
                     request.tpdeny();
                     break;
                 case DENYS:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.DENYS)) throw new NotPermissionErrorException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.DENYS)) throw new ErrorPermissionDeniedException(executorPlayer);
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
                     if (args.length == 0) {
                         SendMessageUtil.denysMessage(executorPlayer, playerDataConfig.getDenyList(executorPlayer));
@@ -164,8 +164,8 @@ public class ErrorCheckUtil{
                         String targetUUID = target.getUniqueId().toString();
                         switch (args[args.length - 2].toLowerCase()) {
                             case "add":
-                                if (executorPlayer.getUniqueId().equals(target.getUniqueId())) throw new YouDenysYouErrorException(executorPlayer);
-                                if (playerDataConfig.isDeny(targetUUID)) throw new TargetIsDenysErrorException(executorPlayer);
+                                if (executorPlayer.getUniqueId().equals(target.getUniqueId())) throw new ErrorSelfOperationException(executorPlayer);
+                                if (playerDataConfig.isDeny(targetUUID)) throw new ErrorAlreadyBlacklistedException(executorPlayer);
                                 if (REQUEST_QUEUE.containsKey(executorPlayer)) PlayerSchedulerUtil.performCommand(executorPlayer, "tpdeny");
                                 playerDataConfig.addDeny(targetUUID);
                                 SendMessageUtil.addDenysSuccess(executorPlayer, targetPlayerName);
@@ -177,7 +177,7 @@ public class ErrorCheckUtil{
                                 return;
                         }
                     }
-                    throw new CommandErrorException(executorPlayer, command);
+                    throw new ErrorSyntaxGenericException(executorPlayer, command);
                 case WARP:
                     if (args.length == 0){
                         List<String> warpNameList = LoadingConfigUtil.getWarpConfig().getWarpNameList();
@@ -187,23 +187,23 @@ public class ErrorCheckUtil{
                     new WarpRequest(sender, args);
                     break;
                 case SET_WARP:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.WARP)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.SET_WARP)) throw new NotPermissionErrorException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.WARP)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.SET_WARP)) throw new ErrorPermissionDeniedException(executorPlayer);
                     location = executorPlayer.getLocation();
-                    if (args.length != 1) throw new WarpCommandErrorException(executorPlayer, command);
+                    if (args.length != 1) throw new ErrorSyntaxWarpException(executorPlayer, command);
                     targetName = args[args.length - 1];
                     LoadingConfigUtil.getWarpConfig().setWarpLocation(targetName, location);
                     SendMessageUtil.setWarpSuccess(executorPlayer, targetName);
                     break;
                 case DEL_WARP:
-                    if (!config.isEnableCommand(CommandType.WARP)) throw new DisableCommandErrorException(sender);
-                    if (!config.hasPermission(sender, PermissionType.DEL_WARP)) throw new NotPermissionErrorException(sender);
-                    if (args.length != 1) throw new WarpCommandErrorException(sender, command);
+                    if (!config.isEnableCommand(CommandType.WARP)) throw new ErrorCommandDisabledException(sender);
+                    if (!config.hasPermission(sender, PermissionType.DEL_WARP)) throw new ErrorPermissionDeniedException(sender);
+                    if (args.length != 1) throw new ErrorSyntaxWarpException(sender, command);
                     WarpConfig warp = LoadingConfigUtil.getWarpConfig();
                     targetName = args[args.length - 1];
-                    if (!warp.containsWarpLocation(targetName)) throw new NotWarpErrorException(sender, targetName);
+                    if (!warp.containsWarpLocation(targetName)) throw new ErrorWarpNotFoundException(sender, targetName);
                     warp.delWarpLocation(targetName);
                     SendMessageUtil.delWarpSuccess(sender, targetName);
                     break;
@@ -211,20 +211,20 @@ public class ErrorCheckUtil{
                     new HomeRequest(sender, args);
                     break;
                 case HOMES:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.HOME)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new NotPermissionErrorException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.HOME)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new ErrorPermissionDeniedException(executorPlayer);
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
                     List<String> homeNameList = playerDataConfig.getHomeNameList();
                     SendMessageUtil.homeListMessage(executorPlayer, homeNameList);
                     break;
                 case SET_HOME:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.HOME)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new NotPermissionErrorException(executorPlayer);
-                    if (args.length > 1) throw new HomeCommandErrorException(executorPlayer, command);
+                    if (!config.isEnableCommand(CommandType.HOME)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new ErrorPermissionDeniedException(executorPlayer);
+                    if (args.length > 1) throw new ErrorSyntaxHomeException(executorPlayer, command);
                     location = executorPlayer.getLocation();
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
                     if (args.length == 0){
@@ -236,21 +236,21 @@ public class ErrorCheckUtil{
                     playerDataConfig.setHomeLocation(targetName, location);
                     break;
                 case SET_DEFAULT_HOME:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.HOME)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new NotPermissionErrorException(executorPlayer);
-                    if (args.length != 1) throw new HomeCommandErrorException(executorPlayer, command);
+                    if (!config.isEnableCommand(CommandType.HOME)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new ErrorPermissionDeniedException(executorPlayer);
+                    if (args.length != 1) throw new ErrorSyntaxHomeException(executorPlayer, command);
                     targetName = args[args.length - 1];
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
                     playerDataConfig.setDefaultHomeName(targetName);
                     break;
                 case DEL_HOME:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.HOME)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new NotPermissionErrorException(executorPlayer);
-                    if (args.length != 1) throw new HomeCommandErrorException(executorPlayer, command);
+                    if (!config.isEnableCommand(CommandType.HOME)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.HOME)) throw new ErrorPermissionDeniedException(executorPlayer);
+                    if (args.length != 1) throw new ErrorSyntaxHomeException(executorPlayer, command);
                     targetName = args[args.length - 1];
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
                     playerDataConfig.delHomeLocation(targetName);
@@ -259,10 +259,10 @@ public class ErrorCheckUtil{
                     new SpawnRequest(sender, args);
                     break;
                 case SET_SPAWN:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.SPAWN)) throw new DisableCommandErrorException(executorPlayer);
-                    if (!config.hasPermission(executorPlayer, PermissionType.SET_SPAWN)) throw new NotPermissionErrorException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.SPAWN)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.hasPermission(executorPlayer, PermissionType.SET_SPAWN)) throw new ErrorPermissionDeniedException(executorPlayer);
                     location = executorPlayer.getLocation();
                     LoadingConfigUtil.getSpawnConfig().setSpawnLocation(location);
                     World world = executorPlayer.getWorld();
@@ -271,8 +271,8 @@ public class ErrorCheckUtil{
                     SendMessageUtil.setSpawnSuccess(executorPlayer);
                     break;
                 case DEL_SPAWN:
-                    if (!config.isEnableCommand(CommandType.SPAWN)) throw new DisableCommandErrorException(sender);
-                    if (!config.hasPermission(sender, PermissionType.DEL_SPAWN)) throw new NotPermissionErrorException(sender);
+                    if (!config.isEnableCommand(CommandType.SPAWN)) throw new ErrorCommandDisabledException(sender);
+                    if (!config.hasPermission(sender, PermissionType.DEL_SPAWN)) throw new ErrorPermissionDeniedException(sender);
                     LoadingConfigUtil.getSpawnConfig().delSpawnLocation();
                     SendMessageUtil.delSpawnSuccess(sender);
                     break;
@@ -280,24 +280,30 @@ public class ErrorCheckUtil{
                     new BackRequest(sender, args);
                     break;
                 case SET_LANG:
-                    if (!(sender instanceof Player)) throw new ConsoleUseErrorException(sender);
+                    if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(sender);
                     String languageStr = args[args.length - 1];
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
+                    if ("clear".equalsIgnoreCase(languageStr)){
+                        playerDataConfig.setSetlang(false);
+                        playerDataConfig.setLanguage(getConfig().isOldServer() ? getConfig().getDefaultLanguageStr() : executorPlayer.getLocale());
+                        return;
+                    }
+
                     playerDataConfig.setLanguage(languageStr);
+                    playerDataConfig.setSetlang(true);
                     break;
                 case VERSION:
-                    if (!config.isEnableCommand(commandType)) throw new DisableCommandErrorException(sender);
-                    if (!config.hasPermission(sender, PermissionType.VERSION)) throw new NotPermissionErrorException(sender);
+                    if (!config.isEnableCommand(commandType)) throw new ErrorCommandDisabledException(sender);
+                    if (!config.hasPermission(sender, PermissionType.VERSION)) throw new ErrorPermissionDeniedException(sender);
                     VersionUtil.updateCheck(sender);
                     break;
                 case RELOAD:
-                    if (!config.hasPermission(sender, PermissionType.RELOAD)) throw new NotPermissionErrorException(sender);
+                    if (!config.hasPermission(sender, PermissionType.RELOAD)) throw new ErrorPermissionDeniedException(sender);
                     LoadingConfigUtil.reloadALLConfig(sender);
                     break;
                 default:
-                    throw new PluginErrorException(sender, "在 utils.ErrorCheckUtil 46 行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
+                    throw new ErrorRuntimeException(sender, "在 utils.ErrorCheckUtil 46 行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
             }
         } catch (Exception exception){
             if (config.isDebug()) exception.printStackTrace();

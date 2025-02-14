@@ -1,0 +1,180 @@
+## TPA Plugin Nederlands Taalbestand
+
+#=======================
+# Basisconfiguratie
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Geen online spelers"
+not_warps: "Geen warps beschikbaar"
+not_homes: "Geen homes beschikbaar"
+spawn: "Spawn"
+last_location: "Laatste locatie"
+rtp: "Willekeurige teleportatie"
+lang.set_success: "&a&lTaal ingesteld op &6&l<target>"
+
+#=======================
+# Knoppeninteractie
+#=======================
+## Knopteksten
+accept_button: "&a&l[Accepteren]"
+deny_button: "&c&l[Weigeren]"
+blacklist.add_button: "&c&l[Weiger en blokkeer]"
+blacklist.remove_button: "&a&l[Deblokkeer]"
+teleport_button: "&a&l[Teleporteren]"
+location_set_button: "&6&l[Locatie instellen]"
+default_home_set_button: "&e&l[Standaard home]"
+delete_button: "&c&l[Verwijderen]"
+
+## Klikhints
+accept_click_hint: "&a&lKlik om teleportatie te accepteren"
+deny_click_hint: "&c&lKlik om teleportatie te weigeren"
+blacklist.add_hint: "&c&lKlik om te weigeren en te blokkeren"
+blacklist.remove_hint: "&a&lKlik om deblokkeren"
+teleport_click_hint: "&a&lKlik om te teleporteren"
+set_location_hint: "&6&lKlik om huidige locatie in te stellen"
+set_default_home_hint: "&e&lKlik als standaard home"
+delete_click_hint: "&c&lKlik om te verwijderen"
+
+#=======================
+# Teleportatieverzoeken
+#=======================
+request.to_here: "&a&lSpeler &6&l<target> &a&lwil naar je teleporteren! Verloopt over &6&l<seconds> &a&lseconden!"
+request.to_target: "&a&lSpeler &6&l<target> &a&lnodigt je uit! Verloopt over &6&l<seconds> &a&lseconden!"
+request.sent_success: "&a&lVerzoek verzonden naar &6&l<target>!"
+request.timeout_notice: "&a&lVerzoek geldig voor &6&l<seconds> &a&lseconden!"
+request.expired_from: "&c&lVerzoek van &6&l<target> &c&lis verlopen!"
+request.expired_to: "&c&lVerzoek aan &6&l<target> &c&lis verlopen!"
+
+#=======================
+# Homes
+#=======================
+home.list_header: "&a&lBeschikbare homes:"
+home.set_success: "&a&lHome &6&l<target> &a&lingesteld"
+home.default_set_success: "&a&lStandaard home ingesteld op &6&l<target>"
+home.delete_success: "&a&lHome &6&l<target> &a&lverwijderd"
+home.teleport_success: "&a&lGeteleporteerd naar home &6&l<target>"
+home.max_limit_error: "&c&lMaximaal <max_home_amount> homes!"
+error.default_home_already_set: "&6&l<target> &c&lis al standaard home"
+
+#=======================
+# Warps
+#=======================
+warp.list_header: "&a&lBeschikbare warps:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lingesteld"
+warp.delete_success: "&a&lWarp &6&l<target> &a&lverwijderd"
+warp.teleport_success: "&a&lGeteleporteerd naar warp &6&l<target>"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn ingesteld"
+spawn.delete_success: "&a&lSpawn verwijderd"
+spawn.teleport_success: "&a&lGeteleporteerd naar spawn!"
+
+#=======================
+# Laatste locatie
+#=======================
+back.teleport_success: "&a&lGeteleporteerd naar laatste locatie!"
+
+#=======================
+# Willekeurige teleportatie
+#=======================
+rtp.generating: "&a&lBezig met genereren..."
+rtp.success: "&a&lWillekeurig geteleporteerd!"
+rtp.failed: "&c&lGenereren mislukt!"
+
+#=======================
+# Zwarte lijst
+#=======================
+blacklist.list_header: "&a&lZwarte lijst:"
+blacklist.add_success: "&a&l&6&l<target> &a&lgeblokkeerd"
+blacklist.remove_success: "&a&l&6&l<target> &a&lgedeblokkeerd"
+
+#=======================
+# Foutmeldingen
+#=======================
+## Commando status
+error.command_disabled: "&c&lCommando uitgeschakeld!"
+error.world_disabled: "&c&lNiet beschikbaar in deze wereld!"
+error.command_cooldown: "&c&lWacht &6&l<seconds> &c&lseconden!"
+
+## Permissies
+error.console_restricted: "&c&lAlleen voor spelers!"
+error.permission_denied: "&c&lGeen toestemming!"
+
+## Spelerstatus
+error.no_online_players: "&c&lGeen online spelers!"
+error.target_offline: "&c&lSpeler &6&l<target> &c&lis offline!"
+error.self_operation: "&c&lNiet op jezelf gebruiken!"
+
+## Verzoekstatus
+error.no_pending_request: "&c&lGeen openstaande verzoeken!"
+error.request_pending: "&c&lEr loopt al een verzoek"
+
+## Zwarte lijst
+error.already_blacklisted: "&c&lAl geblokkeerd!"
+error.blocked_by_target: "&c&lJe bent geblokkeerd!"
+error.blacklist_empty: "&c&lZwarte lijst is leeg!"
+error.not_blacklisted: "&c&lNiet geblokkeerd!"
+
+## Homes
+error.home_not_found: "&c&lHome &6&l<target> &c&lniet gevonden!"
+error.no_homes_set: "&c&lGeen homes ingesteld!"
+error.no_default_home: "&c&lGeen standaard home!"
+
+## Warps
+error.warp_not_found: "&c&lWarp &6&l<target> &c&lniet gevonden!"
+error.no_warps_set: "&c&lGeen warps beschikbaar!"
+
+## Locaties
+error.last_location_missing: "&c&lGeen laatste locatie!"
+error.logout_location_missing: "&c&lGeen uitloglocatie!"
+error.spawn_not_set: "&c&lGeen spawn ingesteld!"
+
+## Commando syntax
+error.syntax_generic: "&c&lSyntaxisfout! Gebruik: /<command>"
+error.syntax_tpa: "&c&lSyntaxisfout! Gebruik: /<command> <speler>"
+error.syntax_tpall: "&c&lSyntaxisfout! Gebruik: /<command> [speler/warp/spawn] [naam]"
+error.syntax_warp: "&c&lSyntaxisfout! Gebruik: /<command> <warp>"
+error.syntax_home: "&c&lSyntaxisfout! Gebruik: /<command> <home>"
+
+## Systeemfouten
+error.config_not_found: "&c&lConfig hersteld!"
+error.runtime: "&c&lPluginfout: <message>"
+error.forwarded_error: "&c&lFout van &6&l<target>:"
+
+#=======================
+# Teleportatieproces
+#=======================
+teleport.accept.self: "&a&lVerzoek van &6&l<target> &a&lgeaccepteerd!"
+teleport.accept.target: "&a&l&6&l<target> &a&lheeft geaccepteerd!"
+teleport.deny.self: "&c&lVerzoek van &6&l<target> &c&lgeweigerd!"
+teleport.deny.target: "&c&l&6&l<target> &c&lheeft geweigerd!"
+teleport.countdown: "&a&lTeleportatie over &6&l<seconds> &a&lseconden naar &6&l<target>"
+teleport.cancel_on_move: "&a&lBewegen annuleert teleportatie!"
+teleport.canceled.self: "&c&lTeleportatie geannuleerd!"
+teleport.canceled.target: "&c&lAndere partij annuleerde!"
+teleport.generic_success: "&a&lGeteleporteerd naar &6&l<target>"
+teleport.tpall.to_target: "&a&lAdmin teleporteerde je naar &6&l<target>"
+teleport.tpall.to_self: "&a&lAdmin teleporteerde iedereen naar jou"
+teleport.tpall.success: "&a&lIedereen geteleporteerd naar &6&l<target>"
+teleport.logout_location: "&a&lGeteleporteerd naar uitloglocatie van &6&l<target>"
+
+#=======================
+# Systeemberichten
+#=======================
+system.config_reloaded: "&a&lConfig herladen!"
+system.plugin_loaded: "&a&lPlugin geladen! Versie: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin uitgeschakeld!"
+system.config_migrated_success: "&a&lConfig gemigreerd!"
+system.config_migrated: "&a&lOude config gedetecteerd (backup in backup-map)"
+system.debug_warning: "Waarschuwing: Debug-modus actief!"
+
+#=======================
+# Updates
+#=======================
+update.checking: "&a&lZoeken naar updates..."
+update.available: "&a&lNieuwe versie &6&lTPA-v<target> &a&lbeschikbaar: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lJe gebruikt de nieuwste versie"
+update.failed: "&c&lUpdatecontrole mislukt!"

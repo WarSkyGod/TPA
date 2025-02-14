@@ -7,7 +7,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.craft_hello.tpa.enums.CommandType;
 import top.craft_hello.tpa.enums.PermissionType;
 import top.craft_hello.tpa.objects.Config;
 import top.craft_hello.tpa.objects.LanguageConfig;
@@ -27,13 +26,7 @@ public class TpaTabCompleter implements TabCompleter {
         }
 
         if (args.length == 1){
-            if (config.hasPermission(sender, PermissionType.RELOAD)) list.add("reload");
-            if (config.hasPermission(sender, PermissionType.VERSION)) list.add("version");
-
             if (sender instanceof Player){
-                if (config.isEnableCommand(CommandType.SET_LANG)){
-                    list.add("setlang");
-                }
                 List<String> playerList = new ArrayList<>();
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!sender.equals(player)){
@@ -42,13 +35,18 @@ public class TpaTabCompleter implements TabCompleter {
                     }
                 }
 
-                if (playerList.isEmpty()) list.add(language.getMessage("not_online_player"));
+                if (playerList.isEmpty()) list.add(language.getMessage("not_online_players"));
+                if (config.hasPermission(sender, PermissionType.RELOAD)) list.add("reload");
+                if (config.hasPermission(sender, PermissionType.VERSION)) list.add("version");
+                list.add("setlang");
             }
             return list;
         }
 
-        if (config.isEnableCommand(CommandType.SET_LANG) && args.length == 2 && "setlang".equalsIgnoreCase(args[args.length - 2])){
-            return LanguageConfig.getLanguageTextList();
+        if (args.length == 2 && "setlang".equalsIgnoreCase(args[args.length - 2])){
+            list.add("clear");
+            list.addAll(LanguageConfig.getLanguageTextList());
+            return list;
         }
         return list;
     }

@@ -1,0 +1,180 @@
+## TPA Plugin Český Jazykový Soubor
+
+#=======================
+# Základní nastavení
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Žádní online hráči"
+not_warps: "Nejsou dostupné warpy"
+not_homes: "Nejsou dostupné domovy"
+spawn: "Spawn"
+last_location: "Poslední pozice"
+rtp: "Náhodný teleport"
+lang.set_success: "&a&lJazyk klienta nastaven na &6&l<target>"
+
+#=======================
+# Tlačítkové interakce
+#=======================
+## Text tlačítek
+accept_button: "&a&l[Přijmout]"
+deny_button: "&c&l[Odmítnout]"
+blacklist.add_button: "&c&l[Odmítnout a zablokovat]"
+blacklist.remove_button: "&a&l[Odblokovat]"
+teleport_button: "&a&l[Teleportovat]"
+location_set_button: "&6&l[Nastavit pozici]"
+default_home_set_button: "&e&l[Nastavit výchozí domov]"
+delete_button: "&c&l[Smazat]"
+
+## Nápovědy pro kliknutí
+accept_click_hint: "&a&lKlikněte pro přijetí teleportace"
+deny_click_hint: "&c&lKlikněte pro odmítnutí teleportace"
+blacklist.add_hint: "&c&lKlikněte pro odmítnutí a blokaci"
+blacklist.remove_hint: "&a&lKlikněte pro odblokování hráče"
+teleport_click_hint: "&a&lKlikněte pro teleportaci"
+set_location_hint: "&6&lKlikněte pro nastavení aktuální pozice"
+set_default_home_hint: "&e&lKlikněte pro výchozí domov"
+delete_click_hint: "&c&lKlikněte pro smazání"
+
+#=======================
+# Teleportační žádosti
+#=======================
+request.to_here: "&a&lHráč &6&l<target> &a&lse chce teleportovat k vám! Platnost: &6&l<seconds> &a&lvteřin!"
+request.to_target: "&a&lHráč &6&l<target> &a&lvás zve k sobě! Platnost: &6&l<seconds> &a&lvteřin!"
+request.sent_success: "&a&lŽádost odeslána hráči &6&l<target>!"
+request.timeout_notice: "&a&lŽádost platí &6&l<seconds> &a&lvteřin!"
+request.expired_from: "&c&lŽádost od &6&l<target> &c&lvypršela!"
+request.expired_to: "&c&lVaše žádost pro &6&l<target> &c&lvypršela!"
+
+#=======================
+# Domovy
+#=======================
+home.list_header: "&a&lDostupné domovy:"
+home.set_success: "&a&lDomov &6&l<target> &a&lnastaven"
+home.default_set_success: "&a&lVýchozí domov nastaven na &6&l<target>"
+home.delete_success: "&a&lDomov &6&l<target> &a&lsmazán"
+home.teleport_success: "&a&lTeleportováno do domova &6&l<target>"
+home.max_limit_error: "&c&lMaximální počet domovů: <max_home_amount>!"
+error.default_home_already_set: "&6&l<target> &c&ljiž je výchozí"
+
+#=======================
+# Warpy
+#=======================
+warp.list_header: "&a&lDostupné warpy:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lnastaven"
+warp.delete_success: "&a&lWarp &6&l<target> &a&lsmazán"
+warp.teleport_success: "&a&lTeleportováno k warpu &6&l<target>"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn nastaven"
+spawn.delete_success: "&a&lSpawn smazán"
+spawn.teleport_success: "&a&lTeleportováno na spawn!"
+
+#=======================
+# Poslední pozice
+#=======================
+back.teleport_success: "&a&lTeleportováno na poslední pozici!"
+
+#=======================
+# Náhodný teleport
+#=======================
+rtp.generating: "&a&lGenerování náhodné pozice..."
+rtp.success: "&a&lÚspěšný náhodný teleport!"
+rtp.failed: "&c&lGenerování selhalo!"
+
+#=======================
+# Černá listina
+#=======================
+blacklist.list_header: "&a&lVaše černá listina:"
+blacklist.add_success: "&a&l&6&l<target> &a&lpřidán na listinu"
+blacklist.remove_success: "&a&l&6&l<target> &a&lodebrán z listiny"
+
+#=======================
+# Chybové zprávy
+#=======================
+## Stav příkazu
+error.command_disabled: "&c&lPříkaz je vypnutý!"
+error.world_disabled: "&c&lV tomto světě nelze použít!"
+error.command_cooldown: "&c&lPočkejte &6&l<seconds> &c&lvteřin!"
+
+## Oprávnění
+error.console_restricted: "&c&lPouze pro hráče!"
+error.permission_denied: "&c&lNemáte oprávnění!"
+
+## Stav hráče
+error.no_online_players: "&c&lŽádní online hráči!"
+error.target_offline: "&c&lHráč &6&l<target> &c&lje offline!"
+error.self_operation: "&c&lNelze použít na sebe!"
+
+## Stav žádosti
+error.no_pending_request: "&c&lŽádné čekající žádosti!"
+error.request_pending: "&c&lJiž máte aktivní žádost"
+
+## Černá listina
+error.already_blacklisted: "&c&lJiž na listině!"
+error.blocked_by_target: "&c&lJste zablokováni!"
+error.blacklist_empty: "&c&lListina je prázdná!"
+error.not_blacklisted: "&c&lNení na listině!"
+
+## Domovy
+error.home_not_found: "&c&lDomov <target> neexistuje!"
+error.no_homes_set: "&c&lNemáte nastavené domovy!"
+error.no_default_home: "&c&lNemáte výchozí domov!"
+
+## Warpy
+error.warp_not_found: "&c&lWarp <target> neexistuje!"
+error.no_warps_set: "&c&lŽádné dostupné warpy!"
+
+## Pozice
+error.last_location_missing: "&c&lChybí poslední pozice!"
+error.logout_location_missing: "&c&lChybí pozice odhlášení!"
+error.spawn_not_set: "&c&lSpawn nenastaven!"
+
+## Syntaxe příkazu
+error.syntax_generic: "&c&lChybná syntaxe! Použijte: /<command>"
+error.syntax_tpa: "&c&lChybná syntaxe! Použijte: /<command> <hráč>"
+error.syntax_tpall: "&c&lChybná syntaxe! Použijte: /<command> [player/warp/spawn] [název]"
+error.syntax_warp: "&c&lChybná syntaxe! Použijte: /<command> <warp>"
+error.syntax_home: "&c&lChybná syntaxe! Použijte: /<command> <domov>"
+
+## Systémové chyby
+error.config_not_found: "&c&lKonfigurace obnovena!"
+error.runtime: "&c&lChyba pluginu: <message>"
+error.forwarded_error: "&c&lChyba od &6&l<target>:"
+
+#=======================
+# Proces teleportace
+#=======================
+teleport.accept.self: "&a&lPřijali jste žádost od &6&l<target>!"
+teleport.accept.target: "&a&lHráč &6&l<target> &a&lpřijal vaši žádost!"
+teleport.deny.self: "&c&lOdmítli jste žádost od &6&l<target>!"
+teleport.deny.target: "&c&lHráč &6&l<target> &c&lvaši žádost odmítl!"
+teleport.countdown: "&a&lTeleportace za &6&l<seconds> &a&lvteřin k &6&l<target>"
+teleport.cancel_on_move: "&a&lPohyb zruší teleportaci!"
+teleport.canceled.self: "&c&lTeleportace zrušena!"
+teleport.canceled.target: "&c&lDruhá strana zrušila teleportaci!"
+teleport.generic_success: "&a&lTeleportováno k &6&l<target>"
+teleport.tpall.to_target: "&a&lAdmin vás teleportoval k &6&l<target>"
+teleport.tpall.to_self: "&a&lAdmin teleportoval všechny k vám"
+teleport.tpall.success: "&a&lVšichni teleportováni k &6&l<target>"
+teleport.logout_location: "&a&lTeleportováno k poslední pozici &6&l<target>"
+
+#=======================
+# Systémové zprávy
+#=======================
+system.config_reloaded: "&a&lKonfigurace obnovena!"
+system.plugin_loaded: "&a&lPlugin načten! Verze: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin vypnut!"
+system.config_migrated_success: "&a&lKonfigurace migrována!"
+system.config_migrated: "&a&lStará konfigurace nalezena (záloha vytvořena)"
+system.debug_warning: "Varování: Debug mód aktivní!"
+
+#=======================
+# Aktualizace
+#=======================
+update.checking: "&a&lKontrola aktualizací..."
+update.available: "&a&lNová verze &6&lTPA-v<target> &a&ldostupná na: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lMáte nejnovější verzi"
+update.failed: "&c&lKontrola aktualizací selhala!"

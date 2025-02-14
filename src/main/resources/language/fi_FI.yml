@@ -1,0 +1,180 @@
+## TPA-laajennuksen suomenkielinen kielitiedosto
+
+#=======================
+# Perusasetukset
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Ei pelaajia paikalla"
+not_warps: "Ei saatavilla olevia warp-pisteitä"
+not_homes: "Ei määritettyjä koteja"
+spawn: "Spawn"
+last_location: "Edellinen sijainti"
+rtp: "Satunnainen teleportti"
+lang.set_success: "&a&lAsiakkaan kieli asetettu: &6&l<target>"
+
+#=======================
+# Painikkeiden toiminnot
+#=======================
+## Painiketekstit
+accept_button: "&a&l[Hyväksy]"
+deny_button: "&c&l[Hylkää]"
+blacklist.add_button: "&c&l[Estä]"
+blacklist.remove_button: "&a&l[Poista esto]"
+teleport_button: "&a&l[Teleporttaa]"
+location_set_button: "&6&l[Aseta sijainti]"
+default_home_set_button: "&e&l[Oletuskoti]"
+delete_button: "&c&l[Poista]"
+
+## Painikevihjeet
+accept_click_hint: "&a&lKlikkaa hyväksyäksesi"
+deny_click_hint: "&c&lKlikkaa hylätäksesi"
+blacklist.add_hint: "&c&lLisää mustalle listalle"
+blacklist.remove_hint: "&a&lPoista mustalta listalta"
+teleport_click_hint: "&a&lTeleporttaa välittömästi"
+set_location_hint: "&6&lAseta nykyinen sijainti"
+set_default_home_hint: "&e&lAseta oletuskodiksi"
+delete_click_hint: "&c&lPoista pysyvästi"
+
+#=======================
+# Teleporttipyynnöt
+#=======================
+request.to_here: "&a&lPelaaja &6&l<target> &a&lhaluaa teleportata luoksesi! (&6&l<seconds>s&a&l)"
+request.to_target: "&a&lPelaaja &6&l<target> &a&lkutsuu sinut luokseen! (&6&l<seconds>s&a&l)"
+request.sent_success: "&a&lPyyntö lähetetty pelaajalle &6&l<target>"
+request.timeout_notice: "&a&lVoimassa &6&l<seconds> &a&lsekunnin ajan"
+request.expired_from: "&c&lPyyntö pelaajalta &6&l<target> &c&lvanhentui"
+request.expired_to: "&c&lPyyntösi pelaajalle &6&l<target> &c&lvanhentui"
+
+#=======================
+# Kodit
+#=======================
+home.list_header: "&a&lKäytettävissä olevat kodit:"
+home.set_success: "&a&lKoti &6&l<target> &a&lasetettiin"
+home.default_set_success: "&a&lOletuskodiksi asetettu &6&l<target>"
+home.delete_success: "&a&lKoti &6&l<target> &a&lpoistettiin"
+home.teleport_success: "&a&lTeleportattu kotiin &6&l<target>"
+home.max_limit_error: "&c&lMaksimi &6&l<max_home_amount> &c&lkottia sallittu"
+error.default_home_already_set: "&6&l<target> &c&lon jo oletuskoti"
+
+#=======================
+# Warp-pisteet
+#=======================
+warp.list_header: "&a&lKäytettävissä olevat warpit:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lluotiin"
+warp.delete_success: "&a&lWarp &6&l<target> &a&lpoistettiin"
+warp.teleport_success: "&a&lTeleportattu warppiin &6&l<target>"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn-piste asetettu"
+spawn.delete_success: "&a&lSpawn-piste poistettu"
+spawn.teleport_success: "&a&lTeleportattu spawn-pisteeseen!"
+
+#=======================
+# Edellinen sijainti
+#=======================
+back.teleport_success: "&a&lPalattu edelliseen sijaintiin!"
+
+#=======================
+# Satunnainen teleportti
+#=======================
+rtp.generating: "&a&lLuodaan satunnaista sijaintia..."
+rtp.success: "&a&lSatunnainen teleportti onnistui!"
+rtp.failed: "&c&lSatunnainen teleportti epäonnistui!"
+
+#=======================
+# Musta lista
+#=======================
+blacklist.list_header: "&a&lMustasi lista:"
+blacklist.add_success: "&a&l&6&l<target> &a&llisättiin mustalle listalle"
+blacklist.remove_success: "&a&l&6&l<target> &a&lpoistettiin mustalta listalta"
+
+#=======================
+# Virheilmoitukset
+#=======================
+## Komentotila
+error.command_disabled: "&c&lKomento ei käytössä"
+error.world_disabled: "&c&lEi saatavilla tässä maailmassa"
+error.command_cooldown: "&c&lOdota &6&l<seconds>s"
+
+## Oikeudet
+error.console_restricted: "&c&lVain pelaajat voivat käyttää"
+error.permission_denied: "&c&lEi käyttöoikeutta!"
+
+## Pelaajatila
+error.no_online_players: "&c&lEi paikalla olevia pelaajia"
+error.target_offline: "&c&lPelaaja &6&l<target> &c&lei ole paikalla"
+error.self_operation: "&c&lEi sovellettavissa itseesi"
+
+## Pyyntötila
+error.no_pending_request: "&c&lEi odottavia pyyntöjä"
+error.request_pending: "&c&lKäsittelyssä oleva pyyntö"
+
+## Musta lista
+error.already_blacklisted: "&c&lJo mustalla listalla"
+error.blocked_by_target: "&c&lSinut on estetty"
+error.blacklist_empty: "&c&lMustasi lista on tyhjä"
+error.not_blacklisted: "&c&lEi mustalla listalla"
+
+## Kodit
+error.home_not_found: "&c&lKotia &6&l<target> &c&lei löydy"
+error.no_homes_set: "&c&lEi määritettyjä koteja"
+error.no_default_home: "&c&lEi oletuskotia"
+
+## Warpit
+error.warp_not_found: "&c&lWarpia &6&l<target> &c&lei löydy"
+error.no_warps_set: "&c&lEi saatavilla olevia warppeja"
+
+## Sijainnit
+error.last_location_missing: "&c&lEdellistä sijaintia ei tallennettu"
+error.logout_location_missing: "&c&lKirjautumispaikkaa ei tallennettu"
+error.spawn_not_set: "&c&lSpawn-pistettä ei asetettu"
+
+## Syntaksi
+error.syntax_generic: "&c&lSyntaksivirhe! Käytä: /<command>"
+error.syntax_tpa: "&c&lSyntaksivirhe! Käytä: /<command> <pelaaja>"
+error.syntax_tpall: "&c&lSyntaksivirhe! Käytä: /<command> [player/warp/spawn] [nimi]"
+error.syntax_warp: "&c&lSyntaksivirhe! Käytä: /<command> <warp>"
+error.syntax_home: "&c&lSyntaksivirhe! Käytä: /<command> <koti>"
+
+## Järjestelmävirheet
+error.config_not_found: "&c&lAsetustiedosto luotiin uudelleen"
+error.runtime: "&c&lLaajennusvirhe: <message>"
+error.forwarded_error: "&c&lVirhe käyttäjältä &6&l<target>&c&l:"
+
+#=======================
+# Teleporttiprosessi
+#=======================
+teleport.accept.self: "&a&lHyväksyit pyynnön pelaajalta &6&l<target>"
+teleport.accept.target: "&a&lPelaaja &6&l<target> &a&lhyväksyi pyyntösi"
+teleport.deny.self: "&c&lHylkäsit pyynnön pelaajalta &6&l<target>"
+teleport.deny.target: "&c&lPelaaja &6&l<target> &c&lhylkäsi pyyntösi"
+teleport.countdown: "&a&lTeleportti alkaa &6&l<seconds>s&a&l kuluttua"
+teleport.cancel_on_move: "&a&lLiikkuminen keskeyttää teleportin"
+teleport.canceled.self: "&c&lTeleportti peruutettu"
+teleport.canceled.target: "&c&lToinen osapuoli peruutti"
+teleport.generic_success: "&a&lTeleportattu kohteeseen &6&l<target>"
+teleport.tpall.to_target: "&a&lYlläpitäjä teleporttasi sinut &6&l<target>"
+teleport.tpall.to_self: "&a&lYlläpitäjä toi kaikki pelaajat luoksesi"
+teleport.tpall.success: "&a&lKaikki teleportattu kohteeseen &6&l<target>"
+teleport.logout_location: "&a&lTeleportattu pelaajan &6&l<target> &a&lviimeiseen sijaintiin"
+
+#=======================
+# Järjestelmäviestit
+#=======================
+system.config_reloaded: "&a&lAsetukset ladattu uudelleen!"
+system.plugin_loaded: "&a&lLaajennus ladattu! Versio: &6&l<target>"
+system.plugin_unloaded: "&c&lLaajennus poistettu!"
+system.config_migrated_success: "&a&lAsetusten migraatio valmis!"
+system.config_migrated: "&a&lVanhat asetukset migroidaan (varmuuskopio luotu)"
+system.debug_warning: "&c&lDebug-tila päällä - sammuta käytön jälkeen!"
+
+#=======================
+# Päivitykset
+#=======================
+update.checking: "&a&lTarkistetaan päivityksiä..."
+update.available: "&a&lUusi versio &6&lTPA-v<target>&a&l saatavilla: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lUusin versio asennettuna"
+update.failed: "&c&lPäivitysten tarkistus epäonnistui"

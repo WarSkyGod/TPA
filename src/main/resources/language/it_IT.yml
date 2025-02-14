@@ -1,0 +1,180 @@
+## File linguistico italiano per il plugin TPA
+
+#=======================
+# Configurazione base
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Nessun giocatore online"
+not_warps: "Nessun punto di teletrasporto disponibile"
+not_homes: "Nessuna casa impostata"
+spawn: "Spawn"
+last_location: "Ultima posizione"
+rtp: "Teletrasporto casuale"
+lang.set_success: "&a&lLingua client impostata a &6&l<target>"
+
+#=======================
+# Interazione pulsanti
+#=======================
+## Testo pulsanti
+accept_button: "&a&l[Accetta]"
+deny_button: "&c&l[Rifiuta]"
+blacklist.add_button: "&c&l[Blocca]"
+blacklist.remove_button: "&a&l[Sblocca]"
+teleport_button: "&a&l[Teletrasporta]"
+location_set_button: "&6&l[Imposta posizione]"
+default_home_set_button: "&e&l[Home predefinita]"
+delete_button: "&c&l[Elimina]"
+
+## Suggerimenti pulsanti
+accept_click_hint: "&a&lClicca per accettare"
+deny_click_hint: "&c&lClicca per rifiutare"
+blacklist.add_hint: "&c&lAggiungi alla lista nera"
+blacklist.remove_hint: "&a&lRimuovi dalla lista nera"
+teleport_click_hint: "&a&lTeletrasporta ora"
+set_location_hint: "&6&lImposta posizione corrente"
+set_default_home_hint: "&e&lImposta come home predefinita"
+delete_click_hint: "&c&lElimina definitivamente"
+
+#=======================
+# Richieste di teletrasporto
+#=======================
+request.to_here: "&a&lIl giocatore &6&l<target> &a&lvuole raggiungerti! (&6&l<seconds>s&a&l)"
+request.to_target: "&a&lIl giocatore &6&l<target> &a&lti invita! (&6&l<seconds>s&a&l)"
+request.sent_success: "&a&lRichiesta inviata a &6&l<target>"
+request.timeout_notice: "&a&lValida per &6&l<seconds> secondi"
+request.expired_from: "&c&lRichiesta da &6&l<target> &c&lscaduta"
+request.expired_to: "&c&lLa tua richiesta a &6&l<target> &c&lè scaduta"
+
+#=======================
+# Home
+#=======================
+home.list_header: "&a&lCase disponibili:"
+home.set_success: "&a&lHome &6&l<target> &a&limpostata"
+home.default_set_success: "&a&lHome predefinita: &6&l<target>"
+home.delete_success: "&a&lHome &6&l<target> &a&leliminata"
+home.teleport_success: "&a&lTeletrasportato a &6&l<target>"
+home.max_limit_error: "&c&lLimite massimo: &6&l<max_home_amount> case"
+error.default_home_already_set: "&6&l<target> &c&lgià home predefinita"
+
+#=======================
+# Punti di teletrasporto
+#=======================
+warp.list_header: "&a&lWarps disponibili:"
+warp.set_success: "&a&lWarp &6&l<target> &a&lcreato"
+warp.delete_success: "&a&lWarp &6&l<target> &a&leliminato"
+warp.teleport_success: "&a&lTeletrasportato a &6&l<target>"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn impostato"
+spawn.delete_success: "&a&lSpawn rimosso"
+spawn.teleport_success: "&a&lTeletrasportato allo spawn!"
+
+#=======================
+# Ultima posizione
+#=======================
+back.teleport_success: "&a&lTornato all'ultima posizione!"
+
+#=======================
+# Teletrasporto casuale
+#=======================
+rtp.generating: "&a&lGenerazione posizione casuale..."
+rtp.success: "&a&lTeletrasporto riuscito!"
+rtp.failed: "&c&lTeletrasporto fallito!"
+
+#=======================
+# Lista nera
+#=======================
+blacklist.list_header: "&a&lLista nera:"
+blacklist.add_success: "&a&l&6&l<target> &a&lbloccato"
+blacklist.remove_success: "&a&l&6&l<target> &a&lsbloccato"
+
+#=======================
+# Messaggi di errore
+#=======================
+## Stato comandi
+error.command_disabled: "&c&lComando disabilitato"
+error.world_disabled: "&c&lNon disponibile qui"
+error.command_cooldown: "&c&lAttendi &6&l<seconds>s"
+
+## Permessi
+error.console_restricted: "&c&lSolo giocatori"
+error.permission_denied: "&c&lPermesso negato!"
+
+## Stato giocatori
+error.no_online_players: "&c&lNessun giocatore online"
+error.target_offline: "&c&lIl giocatore &6&l<target> &c&lè offline"
+error.self_operation: "&c&lNon applicabile a te stesso"
+
+## Richieste
+error.no_pending_request: "&c&lNessuna richiesta pendente"
+error.request_pending: "&c&lRichiesta in elaborazione"
+
+## Lista nera
+error.already_blacklisted: "&c&lGià in lista nera"
+error.blocked_by_target: "&c&lSei stato bloccato"
+error.blacklist_empty: "&c&lLista nera vuota"
+error.not_blacklisted: "&c&lNon in lista nera"
+
+## Home
+error.home_not_found: "&c&lHome &6&l<target> &c&lnon trovata"
+error.no_homes_set: "&c&lNessuna home impostata"
+error.no_default_home: "&c&lNessuna home predefinita"
+
+## Warps
+error.warp_not_found: "&c&lWarp &6&l<target> &c&lnon trovato"
+error.no_warps_set: "&c&lNessun warp disponibile"
+
+## Posizioni
+error.last_location_missing: "&c&lNessun registro posizioni"
+error.logout_location_missing: "&c&lPosizione di logout assente"
+error.spawn_not_set: "&c&lSpawn non impostato"
+
+## Sintassi
+error.syntax_generic: "&c&lErrore sintassi! Usa: /<command>"
+error.syntax_tpa: "&c&lErrore sintassi! Usa: /<command> <giocatore>"
+error.syntax_tpall: "&c&lErrore sintassi! Usa: /<command> [player/warp/spawn] [nome]"
+error.syntax_warp: "&c&lErrore sintassi! Usa: /<command> <warp>"
+error.syntax_home: "&c&lErrore sintassi! Usa: /<command> <home>"
+
+## Errori di sistema
+error.config_not_found: "&c&lConfigurazione rigenerata"
+error.runtime: "&c&lErrore plugin: <message>"
+error.forwarded_error: "&c&lErrore da &6&l<target>&c&l:"
+
+#=======================
+# Processo di teletrasporto
+#=======================
+teleport.accept.self: "&a&lRichiesta da &6&l<target> &a&laccettata"
+teleport.accept.target: "&a&l&6&l<target> &a&lha accettato"
+teleport.deny.self: "&c&lRichiesta da &6&l<target> &c&lrifiutata"
+teleport.deny.target: "&c&l&6&l<target> &c&lha rifiutato"
+teleport.countdown: "&a&lTeletrasporto tra &6&l<seconds>s"
+teleport.cancel_on_move: "&a&lMovimento annulla il teletrasporto"
+teleport.canceled.self: "&c&lTeletrasporto annullato"
+teleport.canceled.target: "&c&lAnnullato dall'altro giocatore"
+teleport.generic_success: "&a&lTeletrasportato a &6&l<target>"
+teleport.tpall.to_target: "&a&lAmministratore ti ha spostato"
+teleport.tpall.to_self: "&a&lAmministratore ha portato tutti"
+teleport.tpall.success: "&a&lTutti spostati a &6&l<target>"
+teleport.logout_location: "&a&lUltima posizione di &6&l<target>"
+
+#=======================
+# Messaggi di sistema
+#=======================
+system.config_reloaded: "&a&lConfigurazione ricaricata!"
+system.plugin_loaded: "&a&lPlugin caricato! Versione: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin rimosso!"
+system.config_migrated_success: "&a&lMigrazione completata!"
+system.config_migrated: "&a&lMigrazione configurazione (backup automatico)"
+system.debug_warning: "&c&lModalità debug attiva!"
+
+#=======================
+# Aggiornamenti
+#=======================
+update.checking: "&a&lControllo aggiornamenti..."
+update.available: "&a&lNuova versione &6&lTPA-v<target>&a&l disponibile: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lGià aggiornato"
+update.failed: "&c&lControllo fallito"

@@ -1,0 +1,180 @@
+## TPA Plugin Magyar Nyelvi Fájl
+
+#=======================
+# Alapbeállítások
+#=======================
+prefix: "&a&l> "
+console_prefix: "&7&l[TPA] "
+not_online_players: "Nincs online játékos"
+not_warps: "Nincs elérhető warp"
+not_homes: "Nincs elérhető home"
+spawn: "Spawn"
+last_location: "Utolsó pozíció"
+rtp: "Véletlenszerű teleportálás"
+lang.set_success: "&a&lNyelv beállítva: &6&l<target>"
+
+#=======================
+# Gombinterakciók
+#=======================
+## Gomb szövegek
+accept_button: "&a&l[Elfogadás]"
+deny_button: "&c&l[Elutasítás]"
+blacklist.add_button: "&c&l[Elutasítás és tiltás]"
+blacklist.remove_button: "&a&l[Tiltás feloldása]"
+teleport_button: "&a&l[Teleportálás]"
+location_set_button: "&6&l[Pozíció beállítása]"
+default_home_set_button: "&e&l[Alapértelmezett home]"
+delete_button: "&c&l[Törlés]"
+
+## Kattintási útmutatók
+accept_click_hint: "&a&lKattints a teleportálás elfogadásához"
+deny_click_hint: "&c&lKattints a teleportálás elutasításához"
+blacklist.add_hint: "&c&lKattints az elutasításra és tiltásra"
+blacklist.remove_hint: "&a&lKattints a tiltás feloldásához"
+teleport_click_hint: "&a&lKattints a teleportáláshoz"
+set_location_hint: "&6&lKattints a jelenlegi pozíció beállításához"
+set_default_home_hint: "&e&lKattints az alapértelmezett home beállításához"
+delete_click_hint: "&c&lKattints a törléshez"
+
+#=======================
+# Teleportkérések
+#=======================
+request.to_here: "&a&l&6&l<target> &a&lhoz akar teleportálni! Kérés lejár: &6&l<seconds> &a&lmásodperc!"
+request.to_target: "&a&l&6&l<target> &a&lmeghívott! Kérés lejár: &6&l<seconds> &a&lmásodperc!"
+request.sent_success: "&a&lKérés elküldve &6&l<target> &a&lnek!"
+request.timeout_notice: "&a&lKérés érvényes: &6&l<seconds> &a&lmásodpercig!"
+request.expired_from: "&c&lKérés &6&l<target> &c&ltől lejárt!"
+request.expired_to: "&c&lKérésed &6&l<target> &c&lnek lejárt!"
+
+#=======================
+# Home-ok
+#=======================
+home.list_header: "&a&lElérhető home-ok:"
+home.set_success: "&a&lHome beállítva: &6&l<target>"
+home.default_set_success: "&a&lAlapértelmezett home: &6&l<target>"
+home.delete_success: "&a&lHome törölve: &6&l<target>"
+home.teleport_success: "&a&lTeleportálva a &6&l<target> &a&lhome-ba"
+home.max_limit_error: "&c&lMaximális home szám: <max_home_amount>!"
+error.default_home_already_set: "&6&l<target> &c&lmár alapértelmezett"
+
+#=======================
+# Warp-ok
+#=======================
+warp.list_header: "&a&lElérhető warp-ok:"
+warp.set_success: "&a&lWarp beállítva: &6&l<target>"
+warp.delete_success: "&a&lWarp törölve: &6&l<target>"
+warp.teleport_success: "&a&lTeleportálva a &6&l<target> &a&lwarp-hoz"
+
+#=======================
+# Spawn
+#=======================
+spawn.set_success: "&a&lSpawn beállítva"
+spawn.delete_success: "&a&lSpawn törölve"
+spawn.teleport_success: "&a&lTeleportálva a spawnhoz!"
+
+#=======================
+# Utolsó pozíció
+#=======================
+back.teleport_success: "&a&lTeleportálva az utolsó pozíciódra!"
+
+#=======================
+# Véletlen teleport
+#=======================
+rtp.generating: "&a&lVéletlenszerű pozíció generálása..."
+rtp.success: "&a&lSikeres véletlenszerű teleport!"
+rtp.failed: "&c&lGenerálás sikertelen!"
+
+#=======================
+# Feketelista
+#=======================
+blacklist.list_header: "&a&lFeketelista:"
+blacklist.add_success: "&a&l&6&l<target> &a&lfelkerült a listára"
+blacklist.remove_success: "&a&l&6&l<target> &a&ltörölve a listáról"
+
+#=======================
+# Hibák
+#=======================
+## Parancs állapot
+error.command_disabled: "&c&lParancs letiltva!"
+error.world_disabled: "&c&lNem elérhető ebben a világban!"
+error.command_cooldown: "&c&lVárj &6&l<seconds> &c&lmásodpercet!"
+
+## Jogosultságok
+error.console_restricted: "&c&lCsak játékosok használhatják!"
+error.permission_denied: "&c&lNincs jogosultságod!"
+
+## Játékos állapot
+error.no_online_players: "&c&lNincs online játékos!"
+error.target_offline: "&c&l&6&l<target> &c&lnem elérhető!"
+error.self_operation: "&c&lNem használhatod magadon!"
+
+## Kérés állapot
+error.no_pending_request: "&c&lNincs függő kérés!"
+error.request_pending: "&c&lMár van aktív kérésed"
+
+## Feketelista
+error.already_blacklisted: "&c&lMár a listán van!"
+error.blocked_by_target: "&c&lLetiltottak!"
+error.blacklist_empty: "&c&lA lista üres!"
+error.not_blacklisted: "&c&lNincs a listán!"
+
+## Home-ok
+error.home_not_found: "&c&lHome &6&l<target> &c&lnem létezik!"
+error.no_homes_set: "&c&lNincs beállított home!"
+error.no_default_home: "&c&lNincs alapértelmezett home!"
+
+## Warp-ok
+error.warp_not_found: "&c&lWarp &6&l<target> &c&lnem létezik!"
+error.no_warps_set: "&c&lNincs elérhető warp!"
+
+## Pozíciók
+error.last_location_missing: "&c&lNincs utolsó pozíció!"
+error.logout_location_missing: "&c&lNincs kijelentkezési hely!"
+error.spawn_not_set: "&c&lNincs spawn beállítva!"
+
+## Parancs szintaxis
+error.syntax_generic: "&c&lSzintaxis hiba! Használat: /<command>"
+error.syntax_tpa: "&c&lSzintaxis hiba! Használat: /<command> <játékos>"
+error.syntax_tpall: "&c&lSzintaxis hiba! Használat: /<command> [player/warp/spawn] [név]"
+error.syntax_warp: "&c&lSzintaxis hiba! Használat: /<command> <warp>"
+error.syntax_home: "&c&lSzintaxis hiba! Használat: /<command> <home>"
+
+## Rendszerhibák
+error.config_not_found: "&c&lÚj konfig generálva!"
+error.runtime: "&c&lPlugin hiba: <message>"
+error.forwarded_error: "&c&lHiba &6&l<target> &c&ltől:"
+
+#=======================
+# Teleportációs folyamat
+#=======================
+teleport.accept.self: "&a&lElfogadtad &6&l<target> &a&lkérését!"
+teleport.accept.target: "&a&l&6&l<target> &a&lel fogadta a kérelmed!"
+teleport.deny.self: "&c&lElutasítottad &6&l<target> &c&lkérését!"
+teleport.deny.target: "&c&l&6&l<target> &c&lelutasította a kérelmed!"
+teleport.countdown: "&a&lTeleportálás &6&l<seconds> &a&lmásodpercen belül: &6&l<target>"
+teleport.cancel_on_move: "&a&lMozgás megszakítja a teleportot!"
+teleport.canceled.self: "&c&lMegszakítottad a teleportot!"
+teleport.canceled.target: "&c&lA másik fél megszakította!"
+teleport.generic_success: "&a&lTeleportálva &6&l<target> &a&lhoz"
+teleport.tpall.to_target: "&a&lAdmin teleportált &6&l<target> &a&lhoz"
+teleport.tpall.to_self: "&a&lAdmin mindenkit hozzád teleportált"
+teleport.tpall.success: "&a&lMindenki teleportálva &6&l<target> &a&lhoz"
+teleport.logout_location: "&a&lTeleportálva &6&l<target> &a&lkijelentkezési helyére"
+
+#=======================
+# Rendszerüzenetek
+#=======================
+system.config_reloaded: "&a&lKonfig újratöltve!"
+system.plugin_loaded: "&a&lPlugin betöltve! Verzió: &6&l<target>"
+system.plugin_unloaded: "&c&lPlugin kikapcsolva!"
+system.config_migrated_success: "&a&lKonfig migrálva!"
+system.config_migrated: "&a&lRégi konfig észlelve (biztonsági mentés készült)"
+system.debug_warning: "Figyelem: Debug mód aktív!"
+
+#=======================
+# Frissítések
+#=======================
+update.checking: "&a&lFrissítések keresése..."
+update.available: "&a&lÚj verzió: &6&lTPA-v<target> &a&lLetöltés: https://modrinth.com/plugin/tpa.66666/versions"
+update.latest: "&a&lLegújabb verzió használatban"
+update.failed: "&c&lFrissítés ellenőrzés sikertelen!"
