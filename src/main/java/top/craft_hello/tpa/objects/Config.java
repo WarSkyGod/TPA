@@ -246,7 +246,7 @@ public class Config extends Configuration {
 
     public boolean isEnableCommand(CommandType... commandTypes) {
         for (CommandType commandType : commandTypes) {
-            if (ENABLE_COMMANDS.containsKey(commandType) && !ENABLE_COMMANDS.get(commandType)) return false;
+            if (ENABLE_COMMANDS.containsKey(commandType) || !ENABLE_COMMANDS.get(commandType)) return false;
         }
         return true;
     }
