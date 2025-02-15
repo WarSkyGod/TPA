@@ -142,6 +142,7 @@ This plugin uses [FoliaLib](https://github.com/handyplus/FoliaLib) for **Folia**
 - [fanlepian1](https://github.com/fanlepian1)
 - [Apleax](https://github.com/Apleax)
 - [LFWQSP2641](https://github.com/LFWQSP2641)
+- [sky-3311](https://github.com/sky-3311)
 
 ### Bug Reporters
 - [fanlepian1](https://github.com/fanlepian1)
@@ -149,6 +150,7 @@ This plugin uses [FoliaLib](https://github.com/handyplus/FoliaLib) for **Folia**
 - [luckeist](https://github.com/luckeist)
 - [DuckCattyCotton](https://github.com/DuckCattyCotton)
 - [Ry4nnnnn](https://github.com/Ry4nnnnn)
+- [sky-3311](https://github.com/sky-3311)
 
 ### Feature Suggesters
 - [Apleax](https://github.com/Apleax)
