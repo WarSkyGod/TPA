@@ -8,8 +8,7 @@ import top.craft_hello.tpa.exceptions.ErrorConfigNotFoundException;
 import top.craft_hello.tpa.exceptions.ErrorRuntimeException;
 import top.craft_hello.tpa.objects.LanguageConfig;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import static top.craft_hello.tpa.objects.LanguageConfig.getLanguage;
 import static top.craft_hello.tpa.utils.LoadingConfigUtil.getConfig;

@@ -49,6 +49,7 @@ public class LoadingConfigUtil {
             Request.clearRequestQueue();
             Request.clearCommandDelayQueue();
             LanguageConfig.reloadAllLanguage();
+            config.reloadConfiguration();
             warpConfig.reloadConfiguration();
             spawnConfig.reloadConfiguration();
             PlayerDataConfig.reloadAllPlayerData();

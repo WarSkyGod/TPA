@@ -12,6 +12,10 @@ import top.craft_hello.tpa.utils.SendMessageUtil;
 import top.craft_hello.tpa.interfaces.ConfigurationInterface;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import static java.util.Objects.isNull;
 import static top.craft_hello.tpa.utils.LoadingConfigUtil.getConfig;
@@ -52,7 +56,10 @@ public abstract class Configuration implements ConfigurationInterface {
             PLUGIN.saveResource(configurationFile.getName(), isReplace);
             configurationFile = new File(configurationFile.getAbsolutePath());
         }
-        configuration = YamlConfiguration.loadConfiguration(configurationFile);
+        try {
+            Reader reader = new InputStreamReader(Files.newInputStream(configurationFile.toPath()), StandardCharsets.UTF_8);
+            configuration = YamlConfiguration.loadConfiguration(reader);
+        } catch (Exception ignored){}
     }
 
     protected void saveConfiguration(CommandSender sender) {

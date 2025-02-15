@@ -156,6 +156,7 @@ public class Config extends Configuration {
         HOME_AMOUNTS.put(PermissionType.ADMIN, configuration.getInt("home_amount.admin"));
 
         switch (configVersion) {
+            case "3.2.1":
             case "3.2.0":
                 configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/" + configurationFile.getName()));
                 configuration.set("version", VERSION);
@@ -246,9 +247,9 @@ public class Config extends Configuration {
 
     public boolean isEnableCommand(CommandType... commandTypes) {
         for (CommandType commandType : commandTypes) {
-            if (ENABLE_COMMANDS.containsKey(commandType) && !ENABLE_COMMANDS.get(commandType)) return false;
+            if (!ENABLE_COMMANDS.containsKey(commandType) || ENABLE_COMMANDS.get(commandType)) return true;
         }
-        return true;
+        return false;
     }
 
     public boolean isEnablePermission(PermissionType permissionType) {

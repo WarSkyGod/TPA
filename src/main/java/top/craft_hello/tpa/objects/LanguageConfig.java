@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import top.craft_hello.tpa.abstracts.Configuration;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -135,7 +138,10 @@ public class LanguageConfig extends Configuration {
                 }
             }
         }
-        configuration = YamlConfiguration.loadConfiguration(configurationFile);
+        try {
+            Reader reader = new InputStreamReader(Files.newInputStream(configurationFile.toPath()), StandardCharsets.UTF_8);
+            configuration = YamlConfiguration.loadConfiguration(reader);
+        } catch (Exception ignored){}
     }
 
     public static void loadAllLanguage() {
