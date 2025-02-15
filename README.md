@@ -151,6 +151,7 @@
 - [luckeist](https://github.com/luckeist)
 - [DuckCattyCotton](https://github.com/DuckCattyCotton)
 - [Ry4nnnnn](https://github.com/Ry4nnnnn)
+- [sky-3311](https://github.com/sky-3311)
 
 ### 功能建议者
 - [Apleax](https://github.com/Apleax)
