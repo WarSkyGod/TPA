@@ -65,7 +65,7 @@ jobs:
           found_files=false
           for file in target/*.jar; do
             if [[ -f "$file" ]]; then
-              hash=$(sha256sum "$file" | awk '{print \$1}')
+              hash=$(sha256sum "$file" | awk '{print $1}')
               filename=$(basename "$file")
               echo "${filename}: ${hash}" >> hashes.md
               found_files=true
