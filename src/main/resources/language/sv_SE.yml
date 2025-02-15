@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Inga spelare online"
 not_warps: "Inga warp-punkter tillgängliga"
 not_homes: "Inga hem inställda"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Slumpmässig teleportering"
 last_location: "Senaste position"
-rtp: "Slumpmässig teleportering"
 lang.set_success: "&a&lKlientens språk satt till &6&l<target>"
 
 #=======================

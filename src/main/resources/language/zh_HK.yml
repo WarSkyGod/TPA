@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "無在線玩家"
 not_warps: "當前無可用傳送點"
 not_homes: "當前無可用嘅家"
-spawn: "主城"
+spawn_name: "主城"
+rtp_name: "隨機傳送點"
 last_location: "上一次嘅位置"
-rtp: "隨機傳送點"
 lang.set_success: "&a&l您已設定客戶端顯示語言為 &6&l<target>"
 
 #=======================
@@ -81,7 +81,7 @@ back.teleport_success: "&a&l您已傳送至 &6&l上次位置！"
 # 隨機傳送
 #=======================
 rtp.generating: "&a&l正在生成隨機傳送點，請稍候..."
-rtp.success: "&a&l您已傳送至隨機位置！"
+rtp.success: "&a&l您已傳送至 &6&l隨機傳送點！"
 rtp.failed: "&c&l生成隨機傳送點失敗！"
 
 #=======================

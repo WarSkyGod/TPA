@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Nessun giocatore online"
 not_warps: "Nessun punto di teletrasporto disponibile"
 not_homes: "Nessuna casa impostata"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Teletrasporto casuale"
 last_location: "Ultima posizione"
-rtp: "Teletrasporto casuale"
 lang.set_success: "&a&lLingua client impostata a &6&l<target>"
 
 #=======================

@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Žádní online hráči"
 not_warps: "Nejsou dostupné warpy"
 not_homes: "Nejsou dostupné domovy"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Náhodný teleport"
 last_location: "Poslední pozice"
-rtp: "Náhodný teleport"
 lang.set_success: "&a&lJazyk klienta nastaven na &6&l<target>"
 
 #=======================

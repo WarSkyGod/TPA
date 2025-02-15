@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "אין שחקנים מחוברים"
 not_warps: "אין נקודות טלפורט זמינות"
 not_homes: "אין בתים זמינים"
-spawn: "ספawn"
+spawn_name: "ספawn"
+rtp_name: "טלפורט אקראי"
 last_location: "מיקום אחרון"
-rtp: "טלפורט אקראי"
 lang.set_success: "&a&lשפת הלקוח הוגדרה ל&6&l<target>"
 
 #=======================

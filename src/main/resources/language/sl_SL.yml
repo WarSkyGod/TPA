@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Ni aktivnih igralcev"
 not_warps: "Ni dostopnih warp točk"
 not_homes: "Ni nastavljenih domov"
-spawn: "Začetna točka"
+spawn_name: "Začetna točka"
+rtp_name: "Naključna teleportacija"
 last_location: "Zadnja lokacija"
-rtp: "Naključna teleportacija"
 lang.set_success: "&a&lJezik nastavljen na &6&l<target>"
 
 #=======================

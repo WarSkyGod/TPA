@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Çevrimiçi oyuncu yok"
 not_warps: "Mevcut ışınlanma noktası yok"
 not_homes: "Mevcut ev bulunamadı"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Rastgele ışınlanma"
 last_location: "Son konum"
-rtp: "Rastgele ışınlanma"
 lang.set_success: "&a&lİstemci dili &6&l<target> &a&lolarak ayarlandı"
 
 #=======================

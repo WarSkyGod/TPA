@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Nincs online játékos"
 not_warps: "Nincs elérhető warp"
 not_homes: "Nincs elérhető home"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Véletlenszerű teleportálás"
 last_location: "Utolsó pozíció"
-rtp: "Véletlenszerű teleportálás"
 lang.set_success: "&a&lNyelv beállítva: &6&l<target>"
 
 #=======================

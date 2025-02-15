@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "オンラインプレイヤーがいません"
 not_warps: "利用可能なワープポイントがありません"
 not_homes: "設定されたホームがありません"
-spawn: "スポーン地点"
+spawn_name: "スポーン地点"
+rtp_name: "ランダムテレポート"
 last_location: "直前の位置"
-rtp: "ランダムテレポート"
 lang.set_success: "&a&lクライアント表示言語を &6&l<target> &a&lに設定しました"
 
 #=======================

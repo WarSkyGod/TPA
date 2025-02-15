@@ -97,7 +97,7 @@ public abstract class PlayerToLocationRequest extends Request {
                 if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
                 if (!LoadingConfigUtil.getSpawnConfig().containsSpawnLocation()) throw new ErrorSpawnNotSetException(requestPlayer);
                 location = LoadingConfigUtil.getSpawnConfig().getSpawnLocation(requestPlayer);
-                targetName = "spawn";
+                targetName = "spawn_name";
                 break;
             case BACK:
                 if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
@@ -121,7 +121,7 @@ public abstract class PlayerToLocationRequest extends Request {
                 if (!config.hasPermission(requestPlayer, PermissionType.RTP)) throw new ErrorPermissionDeniedException(requestPlayer);
                 if (COMMAND_DELAY_QUEUE.containsKey(requestPlayer)) throw new ErrorCommandCooldownException(requestPlayer, COMMAND_DELAY_QUEUE.get(requestPlayer));
                 if (REQUEST_QUEUE.containsKey(requestPlayer)) throw new ErrorRequestPendingException(requestPlayer);
-                targetName = "rtp";
+                targetName = "rtp_name";
                 World world = requestPlayer.getWorld();
                 if (config.isRtpDisableWorld(world)) throw new ErrorWorldDisabledException(requestPlayer);
                 SendMessageUtil.generateRandomLocationMessage(requestPlayer);
@@ -225,6 +225,7 @@ public abstract class PlayerToLocationRequest extends Request {
                 break;
             case SPAWN:
                 if (getConfig().isEnableTitleMessage()) {
+                    Bukkit.getConsoleSender().sendMessage(targetName);
                     SendMessageUtil.titleCountdownOverMessage(requestPlayer, targetName);
                     if (getConfig().isEnableSound()) PlayerSchedulerUtil.playSound(requestPlayer, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 }

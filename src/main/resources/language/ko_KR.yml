@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "접속 중인 플레이어 없음"
 not_warps: "이용 가능한 워프 지점 없음"
 not_homes: "설정된 홈 없음"
-spawn: "스폰 지점"
+spawn_name: "스폰 지점"
+rtp_name: "랜덤 텔레포트"
 last_location: "이전 위치"
-rtp: "랜덤 텔레포트"
 lang.set_success: "&a&l클라이언트 언어를 &6&l<target>&a&l(으)로 설정했습니다"
 
 #=======================

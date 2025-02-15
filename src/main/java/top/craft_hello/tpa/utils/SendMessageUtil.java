@@ -243,7 +243,7 @@ public class SendMessageUtil {
     public static void titleCountdownMessage(Player executor, String... vars) {
         String target = vars[vars.length - 2];
         LanguageConfig language = getLanguage(executor);
-        if ("last_location".equals(target) || "rtp".equals(target) || "spawn".equals(target)) vars[vars.length - 2] = language.getMessage(target);
+        if ("last_location".equals(target) || "rtp_name".equals(target) || "spawn_name".equals(target)) vars[vars.length - 2] = language.getMessage(target);
         String title = language.getFormatMessage("teleport.countdown", vars);
         String subTitle = language.getFormatMessage("teleport.cancel_on_move");
         executor.sendTitle(title, subTitle);
@@ -252,7 +252,8 @@ public class SendMessageUtil {
     // title 样式的传送倒计时结束消息
     public static void titleCountdownOverMessage(Player executor, String target) {
         LanguageConfig language = getLanguage(executor);
-        if ("last_location".equals(target) || "rtp".equals(target) || "spawn".equals(target)) target = language.getMessage(target);
+        if ("last_location".equals(target) || "rtp_name".equals(target) || "spawn_name".equals(target)) target = language.getMessage(target);
+        Bukkit.getConsoleSender().sendMessage(target);
         String title = language.getFormatMessage("teleport.generic_success", target);
         try {
             executor.sendTitle(title, "");
@@ -262,7 +263,7 @@ public class SendMessageUtil {
     // 传送倒计时消息
     public static void teleportCountdown(Player executor, String target, String delay) {
         LanguageConfig language = getLanguage(executor);
-        if ("last_location".equals(target) || "rtp".equals(target) || "spawn".equals(target)) target = language.getMessage(target);
+        if ("last_location".equals(target) || "rtp_name".equals(target) || "spawn_name".equals(target)) target = language.getMessage(target);
         sendMessage(executor, language.getFormatPrefixMessage(executor, "teleport.countdown", target, delay));
         sendMessage(executor, language.getFormatPrefixMessage(executor, "teleport.cancel_on_move"));
     }
@@ -360,7 +361,7 @@ public class SendMessageUtil {
     // 返回主城成功消息
     public static void backSpawnSuccessMessage(Player executor) {
         LanguageConfig language = getLanguage(executor);
-        sendMessage(executor, language.getFormatPrefixMessage(executor, "spawn.teleport_success", language.getMessage("spawn")));
+        sendMessage(executor, language.getFormatPrefixMessage(executor, "spawn.teleport_success", language.getMessage("spawn_name")));
     }
 
     // 成功设置主城消息

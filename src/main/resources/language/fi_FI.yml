@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Ei pelaajia paikalla"
 not_warps: "Ei saatavilla olevia warp-pisteitä"
 not_homes: "Ei määritettyjä koteja"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Satunnainen teleportti"
 last_location: "Edellinen sijainti"
-rtp: "Satunnainen teleportti"
 lang.set_success: "&a&lAsiakkaan kieli asetettu: &6&l<target>"
 
 #=======================

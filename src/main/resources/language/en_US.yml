@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "No online players"
 not_warps: "No available warps"
 not_homes: "No available homes"
-spawn: "Spawn"
-last_location: "lLast Location"
-rtp: "Random Teleport"
+spawn_name: "Spawn"
+rtp_name: "Random Teleport"
+last_location: "Last Location"
 lang.set_success: "&a&lClient language set to &6&l<target>"
 
 #=======================
@@ -81,7 +81,7 @@ back.teleport_success: "&a&lTeleported to last location!"
 # Random Teleport
 #=======================
 rtp.generating: "&a&lGenerating random location..."
-rtp.success: "&a&lTeleported to random location!"
+rtp.success: "&a&lTeleported to&6&l random location!"
 rtp.failed: "&c&lFailed to generate location!"
 
 #=======================

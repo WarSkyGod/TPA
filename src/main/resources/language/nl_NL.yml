@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Geen online spelers"
 not_warps: "Geen warps beschikbaar"
 not_homes: "Geen homes beschikbaar"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Willekeurige teleportatie"
 last_location: "Laatste locatie"
-rtp: "Willekeurige teleportatie"
 lang.set_success: "&a&lTaal ingesteld op &6&l<target>"
 
 #=======================

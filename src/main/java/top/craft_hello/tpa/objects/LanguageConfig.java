@@ -50,11 +50,13 @@ public class LanguageConfig extends Configuration {
         File backupFolder;
         File oldLanguageFolder;
         switch (configVersion) {
+            case "3.2.2":
+            case "3.2.1":
             case "3.2.0":
                 backupFolder = new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/language");
                 if (!backupFolder.exists()) backupFolder.mkdirs();
                 try {
-                    Files.move(configurationFile.toPath(), backupFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.move(configurationFile.getParentFile().toPath(), backupFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (Exception ignored) {}
                 break;
             case "3.1.3":
@@ -67,7 +69,7 @@ public class LanguageConfig extends Configuration {
             case "1.2":
             case "1.1":
             case "1.0":
-                backupFolder = new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/lang");
+                backupFolder = new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/lang/");
                 if (!backupFolder.exists()) backupFolder.mkdirs();
                 oldLanguageFolder = new File(PLUGIN.getDataFolder(), "lang/");
                 if (oldLanguageFolder.exists()) {
@@ -293,7 +295,7 @@ public class LanguageConfig extends Configuration {
     public String getMessage(String messageIndex){
         if (isNull(messageIndex)) return "null";
         String message = configuration.getString(messageIndex);
-        return message == null ? "null" : message;
+        return isNull(message) ? "null" : message;
     }
 
     public String getFormatMessage(String messageIndex, String... vars){

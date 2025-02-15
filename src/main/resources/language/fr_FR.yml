@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "Aucun joueur en ligne"
 not_warps: "Aucun point de téléportation disponible"
 not_homes: "Aucune maison disponible"
-spawn: "Spawn principal"
+spawn_name: "Spawn principal"
+rtp_name: "Téléportation aléatoire"
 last_location: "Position précédente"
-rtp: "Téléportation aléatoire"
 lang.set_success: "&a&lLangue du client définie sur &6&l<target>"
 
 #=======================

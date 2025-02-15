@@ -8,9 +8,9 @@ console_prefix: "&7&l[TPA] "
 not_online_players: "No hay jugadores en línea"
 not_warps: "No hay puntos de teletransporte"
 not_homes: "No hay hogares disponibles"
-spawn: "Spawn"
+spawn_name: "Spawn"
+rtp_name: "Teletransporte aleatorio"
 last_location: "Última ubicación"
-rtp: "Teletransporte aleatorio"
 lang.set_success: "&a&lIdioma establecido a &6&l<target>"
 
 #=======================
