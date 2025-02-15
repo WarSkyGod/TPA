@@ -6,6 +6,6 @@ import top.craft_hello.tpa.abstracts.ErrorException;
 public class ErrorNotBlockedException extends ErrorException {
     public ErrorNotBlockedException(CommandSender sendTarget) {
         // 未拉黑任何人
-        super(sendTarget, "error.block_list_empty");
+        super(sendTarget, "error.blacklist_empty");
     }
 }

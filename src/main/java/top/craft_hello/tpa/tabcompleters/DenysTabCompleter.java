@@ -45,17 +45,8 @@ public class DenysTabCompleter implements TabCompleter {
                 }
                 switch (subCommand) {
                     case "add":
-                        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                            list.add(onlinePlayer.getName());
-                        }
-
                         for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-                            list.add(offlinePlayer.getName());
-                        }
-
-                        for (String playerName : list) {
-                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
-                            if (playerDataConfig.isDeny(offlinePlayer.getUniqueId().toString())) list.remove(playerName);
+                            if (!playerDataConfig.isDeny(offlinePlayer.getUniqueId().toString())) list.add(offlinePlayer.getName());
                         }
 
                         list.remove(sender.getName());

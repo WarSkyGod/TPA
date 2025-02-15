@@ -123,7 +123,7 @@ public class ErrorCheckUtil{
                     if (!config.hasPermission(executorPlayer, PermissionType.TP_LOGOUT)) throw new ErrorPermissionDeniedException(executorPlayer);
                     if (args.length != 1) throw new ErrorSyntaxTpaException(executorPlayer, command);
                     targetPlayerName = args[args.length - 1];
-                    location = PlayerDataConfig.getPlayerData(Bukkit.getPlayerUniqueId(targetPlayerName)).getLogoutLocation(executorPlayer);
+                    location = PlayerDataConfig.getPlayerData(Bukkit.getOfflinePlayer(targetPlayerName)).getLogoutLocation(executorPlayer);
                     teleport(executorPlayer, location);
                     if (getConfig().isEnableTitleMessage()) {
                         SendMessageUtil.titleCountdownOverMessage(executorPlayer, targetPlayerName);
@@ -266,7 +266,7 @@ public class ErrorCheckUtil{
                     location = executorPlayer.getLocation();
                     LoadingConfigUtil.getSpawnConfig().setSpawnLocation(location);
                     World world = executorPlayer.getWorld();
-                    world.setSpawnLocation(location);
+                    world.setSpawnLocation((int) location.getX(), location.getBlockY(), location.getBlockZ());
                     Bukkit.setSpawnRadius(0);
                     SendMessageUtil.setSpawnSuccess(executorPlayer);
                     break;

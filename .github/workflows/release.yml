@@ -1,0 +1,98 @@
+name: 自动构建与发布
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 获取项目信息
+        id: project-info
+        run: |
+          # 获取项目名称（优先使用<name>标签）
+          PROJECT_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          if [ "$PROJECT_NAME" = "null" ]; then
+            PROJECT_NAME=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+          fi
+          
+          # 获取并清理版本号
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\n')
+          
+          echo "name=${PROJECT_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: 设置JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Maven构建
+        run: mvn -B clean package
+
+      - name: 获取提交信息
+        id: get-commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=format:%B)
+          echo "commit_msg<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMIT_MSG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 计算文件哈希
+        id: file-hashes
+        run: |
+          echo "## 📦 文件校验哈希" > hashes.md
+          echo '```' >> hashes.md
+          
+          for file in target/*.jar; do
+            if [ -f "$file" ]; then
+              hash=$(sha256sum "$file" | awk '{print \$1}')
+              filename=$(basename "$file")
+              echo "${filename}: ${hash}" >> hashes.md
+            fi
+          done
+          
+          echo '```' >> hashes.md
+          echo "hash_content<<EOF" >> $GITHUB_OUTPUT
+          cat hashes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 获取构建时间
+        id: get-date
+        run: |
+          echo "date=$(date +'%Y年%m月%d日 %H时%M分%S秒')" >> $GITHUB_OUTPUT
+
+      - name: 创建Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.project-info.outputs.version }}
+          name: ${{ steps.project-info.outputs.name }}-v${{ steps.project-info.outputs.version }}
+          body: |
+            ## 📝 最新提交信息
+            ```
+            ${{ steps.get-commit.outputs.commit_msg }}
+            ```
+
+            ## 🔨 构建详情
+            - **项目名称**: ${{ steps.project-info.outputs.name }}
+            - **版本号**: ${{ steps.project-info.outputs.version }}
+            - **来源提交**: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+            - **编译时间**: ${{ steps.get-date.outputs.date }}
+
+            ${{ steps.file-hashes.outputs.hash_content }}
+
+            > 🚀 本 Release 由 GitHub Actions 自动生成
+          files: |
+            target/*.jar
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

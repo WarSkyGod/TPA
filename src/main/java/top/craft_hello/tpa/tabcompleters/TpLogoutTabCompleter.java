@@ -20,12 +20,7 @@ public class TpLogoutTabCompleter implements TabCompleter {
         if (args.length != 1) return list;
 
         if (sender instanceof Player){
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                list.add(player.getName());
-            }
-            for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-                list.add(player.getName());
-            }
+            for (OfflinePlayer player : Bukkit.getOfflinePlayers()) list.add(player.getName());
         }
         return list;
     }

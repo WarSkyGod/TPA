@@ -3,6 +3,7 @@ package top.craft_hello.tpa.objects;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import top.craft_hello.tpa.abstracts.Configuration;
 import top.craft_hello.tpa.enums.CommandType;
 import top.craft_hello.tpa.enums.PermissionType;
@@ -154,8 +155,10 @@ public class Config extends Configuration {
         HOME_AMOUNTS.put(PermissionType.VIP, configuration.getInt("home_amount.vip"));
         HOME_AMOUNTS.put(PermissionType.VIP_PLUS, configuration.getInt("home_amount.svip"));
         HOME_AMOUNTS.put(PermissionType.ADMIN, configuration.getInt("home_amount.admin"));
-
+        ConfigurationSection keySection;
+        ConfigurationSection keySection2;
         switch (configVersion) {
+            case "3.2.2":
             case "3.2.1":
             case "3.2.0":
                 configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/" + configurationFile.getName()));
@@ -176,28 +179,55 @@ public class Config extends Configuration {
                     configuration.set("enable_title_message", enableTitleMessage);
                     configuration.set("enable_sound", enableSound);
                 }
+                keySection = configuration.getConfigurationSection("delay");
+                if (isNull(keySection)) keySection = configuration.createSection("delay");
+                keySection.set("accept", acceptDelay);
+                keySection2 = keySection.getConfigurationSection("default");
+                if(isNull(keySection2)) keySection2 = keySection.createSection("default");
+                keySection2.set("teleport", TELEPORT_DELAYS.get(PermissionType.DEFAULT));
 
-                configuration.set("delay.accept", acceptDelay);
-                configuration.set("delay.default.teleport", TELEPORT_DELAYS.get(PermissionType.DEFAULT));
+                keySection = configuration.getConfigurationSection("tpa");
+                if (isNull(keySection)) keySection = configuration.createSection("tpa");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.TPA));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.TPA));
 
-                configuration.set("tpa.enable", ENABLE_COMMANDS.get(CommandType.TPA));
-                configuration.set("tpa.permission", ENABLE_PERMISSIONS.get(PermissionType.TPA));
-                configuration.set("tphere.enable", ENABLE_COMMANDS.get(CommandType.TP_HERE));
-                configuration.set("tphere.permission", ENABLE_PERMISSIONS.get(PermissionType.TP_HERE));
-                configuration.set("denys.permission", ENABLE_PERMISSIONS.get(PermissionType.DENYS));
-                configuration.set("warp.enable", ENABLE_COMMANDS.get(CommandType.WARP));
-                configuration.set("warp.permission", ENABLE_PERMISSIONS.get(PermissionType.WARP));
-                configuration.set("home.enable", ENABLE_COMMANDS.get(CommandType.HOME));
-                configuration.set("home.permission", ENABLE_PERMISSIONS.get(PermissionType.HOME));
-                configuration.set("spawn.enable", ENABLE_COMMANDS.get(CommandType.SPAWN));
-                configuration.set("spawn.permission", ENABLE_PERMISSIONS.get(PermissionType.SPAWN));
-                configuration.set("back.enable", ENABLE_COMMANDS.get(CommandType.BACK));
-                configuration.set("back.permission", ENABLE_PERMISSIONS.get(PermissionType.BACK));
+                keySection = configuration.getConfigurationSection("tphere");
+                if (isNull(keySection)) keySection = configuration.createSection("tphere");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.TP_HERE));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.TP_HERE));
 
-                configuration.set("home.amount.default", HOME_AMOUNTS.get(PermissionType.DEFAULT));
-                configuration.set("home.amount.vip", HOME_AMOUNTS.get(PermissionType.VIP));
-                configuration.set("home.amount.vip+", HOME_AMOUNTS.get(PermissionType.VIP_PLUS));
-                configuration.set("home.amount.admin", HOME_AMOUNTS.get(PermissionType.ADMIN));
+                keySection = configuration.getConfigurationSection("denys");
+                if (isNull(keySection)) keySection = configuration.createSection("denys");
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.DENYS));
+
+                keySection = configuration.getConfigurationSection("warp");
+                if (isNull(keySection)) keySection = configuration.createSection("warp");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.WARP));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.WARP));
+
+                keySection = configuration.getConfigurationSection("home");
+                if (isNull(keySection)) keySection = configuration.createSection("home");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.HOME));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.HOME));
+
+                keySection = configuration.getConfigurationSection("spawn");
+                if (isNull(keySection)) keySection = configuration.createSection("spawn");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.SPAWN));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.SPAWN));
+
+                keySection = configuration.getConfigurationSection("back");
+                if (isNull(keySection)) keySection = configuration.createSection("back");
+                keySection.set("enable", ENABLE_COMMANDS.get(CommandType.BACK));
+                keySection.set("permission", ENABLE_PERMISSIONS.get(PermissionType.BACK));
+
+                keySection = configuration.getConfigurationSection("home");
+                if (isNull(keySection)) keySection = configuration.createSection("home");
+                keySection2 = keySection.getConfigurationSection("amount");
+                if (isNull(keySection2)) keySection2 = keySection.createSection("amount");
+                keySection2.set("default", HOME_AMOUNTS.get(PermissionType.DEFAULT));
+                keySection2.set("vip", HOME_AMOUNTS.get(PermissionType.VIP));
+                keySection2.set("vip+", HOME_AMOUNTS.get(PermissionType.VIP_PLUS));
+                keySection2.set("admin", HOME_AMOUNTS.get(PermissionType.ADMIN));
                 break;
             case "2.0.0":
             case "1.3":
@@ -206,8 +236,12 @@ public class Config extends Configuration {
                 configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + configurationFile.getName()));
                 loadConfiguration(true);
                 configuration.set("language", defaultLanguageStr);
-                configuration.set("delay.accept", acceptDelay);
-                configuration.set("delay.default.teleport", TELEPORT_DELAYS.get(PermissionType.DEFAULT));
+                keySection = configuration.getConfigurationSection("delay");
+                if (isNull(keySection)) keySection = configuration.createSection("delay");
+                keySection.set("accept", acceptDelay);
+                keySection2 = keySection.getConfigurationSection("default");
+                if(isNull(keySection2)) keySection2 = keySection.createSection("default");
+                keySection2.set("teleport", TELEPORT_DELAYS.get(PermissionType.DEFAULT));
                 break;
             case "1.0":
                 configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + configurationFile.getName()));

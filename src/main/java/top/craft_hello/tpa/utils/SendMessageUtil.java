@@ -254,7 +254,9 @@ public class SendMessageUtil {
         LanguageConfig language = getLanguage(executor);
         if ("last_location".equals(target) || "rtp".equals(target) || "spawn".equals(target)) target = language.getMessage(target);
         String title = language.getFormatMessage("teleport.generic_success", target);
-        executor.sendTitle(title, "");
+        try {
+            executor.sendTitle(title, "");
+        } catch (Throwable ignored){}
     }
 
     // 传送倒计时消息
