@@ -143,6 +143,7 @@
 - [fanlepian1](https://github.com/fanlepian1)
 - [Apleax](https://github.com/Apleax)
 - [LFWQSP2641](https://github.com/LFWQSP2641)
+- [sky-3311](https://github.com/sky-3311)
 
 ### Bug 报告者
 - [fanlepian1](https://github.com/fanlepian1)
