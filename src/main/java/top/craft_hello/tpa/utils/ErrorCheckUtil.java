@@ -134,7 +134,7 @@ public class ErrorCheckUtil{
                 case TP_ACCEPT:
                     if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);
                     executorPlayer = (Player) sender;
-                    if (!config.isEnableCommand(CommandType.TPA, CommandType.TP_HERE)) throw new ErrorCommandDisabledException(executorPlayer);
+                    if (!config.isEnableCommand(CommandType.TPA) || !config.isEnableCommand(CommandType.TP_HERE)) throw new ErrorCommandDisabledException(executorPlayer);
                     if (!REQUEST_QUEUE.containsKey(executorPlayer)) throw new ErrorNoPendingRequestException(executorPlayer);
                     request = REQUEST_QUEUE.get(executorPlayer);
                     request.tpaccept();
