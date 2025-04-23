@@ -77,6 +77,8 @@ public class LanguageConfig extends Configuration {
                         Files.move(oldLanguageFolder.toPath(), backupFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     } catch (Exception ignored) {}
                 }
+            default:
+                break;
         }
     }
 

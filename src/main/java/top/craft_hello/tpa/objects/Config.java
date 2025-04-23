@@ -158,11 +158,13 @@ public class Config extends Configuration {
         ConfigurationSection keySection;
         ConfigurationSection keySection2;
         switch (configVersion) {
+            case "3.2.3":
             case "3.2.2":
             case "3.2.1":
             case "3.2.0":
                 configurationFile.renameTo(new File(PLUGIN.getDataFolder(), "backup/" + configVersion + "/" + configurationFile.getName()));
                 configuration.set("version", VERSION);
+                offUpdateConfiguration();
                 break;
             case "3.1.3":
             case "3.1.2":

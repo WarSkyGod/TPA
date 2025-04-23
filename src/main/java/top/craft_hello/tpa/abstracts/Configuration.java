@@ -63,9 +63,8 @@ public abstract class Configuration implements ConfigurationInterface {
     }
 
     protected void saveConfiguration(CommandSender sender) {
-        if (!ErrorException.trySaveConfiguration(sender, configuration, configurationFile)) {
-            reloadConfiguration();
-        }
+        ErrorException.trySaveConfiguration(sender, configuration, configurationFile);
+        reloadConfiguration();
     }
 
     protected Location loadLocation(String index) {

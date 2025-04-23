@@ -243,7 +243,7 @@ public class ErrorCheckUtil{
                     if (args.length != 1) throw new ErrorSyntaxHomeException(executorPlayer, command);
                     targetName = args[args.length - 1];
                     playerDataConfig = PlayerDataConfig.getPlayerData(executorPlayer);
-                    playerDataConfig.setDefaultHomeName(targetName);
+                    playerDataConfig.setDefaultHomeName(targetName, false);
                     break;
                 case DEL_HOME:
                     if (!(sender instanceof Player)) throw new ErrorConsoleRestrictedException(sender);

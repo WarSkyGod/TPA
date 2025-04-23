@@ -403,23 +403,37 @@ public class PlayerDataConfig extends Configuration {
         SendMessageUtil.setLangCommandSuccess(player, this.languageStr);
     }
 
-    public void setDefaultHomeName(String homeName)  {
-        if (isNull(homeName) || !containsHomeLocation(homeName)) throw new ErrorHomeNotFoundException(player, homeName);
-        if (homeName.equalsIgnoreCase(defaultHomeName)) throw new ErrorDefaultHomeAlreadySetException(player, homeName);
+    public void setDefaultHomeName(String homeName, boolean force) {
+        if (!force){
+            if (isNull(homeName) || !containsHomeLocation(homeName)) throw new ErrorHomeNotFoundException(player, homeName);
+            if (homeName.equalsIgnoreCase(defaultHomeName)) throw new ErrorDefaultHomeAlreadySetException(player, homeName);
+        }
         defaultHomeName = homeName;
+        configuration.set("default_home", defaultHomeName);
         SendMessageUtil.setDefaultHomeSuccess(player, homeName);
     }
 
     public void setHomeLocation(Location location)  {
         String defaultHomeName = "default";
         if (containsDefaultHome()) defaultHomeName = this.defaultHomeName;
-        setHomeLocation(defaultHomeName, location);
+        if (!containsHomeLocation(defaultHomeName)) {
+            checkHomeAmountIsMax();
+            setDefaultHomeName(defaultHomeName, true);
+        }
+        HOMES.put(defaultHomeName, location);
+        setLocation("homes." + defaultHomeName, location);
+        saveConfiguration(null);
+        SendMessageUtil.setHomeSuccess(player, defaultHomeName);
+        //setHomeLocation(defaultHomeName, location);
     }
 
     public void setHomeLocation(String homeName, Location location)  {
         if (isNull(homeName) || isNull(location)) return;
         if (!containsHomeLocation(homeName)) checkHomeAmountIsMax();
-        if (isNull(defaultHomeName)) defaultHomeName = homeName;
+        if (isNull(defaultHomeName)) {
+            defaultHomeName = homeName;
+            setDefaultHomeName(defaultHomeName, true);
+        }
         HOMES.put(homeName, location);
         setLocation("homes." + homeName, location);
         saveConfiguration(null);
