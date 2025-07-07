@@ -27,6 +27,7 @@ public abstract class Configuration implements ConfigurationInterface {
     protected static boolean updateConfiguration = false;
     protected static final Plugin PLUGIN = getPlugin();
     protected static final String VERSION = PLUGIN.getDescription().getVersion();
+    protected static final String SERVER_VERSION = PLUGIN.getServer().getVersion().substring(PLUGIN.getServer().getVersion().indexOf("(MC: 1.")).replaceAll("\\)","").replaceAll("\\(MC: ", "");
     protected String languageStr;
     protected File configurationFile;
     protected FileConfiguration configuration;
@@ -107,5 +108,9 @@ public abstract class Configuration implements ConfigurationInterface {
             PLUGIN.reloadConfig();
             SendMessageUtil.configVersionUpdateSuccess(Bukkit.getConsoleSender());
         }
+    }
+
+    public static String getServerVersion(){
+        return SERVER_VERSION;
     }
 }

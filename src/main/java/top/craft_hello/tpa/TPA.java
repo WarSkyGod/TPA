@@ -1,6 +1,10 @@
 package top.craft_hello.tpa;
 
 import cn.handyplus.lib.adapter.HandySchedulerUtil;
+import org.bstats.MetricsBase;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.AdvancedBarChart;
+import org.bstats.charts.CustomChart;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +27,8 @@ public final class TPA extends JavaPlugin {
     
     @Override
     public void onEnable() {
+        int pluginId = 26417;
+        Metrics metrics = new Metrics(this, pluginId);
         HandySchedulerUtil.init(this);
         HandySchedulerUtil.runTaskAsynchronously(() -> {
             // 插件加载时执行

@@ -3,8 +3,14 @@ package top.craft_hello.tpa.objects;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import top.craft_hello.tpa.TPA;
+import top.craft_hello.tpa.abstracts.Configuration;
 import top.craft_hello.tpa.enums.ClickEventType;
 import top.craft_hello.tpa.enums.HoverEventType;
+import top.craft_hello.tpa.utils.LoadingConfigUtil;
+import top.craft_hello.tpa.utils.SendMessageUtil;
+
+import static top.craft_hello.tpa.utils.VersionUtil.versionComparison;
 
 public final class JsonMessage {
     private String jsonCommand;
@@ -101,7 +107,11 @@ public final class JsonMessage {
     }
 
     public void sendMessage(){
-        PlayerSchedulerUtil.syncDispatchCommand(this.toString());
+        String newString = this.toString();
+        if (!versionComparison(Configuration.getServerVersion(), "1.21.5"))
+            newString = newString.replaceAll("Event", "_event").replaceAll("value\":\"/", "command\":\"/");
+        // TPA.getPlugin(TPA.class).getServer().getConsoleSender().sendMessage(newString);
+        PlayerSchedulerUtil.syncDispatchCommand(newString);
     }
 
     @Override

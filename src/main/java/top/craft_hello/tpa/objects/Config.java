@@ -116,10 +116,7 @@ public class Config extends Configuration {
 
     public boolean isOldServer() {
         if (!isNull(isOldServer)) return isOldServer;
-
-        String version = PLUGIN.getServer().getVersion();
-        version = version.substring(version.indexOf("(MC: 1.")).replaceAll("\\)","").replaceAll("\\(MC: ", "");
-        return versionComparison(version, "1.12");
+        return versionComparison(SERVER_VERSION, "1.12");
     }
 
     private void updateConfiguration() {
