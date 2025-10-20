@@ -112,7 +112,7 @@ public abstract class PlayerToLocationRequest extends Request {
                 targetName = "last_location";
                 break;
             case RTP:
-                random.setSeed((long) (System.currentTimeMillis() + Bukkit.getTPS()[0]));
+                random.setSeed(System.currentTimeMillis());
                 if (!(requestObject instanceof Player)) throw new ErrorConsoleRestrictedException(requestObject);
                 requestPlayer = ((Player) requestObject);
                 requestPlayerName = requestPlayer.getName();

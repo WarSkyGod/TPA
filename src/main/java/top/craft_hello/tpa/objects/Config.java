@@ -249,6 +249,7 @@ public class Config extends Configuration {
                 break;
             default:
                 configuration.set("version", VERSION);
+                offUpdateConfiguration();
         }
         saveConfiguration(null);
     }

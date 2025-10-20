@@ -154,9 +154,11 @@
 - [sky-3311](https://github.com/sky-3311)
 - [zhgiuu45](https://github.com/zhgiuu45)
 - [notwhitebear](https://github.com/notwhitebear)
+- [XiaoST-one](https://github.com/XiaoST-one)
 
 ### 功能建议者
 - [Apleax](https://github.com/Apleax)
+- [xiaoleaw](https://github.com/xiaoleaw)
 
 ### AI 大模型
 - [DeepSeek](https://www.deepseek.com/)
