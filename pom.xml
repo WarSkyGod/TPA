@@ -6,7 +6,7 @@
 
     <groupId>top.craft_hello.tpa</groupId>
     <artifactId>TPA</artifactId>
-    <version>3.2.6</version>
+    <version>3.2.7</version>
     <packaging>jar</packaging>
 
     <name>TPA</name>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <version>1.21.10-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 

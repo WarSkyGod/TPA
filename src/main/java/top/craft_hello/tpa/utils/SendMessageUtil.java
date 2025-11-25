@@ -253,7 +253,6 @@ public class SendMessageUtil {
     public static void titleCountdownOverMessage(Player executor, String target) {
         LanguageConfig language = getLanguage(executor);
         if ("last_location".equals(target) || "rtp_name".equals(target) || "spawn_name".equals(target)) target = language.getMessage(target);
-        Bukkit.getConsoleSender().sendMessage(target);
         String title = language.getFormatMessage("teleport.generic_success", target);
         try {
             executor.sendTitle(title, "");
