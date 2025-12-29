@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.craft_hello.tpa.objects.PlayerDataConfig;
+import top.craft_hello.tpa.utils.OptimizedAsyncTabCompleteUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,17 +46,26 @@ public class DenysTabCompleter implements TabCompleter {
                 }
                 switch (subCommand) {
                     case "add":
+                        // 获取所有未被拒绝的离线玩家
+                        List<String> allowedPlayers = new ArrayList<>();
                         for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-                            if (!playerDataConfig.isDeny(offlinePlayer.getUniqueId().toString())) list.add(offlinePlayer.getName());
+                            if (!playerDataConfig.isDeny(offlinePlayer.getUniqueId().toString()) && 
+                                !offlinePlayer.getName().equals(sender.getName())) {
+                                allowedPlayers.add(offlinePlayer.getName());
+                            }
                         }
 
-                        list.remove(sender.getName());
-                        break;
+                        // 使用优化的异步工具类过滤玩家名称
+                        return OptimizedAsyncTabCompleteUtil.filterPlayerNames(args[1], allowedPlayers);
                     case "remove":
+                        // 获取所有被拒绝的玩家
+                        List<String> deniedPlayers = new ArrayList<>();
                         for (String playerUUID : denyList) {
-                            list.add(Bukkit.getOfflinePlayer(UUID.fromString(playerUUID)).getName());
+                            deniedPlayers.add(Bukkit.getOfflinePlayer(UUID.fromString(playerUUID)).getName());
                         }
-                        break;
+
+                        // 使用优化的异步工具类过滤玩家名称
+                        return OptimizedAsyncTabCompleteUtil.filterPlayerNames(args[1], deniedPlayers);
                 }
             }
         }

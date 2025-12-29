@@ -11,6 +11,7 @@ import top.craft_hello.tpa.enums.PermissionType;
 import top.craft_hello.tpa.objects.Config;
 import top.craft_hello.tpa.objects.LanguageConfig;
 import top.craft_hello.tpa.utils.LoadingConfigUtil;
+import top.craft_hello.tpa.utils.OptimizedAsyncTabCompleteUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +28,23 @@ public class TpaTabCompleter implements TabCompleter {
 
         if (args.length == 1){
             if (sender instanceof Player){
-                List<String> playerList = new ArrayList<>();
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!sender.equals(player)){
-                        list.add(player.getName());
-                        playerList.add(player.getName());
-                    }
+                Player player = (Player) sender;
+                String input = args[0]; // 获取用户输入的部分名称
+
+                // 使用优化的异步工具类过滤玩家名称
+                List<String> filteredPlayers = OptimizedAsyncTabCompleteUtil.filterOnlinePlayers(input, player);
+
+                // 如果没有匹配的玩家，显示"没有在线玩家"消息
+                if (filteredPlayers.isEmpty()) {
+                    filteredPlayers.add(language.getMessage("not_online_players"));
                 }
 
-                if (playerList.isEmpty()) list.add(language.getMessage("not_online_players"));
-                if (config.hasPermission(sender, PermissionType.RELOAD)) list.add("reload");
-                if (config.hasPermission(sender, PermissionType.VERSION)) list.add("version");
-                list.add("setlang");
+                // 添加命令选项
+                if (config.hasPermission(sender, PermissionType.RELOAD)) filteredPlayers.add("reload");
+                if (config.hasPermission(sender, PermissionType.VERSION)) filteredPlayers.add("version");
+                filteredPlayers.add("setlang");
+
+                return filteredPlayers;
             }
             return list;
         }
