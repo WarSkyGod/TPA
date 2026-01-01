@@ -1,0 +1,170 @@
+## TPA 插件简体中文语言文件
+
+#=======================
+# 基础配置
+#=======================
+prefix: "<green><bold>\\></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
+not_online_players: "无在线玩家"
+not_warps: "当前无可用传送点"
+not_homes: "当前无可用的家"
+spawn_name: "主城"
+rtp_name: "随机传送点"
+last_location: "上一次的位置"
+lang.set_success: "<bold><green>您已设置客户端显示语言为</green> <gold>{target}</gold><bold>"
+
+#=======================
+# 按钮交互
+#=======================
+## 按钮文本
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>点击此处接受传送</bold></green>'>[接受]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpadeny><hover:show_text:'<red><bold>点击此处拒绝传送</bold><red>'>[拒绝]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add {target}><insert:/denys add {target}><hover:show_text:'<red><bold>点击拒绝并加入黑名单</bold><red>'>[拒绝并加入黑名单]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove {target}><insert:/denys remove {target}><hover:show_text:'<green><bold>点击将玩家移出黑名单</bold></green>'>[移出黑名单]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/{command} {target}><insert:/{command} {target}><hover:show_text:'<green><bold>点击传送</bold></green>'>[传送]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set{command} {target}><insert:/set{command} {target}><hover:show_text:'<gold><bold>点击设置为当前位置</bold></gold>'>[设置位置]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome {target}><insert:/setdefaulthome {target}><hover:show_text:'<yellow><bold>点击设置为默认的家</bold></yellow>'>[设为默认家]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del{command} {target}><insert:/del{command} {target}><hover:show_text:'<red><bold>点击删除</bold><red>'>[删除]</hover></insert></click></red>  </bold>"
+
+#=======================
+# 传送请求
+#=======================
+request.to_here: "<bold><green>玩家</green> <gold>{target}</gold> <green>想传送到您的位置，该请求</green> <gold>{seconds}</gold> <green>秒后失效！</green></bold>"
+request.to_target: "<bold><green>玩家</green> <gold>{target}</gold> <green>邀请您传送到对方的位置，该请求</green> <gold>{seconds}</gold> <green>秒后失效！</green></bold>"
+request.sent_success: "<bold><green>您已向</green> <gold>{target}</gold> <green>发送了传送请求！</green></bold>"
+request.timeout_notice: "<bold><green>请求在</green> <gold>{seconds}</gold> <green>秒内有效！</green></bold>"
+request.expired_from: "<bold><red>来自</red> <gold>{target}</gold> <red>的传送请求已失效！</red></bold>"
+request.expired_to: "<bold><red>您发送给</red> <gold>{target}</gold> <red>的传送请求已失效！</red></bold>"
+
+#=======================
+# 家
+#=======================
+home.list_header: "<bold><green>当前可用的家：</green></bold>"
+home.set_success: "<bold><green>已设置家</green> <gold>{target}</gold></bold>"
+home.default_set_success: "<bold><green>您已将</green> <gold>{target}</gold> <green>设置为默认的家</green></bold>"
+home.delete_success: "<bold><green>您已删除家</green> <gold>{target}</gold></bold>"
+home.teleport_success: "<bold><green>您已传送至家</green> <gold>{target}</gold></bold>"
+home.max_limit_error: "<bold><red>您最多只能拥有 {max_home_amount} 个家！</red></bold>"
+error.default_home_already_set: "<bold><gold>{target}</gold> <red>已是默认的家</red></bold>"
+
+#=======================
+# 传送点
+#=======================
+warp.list_header: "<bold><green>当前可用的传送点：</green></bold>"
+warp.set_success: "<bold><green>您已设置传送点</green> <gold>{target}</gold></bold>"
+warp.delete_success: "<bold><green>您已删除传送点</green> <gold>{target}</gold></bold>"
+warp.teleport_success: "<bold><green>您已传送至传送点</green> <gold>{target}</gold></bold>"
+
+#=======================
+# 主城
+#=======================
+spawn.set_success: "<bold><green>您已设置</green> <gold>主城</gold></bold>"
+spawn.delete_success: "<bold><green>您已删除</green> <gold>主城</gold></bold>"
+spawn.teleport_success: "<bold><green>您已传送到</green> <gold>主城！</gold></bold>"
+
+#=======================
+# 上一次的位置
+#=======================
+back.teleport_success: "<bold><green>您已传送到</green> <gold>上一次的位置！</gold></bold>"
+
+#=======================
+# 随机传送
+#=======================
+rtp.generating: "<bold><green>正在生成随机传送点，请稍候...</green></bold>"
+rtp.success: "<bold><green>您已传送到</green> <gold>随机传送点！</gold></bold>"
+rtp.failed: "<bold><red>生成随机传送点失败！</red></bold>"
+
+#=======================
+# 黑名单
+#=======================
+blacklist.list_header: "<bold><red>您的黑名单：</red></bold>"
+blacklist.add_success: "<bold><green>已将</green> <gold>{target}</gold> <green>加入</green><red>黑名单</red></bold>"
+blacklist.remove_success: "<bold><green>已将</green> <gold>{target}</gold> <green>移出</green><red>黑名单</red></bold>"
+
+#=======================
+# 错误提示
+#=======================
+## 命令状态
+error.command_disabled: "<bold><red>服务器未启用此命令！</red></bold>"
+error.world_disabled: "<bold><red>在此世界中无法使用该命令！</red></bold>"
+error.command_cooldown: "<bold><red>您还需要等待 {seconds} 秒才能使用此命令！</red></bold>"
+
+## 权限与执行
+error.console_restricted: "<bold><red>此命令只能由玩家执行！</red></bold>"
+error.permission_denied: "<bold><red>您没有权限执行该命令！</red></bold>"
+
+## 玩家状态
+error.no_online_players: "<bold><red>当前没有在线玩家！</red></bold>"
+error.target_offline: "<bold><red>玩家</red> <gold>{target}</gold> <red>不在线！</red></bold>"
+error.self_operation: "<bold><red>此命令不能对自己执行！</red></bold>"
+
+## 请求状态
+error.no_pending_request: "<bold><red>当前没有待处理的传送请求！</red></bold>"
+error.request_pending: "<bold><red>对方或您有待处理的请求，暂时无法使用该命令</red></bold>"
+
+## 黑名单
+error.already_blacklisted: "<bold><red>对方已在您的黑名单中！</red></bold>"
+error.blocked_by_target: "<bold><red>对方已将您拉黑！</red></bold>"
+error.blacklist_empty: "<bold><red>您的黑名单为空！</red></bold>"
+error.not_blacklisted: "<bold><red>对方不在您的黑名单中！</red></bold>"
+
+## 家
+error.home_not_found: "<bold><red>家 {target} 不存在！</red></bold>"
+error.no_homes_set: "<bold><red>您当前没有设置家！</red></bold>"
+error.no_default_home: "<bold><red>您当前没有默认的家！</red></bold>"
+
+## 传送点
+error.warp_not_found: "<bold><red>传送点 {target} 不存在！</red></bold>"
+error.no_warps_set: "<bold><red>当前没有可用传送点！</red></bold>"
+
+## 位置记录
+error.last_location_missing: "<bold><red>当前没有可用的上一次的位置！</red></bold>"
+error.logout_location_missing: "<bold><red>该玩家没有最后下线位置记录！</red></bold>"
+error.spawn_not_set: "<bold><red>服务器未设置主城传送点！</red></bold>"
+
+## 命令语法
+error.syntax_generic: "<bold><red>命令语法错误！正确用法：/{command}</red></bold>"
+error.syntax_tpa: "<bold><red>命令语法错误！正确用法：/{command} {玩家名称}</red></bold>"
+error.syntax_tpall: "<bold><red>命令语法错误！正确用法：/{command} [player/warp/spawn] [名称]</red></bold>"
+error.syntax_warp: "<bold><red>命令语法错误！正确用法：/{command} {传送点}</red></bold>"
+error.syntax_home: "<bold><red>命令语法错误！正确用法：/{command} {家名称}</red></bold>"
+
+## 系统错误
+error.config_not_found: "<bold><red>配置文件不存在，已重新生成！</red></bold>"
+error.runtime: "<bold><red>插件错误：{message}</red></bold>"
+error.forwarded_error: "<bold><red>来自 &6&l{target} &c&l的错误信息：</red></bold>"
+
+#=======================
+# 传送过程提示
+#=======================
+teleport.accept.self: "<bold><green>您接受了来自</green> <gold>{target}</gold> <green>的传送请求！</green></bold>"
+teleport.accept.target: "<bold><green>玩家</green> <gold>{target}</gold> <green>接受了您的传送请求！</green></bold>"
+teleport.deny.self: "<bold><red>您拒绝了来自</red> <gold>{target}</gold> <red>的传送请求！</red></bold>"
+teleport.deny.target: "<bold><red>玩家</red> <gold>{target}</gold> <red>拒绝了您的传送请求！</red></bold>"
+teleport.countdown: "<bold><green>您将在</green> <gold>{seconds}</gold> <green>秒后传送到</green> <gold>{target}</gold></bold>"
+teleport.cancel_on_move: "<bold><green>移动将取消传送！</green></bold>"
+teleport.canceled.self: "<bold><red>您取消了传送！</red></bold>"
+teleport.canceled.target: "<bold><red>对方取消了传送！</red></bold>"
+teleport.generic_success: "<bold><green>您已传送至</green> <gold>{target}</gold></bold>"
+teleport.tpall.to_target: "<bold><green>管理员已将您传送至</green> <gold>{target}</gold></bold>"
+teleport.tpall.to_self: "<bold><green>管理员将所有玩家传送到您的位置</green></bold>"
+teleport.tpall.success: "<bold><green>已将在线玩家传送至</green> <gold>{target}</gold></bold>"
+teleport.logout_location: "<bold><green>您已传送至</green> <gold>{target}</gold> <green>最后下线的位置</green></bold>"
+
+#=======================
+# 系统消息
+#=======================
+system.config_reloaded: "<bold><green>配置文件已重新加载！</green></bold>"
+system.plugin_loaded: "<bold><green>插件已成功加载！当前版本为：</green><gold>{target}</gold></bold>"
+system.plugin_unloaded: "<bold><red>插件已成功卸载！</red></bold>"
+system.config_migrated_success: "<bold><green>配置文件已迁移完成！</green></bold>"
+system.config_migrated: "<bold><green>检测到旧版本的配置文件，正在为您迁移（旧版配置文件会自动为您备份到backup目录中）</green></bold>"
+system.debug_warning: "注意，您已开启 debug 模式，请务必在使用完毕后关闭！"
+
+#=======================
+# 更新
+#=======================
+update.checking: "<bold><green>正在检查更新...</green></bold>"
+update.available: "<bold><green>发现新版本：</green><gold>TPA-v{target}，</gold><green>请前往</green> <gold>https://modrinth.com/plugin/tpa.66666/versions</gold> <green>查看更新！</green></bold>"
+update.latest: "<bold><green>当前已是最新版本</green></bold>"
+update.failed: "<bold><red>更新检查失败，请检查网络连接！</red></bold>"
