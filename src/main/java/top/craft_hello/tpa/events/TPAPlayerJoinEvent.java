@@ -22,28 +22,32 @@ public class TPAPlayerJoinEvent implements Listener {
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         Player player = playerJoinEvent.getPlayer();
         PlayerDataConfig playerDataConfig = PlayerDataConfig.getPlayerData(player);
-        if (!getConfig().isOldServer() && !playerDataConfig.isSetlang()) {
-            String lang = playerDataConfig.getLanguageStr();    
-            String clientLang = player.getLocale();             
+        Config config = getConfig();
+        if (!config.isOldServer() && !playerDataConfig.isSetlang()) {
+            String lang       = playerDataConfig.getLanguageStr(); 
+            String clientLang = player.getLocale();            
             if (lang != null && clientLang != null && lang.equalsIgnoreCase(clientLang)) {
-                playerDataConfig.setLanguage(clientLang);           
+                playerDataConfig.setLanguage(clientLang);
             }
         }
-        Config config = getConfig();
         try {
-            Location location = getSpawnConfig().getSpawnLocation(null);
-            if (config.isForceSpawn() && location != null) {
-                teleport(player, location);
+            if (config.isForceSpawn()) {
+                if (getSpawnConfig() != null) {
+                    Location location = getSpawnConfig().getSpawnLocation(null);
+                    if (location != null) {
+                        teleport(player, location);
+                    }
+                }
             }
         } catch (Exception exception) {
             if (config.isDebug()) {
                 exception.printStackTrace();
             }
         }
-        HandySchedulerUtil.runTaskAsynchronously(() -> {
-            if (config.hasPermission(player, PermissionType.VERSION) && config.isUpdateCheck()) {
+        if (config.isUpdateCheck() && config.hasPermission(player, PermissionType.VERSION)) {
+            HandySchedulerUtil.runTaskAsynchronously(() -> {
                 ErrorCheckUtil.executeCommand(player, null, "version");
-            }
-        });
+            });
+        }
     }
 }
