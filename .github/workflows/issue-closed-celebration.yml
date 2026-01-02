@@ -1,0 +1,160 @@
+name: Issue Closed Celebration
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  issue-closed-handler:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Process closed issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 获取issue信息
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          ISSUE_AUTHOR="${{ github.event.issue.user.login }}"
+          CREATED_AT="${{ github.event.issue.created_at }}"
+          CLOSED_AT="${{ github.event.issue.closed_at }}"
+          
+          echo "Issue #$ISSUE_NUMBER closed by $ISSUE_AUTHOR"
+          echo "Created at: $CREATED_AT"
+          echo "Closed at: $CLOSED_AT"
+
+          # 获取分配的管理人员
+          ASSIGNEES_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}")
+          
+          ASSIGNEE_LIST=$(echo "$ASSIGNEES_JSON" | jq -r '.assignees[]?.login' | tr '\n' ' ' | sed 's/ $//')
+          echo "Assignees: $ASSIGNEE_LIST"
+
+          # 获取从issue创建到关闭期间的所有提交
+          TOP_USER=""
+          TOP_USER_LOGIN=""
+          TOP_COUNT=0
+          HAS_COMMITS=false
+          
+          # 检查是否有提交
+          if git log --since="$CREATED_AT" --until="$CLOSED_AT" --oneline > /dev/null 2>&1; then
+            # 获取提交者的邮箱（更可靠）
+            COMMITS=$(git log --since="$CREATED_AT" --until="$CLOSED_AT" --pretty=format:"%ae" | sort | uniq -c | sort -nr)
+            if [ -n "$COMMITS" ] && [ "$COMMITS" != "" ]; then
+              HAS_COMMITS=true
+              TOP_CONTRIBUTOR=$(echo "$COMMITS" | head -n 1)
+              TOP_COUNT=$(echo "$TOP_CONTRIBUTOR" | awk '{print $1}')
+              TOP_EMAIL=$(echo "$TOP_CONTRIBUTOR" | awk '{$1=""; print $0}' | sed 's/^ *//')
+              
+              echo "Top contributor email: $TOP_EMAIL with $TOP_COUNT commits"
+              
+              # 尝试通过邮箱查找GitHub用户名
+              if [ -n "$TOP_EMAIL" ]; then
+                # 搜索GitHub用户（通过commit搜索）
+                USER_SEARCH=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  "https://api.github.com/search/users?q=$TOP_EMAIL+in:email")
+                
+                TOP_USER_LOGIN=$(echo "$USER_SEARCH" | jq -r '.items[0].login // empty')
+                
+                if [ -n "$TOP_USER_LOGIN" ]; then
+                  echo "Found GitHub user: $TOP_USER_LOGIN"
+                else
+                  # 如果找不到，使用提交者名称作为备选
+                  TOP_USER=$(git log --since="$CREATED_AT" --until="$CLOSED_AT" --pretty=format:"%an" | sort | uniq -c | sort -nr | head -n 1 | awk '{$1=""; print $0}' | sed 's/^ *//')
+                  echo "Using commit name as fallback: $TOP_USER"
+                fi
+              fi
+            fi
+          fi
+
+          # 获取issue的所有评论
+          echo "Fetching issue comments..."
+          COMMENTS_RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments?per_page=100")
+          
+          # 统计评论
+          TOTAL_COMMENTS=0
+          COMMENTERS_JSON=$(echo "$COMMENTS_RESPONSE" | jq -r '.[] | select(.user.login != "'$ISSUE_AUTHOR'") | .user.login')
+          
+          if [ -n "$COMMENTERS_JSON" ]; then
+            TOTAL_COMMENTS=$(echo "$COMMENTERS_JSON" | wc -l)
+            echo "Total comments (excluding author): $TOTAL_COMMENTS"
+            
+            # 找出最多评论的用户
+            TOP_COMMENTER=$(echo "$COMMENTERS_JSON" | sort | uniq -c | sort -nr | head -n 1)
+            TOP_COMMENT_COUNT=$(echo "$TOP_COMMENTER" | awk '{print $1}')
+            TOP_COMMENTER_LOGIN=$(echo "$TOP_COMMENTER" | awk '{$1=""; print $0}' | sed 's/^ *//')
+            
+            echo "Top commenter: $TOP_COMMENTER_LOGIN with $TOP_COMMENT_COUNT comments"
+          fi
+
+          # 构建消息
+          MESSAGE="@$ISSUE_AUTHOR 你的问题解决啦，嘻嘻 🎉\n\n"
+          
+          # 如果有分配的管理人员，感谢他们
+          if [ -n "$ASSIGNEE_LIST" ] && [ "$ASSIGNEE_LIST" != "null" ]; then
+            # 为每个分配者添加@
+            ASSIGNEE_MENTIONS=""
+            for assignee in $ASSIGNEE_LIST; do
+              ASSIGNEE_MENTIONS+="@$assignee "
+            done
+            MESSAGE+="$ASSIGNEE_MENTIONS 感谢你们的付出！👏\n\n"
+          else
+            MESSAGE+="感谢所有参与解决问题的贡献者！👏\n\n"
+          fi
+          
+          # 代码贡献统计
+          MESSAGE+="**代码贡献统计：**\n"
+          if [ "$HAS_COMMITS" = true ] && [ "$TOP_COUNT" -gt 0 ]; then
+            if [ -n "$TOP_USER_LOGIN" ]; then
+              MESSAGE+="🏆 最高贡献：@$TOP_USER_LOGIN （$TOP_COUNT 次提交）\n"
+            elif [ -n "$TOP_USER" ]; then
+              MESSAGE+="🏆 最高贡献：$TOP_USER （$TOP_COUNT 次提交）\n"
+            else
+              MESSAGE+="🏆 最高贡献：匿名贡献者 （$TOP_COUNT 次提交）\n"
+            fi
+          else
+            MESSAGE+="📊 暂无代码提交数据\n"
+          fi
+          
+          # 社区评论贡献统计
+          MESSAGE+="\n**社区互动统计：**\n"
+          if [ "$TOTAL_COMMENTS" -gt 0 ]; then
+            if [ -n "$TOP_COMMENTER_LOGIN" ] && [ "$TOP_COMMENT_COUNT" -gt 0 ]; then
+              MESSAGE+="💬 最活跃回复：@$TOP_COMMENTER_LOGIN （$TOP_COMMENT_COUNT 次回复）\n"
+            fi
+            MESSAGE+="📝 总回复数：$TOTAL_COMMENTS 条\n"
+          else
+            MESSAGE+="💬 暂无社区回复数据\n"
+          fi
+
+          MESSAGE+="\n感谢大家的共同努力！❤️"
+
+          # 添加评论到已关闭的issue
+          JSON_BODY=$(jq -n --arg body "$(echo -e "$MESSAGE")" '{"body": $body}')
+          
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               -X POST \
+               -d "$JSON_BODY" \
+               "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+
+          echo "Comment added to issue #$ISSUE_NUMBER"
+          echo "Final message:"
+          echo -e "$MESSAGE"
