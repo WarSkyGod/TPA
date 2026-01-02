@@ -1,0 +1,30 @@
+name: Close Inactive Issues and PRs
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  close-inactive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Mark and close stale issues and PRs"
+        uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          days-before-pr-stale: 60
+          days-before-pr-close: 14
+          stale-issue-label: "stale"
+          stale-pr-label: "stale"
+          stale-issue-message: "这个 issue 已经很久没有更新啦！如果还有需要讨论的地方，请尽快更新哦~ 否则我可能会在14天后自动关闭它呢 (｡•́︿•̀｡) ❤️"
+          stale-pr-message: "这个 PR 已经很久没有更新啦！如果还有需要讨论的地方，请尽快更新哦~ 否则我可能会在14天后自动关闭它呢 (｡•́︿•̀｡) ❤️"
+          close-issue-message: "这个 issue 已经标记为不活跃14天啦，我先帮你关闭它哦~ 如果后续还有需要，可以随时重新打开它，我们再一起讨论！(๑•̀ㅂ•́)ง✧"
+          close-pr-message: "这个 PR 已经标记为不活跃14天啦，我先帮你关闭它哦~ 如果后续还有需要，可以随时重新打开它，我们再一起讨论！(๑•̀ㅂ•́)ง✧"
+          exempt-issue-labels: "enhancement, feature-request, upstream, hold"
+          exempt-pr-labels: "enhancement, feature-request, upstream, hold"
