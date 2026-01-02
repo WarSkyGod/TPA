@@ -1,0 +1,201 @@
+name: Auto Assign Developer and Add Label
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  handle-issue-events:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check event type and process
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          # 处理新创建的 issue
+          if [ "${{ github.event_name }}" = "issues" ] && [ "${{ github.event.action }}" = "opened" ]; then
+            echo "Processing new issue..."
+            ISSUE_NUMBER=${{ github.event.issue.number }}
+            ISSUE_AUTHOR=${{ github.event.issue.user.login }}
+            COMMENT="@$ISSUE_AUTHOR 您好，已收到您的问题，我们会尽快处理。\n@xiaoshaziYA 有新的问题需要确认，在此issues下回复「确认」以进行确认。"
+            
+            # 添加评论
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 -X POST \
+                 -d "{\"body\":\"$COMMENT\"}" \
+                 "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+            
+            # 添加标签
+            curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 -X POST \
+                 -d '{"labels":["×等待开发者确认"]}' \
+                 "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/labels"
+          
+          # 处理评论事件
+          elif [ "${{ github.event_name }}" = "issue_comment" ] && [ "${{ github.event.action }}" = "created" ]; then
+            echo "Processing comment..."
+            
+            # 获取评论内容和评论者信息
+            COMMENT_BODY="$COMMENT_BODY"
+            COMMENTER="${{ github.event.comment.user.login }}"
+            COMMENT_ID="${{ github.event.comment.id }}"
+            ISSUE_NUMBER=${{ github.event.issue.number }}
+            ISSUE_AUTHOR=${{ github.event.issue.user.login }}
+            
+            # 检查评论内容是否包含"确认"
+            if echo "$COMMENT_BODY" | grep -q "确认"; then
+              echo "Comment contains '确认'"
+              
+              # 检查评论者是否有仓库写入权限
+              PERMISSION_CHECK=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/${{ github.repository }}/collaborators/${COMMENTER}/permission")
+              
+              PERMISSION_LEVEL=$(echo "$PERMISSION_CHECK" | jq -r '.permission')
+              
+              # 如果有写入权限或以上权限（admin, write, maintain）
+              if [ "$PERMISSION_LEVEL" = "admin" ] || [ "$PERMISSION_LEVEL" = "write" ] || [ "$PERMISSION_LEVEL" = "maintain" ]; then
+                echo "User $COMMENTER has permission level: $PERMISSION_LEVEL"
+                
+                # 获取当前issue的标签和分配信息
+                CURRENT_ISSUE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}")
+                
+                HAS_CONFIRMED_LABEL=$(echo "$CURRENT_ISSUE" | jq '.labels[] | select(.name == "✓已确认") | length > 0')
+                
+                # 如果已经有"已确认"标签
+                if [ "$HAS_CONFIRMED_LABEL" = "true" ]; then
+                  echo "Issue already confirmed, responding to duplicate confirmation..."
+                  
+                  # 回复评论，引用该评论
+                  DUPLICATE_RESPONSE="> @$COMMENTER 确认\n\n已由其他管理人员确认，无须再次确认。"
+                  
+                  curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       -X POST \
+                       -d "{\"body\":\"$DUPLICATE_RESPONSE\"}" \
+                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+                
+                else
+                  echo "First confirmation, updating labels..."
+                  
+                  # 移除"等待开发者确认"标签（如果存在）
+                  curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       -X DELETE \
+                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/labels/×等待开发者确认" || true
+                  
+                  # 添加"已确认"标签
+                  curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       -X POST \
+                       -d '{"labels":["✓已确认"]}' \
+                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/labels"
+                  
+                  echo "Label updated to '✓已确认'"
+                  
+                  # 添加提示信息，告诉管理员完成后回复"结束:理由"
+                  COMPLETION_PROMPT="> @$COMMENTER 确认\n\n感谢您的确认！当您完成这个issue时，请回复「结束:（结束的理由）」来关闭此issue并通知提出者。"
+                  
+                  curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       -X POST \
+                       -d "{\"body\":\"$COMPLETION_PROMPT\"}" \
+                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+                fi
+                
+                # 只有有权限的用户才被分配issue
+                echo "Assigning issue to $COMMENTER (has permission: $PERMISSION_LEVEL)"
+                
+                # 获取当前已分配的人员
+                CURRENT_ASSIGNEES=$(echo "$CURRENT_ISSUE" | jq '[.assignees[].login]')
+                
+                # 如果评论者还没有被分配，则添加到分配列表
+                if ! echo "$CURRENT_ASSIGNEES" | jq -r ".[]" | grep -q "^$COMMENTER$"; then
+                  # 添加新分配者到现有分配列表
+                  NEW_ASSIGNEES=$(echo "$CURRENT_ASSIGNEES" | jq --arg committer "$COMMENTER" '. + [$committer] | unique')
+                  
+                  # 更新分配
+                  curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       -X POST \
+                       -d "{\"assignees\":$NEW_ASSIGNEES}" \
+                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/assignees"
+                  
+                  echo "Assigned issue to $COMMENTER"
+                else
+                  echo "$COMMENTER is already assigned to this issue"
+                fi
+                
+              else
+                echo "User $COMMENTER does not have sufficient permissions (current: $PERMISSION_LEVEL), skipping assignment and label changes"
+                
+                # 回复无权限的用户
+                NO_PERMISSION_RESPONSE="> @$COMMENTER 确认\n\n抱歉，您没有足够的权限来确认此issue。只有具有写入权限的管理人员才能进行确认操作。"
+                
+                curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                     -H "Accept: application/vnd.github.v3+json" \
+                     -X POST \
+                     -d "{\"body\":\"$NO_PERMISSION_RESPONSE\"}" \
+                     "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+              fi
+            
+            # 检查评论内容是否包含"结束:"前缀
+            elif echo "$COMMENT_BODY" | grep -q "^结束:"; then
+              echo "Comment contains '结束:' prefix"
+              
+              # 检查评论者是否有仓库写入权限
+              PERMISSION_CHECK=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/${{ github.repository }}/collaborators/${COMMENTER}/permission")
+              
+              PERMISSION_LEVEL=$(echo "$PERMISSION_CHECK" | jq -r '.permission')
+              
+              # 如果有写入权限或以上权限（admin, write, maintain）
+              if [ "$PERMISSION_LEVEL" = "admin" ] || [ "$PERMISSION_LEVEL" = "write" ] || [ "$PERMISSION_LEVEL" = "maintain" ]; then
+                echo "User $COMMENTER has permission level: $PERMISSION_LEVEL"
+                
+                # 提取结束理由（去除"结束:"前缀）
+                REASON=$(echo "$COMMENT_BODY" | sed 's/^结束://')
+                
+                # 回复评论，引用该评论并通知提出者
+                COMPLETION_RESPONSE="> @$COMMENTER 结束:$REASON\n\n@$ISSUE_AUTHOR 您的问题已解决：$REASON\n\n此issue将被关闭。"
+                
+                curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                     -H "Accept: application/vnd.github.v3+json" \
+                     -X POST \
+                     -d "{\"body\":\"$COMPLETION_RESPONSE\"}" \
+                     "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+                
+                # 关闭issue
+                curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                     -H "Accept: application/vnd.github.v3+json" \
+                     -X PATCH \
+                     -d '{"state":"closed"}' \
+                     "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}"
+                
+                echo "Issue closed by $COMMENTER with reason: $REASON"
+                
+              else
+                echo "User $COMMENTER does not have sufficient permissions (current: $PERMISSION_LEVEL), cannot close issue"
+                
+                # 回复无权限的用户
+                NO_PERMISSION_RESPONSE="> @$COMMENTER 结束:$REASON\n\n抱歉，您没有足够的权限来关闭此issue。只有具有写入权限的管理人员才能进行此操作。"
+                
+                curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                     -H "Accept: application/vnd.github.v3+json" \
+                     -X POST \
+                     -d "{\"body\":\"$NO_PERMISSION_RESPONSE\"}" \
+                     "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+              fi
+            fi
+          fi
