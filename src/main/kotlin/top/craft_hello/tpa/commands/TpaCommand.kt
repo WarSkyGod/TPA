@@ -40,12 +40,11 @@ object TpaCommand {
     fun executeTpa(context: CommandContext<CommandSourceStack>): Int {
         val sender = context.source.sender
         val text = context.getArgument("player", String::class.java).lowercase()
-        if (sender is Player) {
-            sender.sendMessage("> TPA传送命令！${text}")
-            Bukkit.getPlayerExact(text)?.let { SendMessageUtil().requestTeleportToTarget(sender, it, "30") }
-            val location = Bukkit.getPlayerExact(text)?.location
-            if (location != null) PlayerSchedulerUtil.syncTeleport(sender, location)
-        } else sender.sendMessage("> 控制台无法使用此命令！")
+        if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
+        sender.sendMessage("> TPA传送命令！${text}")
+        Bukkit.getPlayerExact(text)?.let { SendMessageUtil.requestTeleportToTarget(sender, it, "30") }
+        val location = Bukkit.getPlayerExact(text)?.location
+        if (location != null) PlayerSchedulerUtil.syncTeleport(sender, location)
         return Command.SINGLE_SUCCESS
     }
 }

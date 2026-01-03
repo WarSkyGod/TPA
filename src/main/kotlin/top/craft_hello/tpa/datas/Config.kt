@@ -1,10 +1,11 @@
 package top.craft_hello.tpa.datas
 
+import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
-import kotlin.Boolean
-import kotlin.Int
+import kotlin.math.max
+
 
 data class Config(var config: FileConfiguration) {
     var version = config.getString("version") ?: "1.0"
@@ -52,19 +53,19 @@ data class Config(var config: FileConfiguration) {
         CommandType.DEL_SPAWN to (config.getBoolean("spawn.enable") != false),
         CommandType.BACK to (config.getBoolean("back.enable") != false)
     )
-    var enablePermissions = mutableMapOf<CommandType, Boolean>(
-        CommandType.TPA to (config.getBoolean("tpa.permission") == true),
-        CommandType.TP_HERE to (config.getBoolean("tphere.permission") == true),
-        CommandType.DENYS to (config.getBoolean("denys.permission") == true),
-        CommandType.RTP to (config.getBoolean("rtp.permission") == true),
-        CommandType.WARP to (config.getBoolean("warp.permission") == true),
-        CommandType.HOME to (config.getBoolean("home.permission") == true),
-        CommandType.HOMES to (config.getBoolean("home.permission") == true),
-        CommandType.SET_HOME to (config.getBoolean("home.permission") == true),
-        CommandType.SET_DEFAULT_HOME to (config.getBoolean("home.permission") == true),
-        CommandType.DEL_HOME to (config.getBoolean("home.permission") == true),
-        CommandType.SPAWN to (config.getBoolean("spawn.permission") == true),
-        CommandType.BACK to (config.getBoolean("back.permission") == true)
+    var enablePermissions = mutableMapOf<PermissionType, Boolean>(
+        PermissionType.TPA to (config.getBoolean("tpa.permission") == true),
+        PermissionType.TP_HERE to (config.getBoolean("tphere.permission") == true),
+        PermissionType.DENYS to (config.getBoolean("denys.permission") == true),
+        PermissionType.RTP to (config.getBoolean("rtp.permission") == true),
+        PermissionType.WARP to (config.getBoolean("warp.permission") == true),
+        PermissionType.HOME to (config.getBoolean("home.permission") == true),
+        PermissionType.HOMES to (config.getBoolean("home.permission") == true),
+        PermissionType.SET_HOME to (config.getBoolean("home.permission") == true),
+        PermissionType.SET_DEFAULT_HOME to (config.getBoolean("home.permission") == true),
+        PermissionType.DEL_HOME to (config.getBoolean("home.permission") == true),
+        PermissionType.SPAWN to (config.getBoolean("spawn.permission") == true),
+        PermissionType.BACK to (config.getBoolean("back.permission") == true)
     )
     var homeAmounts = mutableMapOf<PermissionType, Int>(
         PermissionType.DEFAULT to config.getInt("home.amount.default"),
@@ -78,4 +79,36 @@ data class Config(var config: FileConfiguration) {
     var rtpDisableWorlds = config.getStringList("rtp.disable_worlds")
     var rtpLimitX = config.getInt("rtp.limit.x")
     var rtpLimitZ = config.getInt("rtp.limit.z")
+
+    fun isEnableCommand(vararg commandTypes: CommandType): Boolean {
+        for (commandType in commandTypes) {
+            if (!enableCommands.containsKey(commandType) or (enableCommands[commandType] == true)) return true
+        }
+        return false
+    }
+
+    fun isEnablePermission(permissionType: PermissionType): Boolean {
+        // if (ENABLE_PERMISSIONS.containsKey(permissionType)) return ENABLE_PERMISSIONS.get(permissionType);
+        if (enablePermissions.containsKey(permissionType)) return enablePermissions[permissionType] == true
+        return true
+    }
+
+    fun hasPermission(sender: CommandSender, permissionType: PermissionType): Boolean {
+        return !isEnablePermission(permissionType) or PermissionType.hasPermission(sender, PermissionType.ADMIN) or PermissionType.hasPermission(sender, permissionType)
+    }
+
+    fun isEnableTeleportDelay(sender: CommandSender) : Boolean {
+        return  enableTeleportDelay and !hasPermission(sender, PermissionType.NO_DELAY) and (getTeleportDelay(sender) != 0)
+    }
+
+    fun getTeleportDelay(sender: CommandSender): Int {
+        var teleportDelay: Int = teleportDelays[PermissionType.DEFAULT] ?: 5
+        if (hasPermission(sender, PermissionType.VIP)) teleportDelays[PermissionType.VIP] ?: 5
+        if (hasPermission(sender, PermissionType.VIP_PLUS)) teleportDelay = teleportDelays[PermissionType.VIP_PLUS] ?: 5
+        if (hasPermission(sender, PermissionType.MVP)) teleportDelay = teleportDelays[PermissionType.MVP] ?: 5
+        if (hasPermission(sender, PermissionType.MVP_PLUS)) teleportDelay = teleportDelays[PermissionType.MVP_PLUS] ?: 5
+        if (hasPermission(sender, PermissionType.MVP_PLUS_PLUS)) teleportDelays[PermissionType.MVP_PLUS_PLUS] ?: 5
+        if (hasPermission(sender, PermissionType.ADMIN)) teleportDelay = teleportDelays[PermissionType.ADMIN] ?: 0
+        return teleportDelay
+    }
 }

@@ -1,5 +1,6 @@
 package top.craft_hello.tpa.enums
 
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 enum class PermissionType(val permissionName: String) {
@@ -16,6 +17,10 @@ enum class PermissionType(val permissionName: String) {
     SET_WARP("tpa.setwarp"),
     DEL_WARP("tpa.delwarp"),
     HOME("tpa.home"),
+    HOMES("tpa.home"),
+    SET_HOME("tpa.home"),
+    SET_DEFAULT_HOME("tpa.home"),
+    DEL_HOME("tpa.home"),
     SPAWN("tpa.spawn"),
     SET_SPAWN("tpa.setspawn"),
     DEL_SPAWN("tpa.delspawn"),
@@ -25,11 +30,12 @@ enum class PermissionType(val permissionName: String) {
     TP_LOGOUT("tpa.tplogout"),
     RTP("tpa.rtp"),
     DENYS("tpa.denys"),
-    BACK("tpa.back");
+    BACK("tpa.back"),
+    NO_DELAY("tpa.nodelay");
 
     companion object {
-        fun hasPermission(player: Player, permissionType: PermissionType): Boolean {
-            return player.hasPermission(ADMIN.name) or player.hasPermission(permissionType.name)
+        fun hasPermission(sender: CommandSender, permissionType: PermissionType): Boolean {
+            return sender.hasPermission(ADMIN.name) or sender.hasPermission(permissionType.name)
         }
     }
 }

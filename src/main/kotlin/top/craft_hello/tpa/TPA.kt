@@ -6,9 +6,13 @@ import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import top.craft_hello.tpa.commands.DelSpawnCommand
+import top.craft_hello.tpa.commands.SetSpawnCommand
+import top.craft_hello.tpa.commands.SpawnCommand
 import top.craft_hello.tpa.commands.TpaCommand
 import top.craft_hello.tpa.commands.TpacCommand
 import top.craft_hello.tpa.datas.Language
+import top.craft_hello.tpa.datas.SpawnConfig
 import top.craft_hello.tpa.enums.LanguageType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.DatabaseManager
@@ -17,7 +21,7 @@ import top.craft_hello.tpa.utils.SendMessageUtil
 
 class TPA : JavaPlugin() {
     private lateinit var language: Language
-    val CONSOLE = Bukkit.getConsoleSender()
+    val console = Bukkit.getConsoleSender()
 
     override fun onEnable() {
         // 插件加载时执行
@@ -29,7 +33,7 @@ class TPA : JavaPlugin() {
             Metrics(this, pluginId)
             language = LanguageManager.getLanguage(ConfigManager.config.language)
             DatabaseManager(this).setupDatabase()
-            SendMessageUtil().pluginLoaded(CONSOLE, pluginMeta.version)
+            SendMessageUtil.pluginLoaded(console, pluginMeta.version)
         })
     }
 
@@ -38,12 +42,15 @@ class TPA : JavaPlugin() {
             val registrar = it.registrar()
             TpaCommand.tpaCommand(registrar)
             TpacCommand.tpacCommand(registrar)
+            SpawnCommand.spawnCommand(registrar)
+            SetSpawnCommand.setSpawnCommand(registrar)
+            DelSpawnCommand.delSpawnCommand(registrar)
         }
     }
 
     override fun onDisable() {
         // 插件卸载时执行
-        SendMessageUtil().pluginUnLoaded(CONSOLE)
+        SendMessageUtil.pluginUnLoaded(console)
     }
 
     companion object {
