@@ -29,6 +29,13 @@ public class TPAPlayerJoinEvent implements Listener {
                 playerDataConfig.setLanguage(clientLang);
             }
         }
+        if (!config.isOldServer() && !playerDataConfig.isSetlang()) {
+            String lang = playerDataConfig.getLanguageStr();
+            String clientLang = player.getLocale();
+            if (lang != null && lang.equalsIgnoreCase(clientLang)) {
+                playerDataConfig.setLanguage(clientLang);
+            }
+        }
         try {
             if (config.isForceSpawn()) {
                 if (getSpawnConfig() != null) {
@@ -44,7 +51,9 @@ public class TPAPlayerJoinEvent implements Listener {
             }
         }
         if (config.isUpdateCheck() && config.hasPermission(player, PermissionType.VERSION)) {
-            HandySchedulerUtil.runTaskAsynchronously(() -> ErrorCheckUtil.executeCommand(player, null, "version"));
+            HandySchedulerUtil.runTaskAsynchronously(() -> {
+                ErrorCheckUtil.executeCommand(player, null, "version");
+            });
         }
     }
 }
