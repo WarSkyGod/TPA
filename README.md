@@ -144,6 +144,7 @@
 - [Apleax](https://github.com/Apleax)
 - [LFWQSP2641](https://github.com/LFWQSP2641)
 - [sky-3311](https://github.com/sky-3311)
+- [Ukiyograin](https://github.com/Ukiyograin)
 
 ### Bug 报告者
 - [fanlepian1](https://github.com/fanlepian1)
@@ -158,6 +159,9 @@
 - [TritiumBro](https://github.com/TritiumBro)
 - [XiaoST-one](https://github.com/XiaoST-one)
 - [Cc-Cece](https://github.com/Cc-Cece)
+- [Ukiyograin](https://github.com/Ukiyograin)
+- [xszx-tbh](https://github.com/xszx-tbh)
+- [Carrot520](https://github.com/Carrot520)
 
 
 ### 功能建议者

@@ -267,7 +267,7 @@ public class ErrorCheckUtil{
                     LoadingConfigUtil.getSpawnConfig().setSpawnLocation(location);
                     World world = executorPlayer.getWorld();
                     world.setSpawnLocation((int) location.getX(), location.getBlockY(), location.getBlockZ());
-                    Bukkit.setSpawnRadius(0);
+                    //Bukkit.setSpawnRadius(0);
                     SendMessageUtil.setSpawnSuccess(executorPlayer);
                     break;
                 case DEL_SPAWN:

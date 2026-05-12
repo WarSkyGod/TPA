@@ -4,7 +4,6 @@ package top.craft_hello.tpa.abstracts;
 import cn.handyplus.lib.adapter.HandyRunnable;
 import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
-import cn.handyplus.lib.adapter.WorldSchedulerUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -19,8 +18,6 @@ import top.craft_hello.tpa.objects.LanguageConfig;
 import top.craft_hello.tpa.objects.PlayerDataConfig;
 import top.craft_hello.tpa.utils.LoadingConfigUtil;
 
-import java.util.Arrays;
-import java.util.List;
 
 import static java.util.Objects.isNull;
 import static top.craft_hello.tpa.utils.LoadingConfigUtil.getConfig;
@@ -137,16 +134,15 @@ public abstract class PlayerToLocationRequest extends Request {
                 while (true) {
                     int limitX = config.getRtpLimitX();
                     int limitZ = config.getRtpLimitZ();
-                    double x = 0;
-                    double z = 0;
-                    int y = 0;
+                    double x;
+                    double z;
+                    int y;
                     switch (world.getEnvironment()){
                         case NETHER:
                             x = random.nextDouble(location.getX() - limitX,location.getX() + limitX);
                             z = random.nextDouble(location.getZ() - limitZ, location.getZ() + limitZ);
                             location.setX(x);
                             location.setZ(z);
-                            WorldSchedulerUtil.getChunkAtAsync(location);
                             y = world.getHighestBlockYAt((int) location.getX(), (int) location.getZ(), HeightMap.WORLD_SURFACE);
                             location.setY(y);
                             break;
@@ -155,7 +151,6 @@ public abstract class PlayerToLocationRequest extends Request {
                             z = random.nextDouble(-100,100);
                             location.setX(x);
                             location.setZ(z);
-                            WorldSchedulerUtil.getChunkAtAsync(location);
                             y = world.getHighestBlockYAt((int) location.getX(), (int) location.getZ(), HeightMap.WORLD_SURFACE);
                             location.setY(y);
                             break;
@@ -164,7 +159,6 @@ public abstract class PlayerToLocationRequest extends Request {
                             z = random.nextDouble(location.getZ() - limitZ, location.getZ() + limitZ);
                             location.setX(x);
                             location.setZ(z);
-                            WorldSchedulerUtil.getChunkAtAsync(location);
                             y = world.getHighestBlockYAt((int) location.getX(), (int) location.getZ(), HeightMap.WORLD_SURFACE);
                             location.setY(y);
                     }
@@ -175,24 +169,6 @@ public abstract class PlayerToLocationRequest extends Request {
             default:
                 throw new ErrorRuntimeException(requestObject, "在 objects.PlayerToLocationRequest : 35行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
         }
-    }
-
-    protected boolean isSolidSafeBlock(Block block) {
-        Material type = block.getType();
-
-        // 危险方块黑名单
-        List<Material> dangerous = Arrays.asList(
-                Material.LAVA, Material.FIRE, Material.MAGMA_BLOCK,
-                Material.END_PORTAL, Material.CACTUS
-        );
-
-        // 检查是否在黑名单中
-        if (dangerous.contains(type)) {
-            return false;
-        }
-
-        // 检查方块是否是固体且具有碰撞箱
-        return block.isCollidable();
     }
 
     protected void setTimer(long delay){

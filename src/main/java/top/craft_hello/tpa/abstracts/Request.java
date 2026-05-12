@@ -1,5 +1,6 @@
 package top.craft_hello.tpa.abstracts;
 
+import cn.handyplus.lib.adapter.EntitySchedulerUtil;
 import cn.handyplus.lib.adapter.HandyRunnable;
 import cn.handyplus.lib.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
@@ -78,7 +79,7 @@ public abstract class Request implements RequestInterface {
     }
 
     public static void teleport(Player player, Location location) {
-        PlayerSchedulerUtil.syncTeleport(player, location);
+        EntitySchedulerUtil.syncTeleport(player, location);
     }
 
     public static Map<Player, Request> getRequestQueue() {
