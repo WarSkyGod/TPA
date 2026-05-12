@@ -19,7 +19,7 @@ object TpacCommand {
                                 .suggests { context, builder ->
                                     val sender = context.source.sender
                                     val input = builder.remaining.lowercase()
-                                    var languages = listOf("zh_CN", "en_US")
+                                    val languages = listOf("zh_CN", "en_US")
                                     for (language in languages) {
                                         if (language.lowercase().contains(input)) builder.suggest(language)
                                     }

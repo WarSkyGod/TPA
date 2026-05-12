@@ -1,30 +1,33 @@
 plugins {
-    kotlin("jvm") version "2.2.20"
-    id("com.gradleup.shadow") version "8.3.0"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    kotlin("jvm") version "2.3.21"
+    id("com.gradleup.shadow") version "9.4.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 group = "top.craft_hello"
 version = "4.0.0"
 
 repositories {
-    maven("https://maven.aliyun.com/repository/public") {
-        name = "阿里云开源镜像站"
-    }
     maven("https://mirrors.tuna.tsinghua.edu.cn/maven/repos/public") {
         name = "清华大学开源软件镜像站"
+    }
+    maven("https://maven.aliyun.com/repository/public") {
+        name = "阿里云开源镜像站"
     }
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/") {
         name = "papermc-repo"
     }
+    maven("https://nexus.handyplus.cn/releases") {
+        name = "handy-repository"
+    }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20")
-    implementation("cn.handyplus.lib.adapter:FoliaLib:1.2.3")
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("cn.handyplus.lib.adapter:FoliaLib:1.3.0")
+    implementation("org.bstats:bstats-bukkit:3.2.1")
     implementation("com.zaxxer:HikariCP:4.0.3")
     implementation("io.ktor:ktor-client-core:2.3.5")
     implementation("io.ktor:ktor-client-cio:2.3.5")
@@ -37,7 +40,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.10")
+        minecraftVersion("26.1.2")
         jvmArgs = listOf(
             "-Dfile.encoding=UTF-8",
             "-Dconsole.encoding=UTF-8",
@@ -58,7 +61,7 @@ tasks {
     }
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = 25
 kotlin {
     jvmToolchain(targetJavaVersion)
 }

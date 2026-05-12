@@ -1,7 +1,6 @@
 package top.craft_hello.tpa.enums
 
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
 enum class PermissionType(val permissionName: String) {
     DEFAULT("tpa.default"),

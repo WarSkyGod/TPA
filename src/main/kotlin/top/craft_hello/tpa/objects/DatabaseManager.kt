@@ -11,7 +11,7 @@ class DatabaseManager(private val plugin: JavaPlugin) {
 
     // 初始化数据库连接池
     fun setupDatabase() {
-        var databaseType = "sqlite"
+        val databaseType = "sqlite"
         try {
             val config = HikariConfig().apply {
                 when (databaseType) {

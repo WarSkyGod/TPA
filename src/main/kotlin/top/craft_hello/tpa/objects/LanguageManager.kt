@@ -6,7 +6,6 @@ import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.datas.Language
 import top.craft_hello.tpa.enums.LanguageType
 import java.io.File
-import java.util.Objects.isNull
 
 object LanguageManager {
     val plugin = TPA.plugin
@@ -15,19 +14,19 @@ object LanguageManager {
     init {
         // 加载插件自带的语言文件
         for (languageType in LanguageType.entries) {
-            languages.put(languageType.languageName, loadLanguage(buildString {
+            languages[languageType.languageName] = loadLanguage(buildString {
                 append(plugin.dataFolder)
                 append("/language/")
                 append(languageType.languageName)
                 append(".yml")
-            }, false))
+            }, false)
         }
         // 加载自定义语言文件
         var langFolder = File(plugin.dataFolder, "/language").listFiles()
         if(langFolder != null){
             for (languageFile in langFolder) {
                 var languageName = languageFile.name.replace(".yml", "")
-                if(!languages.equals(languageName)) languages.put(languageName, Language(languageFile, false))
+                if(!languages.equals(languageName)) languages[languageName] = Language(languageFile, false)
             }
         }
     }

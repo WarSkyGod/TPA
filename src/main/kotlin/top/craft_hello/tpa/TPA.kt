@@ -4,7 +4,6 @@ import cn.handyplus.lib.adapter.HandySchedulerUtil
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
-import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import top.craft_hello.tpa.commands.DelSpawnCommand
 import top.craft_hello.tpa.commands.SetSpawnCommand
@@ -12,8 +11,6 @@ import top.craft_hello.tpa.commands.SpawnCommand
 import top.craft_hello.tpa.commands.TpaCommand
 import top.craft_hello.tpa.commands.TpacCommand
 import top.craft_hello.tpa.datas.Language
-import top.craft_hello.tpa.datas.SpawnConfig
-import top.craft_hello.tpa.enums.LanguageType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.DatabaseManager
 import top.craft_hello.tpa.objects.LanguageManager
@@ -27,14 +24,14 @@ class TPA : JavaPlugin() {
         // 插件加载时执行
         HandySchedulerUtil.init(this)
         registerCommands()
-        HandySchedulerUtil.runTaskAsynchronously(Runnable {
+        HandySchedulerUtil.runTaskAsynchronously {
             plugin = this
             val pluginId = 26417
             Metrics(this, pluginId)
             language = LanguageManager.getLanguage(ConfigManager.config.language)
             DatabaseManager(this).setupDatabase()
             SendMessageUtil.pluginLoaded(console, pluginMeta.version)
-        })
+        }
     }
 
     private fun registerCommands(){
@@ -50,6 +47,7 @@ class TPA : JavaPlugin() {
 
     override fun onDisable() {
         // 插件卸载时执行
+        DatabaseManager(this).closeDataSource()
         SendMessageUtil.pluginUnLoaded(console)
     }
 

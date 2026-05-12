@@ -1,6 +1,6 @@
 package top.craft_hello.tpa.commands
 
-import cn.handyplus.lib.adapter.PlayerSchedulerUtil
+import cn.handyplus.lib.adapter.EntitySchedulerUtil
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
@@ -8,7 +8,6 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 object TpaCommand {
@@ -34,7 +33,6 @@ object TpaCommand {
                 )
                 .build()
         )
-
     }
 
     fun executeTpa(context: CommandContext<CommandSourceStack>): Int {
@@ -44,7 +42,7 @@ object TpaCommand {
         sender.sendMessage("> TPA传送命令！${text}")
         Bukkit.getPlayerExact(text)?.let { SendMessageUtil.requestTeleportToTarget(sender, it, "30") }
         val location = Bukkit.getPlayerExact(text)?.location
-        if (location != null) PlayerSchedulerUtil.syncTeleport(sender, location)
+        if (location != null) EntitySchedulerUtil.syncTeleport(sender, location)
         return Command.SINGLE_SUCCESS
     }
 }

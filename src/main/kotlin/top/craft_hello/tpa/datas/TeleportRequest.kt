@@ -1,9 +1,6 @@
 package top.craft_hello.tpa.datas
 
-import cn.handyplus.lib.adapter.HandyRunnable
-import cn.handyplus.lib.adapter.HandySchedulerUtil
-import cn.handyplus.lib.adapter.PlayerSchedulerUtil
-import kotlinx.coroutines.Delay
+import cn.handyplus.lib.adapter.EntitySchedulerUtil
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
@@ -38,7 +35,7 @@ data class TeleportRequest(val requester: Player, val requestType: RequestType, 
             RequestType.WARP -> TODO()
             RequestType.HOME -> TODO()
             RequestType.SPAWN -> {
-                PlayerSchedulerUtil.syncTeleport(requester, target.location)
+                EntitySchedulerUtil.syncTeleport(requester, target.location)
                 SendMessageUtil.backSpawnSuccessMessage(requester)
             }
             RequestType.BACK -> TODO()

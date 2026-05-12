@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
 data class Language(var languageFile: File, var isReplace: Boolean) {
-    val PLUGIN = TPA.plugin
+    val plugin = TPA.plugin
     var languageConfig: FileConfiguration
     var miniMessage = MiniMessage.miniMessage()
     init {
@@ -27,12 +27,12 @@ data class Language(var languageFile: File, var isReplace: Boolean) {
     private fun loadLanguage(languageFile: File, isReplace: Boolean): FileConfiguration {
 
         if (isReplace || !languageFile.exists()) {
-            PLUGIN.saveResource(buildString {
+            plugin.saveResource(buildString {
                 append("language/")
                 append(languageFile.name)
             }, isReplace)
             if (!languageFile.exists()){
-                PLUGIN.saveResource(buildString {
+                plugin.saveResource(buildString {
                     append("language/")
                     append(ConfigManager.config.language)
                     append(".yml")

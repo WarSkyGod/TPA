@@ -5,7 +5,6 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import java.util.Objects.isNull
 
@@ -18,7 +17,7 @@ class SendMessageUtil {
 
         // 根据 path 读取配置文件中的消息并发送
         fun sendMessageForPath(sender: CommandSender, path : String, vararg vars: String) {
-            var language = LanguageManager.getLanguage(sender)
+            val language = LanguageManager.getLanguage(sender)
             sendMessage(sender, language.getFormatPrefixMessage(path, *vars))
         }
 
@@ -60,7 +59,7 @@ class SendMessageUtil {
 
         // 返回主城成功消息
         fun backSpawnSuccessMessage(player: Player) {
-            var language = LanguageManager.getLanguage(player)
+            val language = LanguageManager.getLanguage(player)
             sendMessageForPath(player, "spawn.teleport_success", language.getMessage("spawn_name"))
         }
 
@@ -120,7 +119,7 @@ class SendMessageUtil {
         }
 
         fun acceptOrDeny(target : Player, executorName : String) {
-            var language = LanguageManager.getLanguage(target)
+            val language = LanguageManager.getLanguage(target)
             sendMessage(target, language.getFormatPrefixMessage("accept_button")
                 .append(language.getFormatMessage("deny_button"))
                 .append(language.getFormatMessage("blacklist.add_button", executorName))
@@ -135,12 +134,33 @@ class SendMessageUtil {
 
         // 请求传送到对方的位置消息
         fun requestTeleportToTarget(executor : Player, target : Player, delay : String) {
-            var executorName = executor.name
-            var targetName = target.name
+            val executorName = executor.name
+            val targetName = target.name
             sendMessageForPath(target, "request.to_here", executorName, delay)
             acceptOrDeny(target, executorName)
-            sendMessageForPath(executor, "request.to_target", targetName, delay)
             successSentRequest(executor, targetName, delay)
+        }
+
+        // title 样式的传送倒计时消息
+        fun titleCountdownMessage(executor: Player, vararg vars: String) {
+            val target: String = vars[vars.size - 2]
+            val language = LanguageManager.getLanguage(executor)
+            val vars2 = vars.copyOfRange(0, vars.size - 2)
+            if ("last_location" == target || "rtp_name" == target || "spawn_name" == target)
+                 language.getMessage(target)
+            // val title: String = language.getFormatMessage("teleport.countdown", vars)
+            // val subTitle: String = language.getFormatMessage("teleport.cancel_on_move")
+            // executor.sendTitle(title, subTitle)
+        }
+
+
+        // 传送倒计时消息
+        fun teleportCountdown(executor: Player, target: String, delay: String) {
+            var target = target
+            val language = LanguageManager.getLanguage(executor)
+            if ("last_location" == target || "rtp_name" == target || "spawn_name" == target) target = language.getMessage(target)
+            sendMessageForPath(executor, "teleport.countdown", target, delay)
+            sendMessageForPath(executor, "teleport.cancel_on_move")
         }
     }
 }

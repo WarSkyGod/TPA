@@ -19,8 +19,8 @@ object SetSpawnCommand {
     }
 
     fun executeSetSpawn(context: CommandContext<CommandSourceStack>): Int {
-        var sender = context.source.sender
-        var config = ConfigManager.config
+        val sender = context.source.sender
+        val config = ConfigManager.config
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!config.isEnableCommand(CommandType.SPAWN)) return SendMessageUtil.commandDisabledError(sender)
         if (!config.hasPermission(sender, PermissionType.SET_SPAWN) ) return SendMessageUtil.permissionDeniedError(sender)
