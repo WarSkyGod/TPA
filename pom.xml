@@ -76,7 +76,7 @@
         <repository>
             <id>handy-repository-releases</id>
             <name>handy-repository</name>
-            <url>https://nexus.handyplus.cn/#/releases</url>
+            <url>https://nexus.handyplus.cn/releases</url>
         </repository>
     </repositories>
 
