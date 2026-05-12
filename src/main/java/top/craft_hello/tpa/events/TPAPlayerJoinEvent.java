@@ -17,20 +17,37 @@ import static top.craft_hello.tpa.utils.LoadingConfigUtil.getConfig;
 import static top.craft_hello.tpa.utils.LoadingConfigUtil.getSpawnConfig;
 
 public class TPAPlayerJoinEvent implements Listener {
+
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent playerJoinEvent){
+    public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         Player player = playerJoinEvent.getPlayer();
         PlayerDataConfig playerDataConfig = PlayerDataConfig.getPlayerData(player);
-        if (!getConfig().isOldServer() && !playerDataConfig.isSetlang() && playerDataConfig.getLanguageStr().equalsIgnoreCase(player.getLocale())) playerDataConfig.setLanguage(player.getLocale());
         Config config = getConfig();
-        try {
-            Location location = getSpawnConfig().getSpawnLocation(null);
-            if (config.isForceSpawn() && !isNull(location)) teleport(player, location);
-        } catch (Exception exception) {
-            if (config.isDebug()) exception.printStackTrace();
+        if (!config.isOldServer() && !playerDataConfig.isSetlang()) {
+            String lang       = playerDataConfig.getLanguageStr(); 
+            String clientLang = player.getLocale();            
+            if (lang != null && clientLang != null && lang.equalsIgnoreCase(clientLang)) {
+                playerDataConfig.setLanguage(clientLang);
+            }
         }
-        HandySchedulerUtil.runTaskAsynchronously(() -> {
-            if (config.hasPermission(player, PermissionType.VERSION) && getConfig().isUpdateCheck()) ErrorCheckUtil.executeCommand(player, null, "version");
-        });
+        try {
+            if (config.isForceSpawn()) {
+                if (getSpawnConfig() != null) {
+                    Location location = getSpawnConfig().getSpawnLocation(null);
+                    if (location != null) {
+                        teleport(player, location);
+                    }
+                }
+            }
+        } catch (Exception exception) {
+            if (config.isDebug()) {
+                exception.printStackTrace();
+            }
+        }
+        if (config.isUpdateCheck() && config.hasPermission(player, PermissionType.VERSION)) {
+            HandySchedulerUtil.runTaskAsynchronously(() -> {
+                ErrorCheckUtil.executeCommand(player, null, "version");
+            });
+        }
     }
 }
