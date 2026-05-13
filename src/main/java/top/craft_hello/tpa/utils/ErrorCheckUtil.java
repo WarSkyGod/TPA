@@ -4,6 +4,7 @@ import cn.handyplus.lib.adapter.PlayerSchedulerUtil;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import top.craft_hello.tpa.abstracts.ErrorException;
 import top.craft_hello.tpa.abstracts.Request;
 import top.craft_hello.tpa.enums.CommandType;
 import top.craft_hello.tpa.enums.PermissionType;
@@ -306,7 +307,7 @@ public class ErrorCheckUtil{
                     throw new ErrorRuntimeException(sender, "在 utils.ErrorCheckUtil 46 行，请联系开发者（https://github.com/WarSkyGod/TPA/issues）");
             }
         } catch (Exception exception){
-            if (config.isDebug()) exception.printStackTrace();
+            if (config.isDebug() && !(exception instanceof ErrorException)) exception.printStackTrace();
         }
     }
 }
