@@ -12,6 +12,10 @@ object LanguageManager {
     val languages = mutableMapOf<String, Language>()
 
     init {
+        loadAllLanguage()
+    }
+
+    fun loadAllLanguage() {
         // 加载插件自带的语言文件
         for (languageType in LanguageType.entries) {
             languages[languageType.languageName] = loadLanguage(buildString {
@@ -22,10 +26,10 @@ object LanguageManager {
             }, false)
         }
         // 加载自定义语言文件
-        var langFolder = File(plugin.dataFolder, "/language").listFiles()
+        val langFolder = File(plugin.dataFolder, "/language").listFiles()
         if(langFolder != null){
             for (languageFile in langFolder) {
-                var languageName = languageFile.name.replace(".yml", "")
+                val languageName = languageFile.name.replace(".yml", "")
                 if(!languages.equals(languageName)) languages[languageName] = Language(languageFile, false)
             }
         }
@@ -49,5 +53,10 @@ object LanguageManager {
             append("_")
             append(sender.locale().country)
         }) else getLanguage(ConfigManager.config.language)
+    }
+
+    fun reloadLanguage() {
+        languages.clear()
+        loadAllLanguage()
     }
 }

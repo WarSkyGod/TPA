@@ -12,6 +12,7 @@ import top.craft_hello.tpa.commands.TpaCommand
 import top.craft_hello.tpa.commands.TpacCommand
 import top.craft_hello.tpa.datas.Language
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.objects.ConfigManager.reloadSpawnConfig
 import top.craft_hello.tpa.objects.DatabaseManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.utils.SendMessageUtil
@@ -23,19 +24,17 @@ class TPA : JavaPlugin() {
     override fun onEnable() {
         // 插件加载时执行
         HandySchedulerUtil.init(this)
+        plugin = this
+        val pluginId = 26417
+        Metrics(this, pluginId)
+        language = LanguageManager.getLanguage(ConfigManager.config.language)
         registerCommands()
-        HandySchedulerUtil.runTaskAsynchronously {
-            plugin = this
-            val pluginId = 26417
-            Metrics(this, pluginId)
-            language = LanguageManager.getLanguage(ConfigManager.config.language)
-            DatabaseManager(this).setupDatabase()
-            SendMessageUtil.pluginLoaded(console, pluginMeta.version)
-        }
+        DatabaseManager(this).setupDatabase()
+        SendMessageUtil.pluginLoaded(console, pluginMeta.version)
     }
 
     private fun registerCommands(){
-        lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS) {
+        lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS){
             val registrar = it.registrar()
             TpaCommand.tpaCommand(registrar)
             TpacCommand.tpacCommand(registrar)
@@ -50,6 +49,7 @@ class TPA : JavaPlugin() {
         DatabaseManager(this).closeDataSource()
         SendMessageUtil.pluginUnLoaded(console)
     }
+
 
     companion object {
         lateinit var plugin: TPA

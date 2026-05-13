@@ -6,6 +6,11 @@ import com.mojang.brigadier.context.CommandContext
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import net.kyori.adventure.text.Component
+import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.enums.CommandType
+import top.craft_hello.tpa.enums.PermissionType
+import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SendMessageUtil
 
 object TpacCommand {
     fun tpacCommand(registrar: Commands){
@@ -35,7 +40,7 @@ object TpacCommand {
                 )
                 .then(
                     Commands.literal("reload")
-                        .requires { source -> source.sender.hasPermission("tpa.reload") or source.sender.hasPermission("tpa.admin") }
+                        .requires { ConfigManager.config.hasPermission(it.sender, PermissionType.RELOAD) }
                         .executes(::executeReload)
                 )
                 .build()
@@ -56,20 +61,20 @@ object TpacCommand {
     }
 
     fun executeReload(context: CommandContext<CommandSourceStack>): Int {
-        val player = context.source.sender
-        player.sendMessage(Component.text("> 配置文件已重新加载！"))
-        return Command.SINGLE_SUCCESS
+        val sender = context.source.sender
+        ConfigManager.reloadAllConfig()
+        return SendMessageUtil.configReloaded(sender)
     }
 
     fun executeVersion(context: CommandContext<CommandSourceStack>): Int {
-        val player = context.source.sender
-        player.sendMessage(Component.text("> 当前版本：4.0.0！"))
+        val sender = context.source.sender
+        sender.sendMessage(Component.text("> 当前版本：4.0.0！"))
         return Command.SINGLE_SUCCESS
     }
 
     fun executeSetLang(context: CommandContext<CommandSourceStack>): Int {
-        val player = context.source.sender
-        player.sendMessage(Component.text("> 设置玩家语言为：zh_CN！"))
+        val sender = context.source.sender
+        sender.sendMessage(Component.text("> 设置玩家语言为：zh_CN！"))
         return Command.SINGLE_SUCCESS
     }
 }

@@ -79,21 +79,20 @@ data class Config(var config: FileConfiguration) {
     var rtpLimitX = config.getInt("rtp.limit.x")
     var rtpLimitZ = config.getInt("rtp.limit.z")
 
+
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {
-        for (commandType in commandTypes) {
-            if (!enableCommands.containsKey(commandType) or (enableCommands[commandType] == true)) return true
-        }
+        for (commandType in commandTypes) if ((enableCommands[commandType] ?: true)) return true
         return false
     }
 
     fun isEnablePermission(permissionType: PermissionType): Boolean {
-        // if (ENABLE_PERMISSIONS.containsKey(permissionType)) return ENABLE_PERMISSIONS.get(permissionType);
-        if (enablePermissions.containsKey(permissionType)) return enablePermissions[permissionType] == true
-        return true
+        return (enablePermissions[permissionType] ?: true)
     }
 
     fun hasPermission(sender: CommandSender, permissionType: PermissionType): Boolean {
-        return !isEnablePermission(permissionType) or PermissionType.hasPermission(sender, PermissionType.ADMIN) or PermissionType.hasPermission(sender, permissionType)
+        return !isEnablePermission(permissionType) ||
+                PermissionType.hasPermission(sender, PermissionType.ADMIN) ||
+                PermissionType.hasPermission(sender, permissionType)
     }
 
     fun isEnableTeleportDelay(sender: CommandSender) : Boolean {

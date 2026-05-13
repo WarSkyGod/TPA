@@ -8,12 +8,19 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import top.craft_hello.tpa.enums.CommandType
+import top.craft_hello.tpa.enums.PermissionType
+import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 object TpaCommand {
     fun tpaCommand(registrar: Commands){
         registrar.register(
             Commands.literal("tpa")
+                .requires {
+                    ConfigManager.config.isEnableCommand(CommandType.TPA)
+                }
+                .executes(::executeTpa)
                 .then(
                     Commands.argument("player", StringArgumentType.greedyString())
                         .suggests { context, builder ->
@@ -35,13 +42,29 @@ object TpaCommand {
         )
     }
 
+    inline fun <reified T> CommandContext<*>.getArgumentOrNull(name: String): T? {
+        return try {
+            getArgument(name, T::class.java)
+        } catch (e: IllegalArgumentException) {
+            null
+        }
+    }
+
     fun executeTpa(context: CommandContext<CommandSourceStack>): Int {
         val sender = context.source.sender
-        val text = context.getArgument("player", String::class.java).lowercase()
+        if (!ConfigManager.config.hasPermission(sender, PermissionType.TPA)) return SendMessageUtil.permissionDeniedError(sender)
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
-        sender.sendMessage("> TPA传送命令！${text}")
-        Bukkit.getPlayerExact(text)?.let { SendMessageUtil.requestTeleportToTarget(sender, it, "30") }
-        val location = Bukkit.getPlayerExact(text)?.location
+
+        val playerName = context.getArgumentOrNull<String>("player")
+            ?.lowercase()
+            ?.substringBefore(' ')
+            ?: return SendMessageUtil.syntaxTpaError(
+                sender,
+                context.nodes.firstOrNull()?.node?.name ?: "tpa"
+        )
+
+        Bukkit.getPlayerExact(playerName)?.let { SendMessageUtil.requestTeleportToTarget(sender, it, "30") }
+        val location = Bukkit.getPlayerExact(playerName)?.location
         if (location != null) EntitySchedulerUtil.syncTeleport(sender, location)
         return Command.SINGLE_SUCCESS
     }

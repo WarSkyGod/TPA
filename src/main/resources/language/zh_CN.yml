@@ -3,7 +3,7 @@
 #=======================
 # 基础配置
 #=======================
-prefix: "<green><bold>\\></bold></green> "
+prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "无在线玩家"
 not_warps: "当前无可用传送点"
@@ -124,10 +124,10 @@ error.spawn_not_set: "<bold><red>服务器未设置主城传送点！</red></bol
 
 ## 命令语法
 error.syntax_generic: "<bold><red>命令语法错误！正确用法：/{command}</red></bold>"
-error.syntax_tpa: "<bold><red>命令语法错误！正确用法：/{command} {玩家名称}</red></bold>"
+error.syntax_tpa: "<bold><red>命令语法错误！正确用法：/{command} <玩家名称></red></bold>"
 error.syntax_tpall: "<bold><red>命令语法错误！正确用法：/{command} [player/warp/spawn] [名称]</red></bold>"
-error.syntax_warp: "<bold><red>命令语法错误！正确用法：/{command} {传送点}</red></bold>"
-error.syntax_home: "<bold><red>命令语法错误！正确用法：/{command} {家名称}</red></bold>"
+error.syntax_warp: "<bold><red>命令语法错误！正确用法：/{command} <传送点></red></bold>"
+error.syntax_home: "<bold><red>命令语法错误！正确用法：/{command} <家名称></red></bold>"
 
 ## 系统错误
 error.config_not_found: "<bold><red>配置文件不存在，已重新生成！</red></bold>"

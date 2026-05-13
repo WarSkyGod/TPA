@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import top.craft_hello.tpa.objects.ConfigManager.reloadConfig
 import top.craft_hello.tpa.objects.LanguageManager
 import java.util.Objects.isNull
 
@@ -18,7 +19,7 @@ class SendMessageUtil {
         // 根据 path 读取配置文件中的消息并发送
         fun sendMessageForPath(sender: CommandSender, path : String, vararg vars: String) {
             val language = LanguageManager.getLanguage(sender)
-            sendMessage(sender, language.getFormatPrefixMessage(path, *vars))
+            sendMessage(sender, language.getFormatPrefixMessage(sender, path, *vars))
         }
 
         // 控制台不能使用此命令错误
@@ -42,6 +43,12 @@ class SendMessageUtil {
         // 命令冷却中错误
         fun commandCooldownError(player: Player, delay: String) : Int {
             sendMessageForPath(player, "error.command_cooldown", delay)
+            return Command.SINGLE_SUCCESS
+        }
+
+        // tpa命令错误
+        fun syntaxTpaError(player: Player, command: String) : Int {
+            sendMessageForPath(player, "error.syntax_tpa", command)
             return Command.SINGLE_SUCCESS
         }
 
@@ -111,16 +118,18 @@ class SendMessageUtil {
         }
 
         // 配置文件重载消息
-        fun configReloaded(sender : CommandSender) {
+        fun configReloaded(sender : CommandSender) : Int {
             // 向服务器后台发送重载消息
             sendMessageForPath(Bukkit.getConsoleSender(), "system.config_reloaded")
             // 如果是玩家执行，则也向该玩家发送重载消息
             if (sender is Player) sendMessageForPath(sender, "system.config_reloaded")
+            return Command.SINGLE_SUCCESS
         }
 
+        // 按钮消息
         fun acceptOrDeny(target : Player, executorName : String) {
             val language = LanguageManager.getLanguage(target)
-            sendMessage(target, language.getFormatPrefixMessage("accept_button")
+            sendMessage(target, language.getFormatPrefixMessage(target, "accept_button")
                 .append(language.getFormatMessage("deny_button"))
                 .append(language.getFormatMessage("blacklist.add_button", executorName))
             )
