@@ -3,178 +3,170 @@
 #=======================
 # Configurazione base
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>> </bold>"
+console_prefix: "<gray><bold>[TPA] </bold>"
 not_online_players: "Nessun giocatore online"
 not_warps: "Nessun punto di teletrasporto disponibile"
 not_homes: "Nessuna casa impostata"
 spawn_name: "Spawn"
 rtp_name: "Teletrasporto casuale"
 last_location: "Ultima posizione"
-lang.set_success: "&a&lLingua client impostata a &6&l<target>"
+lang.set_success: "<green><bold>Lingua client impostata a </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Interazione pulsanti
 #=======================
 ## Testo pulsanti
-accept_button: "&a&l[Accetta]"
-deny_button: "&c&l[Rifiuta]"
-blacklist.add_button: "&c&l[Blocca]"
-blacklist.remove_button: "&a&l[Sblocca]"
-teleport_button: "&a&l[Teletrasporta]"
-location_set_button: "&6&l[Imposta posizione]"
-default_home_set_button: "&e&l[Home predefinita]"
-delete_button: "&c&l[Elimina]"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Clicca per accettare</bold><red>'>[Accetta]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Clicca per rifiutare</bold><red>'>[Rifiuta]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Aggiungi alla lista nera</bold><red>'>[Blocca]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Rimuovi dalla lista nera</bold></green>'>[Sblocca]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Teletrasporta ora</bold></green>'>[Teletrasporta]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Imposta posizione corrente</bold></gold>'>[Imposta posizione]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Imposta come home predefinita</bold></yellow>'>[Home predefinita]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Elimina definitivamente</bold><red>'>[Elimina]</hover></insert></click></red>  </bold>"
 
 ## Suggerimenti pulsanti
-accept_click_hint: "&a&lClicca per accettare"
-deny_click_hint: "&c&lClicca per rifiutare"
-blacklist.add_hint: "&c&lAggiungi alla lista nera"
-blacklist.remove_hint: "&a&lRimuovi dalla lista nera"
-teleport_click_hint: "&a&lTeletrasporta ora"
-set_location_hint: "&6&lImposta posizione corrente"
-set_default_home_hint: "&e&lImposta come home predefinita"
-delete_click_hint: "&c&lElimina definitivamente"
 
 #=======================
 # Richieste di teletrasporto
 #=======================
-request.to_here: "&a&lIl giocatore &6&l<target> &a&lvuole raggiungerti! (&6&l<seconds>s&a&l)"
-request.to_target: "&a&lIl giocatore &6&l<target> &a&lti invita! (&6&l<seconds>s&a&l)"
-request.sent_success: "&a&lRichiesta inviata a &6&l<target>"
-request.timeout_notice: "&a&lValida per &6&l<seconds> secondi"
-request.expired_from: "&c&lRichiesta da &6&l<target> &c&lscaduta"
-request.expired_to: "&c&lLa tua richiesta a &6&l<target> &c&lè scaduta"
+request.to_here: "<green><bold>Il giocatore </bold><gold><bold>%target% </bold><green><bold>vuole raggiungerti! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.to_target: "<green><bold>Il giocatore </bold><gold><bold>%target% </bold><green><bold>ti invita! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.sent_success: "<green><bold>Richiesta inviata a </bold><gold><bold>%target%</bold>"
+request.timeout_notice: "<green><bold>Valida per </bold><gold><bold>%seconds% secondi</bold>"
+request.expired_from: "<red><bold>Richiesta da </bold><gold><bold>%target% </bold><red><bold>scaduta</bold>"
+request.expired_to: "<red><bold>La tua richiesta a </bold><gold><bold>%target% </bold><red><bold>è scaduta</bold>"
 
 #=======================
 # Home
 #=======================
-home.list_header: "&a&lCase disponibili:"
-home.set_success: "&a&lHome &6&l<target> &a&limpostata"
-home.default_set_success: "&a&lHome predefinita: &6&l<target>"
-home.delete_success: "&a&lHome &6&l<target> &a&leliminata"
-home.teleport_success: "&a&lTeletrasportato a &6&l<target>"
-home.max_limit_error: "&c&lLimite massimo: &6&l<max_home_amount> case"
-error.default_home_already_set: "&6&l<target> &c&lgià home predefinita"
+home.list_header: "<green><bold>Case disponibili:</bold>"
+home.set_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>impostata</bold>"
+home.default_set_success: "<green><bold>Home predefinita: </bold><gold><bold>%target%</bold>"
+home.delete_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>eliminata</bold>"
+home.teleport_success: "<green><bold>Teletrasportato a </bold><gold><bold>%target%</bold>"
+home.max_limit_error: "<red><bold>Limite massimo: </bold><gold><bold>%max_home_amount% case</bold>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>già home predefinita</bold>"
 
 #=======================
 # Punti di teletrasporto
 #=======================
-warp.list_header: "&a&lWarps disponibili:"
-warp.set_success: "&a&lWarp &6&l<target> &a&lcreato"
-warp.delete_success: "&a&lWarp &6&l<target> &a&leliminato"
-warp.teleport_success: "&a&lTeletrasportato a &6&l<target>"
+warp.list_header: "<green><bold>Warps disponibili:</bold>"
+warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>creato</bold>"
+warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>eliminato</bold>"
+warp.teleport_success: "<green><bold>Teletrasportato a </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Spawn
 #=======================
-spawn.set_success: "&a&lSpawn impostato"
-spawn.delete_success: "&a&lSpawn rimosso"
-spawn.teleport_success: "&a&lTeletrasportato allo spawn!"
+spawn.set_success: "<green><bold>Spawn impostato</bold>"
+spawn.delete_success: "<green><bold>Spawn rimosso</bold>"
+spawn.teleport_success: "<green><bold>Teletrasportato allo spawn!</bold>"
 
 #=======================
 # Ultima posizione
 #=======================
-back.teleport_success: "&a&lTornato all'ultima posizione!"
+back.teleport_success: "<green><bold>Tornato all'ultima posizione!</bold>"
 
 #=======================
 # Teletrasporto casuale
 #=======================
-rtp.generating: "&a&lGenerazione posizione casuale..."
-rtp.success: "&a&lTeletrasporto riuscito!"
-rtp.failed: "&c&lTeletrasporto fallito!"
+rtp.generating: "<green><bold>Generazione posizione casuale...</bold>"
+rtp.success: "<green><bold>Teletrasporto riuscito!</bold>"
+rtp.failed: "<red><bold>Teletrasporto fallito!</bold>"
 
 #=======================
 # Lista nera
 #=======================
-blacklist.list_header: "&a&lLista nera:"
-blacklist.add_success: "&a&l&6&l<target> &a&lbloccato"
-blacklist.remove_success: "&a&l&6&l<target> &a&lsbloccato"
+blacklist.list_header: "<green><bold>Lista nera:</bold>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>bloccato</bold>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sbloccato</bold>"
 
 #=======================
 # Messaggi di errore
 #=======================
 ## Stato comandi
-error.command_disabled: "&c&lComando disabilitato"
-error.world_disabled: "&c&lNon disponibile qui"
-error.command_cooldown: "&c&lAttendi &6&l<seconds>s"
+error.command_disabled: "<red><bold>Comando disabilitato</bold>"
+error.world_disabled: "<red><bold>Non disponibile qui</bold>"
+error.command_cooldown: "<red><bold>Attendi </bold><gold><bold>%seconds%s</bold>"
 
 ## Permessi
-error.console_restricted: "&c&lSolo giocatori"
-error.permission_denied: "&c&lPermesso negato!"
+error.console_restricted: "<red><bold>Solo giocatori</bold>"
+error.permission_denied: "<red><bold>Permesso negato!</bold>"
 
 ## Stato giocatori
-error.no_online_players: "&c&lNessun giocatore online"
-error.target_offline: "&c&lIl giocatore &6&l<target> &c&lè offline"
-error.self_operation: "&c&lNon applicabile a te stesso"
+error.no_online_players: "<red><bold>Nessun giocatore online</bold>"
+error.target_offline: "<red><bold>Il giocatore </bold><gold><bold>%target% </bold><red><bold>è offline</bold>"
+error.self_operation: "<red><bold>Non applicabile a te stesso</bold>"
 
 ## Richieste
-error.no_pending_request: "&c&lNessuna richiesta pendente"
-error.request_pending: "&c&lRichiesta in elaborazione"
+error.no_pending_request: "<red><bold>Nessuna richiesta pendente</bold>"
+error.request_pending: "<red><bold>Richiesta in elaborazione</bold>"
 
 ## Lista nera
-error.already_blacklisted: "&c&lGià in lista nera"
-error.blocked_by_target: "&c&lSei stato bloccato"
-error.blacklist_empty: "&c&lLista nera vuota"
-error.not_blacklisted: "&c&lNon in lista nera"
+error.already_blacklisted: "<red><bold>Già in lista nera</bold>"
+error.blocked_by_target: "<red><bold>Sei stato bloccato</bold>"
+error.blacklist_empty: "<red><bold>Lista nera vuota</bold>"
+error.not_blacklisted: "<red><bold>Non in lista nera</bold>"
 
 ## Home
-error.home_not_found: "&c&lHome &6&l<target> &c&lnon trovata"
-error.no_homes_set: "&c&lNessuna home impostata"
-error.no_default_home: "&c&lNessuna home predefinita"
+error.home_not_found: "<red><bold>Home </bold><gold><bold>%target% </bold><red><bold>non trovata</bold>"
+error.no_homes_set: "<red><bold>Nessuna home impostata</bold>"
+error.no_default_home: "<red><bold>Nessuna home predefinita</bold>"
 
 ## Warps
-error.warp_not_found: "&c&lWarp &6&l<target> &c&lnon trovato"
-error.no_warps_set: "&c&lNessun warp disponibile"
+error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>non trovato</bold>"
+error.no_warps_set: "<red><bold>Nessun warp disponibile</bold>"
 
 ## Posizioni
-error.last_location_missing: "&c&lNessun registro posizioni"
-error.logout_location_missing: "&c&lPosizione di logout assente"
-error.spawn_not_set: "&c&lSpawn non impostato"
+error.last_location_missing: "<red><bold>Nessun registro posizioni</bold>"
+error.logout_location_missing: "<red><bold>Posizione di logout assente</bold>"
+error.spawn_not_set: "<red><bold>Spawn non impostato</bold>"
 
 ## Sintassi
-error.syntax_generic: "&c&lErrore sintassi! Usa: /<command>"
-error.syntax_tpa: "&c&lErrore sintassi! Usa: /<command> <giocatore>"
-error.syntax_tpall: "&c&lErrore sintassi! Usa: /<command> [player/warp/spawn] [nome]"
-error.syntax_warp: "&c&lErrore sintassi! Usa: /<command> <warp>"
-error.syntax_home: "&c&lErrore sintassi! Usa: /<command> <home>"
+error.syntax_generic: "<red><bold>Errore sintassi! Usa: /%command%</bold>"
+error.syntax_tpa: "<red><bold>Errore sintassi! Usa: /%command% <giocatore></bold>"
+error.syntax_tpall: "<red><bold>Errore sintassi! Usa: /%command% [player/warp/spawn] [nome]</bold>"
+error.syntax_warp: "<red><bold>Errore sintassi! Usa: /%command% <warp></bold>"
+error.syntax_home: "<red><bold>Errore sintassi! Usa: /%command% <home></bold>"
 
 ## Errori di sistema
-error.config_not_found: "&c&lConfigurazione rigenerata"
-error.runtime: "&c&lErrore plugin: <message>"
-error.forwarded_error: "&c&lErrore da &6&l<target>&c&l:"
+error.config_not_found: "<red><bold>Configurazione rigenerata</bold>"
+error.runtime: "<red><bold>Errore plugin: %message%</bold>"
+error.forwarded_error: "<red><bold>Errore da </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
 # Processo di teletrasporto
 #=======================
-teleport.accept.self: "&a&lRichiesta da &6&l<target> &a&laccettata"
-teleport.accept.target: "&a&l&6&l<target> &a&lha accettato"
-teleport.deny.self: "&c&lRichiesta da &6&l<target> &c&lrifiutata"
-teleport.deny.target: "&c&l&6&l<target> &c&lha rifiutato"
-teleport.countdown: "&a&lTeletrasporto tra &6&l<seconds>s"
-teleport.cancel_on_move: "&a&lMovimento annulla il teletrasporto"
-teleport.canceled.self: "&c&lTeletrasporto annullato"
-teleport.canceled.target: "&c&lAnnullato dall'altro giocatore"
-teleport.generic_success: "&a&lTeletrasportato a &6&l<target>"
-teleport.tpall.to_target: "&a&lAmministratore ti ha spostato"
-teleport.tpall.to_self: "&a&lAmministratore ha portato tutti"
-teleport.tpall.success: "&a&lTutti spostati a &6&l<target>"
-teleport.logout_location: "&a&lUltima posizione di &6&l<target>"
+teleport.accept.self: "<green><bold>Richiesta da </bold><gold><bold>%target% </bold><green><bold>accettata</bold>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>ha accettato</bold>"
+teleport.deny.self: "<red><bold>Richiesta da </bold><gold><bold>%target% </bold><red><bold>rifiutata</bold>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>ha rifiutato</bold>"
+teleport.countdown: "<green><bold>Teletrasporto tra </bold><gold><bold>%seconds%s</bold>"
+teleport.cancel_on_move: "<green><bold>Movimento annulla il teletrasporto</bold>"
+teleport.canceled.self: "<red><bold>Teletrasporto annullato</bold>"
+teleport.canceled.target: "<red><bold>Annullato dall'altro giocatore</bold>"
+teleport.generic_success: "<green><bold>Teletrasportato a </bold><gold><bold>%target%</bold>"
+teleport.tpall.to_target: "<green><bold>Amministratore ti ha spostato</bold>"
+teleport.tpall.to_self: "<green><bold>Amministratore ha portato tutti</bold>"
+teleport.tpall.success: "<green><bold>Tutti spostati a </bold><gold><bold>%target%</bold>"
+teleport.logout_location: "<green><bold>Ultima posizione di </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Messaggi di sistema
 #=======================
-system.config_reloaded: "&a&lConfigurazione ricaricata!"
-system.plugin_loaded: "&a&lPlugin caricato! Versione: &6&l<target>"
-system.plugin_unloaded: "&c&lPlugin rimosso!"
-system.config_migrated_success: "&a&lMigrazione completata!"
-system.config_migrated: "&a&lMigrazione configurazione (backup automatico)"
-system.debug_warning: "&c&lModalità debug attiva!"
+system.config_reloaded: "<green><bold>Configurazione ricaricata!</bold>"
+system.plugin_loaded: "<green><bold>Plugin caricato! Versione: </bold><gold><bold>%target%</bold>"
+system.plugin_unloaded: "<red><bold>Plugin rimosso!</bold>"
+system.config_migrated_success: "<green><bold>Migrazione completata!</bold>"
+system.config_migrated: "<green><bold>Migrazione configurazione (backup automatico)</bold>"
+system.debug_warning: "<red><bold>Modalità debug attiva!</bold>"
 
 #=======================
 # Aggiornamenti
 #=======================
-update.checking: "&a&lControllo aggiornamenti..."
-update.available: "&a&lNuova versione &6&lTPA-v<target>&a&l disponibile: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lGià aggiornato"
-update.failed: "&c&lControllo fallito"
+update.checking: "<green><bold>Controllo aggiornamenti...</bold>"
+update.available: "<green><bold>Nuova versione </bold><gold><bold>TPA-v%target%</bold><green><bold> disponibile: https://modrinth.com/plugin/tpa.66666/versions</bold>"
+update.latest: "<green><bold>Già aggiornato</bold>"
+update.failed: "<red><bold>Controllo fallito</bold>"

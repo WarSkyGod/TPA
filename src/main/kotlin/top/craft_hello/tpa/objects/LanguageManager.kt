@@ -30,7 +30,7 @@ object LanguageManager {
         if(langFolder != null){
             for (languageFile in langFolder) {
                 val languageName = languageFile.name.replace(".yml", "")
-                if(!languages.equals(languageName)) languages[languageName] = Language(languageFile, false)
+                if(!languages.containsKey(languageName)) languages[languageName] = Language(languageFile, false)
             }
         }
     }
@@ -40,19 +40,50 @@ object LanguageManager {
     }
 
     fun getLanguage(languageName: String): Language {
-        return languages[languageName] ?: languages[ConfigManager.config.language]!!
+        return languages[languageName]
+            ?: languages[ConfigManager.config.language]
+            ?: languages.values.first()
     }
 
     fun getLanguage(languageType: LanguageType): Language {
         return getLanguage(languageType.languageName)
     }
 
+    // 语言选择优先级：玩家手动设置的语言（/tpa setlang）> 客户端语言 > 配置默认语言
     fun getLanguage(sender : CommandSender): Language {
-        return if(sender is Player) getLanguage(buildString {
-            append(sender.locale().language)
+        if (sender is Player) {
+            val playerData = PlayerDataManager.get(sender)
+            if (playerData.setlang && !playerData.language.isNullOrBlank()) {
+                return getLanguage(playerData.language!!)
+            }
+            val locale = sender.locale()
+            val clientLanguage = buildString {
+                append(locale.language)
+                append("_")
+                append(locale.country)
+            }
+            if (languages.containsKey(clientLanguage)) return languages[clientLanguage]!!
+        }
+        return getLanguage(ConfigManager.config.language)
+    }
+
+    // 语言名是否存在（大小写不敏感）
+    fun hasLanguage(languageName: String): Boolean {
+        return languages.keys.any { it.equals(languageName, ignoreCase = true) }
+    }
+
+    // 全部语言名
+    fun getLanguageNames(): List<String> = languages.keys.toList()
+
+    // 规范化语言名：zh_cn -> zh_CN
+    fun formatLangStr(languageName: String): String {
+        val parts = languageName.lowercase().split("_")
+        if (parts.size < 2) return languageName.lowercase()
+        return buildString {
+            append(parts[0])
             append("_")
-            append(sender.locale().country)
-        }) else getLanguage(ConfigManager.config.language)
+            append(parts[1].uppercase())
+        }
     }
 
     fun reloadLanguage() {

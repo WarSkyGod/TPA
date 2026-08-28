@@ -1,22 +1,21 @@
 package top.craft_hello.tpa.objects
 
-import org.bukkit.Bukkit
-import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.datas.Config
 import top.craft_hello.tpa.datas.SpawnConfig
-import top.craft_hello.tpa.utils.SendMessageUtil
+import top.craft_hello.tpa.datas.WarpConfig
 
 object ConfigManager {
     val plugin = TPA.plugin
     var config: Config
     var spawnConfig: SpawnConfig
+    var warpConfig: WarpConfig
 
     init {
         plugin.saveDefaultConfig()
         config = Config(plugin.config)
         spawnConfig = SpawnConfig(plugin)
+        warpConfig = WarpConfig(plugin)
     }
 
     fun reloadConfig() {
@@ -26,11 +25,14 @@ object ConfigManager {
 
     fun reloadSpawnConfig() { spawnConfig = SpawnConfig(plugin) }
 
+    fun reloadWarpConfig() { warpConfig = WarpConfig(plugin) }
+
     fun reloadLanguages() { LanguageManager.reloadLanguage() }
 
     fun reloadAllConfig() {
         reloadConfig()
         reloadSpawnConfig()
+        reloadWarpConfig()
         reloadLanguages()
     }
 }

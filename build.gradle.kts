@@ -21,6 +21,10 @@ repositories {
     maven("https://nexus.handyplus.cn/releases") {
         name = "handy-repository"
     }
+    // PlaceholderAPI（可选依赖，仅编译期）
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
+        name = "placeholderapi-repo"
+    }
 }
 
 dependencies {
@@ -29,10 +33,8 @@ dependencies {
     implementation("cn.handyplus.lib.adapter:FoliaLib:1.3.0")
     implementation("org.bstats:bstats-bukkit:3.2.1")
     implementation("com.zaxxer:HikariCP:4.0.3")
-    implementation("io.ktor:ktor-client-core:3.4.3")
-    implementation("io.ktor:ktor-client-cio:3.4.3")
-    implementation("io.ktor:ktor-client-content-negotiation:3.4.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.3")
+    // PlaceholderAPI 可选依赖：仅编译期，运行时由服务器按需注入
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 tasks {
@@ -74,7 +76,7 @@ tasks.processResources {
     val props = mapOf("version" to version)
     inputs.properties(props)
     filteringCharset = "UTF-8"
-    filesMatching("paper-plugin.yml") {
+    filesMatching(listOf("paper-plugin.yml", "config.yml")) {
         expand(props)
     }
 }

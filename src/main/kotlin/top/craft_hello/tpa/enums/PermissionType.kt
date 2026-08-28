@@ -34,7 +34,20 @@ enum class PermissionType(val permissionName: String) {
 
     companion object {
         fun hasPermission(sender: CommandSender, permissionType: PermissionType): Boolean {
-            return sender.hasPermission(ADMIN.name) or sender.hasPermission(permissionType.name)
+            return sender.hasPermission(ADMIN.permissionName) || sender.hasPermission(permissionType.permissionName)
+        }
+
+        // 获取玩家所属的等级（用于家数量上限、传送延迟、命令间隔），从高到低逐级判断
+        fun getLevel(sender: CommandSender): PermissionType {
+            return when {
+                hasPermission(sender, ADMIN) -> ADMIN
+                hasPermission(sender, MVP_PLUS_PLUS) -> MVP_PLUS_PLUS
+                hasPermission(sender, MVP_PLUS) -> MVP_PLUS
+                hasPermission(sender, MVP) -> MVP
+                hasPermission(sender, VIP_PLUS) -> VIP_PLUS
+                hasPermission(sender, VIP) -> VIP
+                else -> DEFAULT
+            }
         }
     }
 }

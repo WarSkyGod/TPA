@@ -1,11 +1,19 @@
 name: TPA
-version: '4.0.0'
+version: '${version}'
 main: top.craft_hello.tpa.TPA
-description: 一个支持 Folia 的简易传送插件，支持 Bukkit/Spigot/Paper/Folia
+description: 一个支持 Folia 的简易传送插件，支持 Paper/Folia
 api-version: '1.21'
 author: WarSkyGod
 website: https://github.com/WarSkyGod/TPA
 folia-supported: true
+
+# PlaceholderAPI 为可选依赖：存在时提供 %tpa_*% 占位符
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
 
 permissions:
   tpa.admin:
@@ -80,68 +88,3 @@ permissions:
   tpa.back:
     default: false
     description: "可使用 /back 命令传送到上一次的位置（默认关闭权限检查）"
-
-commands:
-  tpac:
-    usage: /tpac [version/setlang/reload]
-    description: 查看插件帮助/ version 检查更新/ setlang 设置默认语言/ reload 重新加载配置文件
-  tpa:
-    usage: /tpa <玩家名称>
-    description: 向玩家发送传送请求
-  tphere:
-    usage: /tphere <玩家名称>
-    description: 请求玩家传送到你身边
-  tpall:
-    usage: /tpall [player/warp/spawn] [玩家名称/传送点名称]
-    description: 强制将所有在线玩家传送到目标位置（如果不加参数默认传送到使用者身边）
-  rtp:
-    usage: /rtp
-    description: 随机传送
-  tplogout:
-    usage: /tplogout <玩家名称>
-    description: 传送到该玩家最后一次下线的位置
-  tpaccept:
-    usage: /tpaccept
-    description: 接受传送请求
-  tpdeny:
-    usage: /tpdeny
-    description: 拒绝传送请求
-  denys:
-    usage: /denys [add/remove] [玩家名称]
-    description: 列出玩家的黑名单列表
-  warp:
-    usage: /warp <传送点>
-    description: 传送到传送点
-  setwarp:
-    usage: /setwarp <传送点>
-    description: 设置传送点
-  delwarp:
-    usage: /delwarp <传送点>
-    description: 删除传送点
-  home:
-    usage: /home <家>
-    description: 传送到家
-  homes:
-    usage: /homes
-    description: 列出你设置的家
-  sethome:
-    usage: /sethome <家>
-    description: 设置家
-  setdefaulthome:
-    usage: /setdefaulthome <家>
-    description: 设置默认的家
-  delhome:
-    usage: /delhome <家>
-    description: 删除家
-  spawn:
-    usage: /spawan
-    description: 传送到主城
-  setspawn:
-    usage: /setspawn
-    description: 设置主城
-  delspawn:
-    usage: /delspawn
-    description: 删除主城
-  back:
-    usage: /back
-    description: 传送到上一次的位置

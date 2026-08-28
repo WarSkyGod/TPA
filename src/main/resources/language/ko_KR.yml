@@ -3,178 +3,170 @@
 #=======================
 # 기본 설정
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>> </bold>"
+console_prefix: "<gray><bold>[TPA] </bold>"
 not_online_players: "접속 중인 플레이어 없음"
 not_warps: "이용 가능한 워프 지점 없음"
 not_homes: "설정된 홈 없음"
 spawn_name: "스폰 지점"
 rtp_name: "랜덤 텔레포트"
 last_location: "이전 위치"
-lang.set_success: "&a&l클라이언트 언어를 &6&l<target>&a&l(으)로 설정했습니다"
+lang.set_success: "<green><bold>클라이언트 언어를 </bold><gold><bold>%target%</bold><green><bold>(으)로 설정했습니다</bold>"
 
 #=======================
 # 버튼 상호작용
 #=======================
 ## 버튼 텍스트
-accept_button: "&a&l[수락]"
-deny_button: "&c&l[거절]"
-blacklist.add_button: "&c&l[거절 및 차단]"
-blacklist.remove_button: "&a&l[차단 해제]"
-teleport_button: "&a&l[텔레포트]"
-location_set_button: "&6&l[위치 설정]"
-default_home_set_button: "&e&l[기본 홈 설정]"
-delete_button: "&c&l[삭제]"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>클릭하여 수락</bold><red>'>[수락]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>클릭하여 거절</bold><red>'>[거절]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>차단 목록에 추가</bold><red>'>[거절 및 차단]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>차단 목록에서 제거</bold></green>'>[차단 해제]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>클릭하여 이동</bold></green>'>[텔레포트]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>현재 위치로 설정</bold></gold>'>[위치 설정]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>기본 홈으로 지정</bold></yellow>'>[기본 홈 설정]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>클릭하여 삭제</bold><red>'>[삭제]</hover></insert></click></red>  </bold>"
 
 ## 버튼 안내
-accept_click_hint: "&a&l클릭하여 수락"
-deny_click_hint: "&c&l클릭하여 거절"
-blacklist.add_hint: "&c&l차단 목록에 추가"
-blacklist.remove_hint: "&a&l차단 목록에서 제거"
-teleport_click_hint: "&a&l클릭하여 이동"
-set_location_hint: "&6&l현재 위치로 설정"
-set_default_home_hint: "&e&l기본 홈으로 지정"
-delete_click_hint: "&c&l클릭하여 삭제"
 
 #=======================
 # 텔레포트 요청
 #=======================
-request.to_here: "&a&l플레이어 &6&l<target>&a&l님이 당신에게 이동을 요청했습니다 (&6&l<seconds>초&a&l 후 만료)"
-request.to_target: "&a&l플레이어 &6&l<target>&a&l님이 자신에게 이동을 초대했습니다 (&6&l<seconds>초&a&l 후 만료)"
-request.sent_success: "&a&l&6&l<target>&a&l님에게 요청을 보냈습니다"
-request.timeout_notice: "&a&l요청 유효 시간 &6&l<seconds>초"
-request.expired_from: "&c&l&6&l<target>&c&l님의 요청이 만료되었습니다"
-request.expired_to: "&c&l&6&l<target>&c&l님에게 보낸 요청이 만료되었습니다"
+request.to_here: "<green><bold>플레이어 </bold><gold><bold>%target%</bold><green><bold>님이 당신에게 이동을 요청했습니다 (</bold><gold><bold>%seconds%초</bold><green><bold> 후 만료)</bold>"
+request.to_target: "<green><bold>플레이어 </bold><gold><bold>%target%</bold><green><bold>님이 자신에게 이동을 초대했습니다 (</bold><gold><bold>%seconds%초</bold><green><bold> 후 만료)</bold>"
+request.sent_success: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님에게 요청을 보냈습니다</bold>"
+request.timeout_notice: "<green><bold>요청 유효 시간 </bold><gold><bold>%seconds%초</bold>"
+request.expired_from: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님의 요청이 만료되었습니다</bold>"
+request.expired_to: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님에게 보낸 요청이 만료되었습니다</bold>"
 
 #=======================
 # 홈
 #=======================
-home.list_header: "&a&l설정된 홈 목록:"
-home.set_success: "&a&l홈 &6&l<target>&a&l을(를) 설정했습니다"
-home.default_set_success: "&a&l기본 홈을 &6&l<target>&a&l(으)로 설정했습니다"
-home.delete_success: "&a&l홈 &6&l<target>&a&l을(를) 삭제했습니다"
-home.teleport_success: "&a&l홈 &6&l<target>&a&l(으)로 이동했습니다"
-home.max_limit_error: "&c&l최대 &6&l<max_home_amount>&c&l개까지 설정 가능합니다"
-error.default_home_already_set: "&6&l<target>&c&l은(는) 이미 기본 홈입니다"
+home.list_header: "<green><bold>설정된 홈 목록:</bold>"
+home.set_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>을(를) 설정했습니다</bold>"
+home.default_set_success: "<green><bold>기본 홈을 </bold><gold><bold>%target%</bold><green><bold>(으)로 설정했습니다</bold>"
+home.delete_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>을(를) 삭제했습니다</bold>"
+home.teleport_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동했습니다</bold>"
+home.max_limit_error: "<red><bold>최대 </bold><gold><bold>%max_home_amount%</bold><red><bold>개까지 설정 가능합니다</bold>"
+error.default_home_already_set: "<gold><bold>%target%</bold><red><bold>은(는) 이미 기본 홈입니다</bold>"
 
 #=======================
 # 워프 지점
 #=======================
-warp.list_header: "&a&l이용 가능한 워프:"
-warp.set_success: "&a&l워프 지점 &6&l<target>&a&l을(를) 설정했습니다"
-warp.delete_success: "&a&l워프 지점 &6&l<target>&a&l을(를) 삭제했습니다"
-warp.teleport_success: "&a&l워프 지점 &6&l<target>&a&l(으)로 이동했습니다"
+warp.list_header: "<green><bold>이용 가능한 워프:</bold>"
+warp.set_success: "<green><bold>워프 지점 </bold><gold><bold>%target%</bold><green><bold>을(를) 설정했습니다</bold>"
+warp.delete_success: "<green><bold>워프 지점 </bold><gold><bold>%target%</bold><green><bold>을(를) 삭제했습니다</bold>"
+warp.teleport_success: "<green><bold>워프 지점 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동했습니다</bold>"
 
 #=======================
 # 스폰 지점
 #=======================
-spawn.set_success: "&a&l스폰 지점을 설정했습니다"
-spawn.delete_success: "&a&l스폰 지점을 삭제했습니다"
-spawn.teleport_success: "&a&l스폰 지점으로 이동했습니다!"
+spawn.set_success: "<green><bold>스폰 지점을 설정했습니다</bold>"
+spawn.delete_success: "<green><bold>스폰 지점을 삭제했습니다</bold>"
+spawn.teleport_success: "<green><bold>스폰 지점으로 이동했습니다!</bold>"
 
 #=======================
 # 이전 위치
 #=======================
-back.teleport_success: "&a&l이전 위치로 이동했습니다!"
+back.teleport_success: "<green><bold>이전 위치로 이동했습니다!</bold>"
 
 #=======================
 # 랜덤 텔레포트
 #=======================
-rtp.generating: "&a&l랜덤 위치 생성 중..."
-rtp.success: "&a&l랜덤 위치로 이동했습니다!"
-rtp.failed: "&c&l랜덤 이동 실패!"
+rtp.generating: "<green><bold>랜덤 위치 생성 중...</bold>"
+rtp.success: "<green><bold>랜덤 위치로 이동했습니다!</bold>"
+rtp.failed: "<red><bold>랜덤 이동 실패!</bold>"
 
 #=======================
 # 차단 목록
 #=======================
-blacklist.list_header: "&a&l차단 목록:"
-blacklist.add_success: "&a&l&6&l<target>&a&l님을 차단했습니다"
-blacklist.remove_success: "&a&l&6&l<target>&a&l님을 차단 해제했습니다"
+blacklist.list_header: "<green><bold>차단 목록:</bold>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님을 차단했습니다</bold>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님을 차단 해제했습니다</bold>"
 
 #=======================
 # 오류 메시지
 #=======================
 ## 명령어 상태
-error.command_disabled: "&c&l비활성화된 명령어입니다"
-error.world_disabled: "&c&l이 월드에서는 사용할 수 없습니다"
-error.command_cooldown: "&c&l&6&l<seconds>초&c&l 후에 다시 시도해주세요"
+error.command_disabled: "<red><bold>비활성화된 명령어입니다</bold>"
+error.world_disabled: "<red><bold>이 월드에서는 사용할 수 없습니다</bold>"
+error.command_cooldown: "<red><bold></bold><gold><bold>%seconds%초</bold><red><bold> 후에 다시 시도해주세요</bold>"
 
 ## 권한
-error.console_restricted: "&c&l플레이어만 사용 가능합니다"
-error.permission_denied: "&c&l권한이 없습니다!"
+error.console_restricted: "<red><bold>플레이어만 사용 가능합니다</bold>"
+error.permission_denied: "<red><bold>권한이 없습니다!</bold>"
 
 ## 플레이어 상태
-error.no_online_players: "&c&l접속 중인 플레이어가 없습니다"
-error.target_offline: "&c&l플레이어 &6&l<target>&c&l님이 오프라인입니다"
-error.self_operation: "&c&l자기 자신에게는 사용할 수 없습니다"
+error.no_online_players: "<red><bold>접속 중인 플레이어가 없습니다</bold>"
+error.target_offline: "<red><bold>플레이어 </bold><gold><bold>%target%</bold><red><bold>님이 오프라인입니다</bold>"
+error.self_operation: "<red><bold>자기 자신에게는 사용할 수 없습니다</bold>"
 
 ## 요청 상태
-error.no_pending_request: "&c&l대기 중인 요청이 없습니다"
-error.request_pending: "&c&l처리 중인 요청이 있습니다"
+error.no_pending_request: "<red><bold>대기 중인 요청이 없습니다</bold>"
+error.request_pending: "<red><bold>처리 중인 요청이 있습니다</bold>"
 
 ## 차단 목록
-error.already_blacklisted: "&c&l이미 차단된 플레이어입니다"
-error.blocked_by_target: "&c&l상대방에게 차단되었습니다"
-error.blacklist_empty: "&c&l차단 목록이 비어있습니다"
-error.not_blacklisted: "&c&l차단 목록에 없습니다"
+error.already_blacklisted: "<red><bold>이미 차단된 플레이어입니다</bold>"
+error.blocked_by_target: "<red><bold>상대방에게 차단되었습니다</bold>"
+error.blacklist_empty: "<red><bold>차단 목록이 비어있습니다</bold>"
+error.not_blacklisted: "<red><bold>차단 목록에 없습니다</bold>"
 
 ## 홈
-error.home_not_found: "&c&l홈 &6&l<target>&c&l을(를) 찾을 수 없습니다"
-error.no_homes_set: "&c&l설정된 홈이 없습니다"
-error.no_default_home: "&c&l기본 홈이 설정되지 않았습니다"
+error.home_not_found: "<red><bold>홈 </bold><gold><bold>%target%</bold><red><bold>을(를) 찾을 수 없습니다</bold>"
+error.no_homes_set: "<red><bold>설정된 홈이 없습니다</bold>"
+error.no_default_home: "<red><bold>기본 홈이 설정되지 않았습니다</bold>"
 
 ## 워프 지점
-error.warp_not_found: "&c&l워프 지점 &6&l<target>&c&l을(를) 찾을 수 없습니다"
-error.no_warps_set: "&c&l이용 가능한 워프가 없습니다"
+error.warp_not_found: "<red><bold>워프 지점 </bold><gold><bold>%target%</bold><red><bold>을(를) 찾을 수 없습니다</bold>"
+error.no_warps_set: "<red><bold>이용 가능한 워프가 없습니다</bold>"
 
 ## 위치 기록
-error.last_location_missing: "&c&l이전 위치 기록이 없습니다"
-error.logout_location_missing: "&c&l마지막 접속 위치가 기록되지 않았습니다"
-error.spawn_not_set: "&c&l스폰 지점이 설정되지 않았습니다"
+error.last_location_missing: "<red><bold>이전 위치 기록이 없습니다</bold>"
+error.logout_location_missing: "<red><bold>마지막 접속 위치가 기록되지 않았습니다</bold>"
+error.spawn_not_set: "<red><bold>스폰 지점이 설정되지 않았습니다</bold>"
 
 ## 명령어 문법
-error.syntax_generic: "&c&l문법 오류! 사용법: /<command>"
-error.syntax_tpa: "&c&l문법 오류! 사용법: /<command> <플레이어>"
-error.syntax_tpall: "&c&l문법 오류! 사용법: /<command> [player/warp/spawn] [이름]"
-error.syntax_warp: "&c&l문법 오류! 사용법: /<command> <워프>"
-error.syntax_home: "&c&l문법 오류! 사용법: /<command> <홈>"
+error.syntax_generic: "<red><bold>문법 오류! 사용법: /%command%</bold>"
+error.syntax_tpa: "<red><bold>문법 오류! 사용법: /%command% <플레이어></bold>"
+error.syntax_tpall: "<red><bold>문법 오류! 사용법: /%command% [player/warp/spawn] [이름]</bold>"
+error.syntax_warp: "<red><bold>문법 오류! 사용법: /%command% <워프></bold>"
+error.syntax_home: "<red><bold>문법 오류! 사용법: /%command% <홈></bold>"
 
 ## 시스템 오류
-error.config_not_found: "&c&l설정 파일을 재생성했습니다"
-error.runtime: "&c&l플러그인 오류: <message>"
-error.forwarded_error: "&c&l&6&l<target>&c&l님의 오류 메시지:"
+error.config_not_found: "<red><bold>설정 파일을 재생성했습니다</bold>"
+error.runtime: "<red><bold>플러그인 오류: %message%</bold>"
+error.forwarded_error: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님의 오류 메시지:</bold>"
 
 #=======================
 # 텔레포트 진행 알림
 #=======================
-teleport.accept.self: "&a&l&6&l<target>&a&l님의 요청을 수락했습니다"
-teleport.accept.target: "&a&l&6&l<target>&a&l님이 요청을 수락했습니다"
-teleport.deny.self: "&c&l&6&l<target>&c&l님의 요청을 거절했습니다"
-teleport.deny.target: "&c&l&6&l<target>&c&l님이 요청을 거절했습니다"
-teleport.countdown: "&a&l&6&l<seconds>초&a&l 후 &6&l<target>&a&l(으)로 이동합니다"
-teleport.cancel_on_move: "&a&l이동 시 취소됩니다"
-teleport.canceled.self: "&c&l텔레포트를 취소했습니다"
-teleport.canceled.target: "&c&l상대방이 취소했습니다"
-teleport.generic_success: "&a&l&6&l<target>&a&l(으)로 이동했습니다"
-teleport.tpall.to_target: "&a&l관리자가 당신을 &6&l<target>&a&l(으)로 이동시켰습니다"
-teleport.tpall.to_self: "&a&l관리자가 모든 플레이어를 당신에게 이동시켰습니다"
-teleport.tpall.success: "&a&l모든 플레이어를 &6&l<target>&a&l(으)로 이동시켰습니다"
-teleport.logout_location: "&a&l&6&l<target>&a&l님의 마지막 접속 위치로 이동했습니다"
+teleport.accept.self: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님의 요청을 수락했습니다</bold>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님이 요청을 수락했습니다</bold>"
+teleport.deny.self: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님의 요청을 거절했습니다</bold>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님이 요청을 거절했습니다</bold>"
+teleport.countdown: "<green><bold></bold><gold><bold>%seconds%초</bold><green><bold> 후 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동합니다</bold>"
+teleport.cancel_on_move: "<green><bold>이동 시 취소됩니다</bold>"
+teleport.canceled.self: "<red><bold>텔레포트를 취소했습니다</bold>"
+teleport.canceled.target: "<red><bold>상대방이 취소했습니다</bold>"
+teleport.generic_success: "<green><bold></bold><gold><bold>%target%</bold><green><bold>(으)로 이동했습니다</bold>"
+teleport.tpall.to_target: "<green><bold>관리자가 당신을 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동시켰습니다</bold>"
+teleport.tpall.to_self: "<green><bold>관리자가 모든 플레이어를 당신에게 이동시켰습니다</bold>"
+teleport.tpall.success: "<green><bold>모든 플레이어를 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동시켰습니다</bold>"
+teleport.logout_location: "<green><bold></bold><gold><bold>%target%</bold><green><bold>님의 마지막 접속 위치로 이동했습니다</bold>"
 
 #=======================
 # 시스템 메시지
 #=======================
-system.config_reloaded: "&a&l설정 파일을 재로드했습니다"
-system.plugin_loaded: "&a&l플러그인 로드 완료! 버전: &6&l<target>"
-system.plugin_unloaded: "&c&l플러그인 언로드 완료"
-system.config_migrated_success: "&a&l설정 파일 마이그레이션 완료"
-system.config_migrated: "&a&l구버전 설정 파일을 백업 후 마이그레이션합니다"
-system.debug_warning: "&c&l디버그 모드가 활성화되었습니다 (사용 후 비활성화하세요)"
+system.config_reloaded: "<green><bold>설정 파일을 재로드했습니다</bold>"
+system.plugin_loaded: "<green><bold>플러그인 로드 완료! 버전: </bold><gold><bold>%target%</bold>"
+system.plugin_unloaded: "<red><bold>플러그인 언로드 완료</bold>"
+system.config_migrated_success: "<green><bold>설정 파일 마이그레이션 완료</bold>"
+system.config_migrated: "<green><bold>구버전 설정 파일을 백업 후 마이그레이션합니다</bold>"
+system.debug_warning: "<red><bold>디버그 모드가 활성화되었습니다 (사용 후 비활성화하세요)</bold>"
 
 #=======================
 # 업데이트
 #=======================
-update.checking: "&a&l업데이트 확인 중..."
-update.available: "&a&l새 버전 &6&lTPA-v<target>&a&l 사용 가능: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&l최신 버전입니다"
-update.failed: "&c&l업데이트 확인 실패"
+update.checking: "<green><bold>업데이트 확인 중...</bold>"
+update.available: "<green><bold>새 버전 </bold><gold><bold>TPA-v%target%</bold><green><bold> 사용 가능: https://modrinth.com/plugin/tpa.66666/versions</bold>"
+update.latest: "<green><bold>최신 버전입니다</bold>"
+update.failed: "<red><bold>업데이트 확인 실패</bold>"

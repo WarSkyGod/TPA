@@ -3,178 +3,170 @@
 #=======================
 # Perusasetukset
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>> </bold>"
+console_prefix: "<gray><bold>[TPA] </bold>"
 not_online_players: "Ei pelaajia paikalla"
 not_warps: "Ei saatavilla olevia warp-pisteitä"
 not_homes: "Ei määritettyjä koteja"
 spawn_name: "Spawn"
 rtp_name: "Satunnainen teleportti"
 last_location: "Edellinen sijainti"
-lang.set_success: "&a&lAsiakkaan kieli asetettu: &6&l<target>"
+lang.set_success: "<green><bold>Asiakkaan kieli asetettu: </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Painikkeiden toiminnot
 #=======================
 ## Painiketekstit
-accept_button: "&a&l[Hyväksy]"
-deny_button: "&c&l[Hylkää]"
-blacklist.add_button: "&c&l[Estä]"
-blacklist.remove_button: "&a&l[Poista esto]"
-teleport_button: "&a&l[Teleporttaa]"
-location_set_button: "&6&l[Aseta sijainti]"
-default_home_set_button: "&e&l[Oletuskoti]"
-delete_button: "&c&l[Poista]"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikkaa hyväksyäksesi</bold><red>'>[Hyväksy]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikkaa hylätäksesi</bold><red>'>[Hylkää]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lisää mustalle listalle</bold><red>'>[Estä]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Poista mustalta listalta</bold></green>'>[Poista esto]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Teleporttaa välittömästi</bold></green>'>[Teleporttaa]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Aseta nykyinen sijainti</bold></gold>'>[Aseta sijainti]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Aseta oletuskodiksi</bold></yellow>'>[Oletuskoti]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Poista pysyvästi</bold><red>'>[Poista]</hover></insert></click></red>  </bold>"
 
 ## Painikevihjeet
-accept_click_hint: "&a&lKlikkaa hyväksyäksesi"
-deny_click_hint: "&c&lKlikkaa hylätäksesi"
-blacklist.add_hint: "&c&lLisää mustalle listalle"
-blacklist.remove_hint: "&a&lPoista mustalta listalta"
-teleport_click_hint: "&a&lTeleporttaa välittömästi"
-set_location_hint: "&6&lAseta nykyinen sijainti"
-set_default_home_hint: "&e&lAseta oletuskodiksi"
-delete_click_hint: "&c&lPoista pysyvästi"
 
 #=======================
 # Teleporttipyynnöt
 #=======================
-request.to_here: "&a&lPelaaja &6&l<target> &a&lhaluaa teleportata luoksesi! (&6&l<seconds>s&a&l)"
-request.to_target: "&a&lPelaaja &6&l<target> &a&lkutsuu sinut luokseen! (&6&l<seconds>s&a&l)"
-request.sent_success: "&a&lPyyntö lähetetty pelaajalle &6&l<target>"
-request.timeout_notice: "&a&lVoimassa &6&l<seconds> &a&lsekunnin ajan"
-request.expired_from: "&c&lPyyntö pelaajalta &6&l<target> &c&lvanhentui"
-request.expired_to: "&c&lPyyntösi pelaajalle &6&l<target> &c&lvanhentui"
+request.to_here: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>haluaa teleportata luoksesi! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.to_target: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>kutsuu sinut luokseen! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.sent_success: "<green><bold>Pyyntö lähetetty pelaajalle </bold><gold><bold>%target%</bold>"
+request.timeout_notice: "<green><bold>Voimassa </bold><gold><bold>%seconds% </bold><green><bold>sekunnin ajan</bold>"
+request.expired_from: "<red><bold>Pyyntö pelaajalta </bold><gold><bold>%target% </bold><red><bold>vanhentui</bold>"
+request.expired_to: "<red><bold>Pyyntösi pelaajalle </bold><gold><bold>%target% </bold><red><bold>vanhentui</bold>"
 
 #=======================
 # Kodit
 #=======================
-home.list_header: "&a&lKäytettävissä olevat kodit:"
-home.set_success: "&a&lKoti &6&l<target> &a&lasetettiin"
-home.default_set_success: "&a&lOletuskodiksi asetettu &6&l<target>"
-home.delete_success: "&a&lKoti &6&l<target> &a&lpoistettiin"
-home.teleport_success: "&a&lTeleportattu kotiin &6&l<target>"
-home.max_limit_error: "&c&lMaksimi &6&l<max_home_amount> &c&lkottia sallittu"
-error.default_home_already_set: "&6&l<target> &c&lon jo oletuskoti"
+home.list_header: "<green><bold>Käytettävissä olevat kodit:</bold>"
+home.set_success: "<green><bold>Koti </bold><gold><bold>%target% </bold><green><bold>asetettiin</bold>"
+home.default_set_success: "<green><bold>Oletuskodiksi asetettu </bold><gold><bold>%target%</bold>"
+home.delete_success: "<green><bold>Koti </bold><gold><bold>%target% </bold><green><bold>poistettiin</bold>"
+home.teleport_success: "<green><bold>Teleportattu kotiin </bold><gold><bold>%target%</bold>"
+home.max_limit_error: "<red><bold>Maksimi </bold><gold><bold>%max_home_amount% </bold><red><bold>kottia sallittu</bold>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>on jo oletuskoti</bold>"
 
 #=======================
 # Warp-pisteet
 #=======================
-warp.list_header: "&a&lKäytettävissä olevat warpit:"
-warp.set_success: "&a&lWarp &6&l<target> &a&lluotiin"
-warp.delete_success: "&a&lWarp &6&l<target> &a&lpoistettiin"
-warp.teleport_success: "&a&lTeleportattu warppiin &6&l<target>"
+warp.list_header: "<green><bold>Käytettävissä olevat warpit:</bold>"
+warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>luotiin</bold>"
+warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>poistettiin</bold>"
+warp.teleport_success: "<green><bold>Teleportattu warppiin </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Spawn
 #=======================
-spawn.set_success: "&a&lSpawn-piste asetettu"
-spawn.delete_success: "&a&lSpawn-piste poistettu"
-spawn.teleport_success: "&a&lTeleportattu spawn-pisteeseen!"
+spawn.set_success: "<green><bold>Spawn-piste asetettu</bold>"
+spawn.delete_success: "<green><bold>Spawn-piste poistettu</bold>"
+spawn.teleport_success: "<green><bold>Teleportattu spawn-pisteeseen!</bold>"
 
 #=======================
 # Edellinen sijainti
 #=======================
-back.teleport_success: "&a&lPalattu edelliseen sijaintiin!"
+back.teleport_success: "<green><bold>Palattu edelliseen sijaintiin!</bold>"
 
 #=======================
 # Satunnainen teleportti
 #=======================
-rtp.generating: "&a&lLuodaan satunnaista sijaintia..."
-rtp.success: "&a&lSatunnainen teleportti onnistui!"
-rtp.failed: "&c&lSatunnainen teleportti epäonnistui!"
+rtp.generating: "<green><bold>Luodaan satunnaista sijaintia...</bold>"
+rtp.success: "<green><bold>Satunnainen teleportti onnistui!</bold>"
+rtp.failed: "<red><bold>Satunnainen teleportti epäonnistui!</bold>"
 
 #=======================
 # Musta lista
 #=======================
-blacklist.list_header: "&a&lMustasi lista:"
-blacklist.add_success: "&a&l&6&l<target> &a&llisättiin mustalle listalle"
-blacklist.remove_success: "&a&l&6&l<target> &a&lpoistettiin mustalta listalta"
+blacklist.list_header: "<green><bold>Mustasi lista:</bold>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>lisättiin mustalle listalle</bold>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>poistettiin mustalta listalta</bold>"
 
 #=======================
 # Virheilmoitukset
 #=======================
 ## Komentotila
-error.command_disabled: "&c&lKomento ei käytössä"
-error.world_disabled: "&c&lEi saatavilla tässä maailmassa"
-error.command_cooldown: "&c&lOdota &6&l<seconds>s"
+error.command_disabled: "<red><bold>Komento ei käytössä</bold>"
+error.world_disabled: "<red><bold>Ei saatavilla tässä maailmassa</bold>"
+error.command_cooldown: "<red><bold>Odota </bold><gold><bold>%seconds%s</bold>"
 
 ## Oikeudet
-error.console_restricted: "&c&lVain pelaajat voivat käyttää"
-error.permission_denied: "&c&lEi käyttöoikeutta!"
+error.console_restricted: "<red><bold>Vain pelaajat voivat käyttää</bold>"
+error.permission_denied: "<red><bold>Ei käyttöoikeutta!</bold>"
 
 ## Pelaajatila
-error.no_online_players: "&c&lEi paikalla olevia pelaajia"
-error.target_offline: "&c&lPelaaja &6&l<target> &c&lei ole paikalla"
-error.self_operation: "&c&lEi sovellettavissa itseesi"
+error.no_online_players: "<red><bold>Ei paikalla olevia pelaajia</bold>"
+error.target_offline: "<red><bold>Pelaaja </bold><gold><bold>%target% </bold><red><bold>ei ole paikalla</bold>"
+error.self_operation: "<red><bold>Ei sovellettavissa itseesi</bold>"
 
 ## Pyyntötila
-error.no_pending_request: "&c&lEi odottavia pyyntöjä"
-error.request_pending: "&c&lKäsittelyssä oleva pyyntö"
+error.no_pending_request: "<red><bold>Ei odottavia pyyntöjä</bold>"
+error.request_pending: "<red><bold>Käsittelyssä oleva pyyntö</bold>"
 
 ## Musta lista
-error.already_blacklisted: "&c&lJo mustalla listalla"
-error.blocked_by_target: "&c&lSinut on estetty"
-error.blacklist_empty: "&c&lMustasi lista on tyhjä"
-error.not_blacklisted: "&c&lEi mustalla listalla"
+error.already_blacklisted: "<red><bold>Jo mustalla listalla</bold>"
+error.blocked_by_target: "<red><bold>Sinut on estetty</bold>"
+error.blacklist_empty: "<red><bold>Mustasi lista on tyhjä</bold>"
+error.not_blacklisted: "<red><bold>Ei mustalla listalla</bold>"
 
 ## Kodit
-error.home_not_found: "&c&lKotia &6&l<target> &c&lei löydy"
-error.no_homes_set: "&c&lEi määritettyjä koteja"
-error.no_default_home: "&c&lEi oletuskotia"
+error.home_not_found: "<red><bold>Kotia </bold><gold><bold>%target% </bold><red><bold>ei löydy</bold>"
+error.no_homes_set: "<red><bold>Ei määritettyjä koteja</bold>"
+error.no_default_home: "<red><bold>Ei oletuskotia</bold>"
 
 ## Warpit
-error.warp_not_found: "&c&lWarpia &6&l<target> &c&lei löydy"
-error.no_warps_set: "&c&lEi saatavilla olevia warppeja"
+error.warp_not_found: "<red><bold>Warpia </bold><gold><bold>%target% </bold><red><bold>ei löydy</bold>"
+error.no_warps_set: "<red><bold>Ei saatavilla olevia warppeja</bold>"
 
 ## Sijainnit
-error.last_location_missing: "&c&lEdellistä sijaintia ei tallennettu"
-error.logout_location_missing: "&c&lKirjautumispaikkaa ei tallennettu"
-error.spawn_not_set: "&c&lSpawn-pistettä ei asetettu"
+error.last_location_missing: "<red><bold>Edellistä sijaintia ei tallennettu</bold>"
+error.logout_location_missing: "<red><bold>Kirjautumispaikkaa ei tallennettu</bold>"
+error.spawn_not_set: "<red><bold>Spawn-pistettä ei asetettu</bold>"
 
 ## Syntaksi
-error.syntax_generic: "&c&lSyntaksivirhe! Käytä: /<command>"
-error.syntax_tpa: "&c&lSyntaksivirhe! Käytä: /<command> <pelaaja>"
-error.syntax_tpall: "&c&lSyntaksivirhe! Käytä: /<command> [player/warp/spawn] [nimi]"
-error.syntax_warp: "&c&lSyntaksivirhe! Käytä: /<command> <warp>"
-error.syntax_home: "&c&lSyntaksivirhe! Käytä: /<command> <koti>"
+error.syntax_generic: "<red><bold>Syntaksivirhe! Käytä: /%command%</bold>"
+error.syntax_tpa: "<red><bold>Syntaksivirhe! Käytä: /%command% <pelaaja></bold>"
+error.syntax_tpall: "<red><bold>Syntaksivirhe! Käytä: /%command% [player/warp/spawn] [nimi]</bold>"
+error.syntax_warp: "<red><bold>Syntaksivirhe! Käytä: /%command% <warp></bold>"
+error.syntax_home: "<red><bold>Syntaksivirhe! Käytä: /%command% <koti></bold>"
 
 ## Järjestelmävirheet
-error.config_not_found: "&c&lAsetustiedosto luotiin uudelleen"
-error.runtime: "&c&lLaajennusvirhe: <message>"
-error.forwarded_error: "&c&lVirhe käyttäjältä &6&l<target>&c&l:"
+error.config_not_found: "<red><bold>Asetustiedosto luotiin uudelleen</bold>"
+error.runtime: "<red><bold>Laajennusvirhe: %message%</bold>"
+error.forwarded_error: "<red><bold>Virhe käyttäjältä </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
 # Teleporttiprosessi
 #=======================
-teleport.accept.self: "&a&lHyväksyit pyynnön pelaajalta &6&l<target>"
-teleport.accept.target: "&a&lPelaaja &6&l<target> &a&lhyväksyi pyyntösi"
-teleport.deny.self: "&c&lHylkäsit pyynnön pelaajalta &6&l<target>"
-teleport.deny.target: "&c&lPelaaja &6&l<target> &c&lhylkäsi pyyntösi"
-teleport.countdown: "&a&lTeleportti alkaa &6&l<seconds>s&a&l kuluttua"
-teleport.cancel_on_move: "&a&lLiikkuminen keskeyttää teleportin"
-teleport.canceled.self: "&c&lTeleportti peruutettu"
-teleport.canceled.target: "&c&lToinen osapuoli peruutti"
-teleport.generic_success: "&a&lTeleportattu kohteeseen &6&l<target>"
-teleport.tpall.to_target: "&a&lYlläpitäjä teleporttasi sinut &6&l<target>"
-teleport.tpall.to_self: "&a&lYlläpitäjä toi kaikki pelaajat luoksesi"
-teleport.tpall.success: "&a&lKaikki teleportattu kohteeseen &6&l<target>"
-teleport.logout_location: "&a&lTeleportattu pelaajan &6&l<target> &a&lviimeiseen sijaintiin"
+teleport.accept.self: "<green><bold>Hyväksyit pyynnön pelaajalta </bold><gold><bold>%target%</bold>"
+teleport.accept.target: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>hyväksyi pyyntösi</bold>"
+teleport.deny.self: "<red><bold>Hylkäsit pyynnön pelaajalta </bold><gold><bold>%target%</bold>"
+teleport.deny.target: "<red><bold>Pelaaja </bold><gold><bold>%target% </bold><red><bold>hylkäsi pyyntösi</bold>"
+teleport.countdown: "<green><bold>Teleportti alkaa </bold><gold><bold>%seconds%s</bold><green><bold> kuluttua</bold>"
+teleport.cancel_on_move: "<green><bold>Liikkuminen keskeyttää teleportin</bold>"
+teleport.canceled.self: "<red><bold>Teleportti peruutettu</bold>"
+teleport.canceled.target: "<red><bold>Toinen osapuoli peruutti</bold>"
+teleport.generic_success: "<green><bold>Teleportattu kohteeseen </bold><gold><bold>%target%</bold>"
+teleport.tpall.to_target: "<green><bold>Ylläpitäjä teleporttasi sinut </bold><gold><bold>%target%</bold>"
+teleport.tpall.to_self: "<green><bold>Ylläpitäjä toi kaikki pelaajat luoksesi</bold>"
+teleport.tpall.success: "<green><bold>Kaikki teleportattu kohteeseen </bold><gold><bold>%target%</bold>"
+teleport.logout_location: "<green><bold>Teleportattu pelaajan </bold><gold><bold>%target% </bold><green><bold>viimeiseen sijaintiin</bold>"
 
 #=======================
 # Järjestelmäviestit
 #=======================
-system.config_reloaded: "&a&lAsetukset ladattu uudelleen!"
-system.plugin_loaded: "&a&lLaajennus ladattu! Versio: &6&l<target>"
-system.plugin_unloaded: "&c&lLaajennus poistettu!"
-system.config_migrated_success: "&a&lAsetusten migraatio valmis!"
-system.config_migrated: "&a&lVanhat asetukset migroidaan (varmuuskopio luotu)"
-system.debug_warning: "&c&lDebug-tila päällä - sammuta käytön jälkeen!"
+system.config_reloaded: "<green><bold>Asetukset ladattu uudelleen!</bold>"
+system.plugin_loaded: "<green><bold>Laajennus ladattu! Versio: </bold><gold><bold>%target%</bold>"
+system.plugin_unloaded: "<red><bold>Laajennus poistettu!</bold>"
+system.config_migrated_success: "<green><bold>Asetusten migraatio valmis!</bold>"
+system.config_migrated: "<green><bold>Vanhat asetukset migroidaan (varmuuskopio luotu)</bold>"
+system.debug_warning: "<red><bold>Debug-tila päällä - sammuta käytön jälkeen!</bold>"
 
 #=======================
 # Päivitykset
 #=======================
-update.checking: "&a&lTarkistetaan päivityksiä..."
-update.available: "&a&lUusi versio &6&lTPA-v<target>&a&l saatavilla: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lUusin versio asennettuna"
-update.failed: "&c&lPäivitysten tarkistus epäonnistui"
+update.checking: "<green><bold>Tarkistetaan päivityksiä...</bold>"
+update.available: "<green><bold>Uusi versio </bold><gold><bold>TPA-v%target%</bold><green><bold> saatavilla: https://modrinth.com/plugin/tpa.66666/versions</bold>"
+update.latest: "<green><bold>Uusin versio asennettuna</bold>"
+update.failed: "<red><bold>Päivitysten tarkistus epäonnistui</bold>"

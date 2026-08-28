@@ -48,5 +48,7 @@ enum class LanguageType(val languageName: String) {
     // 捷克语
     CS_CZ("cs_CZ"),
     // 波兰语
-    PL_PL("pl_PL");
+    PL_PL("pl_PL"),
+    // 越南语
+    VI_VN("vi_VN");
 }

@@ -3,52 +3,68 @@ package top.craft_hello.tpa.objects
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.bukkit.plugin.java.JavaPlugin
+import top.craft_hello.tpa.TPA
 import java.sql.Connection
 import java.sql.SQLException
 
-class DatabaseManager(private val plugin: JavaPlugin) {
+// 数据库连接池（单例）。use_database=false 时不初始化。
+// 表在 4.0 基础上补充 deny_list、logout_location 列，旧库自动升级。
+object DatabaseManager {
+    private lateinit var plugin: TPA
     private var dataSource: HikariDataSource? = null
 
-    // 初始化数据库连接池
-    fun setupDatabase() {
-        val databaseType = "sqlite"
+    // 当前数据库类型：sqlite / mysql（供存储层区分 upsert 方言）
+    var databaseType: String = "sqlite"
+        private set
+
+    // 初始化数据库连接池（按配置；未启用数据库时跳过）
+    fun setupDatabase(plugin: TPA) {
+        this.plugin = plugin
+        val config = ConfigManager.config
+        if (!config.useDatabase) {
+            plugin.logger.info("未启用数据库存储（use_database: false），玩家数据将保存到 playerdata 目录")
+            return
+        }
+        databaseType = config.databaseType.lowercase()
         try {
-            val config = HikariConfig().apply {
+            val hikari = HikariConfig().apply {
                 when (databaseType) {
                     "sqlite" -> {
-                        jdbcUrl = buildString{
+                        jdbcUrl = buildString {
                             append("jdbc:sqlite:${plugin.dataFolder.absolutePath}/")
-                            append("database")
+                            append(config.databaseName)
                             append(".db")
                         }
                         driverClassName = "org.sqlite.JDBC"
+                        maximumPoolSize = 1
                     }
 
                     "mysql" -> {
-                        jdbcUrl = buildString{
+                        jdbcUrl = buildString {
                             append("jdbc:mysql://")
-                            append("localhost")
+                            append(config.databaseAddress)
                             append(":")
-                            append(3306)
+                            append(config.databasePort)
                             append("/")
-                            append("mydatabase")
+                            append(config.databaseName)
                         }
-                        username = "username"
-                        password = "password"
+                        username = config.databaseUsername
+                        password = config.databasePassword
                         driverClassName = "com.mysql.cj.jdbc.Driver"
                     }
+
+                    else -> throw IllegalArgumentException("不支持的数据库类型: $databaseType")
                 }
 
                 // 连接池配置
-                maximumPoolSize = 10
                 minimumIdle = 2
                 connectionTimeout = 30000
                 idleTimeout = 600000
                 maxLifetime = 1800000
             }
 
-            dataSource = HikariDataSource(config)
-            plugin.logger.info("数据库连接池已初始化")
+            dataSource = HikariDataSource(hikari)
+            plugin.logger.info("数据库连接池已初始化（$databaseType）")
 
             // 确保表存在
             ensureTableExists()
@@ -74,17 +90,15 @@ class DatabaseManager(private val plugin: JavaPlugin) {
         plugin.logger.info("数据库连接池已关闭")
     }
 
-    // 确保表存在，如果不存在则创建
+    // 确保表存在，如果不存在则创建；旧表自动补充缺失列
     private fun ensureTableExists() {
         getConnection()?.use { connection ->
-            // 检查表是否存在
             val tableExists = checkTableExists(connection, "player_data")
-
             if (!tableExists) {
-                // 创建表
                 createPlayerDataTable(connection)
                 plugin.logger.info("已创建 player_data 表")
             } else {
+                upgradeTable(connection)
                 plugin.logger.info("player_data 表已存在")
             }
         }
@@ -93,7 +107,6 @@ class DatabaseManager(private val plugin: JavaPlugin) {
     // 检查表是否存在
     private fun checkTableExists(connection: Connection, tableName: String): Boolean {
         val metaData = connection.metaData
-        var flag : Boolean
         val resultSet = metaData.getTables(null, null, tableName, arrayOf("TABLE"))
         return resultSet.next()
     }
@@ -108,7 +121,9 @@ class DatabaseManager(private val plugin: JavaPlugin) {
                     setlang BOOLEAN DEFAULT FALSE,
                     default_home VARCHAR(255),
                     homes TEXT,
+                    deny_list TEXT,
                     last_location TEXT,
+                    logout_location TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
@@ -117,5 +132,28 @@ class DatabaseManager(private val plugin: JavaPlugin) {
         connection.createStatement().use { statement ->
             statement.execute(createTableSQL)
         }
+    }
+
+    // 旧表升级：补充 4.0 新增列（幂等）
+    private fun upgradeTable(connection: Connection) {
+        for (column in listOf("deny_list TEXT", "logout_location TEXT")) {
+            val name = column.substringBefore(" ")
+            if (!columnExists(connection, "player_data", name)) {
+                try {
+                    connection.createStatement().use { statement ->
+                        statement.execute("ALTER TABLE player_data ADD COLUMN $column")
+                    }
+                    plugin.logger.info("player_data 表已补充列 $name")
+                } catch (e: Exception) {
+                    plugin.logger.warning("player_data 表补充列 $name 失败: ${e.message}")
+                }
+            }
+        }
+    }
+
+    private fun columnExists(connection: Connection, table: String, column: String): Boolean {
+        val metaData = connection.metaData
+        val resultSet = metaData.getColumns(null, null, table, column)
+        return resultSet.next()
     }
 }

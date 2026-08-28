@@ -3,178 +3,170 @@
 #=======================
 # Temel Ayarlar
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>> </bold>"
+console_prefix: "<gray><bold>[TPA] </bold>"
 not_online_players: "Çevrimiçi oyuncu yok"
 not_warps: "Mevcut ışınlanma noktası yok"
 not_homes: "Mevcut ev bulunamadı"
 spawn_name: "Spawn"
 rtp_name: "Rastgele ışınlanma"
 last_location: "Son konum"
-lang.set_success: "&a&lİstemci dili &6&l<target> &a&lolarak ayarlandı"
+lang.set_success: "<green><bold>İstemci dili </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
 
 #=======================
 # Düğme Etkileşimleri
 #=======================
 ## Düğme Metinleri
-accept_button: "&a&l[Kabul Et]"
-deny_button: "&c&l[Reddet]"
-blacklist.add_button: "&c&l[Kara Listeye Ekle]"
-blacklist.remove_button: "&a&l[Listeden Çıkar]"
-teleport_button: "&a&l[Işınlan]"
-location_set_button: "&6&l[Konum Belirle]"
-default_home_set_button: "&e&l[Varsayılan Ev]"
-delete_button: "&c&l[Sil]"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Tıklayarak kabul et</bold><red>'>[Kabul Et]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Tıklayarak reddet</bold><red>'>[Reddet]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Kara listeye ekle</bold><red>'>[Kara Listeye Ekle]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Kara listeden çıkar</bold></green>'>[Listeden Çıkar]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Hemen ışınlan</bold></green>'>[Işınlan]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Mevcut konumu ayarla</bold></gold>'>[Konum Belirle]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Varsayılan ev yap</bold></yellow>'>[Varsayılan Ev]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Kalıcı olarak sil</bold><red>'>[Sil]</hover></insert></click></red>  </bold>"
 
 ## Düğme İpuçları
-accept_click_hint: "&a&lTıklayarak kabul et"
-deny_click_hint: "&c&lTıklayarak reddet"
-blacklist.add_hint: "&c&lKara listeye ekle"
-blacklist.remove_hint: "&a&lKara listeden çıkar"
-teleport_click_hint: "&a&lHemen ışınlan"
-set_location_hint: "&6&lMevcut konumu ayarla"
-set_default_home_hint: "&e&lVarsayılan ev yap"
-delete_click_hint: "&c&lKalıcı olarak sil"
 
 #=======================
 # Işınlanma Talepleri
 #=======================
-request.to_here: "&a&l&6&l<target> &a&lsana ışınlanmak istiyor! (&6&l<seconds>s&a&l)"
-request.to_target: "&a&l&6&l<target> &a&lseni davet ediyor! (&6&l<seconds>s&a&l)"
-request.sent_success: "&a&l&6&l<target> &a&l'adlı oyuncuya talep gönderildi"
-request.timeout_notice: "&a&lTalep &6&l<seconds>s&a&l içinde geçerli"
-request.expired_from: "&c&l&6&l<target> &c&l'den gelen talep süresi doldu"
-request.expired_to: "&c&l&6&l<target> &c&l'e gönderdiğin talep süresi doldu"
+request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sana ışınlanmak istiyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>seni davet ediyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı oyuncuya talep gönderildi</bold>"
+request.timeout_notice: "<green><bold>Talep </bold><gold><bold>%seconds%s</bold><green><bold> içinde geçerli</bold>"
+request.expired_from: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'den gelen talep süresi doldu</bold>"
+request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'e gönderdiğin talep süresi doldu</bold>"
 
 #=======================
 # Evler
 #=======================
-home.list_header: "&a&lMevcut Evler:"
-home.set_success: "&a&l&6&l<target> &a&levi oluşturuldu"
-home.default_set_success: "&a&lVarsayılan ev &6&l<target> &a&lolarak ayarlandı"
-home.delete_success: "&a&l&6&l<target> &a&levi silindi"
-home.teleport_success: "&a&l&6&l<target> &a&levine ışınlandın"
-home.max_limit_error: "&c&lMaksimum &6&l<max_home_amount> &c&lev sınırı"
-error.default_home_already_set: "&6&l<target> &c&lzaten varsayılan ev"
+home.list_header: "<green><bold>Mevcut Evler:</bold>"
+home.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi oluşturuldu</bold>"
+home.default_set_success: "<green><bold>Varsayılan ev </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
+home.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi silindi</bold>"
+home.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evine ışınlandın</bold>"
+home.max_limit_error: "<red><bold>Maksimum </bold><gold><bold>%max_home_amount% </bold><red><bold>ev sınırı</bold>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>zaten varsayılan ev</bold>"
 
 #=======================
 # Işınlanma Noktaları
 #=======================
-warp.list_header: "&a&lMevcut Warpler:"
-warp.set_success: "&a&l&6&l<target> &a&lwarp noktası oluşturuldu"
-warp.delete_success: "&a&l&6&l<target> &a&lwarp noktası silindi"
-warp.teleport_success: "&a&l&6&l<target> &a&lwarp noktasına ışınlandın"
+warp.list_header: "<green><bold>Mevcut Warpler:</bold>"
+warp.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası oluşturuldu</bold>"
+warp.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası silindi</bold>"
+warp.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktasına ışınlandın</bold>"
 
 #=======================
 # Spawn
 #=======================
-spawn.set_success: "&a&lSpawn noktası ayarlandı"
-spawn.delete_success: "&a&lSpawn noktası kaldırıldı"
-spawn.teleport_success: "&a&lSpawn noktasına ışınlandın!"
+spawn.set_success: "<green><bold>Spawn noktası ayarlandı</bold>"
+spawn.delete_success: "<green><bold>Spawn noktası kaldırıldı</bold>"
+spawn.teleport_success: "<green><bold>Spawn noktasına ışınlandın!</bold>"
 
 #=======================
 # Son Konum
 #=======================
-back.teleport_success: "&a&lSon konuma dönüldü!"
+back.teleport_success: "<green><bold>Son konuma dönüldü!</bold>"
 
 #=======================
 # Rastgele Işınlanma
 #=======================
-rtp.generating: "&a&lRastgele konum oluşturuluyor..."
-rtp.success: "&a&lRastgele ışınlanma başarılı!"
-rtp.failed: "&c&lRastgele ışınlanma başarısız!"
+rtp.generating: "<green><bold>Rastgele konum oluşturuluyor...</bold>"
+rtp.success: "<green><bold>Rastgele ışınlanma başarılı!</bold>"
+rtp.failed: "<red><bold>Rastgele ışınlanma başarısız!</bold>"
 
 #=======================
 # Kara Liste
 #=======================
-blacklist.list_header: "&a&lKara Listeniz:"
-blacklist.add_success: "&a&l&6&l<target> &a&lkara listeye eklendi"
-blacklist.remove_success: "&a&l&6&l<target> &a&lkara listeden çıkarıldı"
+blacklist.list_header: "<green><bold>Kara Listeniz:</bold>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeye eklendi</bold>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeden çıkarıldı</bold>"
 
 #=======================
 # Hata Mesajları
 #=======================
 ## Komut Durumu
-error.command_disabled: "&c&lBu komut devre dışı"
-error.world_disabled: "&c&lBu dünyada kullanılamaz"
-error.command_cooldown: "&c&lTekrar denemeden önce &6&l<seconds>s&c&l bekle"
+error.command_disabled: "<red><bold>Bu komut devre dışı</bold>"
+error.world_disabled: "<red><bold>Bu dünyada kullanılamaz</bold>"
+error.command_cooldown: "<red><bold>Tekrar denemeden önce </bold><gold><bold>%seconds%s</bold><red><bold> bekle</bold>"
 
 ## Yetkilendirme
-error.console_restricted: "&c&lSadece oyuncular kullanabilir"
-error.permission_denied: "&c&lYetkiniz yok!"
+error.console_restricted: "<red><bold>Sadece oyuncular kullanabilir</bold>"
+error.permission_denied: "<red><bold>Yetkiniz yok!</bold>"
 
 ## Oyuncu Durumu
-error.no_online_players: "&c&lÇevrimiçi oyuncu yok"
-error.target_offline: "&c&l&6&l<target> &c&lçevrimdışı"
-error.self_operation: "&c&lKendine uygulanamaz"
+error.no_online_players: "<red><bold>Çevrimiçi oyuncu yok</bold>"
+error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>çevrimdışı</bold>"
+error.self_operation: "<red><bold>Kendine uygulanamaz</bold>"
 
 ## Talep Durumu
-error.no_pending_request: "&c&lBekleyen talep yok"
-error.request_pending: "&c&lİşlenmekte olan talep var"
+error.no_pending_request: "<red><bold>Bekleyen talep yok</bold>"
+error.request_pending: "<red><bold>İşlenmekte olan talep var</bold>"
 
 ## Kara Liste
-error.already_blacklisted: "&c&lZaten kara listede"
-error.blocked_by_target: "&c&lEngellendiniz"
-error.blacklist_empty: "&c&lKara liste boş"
-error.not_blacklisted: "&c&lKara listede değil"
+error.already_blacklisted: "<red><bold>Zaten kara listede</bold>"
+error.blocked_by_target: "<red><bold>Engellendiniz</bold>"
+error.blacklist_empty: "<red><bold>Kara liste boş</bold>"
+error.not_blacklisted: "<red><bold>Kara listede değil</bold>"
 
 ## Evler
-error.home_not_found: "&c&l&6&l<target> &c&levi bulunamadı"
-error.no_homes_set: "&c&lAyarlı ev yok"
-error.no_default_home: "&c&lVarsayılan ev ayarlanmamış"
+error.home_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>evi bulunamadı</bold>"
+error.no_homes_set: "<red><bold>Ayarlı ev yok</bold>"
+error.no_default_home: "<red><bold>Varsayılan ev ayarlanmamış</bold>"
 
 ## Warpler
-error.warp_not_found: "&c&l&6&l<target> &c&lwarp noktası yok"
-error.no_warps_set: "&c&lMevcut warp yok"
+error.warp_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>warp noktası yok</bold>"
+error.no_warps_set: "<red><bold>Mevcut warp yok</bold>"
 
 ## Konum Kayıtları
-error.last_location_missing: "&c&lSon konum kaydı yok"
-error.logout_location_missing: "&c&lÇıkış konumu kaydedilmemiş"
-error.spawn_not_set: "&c&lSpawn noktası ayarlanmamış"
+error.last_location_missing: "<red><bold>Son konum kaydı yok</bold>"
+error.logout_location_missing: "<red><bold>Çıkış konumu kaydedilmemiş</bold>"
+error.spawn_not_set: "<red><bold>Spawn noktası ayarlanmamış</bold>"
 
 ## Sözdizimi
-error.syntax_generic: "&c&lSözdizimi hatası! Doğru kullanım: /<command>"
-error.syntax_tpa: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <oyuncu>"
-error.syntax_tpall: "&c&lSözdizimi hatası! Doğru kullanım: /<command> [player/warp/spawn] [isim]"
-error.syntax_warp: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <warp>"
-error.syntax_home: "&c&lSözdizimi hatası! Doğru kullanım: /<command> <ev>"
+error.syntax_generic: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command%</bold>"
+error.syntax_tpa: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <oyuncu></bold>"
+error.syntax_tpall: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% [player/warp/spawn] [isim]</bold>"
+error.syntax_warp: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <warp></bold>"
+error.syntax_home: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <ev></bold>"
 
 ## Sistem Hataları
-error.config_not_found: "&c&lYapılandırma dosyası yeniden oluşturuldu"
-error.runtime: "&c&lEklenti hatası: <message>"
-error.forwarded_error: "&c&l&6&l<target>&c&l'den hata:"
+error.config_not_found: "<red><bold>Yapılandırma dosyası yeniden oluşturuldu</bold>"
+error.runtime: "<red><bold>Eklenti hatası: %message%</bold>"
+error.forwarded_error: "<red><bold></bold><gold><bold>%target%</bold><red><bold>'den hata:</bold>"
 
 #=======================
 # Işınlanma Süreci
 #=======================
-teleport.accept.self: "&a&l&6&l<target> &a&l'ın talebi kabul edildi"
-teleport.accept.target: "&a&l&6&l<target> &a&ltalebinizi kabul etti"
-teleport.deny.self: "&c&l&6&l<target> &c&l'ın talebi reddedildi"
-teleport.deny.target: "&c&l&6&l<target> &c&ltalebinizi reddetti"
-teleport.countdown: "&a&l&6&l<seconds>s&a&l sonra ışınlanacaksın"
-teleport.cancel_on_move: "&a&lHareket edersen iptal olur!"
-teleport.canceled.self: "&c&lIşınlanma iptal edildi"
-teleport.canceled.target: "&c&lKarşı taraf iptal etti"
-teleport.generic_success: "&a&l&6&l<target> &a&l'adlı yere ışınlandın"
-teleport.tpall.to_target: "&a&lYönetici seni &6&l<target> &a&l'adlı yere ışınladı"
-teleport.tpall.to_self: "&a&lYönetici herkesi sana getirdi"
-teleport.tpall.success: "&a&lTüm oyuncular &6&l<target> &a&l'adlı yere ışınlandı"
-teleport.logout_location: "&a&l&6&l<target> &a&l'ın son çıkış konumuna ışınlandın"
+teleport.accept.self: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın talebi kabul edildi</bold>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>talebinizi kabul etti</bold>"
+teleport.deny.self: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'ın talebi reddedildi</bold>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>talebinizi reddetti</bold>"
+teleport.countdown: "<green><bold></bold><gold><bold>%seconds%s</bold><green><bold> sonra ışınlanacaksın</bold>"
+teleport.cancel_on_move: "<green><bold>Hareket edersen iptal olur!</bold>"
+teleport.canceled.self: "<red><bold>Işınlanma iptal edildi</bold>"
+teleport.canceled.target: "<red><bold>Karşı taraf iptal etti</bold>"
+teleport.generic_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandın</bold>"
+teleport.tpall.to_target: "<green><bold>Yönetici seni </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınladı</bold>"
+teleport.tpall.to_self: "<green><bold>Yönetici herkesi sana getirdi</bold>"
+teleport.tpall.success: "<green><bold>Tüm oyuncular </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandı</bold>"
+teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın son çıkış konumuna ışınlandın</bold>"
 
 #=======================
 # Sistem Mesajları
 #=======================
-system.config_reloaded: "&a&lYapılandırma yeniden yüklendi!"
-system.plugin_loaded: "&a&lEklenti yüklendi! Sürüm: &6&l<target>"
-system.plugin_unloaded: "&c&lEklenti kaldırıldı!"
-system.config_migrated_success: "&a&lYapılandırma taşıması tamamlandı!"
-system.config_migrated: "&a&lEski yapılandırma taşınıyor (otomatik yedekleme aktif)"
-system.debug_warning: "&c&lDebug modu aktif - kullanım sonrası kapatın!"
+system.config_reloaded: "<green><bold>Yapılandırma yeniden yüklendi!</bold>"
+system.plugin_loaded: "<green><bold>Eklenti yüklendi! Sürüm: </bold><gold><bold>%target%</bold>"
+system.plugin_unloaded: "<red><bold>Eklenti kaldırıldı!</bold>"
+system.config_migrated_success: "<green><bold>Yapılandırma taşıması tamamlandı!</bold>"
+system.config_migrated: "<green><bold>Eski yapılandırma taşınıyor (otomatik yedekleme aktif)</bold>"
+system.debug_warning: "<red><bold>Debug modu aktif - kullanım sonrası kapatın!</bold>"
 
 #=======================
 # Güncellemeler
 #=======================
-update.checking: "&a&lGüncellemeler kontrol ediliyor..."
-update.available: "&a&lYeni sürüm &6&lTPA-v<target>&a&l mevcut: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lEn son sürüm kullanılıyor"
-update.failed: "&c&lGüncelleme kontrolü başarısız"
+update.checking: "<green><bold>Güncellemeler kontrol ediliyor...</bold>"
+update.available: "<green><bold>Yeni sürüm </bold><gold><bold>TPA-v%target%</bold><green><bold> mevcut: https://modrinth.com/plugin/tpa.66666/versions</bold>"
+update.latest: "<green><bold>En son sürüm kullanılıyor</bold>"
+update.failed: "<red><bold>Güncelleme kontrolü başarısız</bold>"

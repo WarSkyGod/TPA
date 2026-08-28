@@ -3,178 +3,170 @@
 #=======================
 # Grundinställningar
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>> </bold>"
+console_prefix: "<gray><bold>[TPA] </bold>"
 not_online_players: "Inga spelare online"
 not_warps: "Inga warp-punkter tillgängliga"
 not_homes: "Inga hem inställda"
 spawn_name: "Spawn"
 rtp_name: "Slumpmässig teleportering"
 last_location: "Senaste position"
-lang.set_success: "&a&lKlientens språk satt till &6&l<target>"
+lang.set_success: "<green><bold>Klientens språk satt till </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Knappinteraktioner
 #=======================
 ## Knapptexter
-accept_button: "&a&l[Acceptera]"
-deny_button: "&c&l[Avvisa]"
-blacklist.add_button: "&c&l[Blockera]"
-blacklist.remove_button: "&a&l[Avblockera]"
-teleport_button: "&a&l[Teleportera]"
-location_set_button: "&6&l[Sätt position]"
-default_home_set_button: "&e&l[Standardhem]"
-delete_button: "&c&l[Radera]"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klicka för att acceptera</bold><red>'>[Acceptera]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klicka för att avvisa</bold><red>'>[Avvisa]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lägg till i svartlista</bold><red>'>[Blockera]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Ta bort från svartlista</bold></green>'>[Avblockera]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Teleportera nu</bold></green>'>[Teleportera]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Sätt nuvarande position</bold></gold>'>[Sätt position]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Sätt som standardhem</bold></yellow>'>[Standardhem]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Radera permanent</bold><red>'>[Radera]</hover></insert></click></red>  </bold>"
 
 ## Knapptips
-accept_click_hint: "&a&lKlicka för att acceptera"
-deny_click_hint: "&c&lKlicka för att avvisa"
-blacklist.add_hint: "&c&lLägg till i svartlista"
-blacklist.remove_hint: "&a&lTa bort från svartlista"
-teleport_click_hint: "&a&lTeleportera nu"
-set_location_hint: "&6&lSätt nuvarande position"
-set_default_home_hint: "&e&lSätt som standardhem"
-delete_click_hint: "&c&lRadera permanent"
 
 #=======================
 # Teleportförfrågningar
 #=======================
-request.to_here: "&a&lSpelare &6&l<target> &a&lvill teleportera till dig! (&6&l<seconds>s&a&l)"
-request.to_target: "&a&lSpelare &6&l<target> &a&lbjuder in dig! (&6&l<seconds>s&a&l)"
-request.sent_success: "&a&lFörfrågan skickad till &6&l<target>"
-request.timeout_notice: "&a&lGiltig i &6&l<seconds> sekunder"
-request.expired_from: "&c&lFörfrågan från &6&l<target> &c&lutgick"
-request.expired_to: "&c&lDin förfrågan till &6&l<target> &c&lutgick"
+request.to_here: "<green><bold>Spelare </bold><gold><bold>%target% </bold><green><bold>vill teleportera till dig! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.to_target: "<green><bold>Spelare </bold><gold><bold>%target% </bold><green><bold>bjuder in dig! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
+request.sent_success: "<green><bold>Förfrågan skickad till </bold><gold><bold>%target%</bold>"
+request.timeout_notice: "<green><bold>Giltig i </bold><gold><bold>%seconds% sekunder</bold>"
+request.expired_from: "<red><bold>Förfrågan från </bold><gold><bold>%target% </bold><red><bold>utgick</bold>"
+request.expired_to: "<red><bold>Din förfrågan till </bold><gold><bold>%target% </bold><red><bold>utgick</bold>"
 
 #=======================
 # Hem
 #=======================
-home.list_header: "&a&lTillgängliga hem:"
-home.set_success: "&a&lHem &6&l<target> &a&lskapades"
-home.default_set_success: "&a&lStandardhem satt till &6&l<target>"
-home.delete_success: "&a&lHem &6&l<target> &a&lraderades"
-home.teleport_success: "&a&lTeleporterad till &6&l<target>"
-home.max_limit_error: "&c&lMax &6&l<max_home_amount> &c&lhem tillåtna"
-error.default_home_already_set: "&6&l<target> &c&lär redan standardhem"
+home.list_header: "<green><bold>Tillgängliga hem:</bold>"
+home.set_success: "<green><bold>Hem </bold><gold><bold>%target% </bold><green><bold>skapades</bold>"
+home.default_set_success: "<green><bold>Standardhem satt till </bold><gold><bold>%target%</bold>"
+home.delete_success: "<green><bold>Hem </bold><gold><bold>%target% </bold><green><bold>raderades</bold>"
+home.teleport_success: "<green><bold>Teleporterad till </bold><gold><bold>%target%</bold>"
+home.max_limit_error: "<red><bold>Max </bold><gold><bold>%max_home_amount% </bold><red><bold>hem tillåtna</bold>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>är redan standardhem</bold>"
 
 #=======================
 # Warp-punkter
 #=======================
-warp.list_header: "&a&lTillgängliga warps:"
-warp.set_success: "&a&lWarp &6&l<target> &a&lskapades"
-warp.delete_success: "&a&lWarp &6&l<target> &a&lraderades"
-warp.teleport_success: "&a&lTeleporterad till &6&l<target>"
+warp.list_header: "<green><bold>Tillgängliga warps:</bold>"
+warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>skapades</bold>"
+warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>raderades</bold>"
+warp.teleport_success: "<green><bold>Teleporterad till </bold><gold><bold>%target%</bold>"
 
 #=======================
 # Spawn
 #=======================
-spawn.set_success: "&a&lSpawn satt"
-spawn.delete_success: "&a&lSpawn borttaget"
-spawn.teleport_success: "&a&lTeleporterad till spawn!"
+spawn.set_success: "<green><bold>Spawn satt</bold>"
+spawn.delete_success: "<green><bold>Spawn borttaget</bold>"
+spawn.teleport_success: "<green><bold>Teleporterad till spawn!</bold>"
 
 #=======================
 # Senaste position
 #=======================
-back.teleport_success: "&a&lÅtervänd till senaste position!"
+back.teleport_success: "<green><bold>Återvänd till senaste position!</bold>"
 
 #=======================
 # Slumpmässig teleport
 #=======================
-rtp.generating: "&a&lGenererar slumpmässig position..."
-rtp.success: "&a&lSlumpmässig teleport lyckades!"
-rtp.failed: "&c&lSlumpmässig teleport misslyckades!"
+rtp.generating: "<green><bold>Genererar slumpmässig position...</bold>"
+rtp.success: "<green><bold>Slumpmässig teleport lyckades!</bold>"
+rtp.failed: "<red><bold>Slumpmässig teleport misslyckades!</bold>"
 
 #=======================
 # Svartlista
 #=======================
-blacklist.list_header: "&a&lDin svartlista:"
-blacklist.add_success: "&a&l&6&l<target> &a&lblev svartlistad"
-blacklist.remove_success: "&a&l&6&l<target> &a&ltogs bort från svartlistan"
+blacklist.list_header: "<green><bold>Din svartlista:</bold>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>blev svartlistad</bold>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>togs bort från svartlistan</bold>"
 
 #=======================
 # Felmeddelanden
 #=======================
 ## Kommandostatus
-error.command_disabled: "&c&lKommandot är inaktiverat"
-error.world_disabled: "&c&lInte tillgängligt i denna värld"
-error.command_cooldown: "&c&lVänta &6&l<seconds>s"
+error.command_disabled: "<red><bold>Kommandot är inaktiverat</bold>"
+error.world_disabled: "<red><bold>Inte tillgängligt i denna värld</bold>"
+error.command_cooldown: "<red><bold>Vänta </bold><gold><bold>%seconds%s</bold>"
 
 ## Behörigheter
-error.console_restricted: "&c&lEndast spelare"
-error.permission_denied: "&c&lDu har inte behörighet!"
+error.console_restricted: "<red><bold>Endast spelare</bold>"
+error.permission_denied: "<red><bold>Du har inte behörighet!</bold>"
 
 ## Spelarstatus
-error.no_online_players: "&c&lInga spelare online"
-error.target_offline: "&c&lSpelare &6&l<target> &c&lär offline"
-error.self_operation: "&c&lKan inte användas på dig själv"
+error.no_online_players: "<red><bold>Inga spelare online</bold>"
+error.target_offline: "<red><bold>Spelare </bold><gold><bold>%target% </bold><red><bold>är offline</bold>"
+error.self_operation: "<red><bold>Kan inte användas på dig själv</bold>"
 
 ## Förfrågningsstatus
-error.no_pending_request: "&c&lInga väntande förfrågningar"
-error.request_pending: "&c&lPågående förfrågan"
+error.no_pending_request: "<red><bold>Inga väntande förfrågningar</bold>"
+error.request_pending: "<red><bold>Pågående förfrågan</bold>"
 
 ## Svartlista
-error.already_blacklisted: "&c&lRedan svartlistad"
-error.blocked_by_target: "&c&lDu är blockerad"
-error.blacklist_empty: "&c&lSvartlistan är tom"
-error.not_blacklisted: "&c&lInte svartlistad"
+error.already_blacklisted: "<red><bold>Redan svartlistad</bold>"
+error.blocked_by_target: "<red><bold>Du är blockerad</bold>"
+error.blacklist_empty: "<red><bold>Svartlistan är tom</bold>"
+error.not_blacklisted: "<red><bold>Inte svartlistad</bold>"
 
 ## Hem
-error.home_not_found: "&c&lHem &6&l<target> &c&lfinns inte"
-error.no_homes_set: "&c&lInga hem inställda"
-error.no_default_home: "&c&lInget standardhem"
+error.home_not_found: "<red><bold>Hem </bold><gold><bold>%target% </bold><red><bold>finns inte</bold>"
+error.no_homes_set: "<red><bold>Inga hem inställda</bold>"
+error.no_default_home: "<red><bold>Inget standardhem</bold>"
 
 ## Warps
-error.warp_not_found: "&c&lWarp &6&l<target> &c&lfinns inte"
-error.no_warps_set: "&c&lInga warps tillgängliga"
+error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>finns inte</bold>"
+error.no_warps_set: "<red><bold>Inga warps tillgängliga</bold>"
 
 ## Positioner
-error.last_location_missing: "&c&lIngen senaste position"
-error.logout_location_missing: "&c&lIngen utloggningsposition"
-error.spawn_not_set: "&c&lSpawn inte inställt"
+error.last_location_missing: "<red><bold>Ingen senaste position</bold>"
+error.logout_location_missing: "<red><bold>Ingen utloggningsposition</bold>"
+error.spawn_not_set: "<red><bold>Spawn inte inställt</bold>"
 
 ## Syntax
-error.syntax_generic: "&c&lFel syntax! Använd: /<command>"
-error.syntax_tpa: "&c&lFel syntax! Använd: /<command> <spelare>"
-error.syntax_tpall: "&c&lFel syntax! Använd: /<command> [player/warp/spawn] [namn]"
-error.syntax_warp: "&c&lFel syntax! Använd: /<command> <warp>"
-error.syntax_home: "&c&lFel syntax! Använd: /<command> <hem>"
+error.syntax_generic: "<red><bold>Fel syntax! Använd: /%command%</bold>"
+error.syntax_tpa: "<red><bold>Fel syntax! Använd: /%command% <spelare></bold>"
+error.syntax_tpall: "<red><bold>Fel syntax! Använd: /%command% [player/warp/spawn] [namn]</bold>"
+error.syntax_warp: "<red><bold>Fel syntax! Använd: /%command% <warp></bold>"
+error.syntax_home: "<red><bold>Fel syntax! Använd: /%command% <hem></bold>"
 
 ## Systemfel
-error.config_not_found: "&c&lKonfiguration återskapades"
-error.runtime: "&c&lPluginfel: <message>"
-error.forwarded_error: "&c&lFel från &6&l<target>&c&l:"
+error.config_not_found: "<red><bold>Konfiguration återskapades</bold>"
+error.runtime: "<red><bold>Pluginfel: %message%</bold>"
+error.forwarded_error: "<red><bold>Fel från </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
 # Teleportprocess
 #=======================
-teleport.accept.self: "&a&lAccepterade förfrågan från &6&l<target>"
-teleport.accept.target: "&a&l&6&l<target> &a&laccepterade din förfrågan"
-teleport.deny.self: "&c&lAvvisade förfrågan från &6&l<target>"
-teleport.deny.target: "&c&l&6&l<target> &c&lavvisade din förfrågan"
-teleport.countdown: "&a&lTeleporterar om &6&l<seconds>s"
-teleport.cancel_on_move: "&a&lRörelse avbryter teleport"
-teleport.canceled.self: "&c&lTeleport avbruten"
-teleport.canceled.target: "&c&lMotparten avbröt"
-teleport.generic_success: "&a&lTeleporterad till &6&l<target>"
-teleport.tpall.to_target: "&a&lAdmin teleporterade dig till &6&l<target>"
-teleport.tpall.to_self: "&a&lAdmin hämtade alla spelare"
-teleport.tpall.success: "&a&lAlla teleporterade till &6&l<target>"
-teleport.logout_location: "&a&lTeleporterad till &6&l<target>s utloggningsposition"
+teleport.accept.self: "<green><bold>Accepterade förfrågan från </bold><gold><bold>%target%</bold>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>accepterade din förfrågan</bold>"
+teleport.deny.self: "<red><bold>Avvisade förfrågan från </bold><gold><bold>%target%</bold>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>avvisade din förfrågan</bold>"
+teleport.countdown: "<green><bold>Teleporterar om </bold><gold><bold>%seconds%s</bold>"
+teleport.cancel_on_move: "<green><bold>Rörelse avbryter teleport</bold>"
+teleport.canceled.self: "<red><bold>Teleport avbruten</bold>"
+teleport.canceled.target: "<red><bold>Motparten avbröt</bold>"
+teleport.generic_success: "<green><bold>Teleporterad till </bold><gold><bold>%target%</bold>"
+teleport.tpall.to_target: "<green><bold>Admin teleporterade dig till </bold><gold><bold>%target%</bold>"
+teleport.tpall.to_self: "<green><bold>Admin hämtade alla spelare</bold>"
+teleport.tpall.success: "<green><bold>Alla teleporterade till </bold><gold><bold>%target%</bold>"
+teleport.logout_location: "<green><bold>Teleporterad till </bold><gold><bold>%target%s utloggningsposition</bold>"
 
 #=======================
 # Systemmeddelanden
 #=======================
-system.config_reloaded: "&a&lKonfiguration laddades om!"
-system.plugin_loaded: "&a&lPlugin laddad! Version: &6&l<target>"
-system.plugin_unloaded: "&c&lPlugin avinstallerat!"
-system.config_migrated_success: "&a&lKonfigmigration klar!"
-system.config_migrated: "&a&lMigrerar gammal konfig (automatisk backup)"
-system.debug_warning: "&c&lDebug-läge aktivt - stäng av efter användning!"
+system.config_reloaded: "<green><bold>Konfiguration laddades om!</bold>"
+system.plugin_loaded: "<green><bold>Plugin laddad! Version: </bold><gold><bold>%target%</bold>"
+system.plugin_unloaded: "<red><bold>Plugin avinstallerat!</bold>"
+system.config_migrated_success: "<green><bold>Konfigmigration klar!</bold>"
+system.config_migrated: "<green><bold>Migrerar gammal konfig (automatisk backup)</bold>"
+system.debug_warning: "<red><bold>Debug-läge aktivt - stäng av efter användning!</bold>"
 
 #=======================
 # Uppdateringar
 #=======================
-update.checking: "&a&lSöker uppdateringar..."
-update.available: "&a&lNy version &6&lTPA-v<target>&a&l tillgänglig: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lSenaste version installerad"
-update.failed: "&c&lUppdateringskontroll misslyckades"
+update.checking: "<green><bold>Söker uppdateringar...</bold>"
+update.available: "<green><bold>Ny version </bold><gold><bold>TPA-v%target%</bold><green><bold> tillgänglig: https://modrinth.com/plugin/tpa.66666/versions</bold>"
+update.latest: "<green><bold>Senaste version installerad</bold>"
+update.failed: "<red><bold>Uppdateringskontroll misslyckades</bold>"
