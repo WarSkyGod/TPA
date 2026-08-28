@@ -14,6 +14,9 @@ import java.util.UUID
 interface PlayerDataStore {
     fun load(uuid: UUID): PlayerData?
     fun save(data: PlayerData)
+
+    // 按玩家名查找数据对应的 UUID（在线/离线均可查，用于 /tplogout 等场景）
+    fun findUuidByName(name: String): UUID?
 }
 
 // 默认存储：plugins/TPA/playerdata/<uuid>.yml，与 3.x 格式互通
@@ -39,6 +42,17 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         data.lastLocation = config.getLocation("last_location")
         data.logoutLocation = config.getLocation("logout_location")
         return data
+    }
+
+    override fun findUuidByName(name: String): UUID? {
+        if (!folder.exists()) return null
+        val files = folder.listFiles { file -> file.extension.equals("yml", ignoreCase = true) } ?: return null
+        for (file in files) {
+            val uuid = runCatching { UUID.fromString(file.nameWithoutExtension) }.getOrNull() ?: continue
+            val playerName = YamlConfiguration.loadConfiguration(file).getString("player_name") ?: continue
+            if (playerName.equals(name, ignoreCase = true)) return uuid
+        }
+        return null
     }
 
     override fun save(data: PlayerData) {
@@ -109,6 +123,18 @@ class DatabasePlayerDataStore(private val database: DatabaseManager) : PlayerDat
                     data.logoutLocation = decodeLocation(rs.getString("logout_location"))
                     data.denyList.addAll(loadDenyList(connection, uuid))
                     data
+                }
+            }
+        }
+    }
+
+    override fun findUuidByName(name: String): UUID? {
+        // LOWER() 比较同时兼容 SQLite 与 MySQL（MySQL 默认排序规则本就大小写不敏感）
+        return database.getConnection()?.use { connection ->
+            connection.prepareStatement("SELECT uuid FROM player_data WHERE LOWER(player_name) = LOWER(?) LIMIT 1").use { statement ->
+                statement.setString(1, name)
+                statement.executeQuery().use { rs ->
+                    if (rs.next()) runCatching { UUID.fromString(rs.getString("uuid")) }.getOrNull() else null
                 }
             }
         }

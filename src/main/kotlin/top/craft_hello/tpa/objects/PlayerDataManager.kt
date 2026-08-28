@@ -38,12 +38,17 @@ object PlayerDataManager {
 
     fun getIfLoaded(uuid: UUID): PlayerData? = cache[uuid]
 
-    // 按名称查找（在线优先，其次缓存），用于 /tplogout 等离线目标场景
+    // 按名称查找：在线玩家 → 内存缓存 → 存储层按 player_name 反查（离线玩家可查，用于 /tplogout）
     fun getByName(name: String): PlayerData? {
-        val online = Bukkit.getPlayerExact(name) ?: return cache.values.firstOrNull {
-            it.playerName.equals(name, ignoreCase = true)
-        }
-        return get(online)
+        Bukkit.getPlayerExact(name)?.let { return get(it) }
+        cache.values.firstOrNull { it.playerName.equals(name, ignoreCase = true) }?.let { return it }
+        val uuid = try {
+            store.findUuidByName(name)
+        } catch (ignored: Exception) {
+            if (ConfigManager.config.debug) ignored.printStackTrace()
+            null
+        } ?: return null
+        return get(uuid)
     }
 
     fun save(uuid: UUID) {
