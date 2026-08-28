@@ -162,7 +162,7 @@ class TeleportRequest private constructor(
             SendMessageUtil.generateRandomLocationMessage(sender)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleGenerateRandomLocationMessage(sender)
             // 对齐 3.x：以玩家当前位置为中心随机；超过世界可传送范围时自动夹回
-            val location = findRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ)
+            val location = findRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, ConfigManager.config.rtpGenerateAttempts)
             if (location == null) {
                 SendMessageUtil.rtpFailedError(sender)
                 return false
@@ -300,8 +300,8 @@ class TeleportRequest private constructor(
         }
 
         // 寻找随机传送点：以玩家当前位置为中心 ±limit；超过世界边界实时可传送范围则夹回；
-        // 主世界取地表最高点，下界/末地扫描首个安全柱；最多尝试 5 次，全部失败返回 null
-        private fun findRandomLocation(world: World, centerX: Double, centerZ: Double, limitX: Int, limitZ: Int): Location? {
+        // 主世界取地表最高点，下界/末地扫描首个安全柱；最多尝试 maxAttempts 次，全部失败返回 null
+        private fun findRandomLocation(world: World, centerX: Double, centerZ: Double, limitX: Int, limitZ: Int, maxAttempts: Int): Location? {
             val isScanningWorld = world.environment == World.Environment.NETHER || world.environment == World.Environment.THE_END
             // 实时可传送半径：当前世界边界半径 - 16 格安全边距（未设边界时即坐标极限范围）
             val halfSize = (world.worldBorder.size / 2.0 - 16.0).coerceAtLeast(1.0)
@@ -311,7 +311,7 @@ class TeleportRequest private constructor(
             val borderMaxZ = world.worldBorder.center.z + halfSize
             var found: Location? = null
             var attempts = 0
-            while (attempts < 5 && found == null) {
+            while (attempts < maxAttempts && found == null) {
                 attempts++
                 val x = (centerX + (Math.random() * 2 - 1) * limitX).coerceIn(borderMinX, borderMaxX).toInt()
                 val z = (centerZ + (Math.random() * 2 - 1) * limitZ).coerceIn(borderMinZ, borderMaxZ).toInt()

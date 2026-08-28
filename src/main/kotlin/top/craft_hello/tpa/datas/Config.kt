@@ -90,6 +90,8 @@ data class Config(var config: FileConfiguration) {
     var rtpDisableWorlds = config.getStringList("rtp.disable_worlds")
     var rtpLimitX = config.getInt("rtp.limit.x")
     var rtpLimitZ = config.getInt("rtp.limit.z")
+    // 旧配置文件缺失此键时回退默认 5 次
+    var rtpGenerateAttempts = config.getInt("rtp.generate_attempts", 5).coerceAtLeast(1)
 
 
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {
