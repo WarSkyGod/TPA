@@ -24,11 +24,15 @@ object TpaCommand {
             .executes { context -> executeTpa(context) }
             .then(
                 Commands.argument("player", StringArgumentType.word())
-                    .suggests { _, builder ->
+                    .suggests { context, builder ->
+                        val sender = context.source.sender
                         val input = builder.remaining.lowercase()
-                        for (player in Bukkit.getOnlinePlayers()) {
-                            val playerName = player.name
-                            if (playerName.lowercase().contains(input)) builder.suggest(playerName)
+                        if (sender is Player) {
+                            // 不能对自己发起传送请求：补全列表排除自己
+                            for (player in Bukkit.getOnlinePlayers()) {
+                                val playerName = player.name
+                                if (player != sender && playerName.lowercase().contains(input)) builder.suggest(playerName)
+                            }
                         }
                         builder.buildFuture()
                     }

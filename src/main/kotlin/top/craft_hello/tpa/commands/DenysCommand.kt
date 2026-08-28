@@ -26,10 +26,14 @@ object DenysCommand {
                 Commands.literal("add")
                     .then(
                         Commands.argument("player", StringArgumentType.word())
-                            .suggests { _, builder ->
+                            .suggests { context, builder ->
+                                val sender = context.source.sender
                                 val input = builder.remaining.lowercase()
-                                for (player in Bukkit.getOnlinePlayers()) {
-                                    if (player.name.lowercase().contains(input)) builder.suggest(player.name)
+                                if (sender is Player) {
+                                    // 不能拉黑自己：补全列表排除自己
+                                    for (player in Bukkit.getOnlinePlayers()) {
+                                        if (player != sender && player.name.lowercase().contains(input)) builder.suggest(player.name)
+                                    }
                                 }
                                 builder.buildFuture()
                             }
