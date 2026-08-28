@@ -466,7 +466,12 @@ class SendMessageUtil {
             val title = language.getFormatMessage(executor, "teleport.countdown", target, delay)
             val subTitle = language.getFormatMessage(executor, "teleport.cancel_on_move")
             executor.showTitle(Title.title(title, subTitle))
-            if (ConfigHolder.enableSound()) PlayerSchedulerUtil.playSound(executor, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f)
+        }
+
+        // 传送音效：仅受 enable_sound 控制（独立于 title 设置），音效/音量/音调从配置读取
+        fun playTeleportSound(executor: Player) {
+            val config = top.craft_hello.tpa.objects.ConfigManager.config
+            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.teleportSound, config.soundVolume, config.soundPitch)
         }
 
         // title 样式的传送完成消息

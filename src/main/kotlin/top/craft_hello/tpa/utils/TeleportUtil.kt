@@ -34,6 +34,7 @@ object TeleportUtil {
         }
         SendMessageUtil.teleportCountdown(player, targetName, delay.toString())
         if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownMessage(player, targetName, delay.toString())
+        SendMessageUtil.playTeleportSound(player)
         var lastX = player.location.blockX
         var lastY = player.location.blockY
         var lastZ = player.location.blockZ
@@ -58,6 +59,7 @@ object TeleportUtil {
                     return
                 }
                 if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownMessage(player, targetName, remaining.toString())
+                SendMessageUtil.playTeleportSound(player)
             }
         }
         HandySchedulerUtil.runTaskTimerAsynchronously(timer, 20L, 20L)

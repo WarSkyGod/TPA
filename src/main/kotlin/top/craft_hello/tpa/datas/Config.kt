@@ -2,6 +2,7 @@ package top.craft_hello.tpa.datas
 
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.World
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
@@ -24,6 +25,11 @@ data class Config(var config: FileConfiguration) {
     var forceSpawn = config.getBoolean("force_spawn")
     var enableTitleMessage = config.getBoolean("enable_title_message")
     var enableSound = config.getBoolean("enable_sound")
+    // 传送音效：非法名称回退默认
+    var teleportSound: Sound = runCatching { Sound.valueOf(config.getString("sound.name", "ENTITY_EXPERIENCE_ORB_PICKUP")!!.uppercase(Locale.ROOT)) }
+        .getOrDefault(Sound.ENTITY_EXPERIENCE_ORB_PICKUP)
+    var soundVolume = config.getDouble("sound.volume", 1.0).toFloat()
+    var soundPitch = config.getDouble("sound.pitch", 1.0).toFloat()
     var acceptDelay = config.getInt("delay.accept").coerceAtLeast(3)
     var enableTeleportDelay = config.getBoolean("delay.enable_teleport")
     var enableCommandDelay = config.getBoolean("delay.enable_command")

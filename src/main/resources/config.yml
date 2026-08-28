@@ -44,8 +44,15 @@ force_spawn: true
 # 是否启用 title 传送消息（1.12 以下版本将自动关闭）
 enable_title_message: true
 
-# 是否启用传送音效（需要 enable_title_message 为 true）
+# 是否启用传送音效
 enable_sound: true
+
+# 传送音效设置
+# name 填 Bukkit Sound 名称，非法名称回退默认 ENTITY_EXPERIENCE_ORB_PICKUP
+sound:
+  name: ENTITY_EXPERIENCE_ORB_PICKUP
+  volume: 1.0
+  pitch: 1.0
 
 # 延迟设置（单位：秒）
 delay:
