@@ -104,6 +104,7 @@ object TpAllCommand {
         for (player in movable) {
             EntitySchedulerUtil.syncTeleport(player, target.location)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, targetName)
+            SendMessageUtil.playTeleportSuccessSound(player)
             SendMessageUtil.adminTpYouToMessage(player, targetName)
         }
         SendMessageUtil.tpAllCommandSuccess(sender, targetName)
@@ -117,6 +118,7 @@ object TpAllCommand {
         for (player in onlinePlayers) {
             EntitySchedulerUtil.syncTeleport(player, location)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, targetName)
+            SendMessageUtil.playTeleportSuccessSound(player)
             SendMessageUtil.adminTpYouToMessage(player, targetNameShown)
         }
         return SendMessageUtil.tpAllCommandSuccess(sender, targetNameShown)
@@ -129,6 +131,7 @@ object TpAllCommand {
         for (player in movable) {
             EntitySchedulerUtil.syncTeleport(player, sender.location)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, sender.name)
+            SendMessageUtil.playTeleportSuccessSound(player)
             SendMessageUtil.adminTpYouToMessage(player, sender.name)
         }
         return SendMessageUtil.tpAllCommandSuccess(sender, sender.name)

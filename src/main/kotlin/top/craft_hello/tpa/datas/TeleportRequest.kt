@@ -167,6 +167,7 @@ class TeleportRequest private constructor(
             attemptRandomLocation(world, center.x, center.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, attempts, attempts) { location ->
                 if (!sender.isOnline) return@attemptRandomLocation
                 if (location == null) {
+                    SendMessageUtil.playTeleportFailSound(sender)
                     SendMessageUtil.rtpFailedError(sender)
                     return@attemptRandomLocation
                 }
@@ -241,15 +242,18 @@ class TeleportRequest private constructor(
                     onComplete = {
                         TeleportUtil.teleport(mover, destination)
                         if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
+                        SendMessageUtil.playTeleportSuccessSound(mover)
                         startCommandDelay(mover)
                     },
                     onCancel = {
+                        SendMessageUtil.playTeleportCancelSound(mover)
                         SendMessageUtil.move(mover, opponent)
                     }
                 )
             } else {
                 TeleportUtil.teleport(mover, destination)
                 if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
+                SendMessageUtil.playTeleportSuccessSound(mover)
                 SendMessageUtil.youTeleportedToMessage(mover, opponentName)
                 startCommandDelay(mover)
             }
@@ -265,6 +269,7 @@ class TeleportRequest private constructor(
                 },
                 onCancel = {
                     requestQueue.remove(sender.uniqueId)
+                    SendMessageUtil.playTeleportCancelSound(sender)
                     SendMessageUtil.move(sender, null)
                 }
             )
@@ -277,6 +282,7 @@ class TeleportRequest private constructor(
             requestQueue.remove(sender.uniqueId)
             if (!sender.isOnline) return
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(sender, request.targetName)
+            SendMessageUtil.playTeleportSuccessSound(sender)
             val successMessage: (Player, String) -> Unit = when (request.requestType) {
                 RequestType.WARP -> SendMessageUtil::tpToWarpMessage
                 RequestType.HOME -> SendMessageUtil::tpToHomeMessage

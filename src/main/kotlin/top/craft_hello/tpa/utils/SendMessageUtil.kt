@@ -468,10 +468,25 @@ class SendMessageUtil {
             executor.showTitle(Title.title(title, subTitle))
         }
 
-        // 传送音效：仅受 enable_sound 控制（独立于 title 设置），音效/音量/音调从配置读取
-        fun playTeleportSound(executor: Player) {
+        // 传送音效组：仅受 enable_sound 控制（独立于 title 设置），音效/音量/音调从配置读取
+        fun playTeleportCountdownSound(executor: Player) {
             val config = top.craft_hello.tpa.objects.ConfigManager.config
-            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.teleportSound, config.soundVolume, config.soundPitch)
+            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundCountdown, config.soundCountdownVolume, config.soundCountdownPitch)
+        }
+
+        fun playTeleportSuccessSound(executor: Player) {
+            val config = top.craft_hello.tpa.objects.ConfigManager.config
+            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundSuccess, config.soundSuccessVolume, config.soundSuccessPitch)
+        }
+
+        fun playTeleportFailSound(executor: Player) {
+            val config = top.craft_hello.tpa.objects.ConfigManager.config
+            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundFail, config.soundFailVolume, config.soundFailPitch)
+        }
+
+        fun playTeleportCancelSound(executor: Player) {
+            val config = top.craft_hello.tpa.objects.ConfigManager.config
+            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundCancel, config.soundCancelVolume, config.soundCancelPitch)
         }
 
         // title 样式的传送完成消息

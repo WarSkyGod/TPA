@@ -25,11 +25,19 @@ data class Config(var config: FileConfiguration) {
     var forceSpawn = config.getBoolean("force_spawn")
     var enableTitleMessage = config.getBoolean("enable_title_message")
     var enableSound = config.getBoolean("enable_sound")
-    // 传送音效：非法名称回退默认
-    var teleportSound: Sound = runCatching { Sound.valueOf(config.getString("sound.name", "ENTITY_EXPERIENCE_ORB_PICKUP")!!.uppercase(Locale.ROOT)) }
-        .getOrDefault(Sound.ENTITY_EXPERIENCE_ORB_PICKUP)
-    var soundVolume = config.getDouble("sound.volume", 1.0).toFloat()
-    var soundPitch = config.getDouble("sound.pitch", 1.0).toFloat()
+    // 传送音效组：倒计时/成功/失败/取消（非法名称回退默认）
+    var soundCountdown: Sound = loadSound("sound.countdown.name", "ENTITY_EXPERIENCE_ORB_PICKUP")
+    var soundCountdownVolume = config.getDouble("sound.countdown.volume", 1.0).toFloat()
+    var soundCountdownPitch = config.getDouble("sound.countdown.pitch", 1.0).toFloat()
+    var soundSuccess: Sound = loadSound("sound.success.name", "ENTITY_ENDERMAN_TELEPORT")
+    var soundSuccessVolume = config.getDouble("sound.success.volume", 1.0).toFloat()
+    var soundSuccessPitch = config.getDouble("sound.success.pitch", 1.0).toFloat()
+    var soundFail: Sound = loadSound("sound.fail.name", "ENTITY_VILLAGER_NO")
+    var soundFailVolume = config.getDouble("sound.fail.volume", 1.0).toFloat()
+    var soundFailPitch = config.getDouble("sound.fail.pitch", 1.0).toFloat()
+    var soundCancel: Sound = loadSound("sound.cancel.name", "BLOCK_NOTE_BLOCK_BASS")
+    var soundCancelVolume = config.getDouble("sound.cancel.volume", 1.0).toFloat()
+    var soundCancelPitch = config.getDouble("sound.cancel.pitch", 1.0).toFloat()
     var acceptDelay = config.getInt("delay.accept").coerceAtLeast(3)
     var enableTeleportDelay = config.getBoolean("delay.enable_teleport")
     var enableCommandDelay = config.getBoolean("delay.enable_command")
@@ -136,6 +144,10 @@ data class Config(var config: FileConfiguration) {
         )
     }
 
+
+    // 读取配置中的音效名称，非法或缺失回退默认
+    private fun loadSound(path: String, defaultName: String): Sound =
+        runCatching { Sound.valueOf(config.getString(path, defaultName)!!.uppercase(Locale.ROOT)) }.getOrDefault(Sound.valueOf(defaultName))
 
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {
         for (commandType in commandTypes) if ((enableCommands[commandType] ?: true)) return true

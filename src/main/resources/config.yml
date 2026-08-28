@@ -47,12 +47,29 @@ enable_title_message: true
 # 是否启用传送音效
 enable_sound: true
 
-# 传送音效设置
-# name 填 Bukkit Sound 名称，非法名称回退默认 ENTITY_EXPERIENCE_ORB_PICKUP
+# 传送音效设置（enable_sound 为总开关）
+# name 填 Bukkit Sound 名称，非法名称回退默认
 sound:
-  name: ENTITY_EXPERIENCE_ORB_PICKUP
-  volume: 1.0
-  pitch: 1.0
+  # 传送倒计时音效（每秒）
+  countdown:
+    name: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 1.0
+    pitch: 1.0
+  # 传送成功音效
+  success:
+    name: ENTITY_ENDERMAN_TELEPORT
+    volume: 1.0
+    pitch: 1.0
+  # 传送失败音效
+  fail:
+    name: ENTITY_VILLAGER_NO
+    volume: 1.0
+    pitch: 1.0
+  # 取消传送音效（移动取消）
+  cancel:
+    name: BLOCK_NOTE_BLOCK_BASS
+    volume: 1.0
+    pitch: 1.0
 
 # 延迟设置（单位：秒）
 delay:
