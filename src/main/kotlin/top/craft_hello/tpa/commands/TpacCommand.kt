@@ -31,15 +31,17 @@ object TpacCommand {
                 Commands.literal("setlang")
                     .then(
                         Commands.argument("language", StringArgumentType.word())
-                            .suggests { _, builder ->
+                            .suggests { context, builder ->
+                                val input = builder.remaining.lowercase()
+                                if ("clear".contains(input)) builder.suggest("clear")
                                 for (languageName in LanguageManager.getLanguageNames()) {
-                                    builder.suggest(languageName)
+                                    if (languageName.lowercase().contains(input)) builder.suggest(languageName)
                                 }
                                 builder.buildFuture()
                             }
                             .executes { context ->
                                 val language = context.getArgumentOrNull<String>("language")
-                                    ?: return@executes SendMessageUtil.syntaxGenericError(context.source.sender, "tpac setlang <language>")
+                                    ?: return@executes SendMessageUtil.syntaxGenericError(context.source.sender, "tpac setlang <language/clear>")
                                 executeSetLang(context.source.sender, language)
                             }
                     )
@@ -67,17 +69,26 @@ object TpacCommand {
         return Command.SINGLE_SUCCESS
     }
 
-    // 设置玩家语言（false 恢复跟随客户端）
+    // 设置玩家语言；clear 恢复为根据客户端自动匹配（3.x 设计）
     fun executeSetLang(sender: CommandSender, language: String): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         val playerData = PlayerDataManager.get(sender)
-        if (language.equals("false", ignoreCase = true)) {
+        if (language.equals("clear", ignoreCase = true)) {
             playerData.setlang = false
+            // 同步 language 为当前客户端语言（老服务器无法获取客户端语言时由跟随逻辑回退配置默认）
+            val clientLanguage = LanguageManager.formatLangStr(
+                buildString {
+                    append(sender.locale().language)
+                    append("_")
+                    append(sender.locale().country)
+                }
+            )
+            if (LanguageManager.hasLanguage(clientLanguage)) playerData.language = clientLanguage
             PlayerDataManager.save(sender)
             SendMessageUtil.setLangCommandSuccess(sender, LanguageManager.getLanguage(sender).languageFile.nameWithoutExtension)
             return Command.SINGLE_SUCCESS
         }
-        if (!LanguageManager.hasLanguage(language)) return SendMessageUtil.syntaxGenericError(sender, "tpac setlang <language>")
+        if (!LanguageManager.hasLanguage(language)) return SendMessageUtil.syntaxGenericError(sender, "tpac setlang <language/clear>")
         val languageName = LanguageManager.formatLangStr(language)
         playerData.language = languageName
         playerData.setlang = true
