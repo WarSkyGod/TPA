@@ -240,9 +240,8 @@ class TeleportRequest private constructor(
                 TeleportUtil.delayTeleport(
                     mover, destination, opponentName,
                     onComplete = {
-                        TeleportUtil.teleport(mover, destination)
+                        TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
                         if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
-                        SendMessageUtil.playTeleportSuccessSound(mover)
                         startCommandDelay(mover)
                     },
                     onCancel = {
@@ -251,9 +250,8 @@ class TeleportRequest private constructor(
                     }
                 )
             } else {
-                TeleportUtil.teleport(mover, destination)
+                TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
                 if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
-                SendMessageUtil.playTeleportSuccessSound(mover)
                 SendMessageUtil.youTeleportedToMessage(mover, opponentName)
                 startCommandDelay(mover)
             }
@@ -282,7 +280,6 @@ class TeleportRequest private constructor(
             requestQueue.remove(sender.uniqueId)
             if (!sender.isOnline) return
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(sender, request.targetName)
-            SendMessageUtil.playTeleportSuccessSound(sender)
             val successMessage: (Player, String) -> Unit = when (request.requestType) {
                 RequestType.WARP -> SendMessageUtil::tpToWarpMessage
                 RequestType.HOME -> SendMessageUtil::tpToHomeMessage
@@ -292,7 +289,7 @@ class TeleportRequest private constructor(
                 RequestType.TP_LOGOUT -> { player, name -> SendMessageUtil.tpLogoutCommandSuccess(player, name) }
                 else -> SendMessageUtil::youTeleportedToMessage
             }
-            TeleportUtil.teleport(sender, location)
+            TeleportUtil.teleport(sender, location) { SendMessageUtil.playTeleportSuccessSound(sender) }
             successMessage(sender, request.targetName)
             startCommandDelay(sender)
         }

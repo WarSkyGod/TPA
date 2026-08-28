@@ -14,8 +14,18 @@ object TeleportUtil {
     // 立即传送（对齐 3.x：异步调度到实体所属 region 执行，禁止在 join 等事件同步栈内
     // 直接 teleportAsync——placeNewPlayer 阶段玩家尚未完全进入 chunk loader，会触发
     // "Player is already removed from player chunk loader" 并导致 region tick 崩溃）
-    fun teleport(player: Player, location: Location) {
-        HandySchedulerUtil.runTaskAsynchronously { EntitySchedulerUtil.syncTeleport(player, location) }
+    // onDone：传送真正完成后回调（Folia 走 teleportAsync 完成future；跨 region 迁移
+    // 已结束，此时再调度 playSound 等玩家实体任务不会被迁移窗口吞掉）
+    fun teleport(player: Player, location: Location, onDone: () -> Unit = {}) {
+        HandySchedulerUtil.runTaskAsynchronously {
+            if (HandySchedulerUtil.isFolia()) {
+                // teleportAsync 线程安全（Folia 文档允许任意线程调用），完成后回调
+                player.teleportAsync(location).thenAccept { result -> if (result) onDone() }
+            } else {
+                EntitySchedulerUtil.syncTeleport(player, location)
+                onDone()
+            }
+        }
     }
 
     /**
