@@ -537,7 +537,8 @@ class SendMessageUtil {
         // 传送点列表（含 传送 按钮；控制台只显示名字）
         fun warpListMessage(sender: CommandSender, warpList: List<String>) {
             if (warpList.isEmpty()) {
-                sendMessageForPath(sender, "not_warps")
+                // 对齐 3.x：空列表用 error.no_warps_set（not_warps 在 3.x 仅用于 tab 补全提示文字）
+                noWarpsSetError(sender)
                 return
             }
             sendMessageForPath(sender, "warp.list_header")
