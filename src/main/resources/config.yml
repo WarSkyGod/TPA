@@ -167,6 +167,20 @@ rtp:
   # 尝试次数内全部生成失败时才会提示无法生成传送点
   generate_attempts: 5
 
+  # 传送位置的黑名单方块列表（脚下/所在/头顶命中任一则该位置无效并重新生成）
+  # 填 Bukkit Material 名称；旧配置文件缺失本项时使用与下方相同的默认规则
+  blacklisted_blocks:
+    - LAVA
+    - WATER
+    - FIRE
+    - SOUL_FIRE
+    - MAGMA_BLOCK
+
+  # 是否以玩家坐标为随机传送中心
+  # true: 以玩家当前位置为中心（默认）
+  # false: 以世界出生点为中心
+  center_on_player: true
+
 # warp 命令设置
 warp:
   # 是否开启 warp 命令

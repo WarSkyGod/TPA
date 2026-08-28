@@ -1,11 +1,13 @@
 package top.craft_hello.tpa.datas
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
+import java.util.Locale
 
 data class Config(var config: FileConfiguration) {
     var version = config.getString("version") ?: "1.0"
@@ -92,6 +94,16 @@ data class Config(var config: FileConfiguration) {
     var rtpLimitZ = config.getInt("rtp.limit.z")
     // 旧配置文件缺失此键时回退默认 5 次
     var rtpGenerateAttempts = config.getInt("rtp.generate_attempts", 5).coerceAtLeast(1)
+    // 黑名单方块列表：非法名称忽略；旧配置缺失本项时使用默认危险方块规则；显式空列表 = 关闭黑名单
+    var rtpBlacklistedBlocks: Set<Material> = if (config.contains("rtp.blacklisted_blocks")) {
+        config.getStringList("rtp.blacklisted_blocks")
+            .mapNotNull { name -> runCatching { Material.valueOf(name.uppercase(Locale.ROOT)) }.getOrNull() }
+            .toSet()
+    } else {
+        setOf(Material.LAVA, Material.WATER, Material.FIRE, Material.SOUL_FIRE, Material.MAGMA_BLOCK)
+    }
+    // 随机传送中心：true=玩家当前位置（默认），false=世界出生点
+    var rtpCenterOnPlayer = config.getBoolean("rtp.center_on_player", true)
 
 
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {

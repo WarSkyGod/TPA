@@ -3,7 +3,6 @@ package top.craft_hello.tpa.datas
 import cn.handyplus.lib.adapter.HandyRunnable
 import cn.handyplus.lib.adapter.HandySchedulerUtil
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.RequestType
@@ -163,8 +162,9 @@ class TeleportRequest private constructor(
             SendMessageUtil.generateRandomLocationMessage(sender)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleGenerateRandomLocationMessage(sender)
             val attempts = ConfigManager.config.rtpGenerateAttempts
-            // 对齐 3.x：以玩家当前位置为中心随机；随机范围实时收缩到玩家位置与世界边界的可达距离内
-            attemptRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, attempts, attempts) { location ->
+            // 随机中心可配置：玩家当前位置（默认，对齐 3.x）或世界出生点
+            val center = if (ConfigManager.config.rtpCenterOnPlayer) sender.location else world.spawnLocation
+            attemptRandomLocation(world, center.x, center.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, attempts, attempts) { location ->
                 if (!sender.isOnline) return@attemptRandomLocation
                 if (location == null) {
                     SendMessageUtil.rtpFailedError(sender)
@@ -287,25 +287,22 @@ class TeleportRequest private constructor(
             startCommandDelay(sender)
         }
 
-        // 危险位置：脚下/所在/头部任一命中即拒绝（岩浆、水、火、灵魂火、岩浆块；虚空由边界与 solid 检查兜底）
-        private val dangerousMaterials = setOf(
-            Material.LAVA, Material.WATER, Material.FIRE, Material.SOUL_FIRE, Material.MAGMA_BLOCK
-        )
-
         // Minecraft chunk 系统方块坐标硬极限与安全边距
         private const val WORLD_MAX_COORD = 29_999_984.0
         private const val WORLD_SAFE_MARGIN = 16.0
         private const val WORLD_SAFE_LIMIT = WORLD_MAX_COORD - WORLD_SAFE_MARGIN
         private const val WORLD_SAFE_LIMIT_INT = 29_999_968
 
-        // y 为脚部层：ground(y-1) 必须为实体且不危险，feet(y)/head(y+1) 必须可穿越且不危险
+        // 黑名单方块由配置 rtp.blacklisted_blocks 提供（默认排除岩浆/水/火/灵魂火/岩浆块）
+        // y 为脚部层：ground(y-1) 必须为实体且不在黑名单，feet(y)/head(y+1) 必须可穿越且不在黑名单
         private fun isSafeStanding(world: World, x: Int, y: Int, z: Int): Boolean {
+            val blacklisted = ConfigManager.config.rtpBlacklistedBlocks
             val ground = world.getBlockAt(x, y - 1, z)
             val feet = world.getBlockAt(x, y, z)
             val head = world.getBlockAt(x, y + 1, z)
-            if (!ground.isSolid || ground.type in dangerousMaterials) return false
-            if (feet.isSolid || feet.type in dangerousMaterials) return false
-            if (head.isSolid || head.type in dangerousMaterials) return false
+            if (!ground.isSolid || ground.type in blacklisted) return false
+            if (feet.isSolid || feet.type in blacklisted) return false
+            if (head.isSolid || head.type in blacklisted) return false
             return true
         }
 
