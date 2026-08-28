@@ -3,6 +3,7 @@ package top.craft_hello.tpa.datas
 import cn.handyplus.lib.adapter.HandyRunnable
 import cn.handyplus.lib.adapter.HandySchedulerUtil
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.RequestType
@@ -160,7 +161,8 @@ class TeleportRequest private constructor(
             }
             SendMessageUtil.generateRandomLocationMessage(sender)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleGenerateRandomLocationMessage(sender)
-            val location = findRandomLocation(world, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ)
+            // 对齐 3.x：以玩家当前位置为中心随机；超过世界可传送范围时自动夹回
+            val location = findRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ)
             if (location == null) {
                 SendMessageUtil.rtpFailedError(sender)
                 return false
@@ -281,31 +283,52 @@ class TeleportRequest private constructor(
             startCommandDelay(sender)
         }
 
-        // 寻找随机传送点：主世界取地表最高点；下界/末地扫描首个 solid+双空气结构
-        private fun findRandomLocation(world: World, limitX: Int, limitZ: Int): Location? {
+        // 危险位置：脚下/所在/头部任一命中即拒绝（岩浆、水、火、灵魂火、岩浆块；虚空由边界与 solid 检查兜底）
+        private val dangerousMaterials = setOf(
+            Material.LAVA, Material.WATER, Material.FIRE, Material.SOUL_FIRE, Material.MAGMA_BLOCK
+        )
+
+        // y 为脚部层：ground(y-1) 必须为实体且不危险，feet(y)/head(y+1) 必须可穿越且不危险
+        private fun isSafeStanding(world: World, x: Int, y: Int, z: Int): Boolean {
+            val ground = world.getBlockAt(x, y - 1, z)
+            val feet = world.getBlockAt(x, y, z)
+            val head = world.getBlockAt(x, y + 1, z)
+            if (!ground.isSolid || ground.type in dangerousMaterials) return false
+            if (feet.isSolid || feet.type in dangerousMaterials) return false
+            if (head.isSolid || head.type in dangerousMaterials) return false
+            return true
+        }
+
+        // 寻找随机传送点：以玩家当前位置为中心 ±limit；超过世界边界实时可传送范围则夹回；
+        // 主世界取地表最高点，下界/末地扫描首个安全柱；最多尝试 5 次，全部失败返回 null
+        private fun findRandomLocation(world: World, centerX: Double, centerZ: Double, limitX: Int, limitZ: Int): Location? {
             val isScanningWorld = world.environment == World.Environment.NETHER || world.environment == World.Environment.THE_END
+            // 实时可传送半径：当前世界边界半径 - 16 格安全边距（未设边界时即坐标极限范围）
+            val halfSize = (world.worldBorder.size / 2.0 - 16.0).coerceAtLeast(1.0)
+            val borderMinX = world.worldBorder.center.x - halfSize
+            val borderMaxX = world.worldBorder.center.x + halfSize
+            val borderMinZ = world.worldBorder.center.z - halfSize
+            val borderMaxZ = world.worldBorder.center.z + halfSize
             var found: Location? = null
             var attempts = 0
-            while (attempts < 50 && found == null) {
+            while (attempts < 5 && found == null) {
                 attempts++
-                val x = (Math.random() * limitX * 2 - limitX).toInt()
-                val z = (Math.random() * limitZ * 2 - limitZ).toInt()
+                val x = (centerX + (Math.random() * 2 - 1) * limitX).coerceIn(borderMinX, borderMaxX).toInt()
+                val z = (centerZ + (Math.random() * 2 - 1) * limitZ).coerceIn(borderMinZ, borderMaxZ).toInt()
                 if (!isScanningWorld) {
                     val y = world.getHighestBlockYAt(x, z)
+                    // 虚空：整列为空或低于世界最低可用高度
                     if (y <= world.minHeight) continue
-                    val feetBlock = world.getBlockAt(x, y, z)
-                    val groundBlock = world.getBlockAt(x, y - 1, z)
-                    // 落点不能在实体方块内，且脚下必须为实体方块
-                    if (feetBlock.isSolid || !groundBlock.isSolid) continue
-                    if (world.getBlockAt(x, y + 1, z).isSolid) continue
-                    found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                    if (isSafeStanding(world, x, y, z)) {
+                        found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                    }
                 } else {
-                    // 下界/末地：从最低点向上找 solid 上方有两格空气的位置
-                    var y = world.minHeight
-                    while (y < world.maxHeight - 2 && found == null) {
-                        val ground = world.getBlockAt(x, y, z)
-                        if (ground.isSolid && !world.getBlockAt(x, y + 1, z).isSolid && !world.getBlockAt(x, y + 2, z).isSolid) {
-                            found = Location(world, x + 0.5, y + 1.0, z + 0.5, Math.random().toFloat() * 360f, 0f)
+                    // 下界/末地：从最低点向上找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
+                    var y = world.minHeight + 1
+                    while (y < world.maxHeight - 2) {
+                        if (isSafeStanding(world, x, y, z)) {
+                            found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                            break
                         }
                         y++
                     }

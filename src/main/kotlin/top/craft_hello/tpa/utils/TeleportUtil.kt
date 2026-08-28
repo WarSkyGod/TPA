@@ -27,6 +27,8 @@ object TeleportUtil {
     fun delayTeleport(player: Player, location: Location, targetName: String, onComplete: () -> Unit, onCancel: () -> Unit) {
         val delay = ConfigManager.config.getTeleportDelay(player)
         if (delay <= 0) {
+            // 0 秒传送（管理员/无延迟权限）同样显示"传送到 xx"标题
+            if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, targetName)
             onComplete()
             return
         }
