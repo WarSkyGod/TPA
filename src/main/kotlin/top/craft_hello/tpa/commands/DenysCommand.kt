@@ -65,10 +65,10 @@ object DenysCommand {
 
         val playerData = PlayerDataManager.get(sender)
         val action = context.getArgumentOrNull<String>("player")
-        // 判断当前是哪个子命令：检查节点路径
-        val path = context.nodes.joinToString(" ") { it.node.name }
+        // 判断当前命中的子命令：检查解析树节点名
+        val nodeNames = context.nodes.map { it.node.name }
         return when {
-            path.endsWith("add") -> {
+            "add" in nodeNames -> {
                 val playerName = action ?: return SendMessageUtil.syntaxGenericError(sender, "denys add <player>")
                 val target = Bukkit.getPlayerExact(playerName)
                     ?: return SendMessageUtil.targetOfflineError(sender, playerName)
@@ -77,7 +77,7 @@ object DenysCommand {
                 PlayerDataManager.save(sender)
                 SendMessageUtil.addDenysSuccess(sender, target.name)
             }
-            path.endsWith("remove") -> {
+            "remove" in nodeNames -> {
                 val playerName = action ?: return SendMessageUtil.syntaxGenericError(sender, "denys remove <player>")
                 val denyUuid = playerData.denyList.firstOrNull {
                     SendMessageUtil.denyDisplayName(it).equals(playerName, ignoreCase = true)
