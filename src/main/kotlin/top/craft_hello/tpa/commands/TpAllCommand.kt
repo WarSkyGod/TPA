@@ -81,6 +81,7 @@ object TpAllCommand {
             "warp" in nodeNames -> {
                 val warpName = context.getArgumentOrNull<String>("warp")
                     ?: return SendMessageUtil.syntaxTpAllError(sender, "tpall")
+                if (ConfigManager.warpConfig.getWarpNames().isEmpty()) return SendMessageUtil.noWarpsSetError(sender)
                 val location = ConfigManager.warpConfig.getWarpLocation(warpName)
                     ?: return SendMessageUtil.warpNotFoundError(sender, warpName)
                 tpAllToLocation(sender, onlinePlayers, location, warpName)
