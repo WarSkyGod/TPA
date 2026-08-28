@@ -292,6 +292,12 @@ class TeleportRequest private constructor(
             Material.LAVA, Material.WATER, Material.FIRE, Material.SOUL_FIRE, Material.MAGMA_BLOCK
         )
 
+        // Minecraft chunk 系统方块坐标硬极限与安全边距
+        private const val WORLD_MAX_COORD = 29_999_984.0
+        private const val WORLD_SAFE_MARGIN = 16.0
+        private const val WORLD_SAFE_LIMIT = WORLD_MAX_COORD - WORLD_SAFE_MARGIN
+        private const val WORLD_SAFE_LIMIT_INT = 29_999_968
+
         // y 为脚部层：ground(y-1) 必须为实体且不危险，feet(y)/head(y+1) 必须可穿越且不危险
         private fun isSafeStanding(world: World, x: Int, y: Int, z: Int): Boolean {
             val ground = world.getBlockAt(x, y - 1, z)
@@ -304,7 +310,9 @@ class TeleportRequest private constructor(
         }
 
         // 寻找随机传送点（异步链，Folia 安全）：
-        // - 以玩家当前位置为中心 ±limit，随机范围实时收缩到玩家位置与当前世界边界的可达距离内
+        // - 以玩家当前位置为中心 ±limit，随机范围实时收缩到玩家位置与世界边界/硬极限的可达距离内
+        // - Minecraft chunk 系统硬极限（±29,999,984 方块）是最终兜底：world border 与
+        //   max-world-size 只能收紧范围、永远不能放宽（border 尺寸被配置得异常巨大时防崩）
         // - 必须先 getChunkAtAsync 异步加载目标列所在 chunk（Folia 禁止跨 region 同步取 chunk，
         //   加载完成后回调在该 chunk 所属 region 线程执行，此时读方块合法）
         // - 主世界取地表最高点，下界/末地扫描首个安全柱；最多 maxAttempts 次，全部失败回调 null
@@ -318,17 +326,19 @@ class TeleportRequest private constructor(
                 return
             }
             val isScanningWorld = world.environment == World.Environment.NETHER || world.environment == World.Environment.THE_END
-            // 实时可传送半径：当前世界边界半径 - 16 格安全边距（未设边界时即坐标极限范围）
-            val halfSize = (world.worldBorder.size / 2.0 - 16.0).coerceAtLeast(1.0)
-            val borderMinX = world.worldBorder.center.x - halfSize
-            val borderMaxX = world.worldBorder.center.x + halfSize
-            val borderMinZ = world.worldBorder.center.z - halfSize
-            val borderMaxZ = world.worldBorder.center.z + halfSize
-            // 玩家当前位置与边界之间的实时最大可传送距离：随机范围据此收缩，落点永不越界
-            val effLimitX = minOf(limitX.toDouble(), maxOf(1.0, minOf(centerX - borderMinX, borderMaxX - centerX)))
-            val effLimitZ = minOf(limitZ.toDouble(), maxOf(1.0, minOf(centerZ - borderMinZ, borderMaxZ - centerZ)))
-            val x = (centerX + (Math.random() * 2 - 1) * effLimitX).toInt()
-            val z = (centerZ + (Math.random() * 2 - 1) * effLimitZ).toInt()
+            // 硬极限可达距离：玩家位置到 ±29,999,968（硬极限 - 16 格安全边距）的距离
+            val hardLimitX = maxOf(1.0, minOf(WORLD_SAFE_LIMIT - centerX, centerX + WORLD_SAFE_LIMIT))
+            val hardLimitZ = maxOf(1.0, minOf(WORLD_SAFE_LIMIT - centerZ, centerZ + WORLD_SAFE_LIMIT))
+            // 世界边界可达距离（border 尺寸异常巨大时必然大于硬极限层，由硬极限兜住）
+            val halfSize = (world.worldBorder.size / 2.0 - WORLD_SAFE_MARGIN).coerceAtLeast(1.0)
+            val borderLimitX = maxOf(1.0, minOf(world.worldBorder.center.x + halfSize - centerX, centerX - (world.worldBorder.center.x - halfSize)))
+            val borderLimitZ = maxOf(1.0, minOf(world.worldBorder.center.z + halfSize - centerZ, centerZ - (world.worldBorder.center.z - halfSize)))
+            // 实际随机范围 = min(配置 limit, border 可达距离, 硬极限可达距离)
+            val effLimitX = minOf(limitX.toDouble(), borderLimitX, hardLimitX)
+            val effLimitZ = minOf(limitZ.toDouble(), borderLimitZ, hardLimitZ)
+            // 硬夹双保险：无论上层收缩如何失效，落点物理上不可能超过 chunk 系统合法范围
+            val x = (centerX + (Math.random() * 2 - 1) * effLimitX).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
+            val z = (centerZ + (Math.random() * 2 - 1) * effLimitZ).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
             world.getChunkAtAsync(x shr 4, z shr 4).thenAccept { _ ->
                 var found: Location? = null
                 if (!isScanningWorld) {
