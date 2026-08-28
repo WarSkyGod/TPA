@@ -24,7 +24,10 @@ class PlayerData(val uuid: UUID) {
 
     fun delHome(name: String): Boolean {
         val removed = homes.remove(name) != null
-        if (removed && defaultHomeName == name) defaultHomeName = null
+        // 删除的是默认家：默认家转移到剩下的下一个家，直到没有可用的家为止
+        if (removed && defaultHomeName == name) {
+            defaultHomeName = if (homes.isEmpty()) null else homes.keys.first()
+        }
         return removed
     }
 

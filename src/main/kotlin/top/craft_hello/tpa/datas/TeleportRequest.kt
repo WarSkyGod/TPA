@@ -217,12 +217,11 @@ class TeleportRequest private constructor(
             return false
         }
 
-        private fun checkRequestPending(vararg players: Player): Boolean {
-            for (player in players) {
-                if (requestQueue.containsKey(player.uniqueId)) {
-                    SendMessageUtil.requestPendingError(player)
-                    return true
-                }
+        // 对齐 3.x：执行者或目标任一方有未处理请求，"对方或您有待处理的请求"都发给执行者
+        private fun checkRequestPending(requester: Player, vararg others: Player): Boolean {
+            if (requestQueue.containsKey(requester.uniqueId) || others.any { requestQueue.containsKey(it.uniqueId) }) {
+                SendMessageUtil.requestPendingError(requester)
+                return true
             }
             return false
         }
