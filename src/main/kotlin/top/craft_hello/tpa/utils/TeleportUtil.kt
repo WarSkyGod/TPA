@@ -11,9 +11,11 @@ import top.craft_hello.tpa.utils.SendMessageUtil
 // 传送工具：立即传送（Folia 安全）与延迟传送（倒计时 + 移动检测）
 object TeleportUtil {
 
-    // 立即传送（Folia 调度器包装）
+    // 立即传送（对齐 3.x：异步调度到实体所属 region 执行，禁止在 join 等事件同步栈内
+    // 直接 teleportAsync——placeNewPlayer 阶段玩家尚未完全进入 chunk loader，会触发
+    // "Player is already removed from player chunk loader" 并导致 region tick 崩溃）
     fun teleport(player: Player, location: Location) {
-        EntitySchedulerUtil.syncTeleport(player, location)
+        HandySchedulerUtil.runTaskAsynchronously { EntitySchedulerUtil.syncTeleport(player, location) }
     }
 
     /**
