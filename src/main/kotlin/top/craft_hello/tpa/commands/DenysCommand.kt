@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
@@ -77,7 +78,10 @@ object DenysCommand {
                 val target = Bukkit.getPlayerExact(playerName)
                     ?: return SendMessageUtil.targetOfflineError(sender, playerName)
                 if (target == sender) return SendMessageUtil.selfOperationError(sender)
-                if (!playerData.addDeny(target.uniqueId.toString())) return SendMessageUtil.alreadyBlacklistedError(sender)
+                if (playerData.isDeny(target.uniqueId.toString())) return SendMessageUtil.alreadyBlacklistedError(sender)
+                // 对齐 3.x：[拒绝并加入黑名单]——加黑名单前先拒绝自己收到的待处理请求
+                if (TeleportRequest.isQueued(sender.uniqueId)) TeleportRequest.tpdeny(sender)
+                playerData.addDeny(target.uniqueId.toString())
                 PlayerDataManager.save(sender)
                 SendMessageUtil.addDenysSuccess(sender, target.name)
             }
