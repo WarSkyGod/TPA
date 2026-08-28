@@ -100,10 +100,35 @@ data class Config(var config: FileConfiguration) {
             .mapNotNull { name -> runCatching { Material.valueOf(name.uppercase(Locale.ROOT)) }.getOrNull() }
             .toSet()
     } else {
-        setOf(Material.LAVA, Material.WATER, Material.FIRE, Material.SOUL_FIRE, Material.MAGMA_BLOCK)
+        DEFAULT_RTP_BLACKLIST
     }
     // 随机传送中心：true=玩家当前位置（默认），false=世界出生点
     var rtpCenterOnPlayer = config.getBoolean("rtp.center_on_player", true)
+
+    companion object {
+        // rtp 黑名单方块默认规则（与 config.yml 默认项保持一致）：
+        // 站立/触碰会受伤、产生负面效果、误触发传送或被困的方块
+        val DEFAULT_RTP_BLACKLIST = setOf(
+            Material.LAVA,              // 岩浆：烧灼
+            Material.WATER,             // 水：溺水/湿身
+            Material.FIRE,              // 火：烧灼
+            Material.SOUL_FIRE,         // 灵魂火：烧灼
+            Material.MAGMA_BLOCK,       // 岩浆块：站立烧灼
+            Material.BEDROCK,           // 基岩：基岩层上方无可站立空间
+            Material.CACTUS,            // 仙人掌：站立扎伤
+            Material.CAMPFIRE,          // 营火：站立烧灼
+            Material.SOUL_CAMPFIRE,     // 灵魂营火：站立烧灼
+            Material.POINTED_DRIPSTONE, // 滴水石锥：坠落刺伤
+            Material.POWDER_SNOW,       // 细雪：陷入冻伤
+            Material.SWEET_BERRY_BUSH,  // 甜浆果丛：穿行扎伤
+            Material.WITHER_ROSE,       // 凋零玫瑰：凋零效果
+            Material.NETHER_PORTAL,     // 下界传送门：误触发维度传送
+            Material.END_PORTAL,        // 末地传送门：误触发维度传送
+            Material.END_GATEWAY,       // 末地折跃门：误触发维度传送
+            Material.BUBBLE_COLUMN,     // 气泡柱：卷入水柱
+            Material.COBWEB,            // 蜘蛛网：被困
+        )
+    }
 
 
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {

@@ -168,13 +168,27 @@ rtp:
   generate_attempts: 5
 
   # 传送位置的黑名单方块列表（脚下/所在/头顶命中任一则该位置无效并重新生成）
-  # 填 Bukkit Material 名称；旧配置文件缺失本项时使用与下方相同的默认规则
+  # 填 Bukkit Material 名称；旧配置文件缺失本项时使用与下方相同的默认规则；
+  # 设为空列表 [] 可关闭黑名单检查
   blacklisted_blocks:
-    - LAVA
-    - WATER
-    - FIRE
-    - SOUL_FIRE
-    - MAGMA_BLOCK
+    - LAVA              # 岩浆：烧灼
+    - WATER             # 水：溺水/湿身
+    - FIRE              # 火：烧灼
+    - SOUL_FIRE         # 灵魂火：烧灼
+    - MAGMA_BLOCK       # 岩浆块：站立烧灼
+    - BEDROCK           # 基岩：基岩层上方无可站立空间
+    - CACTUS            # 仙人掌：站立扎伤
+    - CAMPFIRE          # 营火：站立烧灼
+    - SOUL_CAMPFIRE     # 灵魂营火：站立烧灼
+    - POINTED_DRIPSTONE # 滴水石锥：坠落刺伤
+    - POWDER_SNOW       # 细雪：陷入冻伤
+    - SWEET_BERRY_BUSH  # 甜浆果丛：穿行扎伤
+    - WITHER_ROSE       # 凋零玫瑰：凋零效果
+    - NETHER_PORTAL     # 下界传送门：误触发维度传送
+    - END_PORTAL        # 末地传送门：误触发维度传送
+    - END_GATEWAY       # 末地折跃门：误触发维度传送
+    - BUBBLE_COLUMN     # 气泡柱：卷入水柱
+    - COBWEB            # 蜘蛛网：被困
 
   # 是否以玩家坐标为随机传送中心
   # true: 以玩家当前位置为中心（默认）
