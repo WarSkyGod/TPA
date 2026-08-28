@@ -151,7 +151,8 @@ class TeleportRequest private constructor(
             return true
         }
 
-        // /rtp：随机传送
+        // /rtp：随机传送。随机点生成是异步链（Folia 禁止跨 region 同步取 chunk，
+        // getHighestBlockYAt 必须在目标 chunk 所属 region 线程上调用），完成后继续入队与传送
         fun rtpRequest(sender: Player): Boolean {
             if (checkRequestPending(sender)) return false
             val world = sender.world
@@ -161,19 +162,22 @@ class TeleportRequest private constructor(
             }
             SendMessageUtil.generateRandomLocationMessage(sender)
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleGenerateRandomLocationMessage(sender)
-            // 对齐 3.x：以玩家当前位置为中心随机；超过世界可传送范围时自动夹回
-            val location = findRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, ConfigManager.config.rtpGenerateAttempts)
-            if (location == null) {
-                SendMessageUtil.rtpFailedError(sender)
-                return false
-            }
-            val request = TeleportRequest(RequestType.RTP, sender, null, location, "rtp_name")
-            requestQueue[sender.uniqueId] = request
-            val checkMove = !ConfigManager.config.nonTpaOrTphereDisableCheck
-            if (ConfigManager.config.isEnableTeleportDelay(sender) && checkMove) {
-                delayedTeleport(request, location)
-            } else {
-                finishTeleport(request, location)
+            val attempts = ConfigManager.config.rtpGenerateAttempts
+            // 对齐 3.x：以玩家当前位置为中心随机；随机范围实时收缩到玩家位置与世界边界的可达距离内
+            attemptRandomLocation(world, sender.location.x, sender.location.z, ConfigManager.config.rtpLimitX, ConfigManager.config.rtpLimitZ, attempts, attempts) { location ->
+                if (!sender.isOnline) return@attemptRandomLocation
+                if (location == null) {
+                    SendMessageUtil.rtpFailedError(sender)
+                    return@attemptRandomLocation
+                }
+                val request = TeleportRequest(RequestType.RTP, sender, null, location, "rtp_name")
+                requestQueue[sender.uniqueId] = request
+                val checkMove = !ConfigManager.config.nonTpaOrTphereDisableCheck
+                if (ConfigManager.config.isEnableTeleportDelay(sender) && checkMove) {
+                    delayedTeleport(request, location)
+                } else {
+                    finishTeleport(request, location)
+                }
             }
             return true
         }
@@ -299,9 +303,20 @@ class TeleportRequest private constructor(
             return true
         }
 
-        // 寻找随机传送点：以玩家当前位置为中心 ±limit；超过世界边界实时可传送范围则夹回；
-        // 主世界取地表最高点，下界/末地扫描首个安全柱；最多尝试 maxAttempts 次，全部失败返回 null
-        private fun findRandomLocation(world: World, centerX: Double, centerZ: Double, limitX: Int, limitZ: Int, maxAttempts: Int): Location? {
+        // 寻找随机传送点（异步链，Folia 安全）：
+        // - 以玩家当前位置为中心 ±limit，随机范围实时收缩到玩家位置与当前世界边界的可达距离内
+        // - 必须先 getChunkAtAsync 异步加载目标列所在 chunk（Folia 禁止跨 region 同步取 chunk，
+        //   加载完成后回调在该 chunk 所属 region 线程执行，此时读方块合法）
+        // - 主世界取地表最高点，下界/末地扫描首个安全柱；最多 maxAttempts 次，全部失败回调 null
+        private fun attemptRandomLocation(
+            world: World, centerX: Double, centerZ: Double,
+            limitX: Int, limitZ: Int, maxAttempts: Int, remaining: Int,
+            onResult: (Location?) -> Unit
+        ) {
+            if (remaining <= 0) {
+                onResult(null)
+                return
+            }
             val isScanningWorld = world.environment == World.Environment.NETHER || world.environment == World.Environment.THE_END
             // 实时可传送半径：当前世界边界半径 - 16 格安全边距（未设边界时即坐标极限范围）
             val halfSize = (world.worldBorder.size / 2.0 - 16.0).coerceAtLeast(1.0)
@@ -309,21 +324,21 @@ class TeleportRequest private constructor(
             val borderMaxX = world.worldBorder.center.x + halfSize
             val borderMinZ = world.worldBorder.center.z - halfSize
             val borderMaxZ = world.worldBorder.center.z + halfSize
-            var found: Location? = null
-            var attempts = 0
-            while (attempts < maxAttempts && found == null) {
-                attempts++
-                val x = (centerX + (Math.random() * 2 - 1) * limitX).coerceIn(borderMinX, borderMaxX).toInt()
-                val z = (centerZ + (Math.random() * 2 - 1) * limitZ).coerceIn(borderMinZ, borderMaxZ).toInt()
+            // 玩家当前位置与边界之间的实时最大可传送距离：随机范围据此收缩，落点永不越界
+            val effLimitX = minOf(limitX.toDouble(), maxOf(1.0, minOf(centerX - borderMinX, borderMaxX - centerX)))
+            val effLimitZ = minOf(limitZ.toDouble(), maxOf(1.0, minOf(centerZ - borderMinZ, borderMaxZ - centerZ)))
+            val x = (centerX + (Math.random() * 2 - 1) * effLimitX).toInt()
+            val z = (centerZ + (Math.random() * 2 - 1) * effLimitZ).toInt()
+            world.getChunkAtAsync(x shr 4, z shr 4).thenAccept { _ ->
+                var found: Location? = null
                 if (!isScanningWorld) {
                     val y = world.getHighestBlockYAt(x, z)
                     // 虚空：整列为空或低于世界最低可用高度
-                    if (y <= world.minHeight) continue
-                    if (isSafeStanding(world, x, y, z)) {
+                    if (y > world.minHeight && isSafeStanding(world, x, y, z)) {
                         found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
                     }
                 } else {
-                    // 下界/末地：从最低点向上找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
+                    // 下界/末地：同一 chunk 列内自低向高找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
                     var y = world.minHeight + 1
                     while (y < world.maxHeight - 2) {
                         if (isSafeStanding(world, x, y, z)) {
@@ -333,8 +348,13 @@ class TeleportRequest private constructor(
                         y++
                     }
                 }
+                if (found != null) {
+                    onResult(found)
+                } else {
+                    // 本列不可用，异步尝试下一列
+                    attemptRandomLocation(world, centerX, centerZ, limitX, limitZ, maxAttempts, remaining - 1, onResult)
+                }
             }
-            return found
         }
     }
 }
