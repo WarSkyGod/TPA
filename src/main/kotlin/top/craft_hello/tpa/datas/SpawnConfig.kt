@@ -3,46 +3,30 @@ package top.craft_hello.tpa.datas
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
-import org.bukkit.configuration.file.FileConfiguration
-import org.bukkit.configuration.file.YamlConfiguration
 import top.craft_hello.tpa.TPA
-import java.io.File
+import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.objects.PointStore
 
-data class SpawnConfig(val plugin : TPA) {
-    var configFile = File(plugin.dataFolder, "spawn.yml")
-    lateinit var config : FileConfiguration
-    var worldName : String = "null"
-    var world : World = Bukkit.getWorlds()[0]
-    var x : Double = 0.0
-    var y : Double = 0.0
-    var z : Double = 0.0
-    var yaw : Float = 0.0f
-    var pitch : Float = 0.0f
+// 主城存储（薄壳）：实际读写委托 PointStore（yml：spawn.yml / 数据库：tpa_points 表）
+// 内存缓存 spawnLocation；worldName/x/y/z/yaw/pitch 保留为兼容字段
+data class SpawnConfig(val plugin: TPA) {
+    var worldName: String = "null"
+    var world: World = Bukkit.getWorlds()[0]
+    var x: Double = 0.0
+    var y: Double = 0.0
+    var z: Double = 0.0
+    var yaw: Float = 0.0f
+    var pitch: Float = 0.0f
     var spawnLocation: Location? = null
+    private var store: PointStore
+
     init {
-        loadConfig()
+        store = ConfigManager.createPointStore()
+        loadFromStore()
     }
 
-    fun loadConfig(isReplace : Boolean = false) {
-        if (isReplace || !configFile.exists()) {
-            plugin.saveResource("spawn.yml", isReplace)
-            configFile = File(configFile.absolutePath)
-        }
-        config = YamlConfiguration.loadConfiguration(configFile)
-        worldName = config.getString("spawn.world") ?: "null"
-        if (worldName != "null") {
-            world = Bukkit.getWorld(worldName) ?: Bukkit.getWorlds()[0]
-            x = config.getDouble("spawn.x")
-            y = config.getDouble("spawn.y")
-            z = config.getDouble("spawn.z")
-            yaw = config.getDouble("spawn.yaw").toFloat()
-            pitch = config.getDouble("spawn.pitch").toFloat()
-            spawnLocation = Location(world, x, y, z, yaw, pitch)
-            return
-        }
-    }
-
-    fun setLocation(location : Location) {
+    private fun loadFromStore() {
+        val location = store.loadSpawn() ?: return
         worldName = location.world.name
         world = location.world
         x = location.x
@@ -51,11 +35,22 @@ data class SpawnConfig(val plugin : TPA) {
         yaw = location.yaw
         pitch = location.pitch
         spawnLocation = location
-        saveConfig()
     }
 
-    fun delLocation() : Boolean {
-        if (worldName == "null") return false
+    fun setLocation(location: Location) {
+        worldName = location.world.name
+        world = location.world
+        x = location.x
+        y = location.y
+        z = location.z
+        yaw = location.yaw
+        pitch = location.pitch
+        spawnLocation = location
+        store.saveSpawn(location)
+    }
+
+    fun delLocation(): Boolean {
+        if (worldName == "null" && spawnLocation == null) return false
         worldName = "null"
         world = Bukkit.getWorlds()[0]
         x = 0.0
@@ -64,25 +59,11 @@ data class SpawnConfig(val plugin : TPA) {
         yaw = 0.0f
         pitch = 0.0f
         spawnLocation = null
-        saveConfig(true)
+        store.deleteSpawn()
         return true
     }
 
-    fun saveConfig(isDelete : Boolean = false) {
-        if (isDelete) {
-            config.set("spawn", null)
-        } else {
-            config.set("spawn.world", worldName)
-            config.set("spawn.x", x)
-            config.set("spawn.y", y)
-            config.set("spawn.z", z)
-            config.set("spawn.yaw", yaw.toDouble())
-            config.set("spawn.pitch", pitch.toDouble())
-        }
-        config.save(configFile)
-    }
-
-    fun getLocation() : Location? {
+    fun getLocation(): Location? {
         return spawnLocation
     }
 }

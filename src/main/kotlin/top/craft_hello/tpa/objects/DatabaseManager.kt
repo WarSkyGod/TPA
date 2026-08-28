@@ -2,76 +2,116 @@ package top.craft_hello.tpa.objects
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import org.bukkit.plugin.java.JavaPlugin
 import top.craft_hello.tpa.TPA
+import java.io.File
 import java.sql.Connection
 import java.sql.SQLException
 
-// 数据库连接池（单例）。use_database=false 时不初始化。
-// 表在 4.0 基础上补充 deny_list、logout_location 列，旧库自动升级。
+// 数据库连接池（单例）。
+// - use_database=false 时不初始化
+// - 配置 mysql 连接失败时自动降级为本地 SQLite（data_fallback.db），并在配置修复后由
+//   StorageMigrator 将降级数据自动迁回数据库（迁前复制到 backup/）
+// - 表：player_data（玩家数据）+ tpa_points（spawn/warp 传送点）
 object DatabaseManager {
     private lateinit var plugin: TPA
     private var dataSource: HikariDataSource? = null
 
-    // 当前数据库类型：sqlite / mysql（供存储层区分 upsert 方言）
+    // 当前实际生效的数据库类型：sqlite / mysql（供存储层区分 upsert 方言）
     var databaseType: String = "sqlite"
         private set
 
-    // 初始化数据库连接池（按配置；未启用数据库时跳过）
-    fun setupDatabase(plugin: TPA) {
+    // 是否处于降级状态（配置 mysql 但连接失败，实际使用本地 sqlite 兜底库）
+    var isFallback: Boolean = false
+        private set
+
+    // 降级兜底库文件名
+    val fallbackFileName: String = "data_fallback.db"
+
+    // 主库（配置指定类型）是否当前可用
+    fun isAvailable(): Boolean = dataSource != null
+
+    // 降级兜底库文件
+    fun fallbackFile(): File = File(plugin.dataFolder, fallbackFileName)
+
+    // 初始化数据库连接池（按配置；未启用数据库时跳过）。返回是否获得可用连接。
+    fun setupDatabase(plugin: TPA): Boolean {
         this.plugin = plugin
+        closeDataSource()
         val config = ConfigManager.config
         if (!config.useDatabase) {
             plugin.logger.info("未启用数据库存储（use_database: false），玩家数据将保存到 playerdata 目录")
-            return
+            return false
         }
-        databaseType = config.databaseType.lowercase()
+        val requestedType = config.databaseType.lowercase()
+
+        // 1. 按配置连接（initializationFailTimeout 快速失败，避免 reload 卡 30 秒）
         try {
-            val hikari = HikariConfig().apply {
-                when (databaseType) {
-                    "sqlite" -> {
-                        jdbcUrl = buildString {
-                            append("jdbc:sqlite:${plugin.dataFolder.absolutePath}/")
-                            append(config.databaseName)
-                            append(".db")
-                        }
-                        driverClassName = "org.sqlite.JDBC"
-                        maximumPoolSize = 1
-                    }
+            dataSource = createPool(requestedType)
+            databaseType = requestedType
+            isFallback = false
+            ensureTables()
+            plugin.logger.info("数据库连接池已初始化（$databaseType）")
+            return true
+        } catch (e: Exception) {
+            plugin.logger.warning("数据库连接失败（$requestedType）: ${e.message}")
+        }
 
-                    "mysql" -> {
-                        jdbcUrl = buildString {
-                            append("jdbc:mysql://")
-                            append(config.databaseAddress)
-                            append(":")
-                            append(config.databasePort)
-                            append("/")
-                            append(config.databaseName)
-                        }
-                        username = config.databaseUsername
-                        password = config.databasePassword
-                        driverClassName = "com.mysql.cj.jdbc.Driver"
-                    }
+        // 2. 配置 mysql 连接失败 → 降级本地 SQLite
+        if (requestedType == "mysql") {
+            try {
+                dataSource = createPool("sqlite", fallbackFile())
+                databaseType = "sqlite"
+                isFallback = true
+                ensureTables()
+                plugin.logger.warning("已降级为本地 SQLite 存储（$fallbackFileName），数据暂存本地；配置修复后执行 /tpac reload 将自动迁移回数据库")
+                return true
+            } catch (e: Exception) {
+                plugin.logger.severe("降级 SQLite 连接池创建失败: ${e.message}")
+            }
+        }
 
-                    else -> throw IllegalArgumentException("不支持的数据库类型: $databaseType")
+        plugin.logger.severe("数据库不可用且降级失败，数据将仅保存在内存缓存（重启丢失）")
+        dataSource = null
+        isFallback = false
+        return false
+    }
+
+    private fun createPool(type: String, sqliteFile: File? = null): HikariDataSource {
+        val config = ConfigManager.config
+        val hikari = HikariConfig().apply {
+            when (type) {
+                "sqlite" -> {
+                    jdbcUrl = "jdbc:sqlite:${sqliteFile?.absolutePath ?: "${plugin.dataFolder.absolutePath}/${config.databaseName}.db"}"
+                    driverClassName = "org.sqlite.JDBC"
+                    maximumPoolSize = 1
                 }
 
-                // 连接池配置
-                minimumIdle = 2
-                connectionTimeout = 30000
-                idleTimeout = 600000
-                maxLifetime = 1800000
+                "mysql" -> {
+                    jdbcUrl = buildString {
+                        append("jdbc:mysql://")
+                        append(config.databaseAddress)
+                        append(":")
+                        append(config.databasePort)
+                        append("/")
+                        append(config.databaseName)
+                    }
+                    username = config.databaseUsername
+                    password = config.databasePassword
+                    driverClassName = "com.mysql.cj.jdbc.Driver"
+                }
+
+                else -> throw IllegalArgumentException("不支持的数据库类型: $type")
             }
 
-            dataSource = HikariDataSource(hikari)
-            plugin.logger.info("数据库连接池已初始化（$databaseType）")
-
-            // 确保表存在
-            ensureTableExists()
-
-        } catch (e: Exception) {
-            plugin.logger.severe("数据库初始化失败: ${e.message}")
+            // 连接池配置（initializationFailTimeout 快速失败：5 秒内连不上直接抛异常走降级）
+            minimumIdle = 2
+            maximumPoolSize = 4
+            connectionTimeout = 30000
+            idleTimeout = 600000
+            maxLifetime = 1800000
+            initializationFailTimeout = 5000
         }
+        return HikariDataSource(hikari)
     }
 
     // 获取数据库连接
@@ -86,22 +126,72 @@ object DatabaseManager {
 
     // 关闭连接池
     fun closeDataSource() {
-        dataSource?.close()
-        plugin.logger.info("数据库连接池已关闭")
+        if (dataSource != null) {
+            dataSource?.close()
+            dataSource = null
+            if (this::plugin.isInitialized) plugin.logger.info("数据库连接池已关闭")
+        }
     }
 
-    // 确保表存在，如果不存在则创建；旧表自动补充缺失列
-    private fun ensureTableExists() {
+    // 确保表存在；旧表自动补充缺失列
+    private fun ensureTables() {
         getConnection()?.use { connection ->
-            val tableExists = checkTableExists(connection, "player_data")
-            if (!tableExists) {
-                createPlayerDataTable(connection)
-                plugin.logger.info("已创建 player_data 表")
-            } else {
-                upgradeTable(connection)
-                plugin.logger.info("player_data 表已存在")
-            }
+            ensurePlayerDataTable(connection)
+            ensurePointsTable(connection)
         }
+    }
+
+    private fun ensurePlayerDataTable(connection: Connection) {
+        val tableExists = checkTableExists(connection, "player_data")
+        if (!tableExists) {
+            connection.createStatement().use { statement ->
+                statement.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS player_data (
+                        uuid VARCHAR(36) PRIMARY KEY,
+                        player_name VARCHAR(255) NOT NULL,
+                        language VARCHAR(10) DEFAULT 'zh_CN',
+                        setlang BOOLEAN DEFAULT FALSE,
+                        default_home VARCHAR(255),
+                        homes TEXT,
+                        deny_list TEXT,
+                        last_location TEXT,
+                        logout_location TEXT,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                    """.trimIndent()
+                )
+            }
+            plugin.logger.info("已创建 player_data 表")
+        } else {
+            upgradeTable(connection)
+            plugin.logger.info("player_data 表已存在")
+        }
+    }
+
+    // 确保传送点表存在（spawn/warp 统一存储）
+    private fun ensurePointsTable(connection: Connection) {
+        if (checkTableExists(connection, "tpa_points")) return
+        connection.createStatement().use { statement ->
+            statement.execute(
+                """
+                CREATE TABLE IF NOT EXISTS tpa_points (
+                    point_type VARCHAR(16) NOT NULL,
+                    point_name VARCHAR(255) NOT NULL,
+                    world_name VARCHAR(255) NOT NULL,
+                    x DOUBLE NOT NULL,
+                    y DOUBLE NOT NULL,
+                    z DOUBLE NOT NULL,
+                    yaw DOUBLE NOT NULL,
+                    pitch DOUBLE NOT NULL,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (point_type, point_name)
+                )
+                """.trimIndent()
+            )
+        }
+        plugin.logger.info("已创建 tpa_points 表（spawn/warp 统一传送点存储）")
     }
 
     // 检查表是否存在
@@ -109,29 +199,6 @@ object DatabaseManager {
         val metaData = connection.metaData
         val resultSet = metaData.getTables(null, null, tableName, arrayOf("TABLE"))
         return resultSet.next()
-    }
-
-    // 创建 player_data 表
-    private fun createPlayerDataTable(connection: Connection) {
-        val createTableSQL = """
-                CREATE TABLE IF NOT EXISTS player_data (
-                    uuid VARCHAR(36) PRIMARY KEY,
-                    player_name VARCHAR(255) NOT NULL,
-                    language VARCHAR(10) DEFAULT 'zh_CN',
-                    setlang BOOLEAN DEFAULT FALSE,
-                    default_home VARCHAR(255),
-                    homes TEXT,
-                    deny_list TEXT,
-                    last_location TEXT,
-                    logout_location TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """.trimIndent()
-
-        connection.createStatement().use { statement ->
-            statement.execute(createTableSQL)
-        }
     }
 
     // 旧表升级：补充 4.0 新增列（幂等）

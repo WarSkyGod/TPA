@@ -36,6 +36,7 @@ import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.DatabaseManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
+import top.craft_hello.tpa.objects.StorageMigrator
 import top.craft_hello.tpa.utils.PapiHook
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.VersionUtil
@@ -53,7 +54,12 @@ class TPA : JavaPlugin() {
 
         // 玩家数据存储（yml 默认 / 数据库可选）
         DatabaseManager.setupDatabase(this)
+        StorageMigrator.init(this)
+        // 自动迁移：降级库恢复 / yml↔数据库双向（迁前备份到 backup/）
+        StorageMigrator.migrateAll()
         PlayerDataManager.init(this)
+        // 传送点存储按数据库状态重建（迁移完成后库中数据为最新）
+        ConfigManager.reinitDataStores()
 
         // PlaceholderAPI（可选依赖）
         PapiHook.registerExpansion()

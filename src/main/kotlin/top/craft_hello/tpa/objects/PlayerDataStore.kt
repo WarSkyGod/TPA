@@ -143,7 +143,23 @@ class DatabasePlayerDataStore(private val database: DatabaseManager) : PlayerDat
     override fun save(data: PlayerData) {
         val homesRaw = data.homes.mapValues { encodeLocation(it.value) ?: "" }
         database.getConnection()?.use { connection ->
-            connection.prepareStatement(
+            // 方言分支：MySQL 用 ON DUPLICATE KEY UPDATE，SQLite 用 ON CONFLICT
+            val upsert = if (database.databaseType == "mysql") {
+                """
+                INSERT INTO player_data (uuid, player_name, language, setlang, default_home, homes, last_location, logout_location, deny_list, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    player_name = VALUES(player_name),
+                    language = VALUES(language),
+                    setlang = VALUES(setlang),
+                    default_home = VALUES(default_home),
+                    homes = VALUES(homes),
+                    last_location = VALUES(last_location),
+                    logout_location = VALUES(logout_location),
+                    deny_list = VALUES(deny_list),
+                    updated_at = CURRENT_TIMESTAMP
+                """.trimIndent()
+            } else {
                 """
                 INSERT INTO player_data (uuid, player_name, language, setlang, default_home, homes, last_location, logout_location, deny_list, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
@@ -158,7 +174,8 @@ class DatabasePlayerDataStore(private val database: DatabaseManager) : PlayerDat
                     deny_list = excluded.deny_list,
                     updated_at = CURRENT_TIMESTAMP
                 """.trimIndent()
-            ).use { statement ->
+            }
+            connection.prepareStatement(upsert).use { statement ->
                 statement.setString(1, data.uuid.toString())
                 statement.setString(2, data.playerName)
                 statement.setString(3, data.language)
