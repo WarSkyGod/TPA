@@ -9,6 +9,8 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import top.craft_hello.tpa.enums.PermissionType
+import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import java.util.UUID
@@ -499,21 +501,22 @@ class SendMessageUtil {
             val language = LanguageManager.getLanguage(executor)
             for (targetName in targetNames) {
                 sendMessage(executor, language.getFormatMessage(executor, "prefix").append(Component.text(targetName)))
-                val row = Component.empty()
+                // Adventure Component 不可变：append 返回新组件，必须重新赋值（否则按钮全部丢失）
+                var row: Component = Component.empty()
                 if (teleportButton) {
-                    row.append(language.getFormatMessage(executor, "teleport_button", targetName, command))
+                    row = row.append(language.getFormatMessage(executor, "teleport_button", targetName, command))
                 }
                 if (settingButton) {
-                    row.append(language.getFormatMessage(executor, "location_set_button", targetName, command))
+                    row = row.append(language.getFormatMessage(executor, "location_set_button", targetName, command))
                 }
                 if (settingDefaultHomeButton && command == "home" && !defaultHomeEquals(executor, targetName)) {
-                    row.append(language.getFormatMessage(executor, "default_home_set_button", targetName, command))
+                    row = row.append(language.getFormatMessage(executor, "default_home_set_button", targetName, command))
                 }
                 if (deleteButton) {
-                    row.append(language.getFormatMessage(executor, "delete_button", targetName, command))
+                    row = row.append(language.getFormatMessage(executor, "delete_button", targetName, command))
                 }
                 if (removeDenysButton) {
-                    row.append(language.getFormatMessage(executor, "blacklist.remove_button", targetName))
+                    row = row.append(language.getFormatMessage(executor, "blacklist.remove_button", targetName))
                 }
                 sendMessage(executor, row)
             }
@@ -527,7 +530,8 @@ class SendMessageUtil {
         // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除 按钮）
         fun homeListMessage(executor: Player, homeNameList: List<String>) {
             if (homeNameList.isEmpty()) {
-                sendMessageForPath(executor, "not_homes")
+                // 对齐 3.x：空列表用 error.no_homes_set（not_homes 在 3.x 仅用于 tab 补全提示文字）
+                sendMessageForPath(executor, "error.no_homes_set")
                 return
             }
             sendMessageForPath(executor, "home.list_header")
@@ -543,7 +547,10 @@ class SendMessageUtil {
             }
             sendMessageForPath(sender, "warp.list_header")
             if (sender is Player) {
-                listMessage(sender, warpList, "warp", teleportButton = true)
+                // 对齐 3.x：设置位置/删除按钮按管理权限显示
+                val settingButton = ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP)
+                val deleteButton = ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)
+                listMessage(sender, warpList, "warp", teleportButton = true, settingButton = settingButton, deleteButton = deleteButton)
             } else {
                 for (warpName in warpList) sendMessage(sender, Component.text(warpName))
             }

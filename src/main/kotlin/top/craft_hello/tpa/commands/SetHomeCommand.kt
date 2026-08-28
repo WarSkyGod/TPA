@@ -38,12 +38,28 @@ object SetHomeCommand {
             return SendMessageUtil.commandCooldownError(sender, TeleportRequest.getCommandDelayRemaining(sender.uniqueId).toString())
         }
 
-        val homeName = context.getArgumentOrNull<String>("home")
-            ?: return SendMessageUtil.syntaxHomeError(sender, "sethome")
         val playerData = PlayerDataManager.get(sender)
+        val homeName = context.getArgumentOrNull<String>("home")
+
+        // 无参：对齐 3.x setHomeLocation(location)——有默认家则替换其位置，否则设置名为 default 的默认家
+        if (homeName == null) {
+            val defaultHomeName = playerData.defaultHomeName ?: "default"
+            if (!playerData.homes.containsKey(defaultHomeName)) {
+                if (ConfigManager.config.isHomeAmountExceeded(sender, playerData.homes.size)) {
+                    return SendMessageUtil.homeMaxLimitError(sender, ConfigManager.config.homeAmountMax(sender).toString())
+                }
+                playerData.defaultHomeName = defaultHomeName
+            }
+            playerData.setHome(defaultHomeName, sender.location)
+            PlayerDataManager.save(sender)
+            return SendMessageUtil.setHomeSuccess(sender, defaultHomeName)
+        }
+
+        // 带名：对齐 3.x setHomeLocation(name, location)——新家受数量上限约束；无默认家时该名字成为默认家
         if (!playerData.homes.containsKey(homeName) && ConfigManager.config.isHomeAmountExceeded(sender, playerData.homes.size)) {
             return SendMessageUtil.homeMaxLimitError(sender, ConfigManager.config.homeAmountMax(sender).toString())
         }
+        if (playerData.defaultHomeName == null) playerData.defaultHomeName = homeName
         playerData.setHome(homeName, sender.location)
         PlayerDataManager.save(sender)
         return SendMessageUtil.setHomeSuccess(sender, homeName)
