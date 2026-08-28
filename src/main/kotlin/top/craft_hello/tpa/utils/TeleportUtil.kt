@@ -26,9 +26,9 @@ object TeleportUtil {
      */
     fun delayTeleport(player: Player, location: Location, targetName: String, onComplete: () -> Unit, onCancel: () -> Unit) {
         val delay = ConfigManager.config.getTeleportDelay(player)
+        // "已传送至 xx"的完成标题由传送执行点统一发送（finishTeleport / delayedTeleportTo），
+        // 保证 0 秒玩家（管理员/无延迟权限）同样显示且不与倒计时结束段重复
         if (delay <= 0) {
-            // 0 秒传送（管理员/无延迟权限）同样显示"传送到 xx"标题
-            if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, targetName)
             onComplete()
             return
         }
@@ -54,7 +54,6 @@ object TeleportUtil {
                 remaining--
                 if (remaining <= 0) {
                     cancel()
-                    if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(player, targetName)
                     onComplete()
                     return
                 }

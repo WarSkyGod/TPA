@@ -240,6 +240,7 @@ class TeleportRequest private constructor(
                     mover, destination, opponentName,
                     onComplete = {
                         TeleportUtil.teleport(mover, destination)
+                        if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
                         startCommandDelay(mover)
                     },
                     onCancel = {
@@ -248,6 +249,7 @@ class TeleportRequest private constructor(
                 )
             } else {
                 TeleportUtil.teleport(mover, destination)
+                if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
                 SendMessageUtil.youTeleportedToMessage(mover, opponentName)
                 startCommandDelay(mover)
             }
@@ -268,11 +270,13 @@ class TeleportRequest private constructor(
             )
         }
 
-        // 完成传送：出队 + 传送 + 成功消息 + 命令冷却
+        // 完成传送：出队 + 传送 + 成功消息 + 命令冷却（"已传送至 xx"标题在此统一发送，
+        // 覆盖 0 秒直达与倒计时结束两条路径）
         private fun finishTeleport(request: TeleportRequest, location: Location) {
             val sender = request.requester
             requestQueue.remove(sender.uniqueId)
             if (!sender.isOnline) return
+            if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(sender, request.targetName)
             val successMessage: (Player, String) -> Unit = when (request.requestType) {
                 RequestType.WARP -> SendMessageUtil::tpToWarpMessage
                 RequestType.HOME -> SendMessageUtil::tpToHomeMessage
