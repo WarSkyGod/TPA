@@ -342,10 +342,11 @@ class TeleportRequest private constructor(
             world.getChunkAtAsync(x shr 4, z shr 4).thenAccept { _ ->
                 var found: Location? = null
                 if (!isScanningWorld) {
-                    val y = world.getHighestBlockYAt(x, z)
+                    // getHighestBlockYAt 返回最高实体方块所在层（站立地面层），脚层是其上一格
+                    val groundY = world.getHighestBlockYAt(x, z)
                     // 虚空：整列为空或低于世界最低可用高度
-                    if (y > world.minHeight && isSafeStanding(world, x, y, z)) {
-                        found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                    if (groundY > world.minHeight && isSafeStanding(world, x, groundY + 1, z)) {
+                        found = Location(world, x + 0.5, (groundY + 1).toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
                     }
                 } else {
                     // 下界/末地：同一 chunk 列内自低向高找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
