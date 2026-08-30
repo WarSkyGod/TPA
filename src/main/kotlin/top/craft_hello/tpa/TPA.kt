@@ -34,6 +34,7 @@ import top.craft_hello.tpa.events.TPAPlayerRespawnEvent
 import top.craft_hello.tpa.events.TPAPlayerTeleportEvent
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.DatabaseManager
+import top.craft_hello.tpa.objects.EconomyHook
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.objects.StorageMigrator
@@ -60,6 +61,13 @@ class TPA : JavaPlugin() {
         PlayerDataManager.init(this)
         // 传送点存储按数据库状态重建（迁移完成后库中数据为最新）
         ConfigManager.reinitDataStores()
+
+        // 经济前置挂钩（Vault/PlayerPoints 可选）：费用启用但货币系统缺失时警告
+        EconomyHook.init(this)
+        if (ConfigManager.config.costEnable && !EconomyHook.isCurrencyAvailable(ConfigManager.config.costCurrency)) {
+            val needed = if (ConfigManager.config.costCurrency == "points") "PlayerPoints" else "Vault"
+            logger.warning("传送费用已启用（cost.enable: true）但货币系统（${ConfigManager.config.costCurrency}）不可用：$needed 未安装或未提供经济/点券服务，费用将不收取")
+        }
 
         // PlaceholderAPI（可选依赖）
         PapiHook.registerExpansion()

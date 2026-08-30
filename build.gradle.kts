@@ -25,6 +25,14 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
         name = "placeholderapi-repo"
     }
+    // Vault（可选经济前置，仅编译期）
+    maven("https://jitpack.io") {
+        name = "jitpack-repo"
+    }
+    // PlayerPoints（可选点券前置，仅编译期，官方仓库）
+    maven("https://repo.rosewooddev.io/repository/public/") {
+        name = "rosewood-repo"
+    }
 }
 
 dependencies {
@@ -35,6 +43,10 @@ dependencies {
     implementation("com.zaxxer:HikariCP:4.0.3")
     // PlaceholderAPI 可选依赖：仅编译期，运行时由服务器按需注入
     compileOnly("me.clip:placeholderapi:2.11.6")
+    // Vault / PlayerPoints 可选前置：仅编译期，运行时由服务器按需注入（paper-plugin.yml join-classpath）
+    // VaultAPI 经 JitPack；PlayerPoints 坐标按官方 Wiki（org.black_ixx:playerpoints）
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1") { isTransitive = false }
+    compileOnly("org.black_ixx:playerpoints:3.3.5") { isTransitive = false }
 }
 
 tasks {
@@ -42,7 +54,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("26.1.2")
+        minecraftVersion("26.2")
         jvmArgs = listOf(
             "-Dfile.encoding=UTF-8",
             "-Dconsole.encoding=UTF-8",

@@ -20,7 +20,7 @@ class SendMessageUtil {
     companion object {
         // 发送消息
         fun sendMessage(sender: CommandSender?, message: Component) {
-            if (sender != null) sender.sendMessage(message)
+            sender?.sendMessage(message)
         }
 
         // 根据 path 读取配置文件中的消息并发送
@@ -209,6 +209,25 @@ class SendMessageUtil {
         fun rtpFailedError(player: Player) : Int {
             sendMessageForPath(player, "rtp.failed")
             return Command.SINGLE_SUCCESS
+        }
+
+        // =============== 传送费用消息 ===============
+
+        // 传送扣费成功（cost/balance/currency 命名占位符）
+        fun costChargedMessage(player: Player, cost: String, balance: String, currencyName: String) {
+            val language = LanguageManager.getLanguage(player)
+            sendMessage(player, language.getCostMessage(player, "teleport.cost_charged", cost, balance, currencyName))
+        }
+
+        // 余额不足错误（发起预检与执行扣费共用）
+        fun costInsufficientError(player: Player, cost: String, balance: String, currencyName: String) {
+            val language = LanguageManager.getLanguage(player)
+            sendMessage(player, language.getCostMessage(player, "error.cost_insufficient", cost, balance, currencyName))
+        }
+
+        // 因发起者余额不足，移动者侧取消提示
+        fun costTeleportBlockedError(player: Player, payerName: String) {
+            sendMessageForPath(player, "error.cost_teleport_blocked", payerName)
         }
 
         // 插件运行时错误

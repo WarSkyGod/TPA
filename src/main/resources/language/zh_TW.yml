@@ -157,6 +157,13 @@ teleport.logout_location: "<green><bold>已傳送至 </bold><gold><bold>%target%
 # 系統訊息
 #=======================
 system.config_reloaded: "<green><bold>設定檔已重新載入！</bold>"
+## 传送费用
+error.cost_insufficient: "<bold><red>余额不足！本次传送需要</red> <gold>{cost}</gold> {currency}<red>，当前余额</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>余额不足，本次传送已取消</red></bold>"
+teleport.cost_charged: "<bold><green>本次传送消耗</green> <gold>{cost}</gold> {currency}<green>，当前余额</green> <gold>{balance}</green></bold>"
+system.currency_money: "金钱"
+system.currency_points: "点券"
+
 system.plugin_loaded: "<green><bold>插件已啟用！目前版本：</bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>插件已停用！</bold>"
 system.config_migrated_success: "<green><bold>設定檔遷移完成！</bold>"

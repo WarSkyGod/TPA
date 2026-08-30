@@ -157,6 +157,13 @@ teleport.logout_location: "<green><bold>Teleported to </bold><gold><bold>%target
 # System Messages
 #=======================
 system.config_reloaded: "<green><bold>Config reloaded!</bold>"
+## Teleport cost
+error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
+teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</green></bold>"
+system.currency_money: "money"
+system.currency_points: "points"
+
 system.plugin_loaded: "<green><bold>Plugin loaded! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin unloaded!</bold>"
 system.config_migrated_success: "<green><bold>Config migration completed!</bold>"

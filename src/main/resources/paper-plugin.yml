@@ -7,11 +7,20 @@ author: WarSkyGod
 website: https://github.com/WarSkyGod/TPA
 folia-supported: true
 
-# PlaceholderAPI 为可选依赖：存在时提供 %tpa_*% 占位符
+# 可选依赖：PlaceholderAPI 存在时提供 %tpa_*% 占位符；
+# Vault/PlayerPoints 存在时提供传送费用货币支持（金钱/点券）
 dependencies:
   server:
     PlaceholderAPI:
       load: BEFORE
+      required: false
+      join-classpath: true
+    Vault:
+      load: OMIT
+      required: false
+      join-classpath: true
+    PlayerPoints:
+      load: OMIT
       required: false
       join-classpath: true
 

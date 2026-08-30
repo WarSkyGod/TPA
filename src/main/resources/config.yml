@@ -71,6 +71,40 @@ sound:
     volume: 1.0
     pitch: 1.0
 
+# 传送费用设置（非管理传送命令：tpa/tphere/home/warp/spawn/back/rtp/tplogout）
+# 需要可选前置：money=Vault（金钱），points=PlayerPoints（点券）
+# 对应前置未安装时费用功能自动跳过（免费传送，不阻塞使用）
+cost:
+  # 是否启用传送费用
+  enable: false
+
+  # 费用货币类型：money=金钱（Vault）/ points=点券（PlayerPoints）
+  currency: money
+
+  # 各传送命令费用（0 为免费）
+  price:
+    tpa: 0
+    tphere: 0
+    home: 0
+    warp: 0
+    spawn: 0
+    back: 0
+    rtp: 0
+    tplogout: 0
+
+  # 会员优惠模式：percent=百分比（vip_discount 值为实付百分比，50 = 半价）
+  #             amount=固定减免（vip_discount 值为直接减免的金额，5 = 少付 5）
+  discount_mode: percent
+
+  # 会员优惠：沿用 tpa.vip / tpa.vip+ / tpa.mvp / tpa.mvp+ / tpa.mvp++ 既有权限（不引入新权限）
+  # 配置各会员等级的优惠值（含义由上方 discount_mode 决定），多项命中取最优惠，未配置的等级无优惠
+  vip_discount:
+    vip: 50
+    "vip+": 30
+    mvp: 20
+    "mvp+": 10
+    "mvp++": 5
+
 # 延迟设置（单位：秒）
 delay:
   # 对方最晚可以在多长时间内接受？（最低不能小于3秒）

@@ -38,6 +38,22 @@ data class Config(var config: FileConfiguration) {
     var soundCancel: Sound = loadSound("sound.cancel.name", "BLOCK_NOTE_BLOCK_BASS")
     var soundCancelVolume = config.getDouble("sound.cancel.volume", 1.0).toFloat()
     var soundCancelPitch = config.getDouble("sound.cancel.pitch", 1.0).toFloat()
+    // 传送费用（非管理传送命令）：money=Vault 金钱 / points=PlayerPoints 点券；
+    // 前置未安装时费用功能自动跳过（免费）。会员折扣沿用 tpa.vip 体系权限。
+    var costEnable = config.getBoolean("cost.enable")
+    var costCurrency = config.getString("cost.currency") ?: "money"
+    // 会员优惠模式：percent=vip_discount 值为实付百分比 / amount=值为固定减免金额
+    var costDiscountMode = config.getString("cost.discount_mode") ?: "percent"
+    var costPrices: Map<String, Double> = buildMap {
+        for (key in listOf("tpa", "tphere", "home", "warp", "spawn", "back", "rtp", "tplogout")) {
+            put(key, config.getDouble("cost.price.$key"))
+        }
+    }
+    var costVipDiscount: Map<String, Double> = buildMap {
+        config.getConfigurationSection("cost.vip_discount")?.getKeys(false)?.forEach { level ->
+            put(level, config.getDouble("cost.vip_discount.$level", 100.0))
+        }
+    }
     var acceptDelay = config.getInt("delay.accept").coerceAtLeast(3)
     var enableTeleportDelay = config.getBoolean("delay.enable_teleport")
     var enableCommandDelay = config.getBoolean("delay.enable_command")

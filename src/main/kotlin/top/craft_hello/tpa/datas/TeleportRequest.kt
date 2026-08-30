@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
+import top.craft_hello.tpa.objects.TeleportCost
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.TeleportUtil
 import java.util.UUID
@@ -66,6 +67,8 @@ class TeleportRequest private constructor(
         // /tpa：请求方传送到目标
         fun tpRequest(requester: Player, target: Player): Boolean {
             if (checkSelf(requester, target) || checkRequestPending(requester, target)) return false
+            // 传送费用发起预检：余额不足直接报错，不进入请求流程
+            if (!TeleportCost.precheck(requester, "tpa")) return false
             val requesterData = PlayerDataManager.get(requester)
             if (requesterData.isDeny(target.uniqueId.toString())) {
                 SendMessageUtil.alreadyBlacklistedError(requester)
@@ -86,6 +89,8 @@ class TeleportRequest private constructor(
         // /tphere：目标传送到请求方
         fun tpHereRequest(requester: Player, target: Player): Boolean {
             if (checkSelf(requester, target) || checkRequestPending(requester, target)) return false
+            // 传送费用发起预检：发起者付费
+            if (!TeleportCost.precheck(requester, "tphere")) return false
             val requesterData = PlayerDataManager.get(requester)
             if (requesterData.isDeny(target.uniqueId.toString())) {
                 SendMessageUtil.alreadyBlacklistedError(requester)
@@ -117,8 +122,8 @@ class TeleportRequest private constructor(
             }
             SendMessageUtil.acceptMessage(requester, accepter)
             when (request.requestType) {
-                RequestType.TPA -> delayedTeleportTo(mover = requester, destination = accepter.location, opponent = accepter)
-                RequestType.TPA_HERE -> delayedTeleportTo(mover = accepter, destination = requester.location, opponent = requester)
+                RequestType.TPA -> delayedTeleportTo(mover = requester, destination = accepter.location, opponent = accepter, costPayer = requester, costKey = "tpa")
+                RequestType.TPA_HERE -> delayedTeleportTo(mover = accepter, destination = requester.location, opponent = requester, costPayer = requester, costKey = "tphere")
                 else -> {}
             }
             return true
@@ -138,6 +143,9 @@ class TeleportRequest private constructor(
         // 位置类传送（warp/home/spawn/back/tplogout）
         fun locationRequest(sender: Player, requestType: RequestType, location: Location, targetName: String): Boolean {
             if (checkRequestPending(sender)) return false
+            // 传送费用发起预检：余额不足直接报错，不进入请求流程
+            val costKey = TeleportCost.costKeyOf(requestType)
+            if (costKey != null && !TeleportCost.precheck(sender, costKey)) return false
             val request = TeleportRequest(requestType, sender, null, location, targetName)
             requestQueue[sender.uniqueId] = request
             // 移动检测：non_tpa_or_tphere_disable_check 为 true 时跳过
@@ -154,6 +162,8 @@ class TeleportRequest private constructor(
         // getHighestBlockYAt 必须在目标 chunk 所属 region 线程上调用），完成后继续入队与传送
         fun rtpRequest(sender: Player): Boolean {
             if (checkRequestPending(sender)) return false
+            // 传送费用发起预检
+            if (!TeleportCost.precheck(sender, "rtp")) return false
             val world = sender.world
             if (ConfigManager.config.isRtpDisableWorld(world)) {
                 SendMessageUtil.worldDisabledError(sender)
@@ -233,16 +243,22 @@ class TeleportRequest private constructor(
             return false
         }
 
-        // 玩家对玩家的延迟传送（tpaccept 后）：移动者倒计时，移动取消则通知双方
-        private fun delayedTeleportTo(mover: Player, destination: Location, opponent: Player) {
+        // 玩家对玩家的延迟传送（tpaccept 后）：移动者倒计时，移动取消则通知双方。
+        // costPayer/costKey：传送执行前扣费的付费人与费用键（发起者付费，mover 可能≠付费人）
+        private fun delayedTeleportTo(mover: Player, destination: Location, opponent: Player, costPayer: Player?, costKey: String?) {
             val opponentName = opponent.name
             if (ConfigManager.config.isEnableTeleportDelay(mover)) {
                 TeleportUtil.delayTeleport(
                     mover, destination, opponentName,
                     onComplete = {
-                        TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
-                        if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
-                        startCommandDelay(mover)
+                        // 倒计时结束：先扣费，扣费失败则取消传送（付费人与移动者不是同一人时分别提示）
+                        if (costPayer == null || costKey == null || TeleportCost.charge(costPayer, costKey)) {
+                            TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
+                            if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
+                            startCommandDelay(mover)
+                        } else if (mover !== costPayer) {
+                            SendMessageUtil.costTeleportBlockedError(mover, costPayer.name)
+                        }
                     },
                     onCancel = {
                         SendMessageUtil.playTeleportCancelSound(mover)
@@ -250,6 +266,11 @@ class TeleportRequest private constructor(
                     }
                 )
             } else {
+                // 0 秒直达：传送前扣费，失败则取消传送
+                if (costPayer != null && costKey != null && !TeleportCost.charge(costPayer, costKey)) {
+                    if (mover !== costPayer) SendMessageUtil.costTeleportBlockedError(mover, costPayer.name)
+                    return
+                }
                 TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
                 if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
                 SendMessageUtil.youTeleportedToMessage(mover, opponentName)
@@ -274,11 +295,13 @@ class TeleportRequest private constructor(
         }
 
         // 完成传送：出队 + 传送 + 成功消息 + 命令冷却（"已传送至 xx"标题在此统一发送，
-        // 覆盖 0 秒直达与倒计时结束两条路径）
+        // 覆盖 0 秒直达与倒计时结束两条路径）。传送前扣费，失败则请求作废不传送。
         private fun finishTeleport(request: TeleportRequest, location: Location) {
             val sender = request.requester
             requestQueue.remove(sender.uniqueId)
             if (!sender.isOnline) return
+            val costKey = TeleportCost.costKeyOf(request.requestType)
+            if (costKey != null && !TeleportCost.charge(sender, costKey)) return
             if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(sender, request.targetName)
             val successMessage: (Player, String) -> Unit = when (request.requestType) {
                 RequestType.WARP -> SendMessageUtil::tpToWarpMessage
