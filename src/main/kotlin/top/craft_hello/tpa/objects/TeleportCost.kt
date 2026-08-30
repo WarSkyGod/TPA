@@ -13,7 +13,7 @@ import java.math.RoundingMode
 // 由配置 vip_discount 指定各等级实付百分比，多项命中取最优惠。
 object TeleportCost {
 
-    // 请求类型 → 配置费用键（无对应键的类型不收费）
+    // 请求类型 → 配置费用键（无对应键的类型不收费；tplogout 为管理指令不收费）
     fun costKeyOf(type: RequestType): String? {
         return when (type) {
             RequestType.TPA -> "tpa"
@@ -23,7 +23,6 @@ object TeleportCost {
             RequestType.SPAWN -> "spawn"
             RequestType.BACK -> "back"
             RequestType.RTP -> "rtp"
-            RequestType.TP_LOGOUT -> "tplogout"
             else -> null
         }
     }

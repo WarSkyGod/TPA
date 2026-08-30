@@ -45,7 +45,7 @@ data class Config(var config: FileConfiguration) {
     // 会员优惠模式：percent=vip_discount 值为实付百分比 / amount=值为固定减免金额
     var costDiscountMode = config.getString("cost.discount_mode") ?: "percent"
     var costPrices: Map<String, Double> = buildMap {
-        for (key in listOf("tpa", "tphere", "home", "warp", "spawn", "back", "rtp", "tplogout")) {
+        for (key in listOf("tpa", "tphere", "home", "warp", "spawn", "back", "rtp")) {
             put(key, config.getDouble("cost.price.$key"))
         }
     }
