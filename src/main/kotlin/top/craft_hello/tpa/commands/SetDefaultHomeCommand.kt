@@ -12,6 +12,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /setdefaulthome <名称>：设置默认家
@@ -20,7 +21,7 @@ object SetDefaultHomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("setdefaulthome")
             .requires { ConfigManager.config.isEnableCommand(CommandType.SET_DEFAULT_HOME) }
-            .executes { context -> executeSetDefaultHome(context) }
+            .executes { context -> SafeGuard.command(context) { executeSetDefaultHome(context) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -33,7 +34,7 @@ object SetDefaultHomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeSetDefaultHome(context) }
+                    .executes { context -> SafeGuard.command(context) { executeSetDefaultHome(context) } }
             )
             .build()
     }

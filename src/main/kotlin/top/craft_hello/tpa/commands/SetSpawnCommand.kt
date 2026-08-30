@@ -9,6 +9,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /setspawn：在当前位置设置主城
@@ -16,7 +17,7 @@ object SetSpawnCommand {
 
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("setspawn")
-            .executes { context -> executeSetSpawn(context) }
+            .executes { context -> SafeGuard.command(context) { executeSetSpawn(context) } }
             .build()
     }
 

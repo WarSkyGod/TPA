@@ -15,6 +15,7 @@ import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.datas.TeleportRequest
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.TeleportUtil
 import top.craft_hello.tpa.utils.VersionUtil
@@ -23,9 +24,11 @@ import top.craft_hello.tpa.utils.VersionUtil
 object TPAPlayerDeathEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerDeath(event: PlayerDeathEvent) {
-        val player = event.player
-        PlayerDataManager.get(player).lastLocation = player.location
-        PlayerDataManager.save(player)
+        SafeGuard.event("onPlayerDeath") {
+            val player = event.player
+            PlayerDataManager.get(player).lastLocation = player.location
+            PlayerDataManager.save(player)
+        }
     }
 }
 
@@ -33,36 +36,38 @@ object TPAPlayerDeathEvent : Listener {
 object TPAPlayerJoinEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        val player = event.player
-        val playerData = PlayerDataManager.get(player)
-        playerData.playerName = player.name
-        PlayerDataManager.save(player)
+        SafeGuard.event("onPlayerJoin") {
+            val player = event.player
+            val playerData = PlayerDataManager.get(player)
+            playerData.playerName = player.name
+            PlayerDataManager.save(player)
 
-        // 未手动设置语言时跟随客户端语言
-        if (!playerData.setlang) {
-            val clientLanguage = LanguageManager.formatLangStr(
-                buildString {
-                    append(player.locale().language)
-                    append("_")
-                    append(player.locale().country)
+            // 未手动设置语言时跟随客户端语言
+            if (!playerData.setlang) {
+                val clientLanguage = LanguageManager.formatLangStr(
+                    buildString {
+                        append(player.locale().language)
+                        append("_")
+                        append(player.locale().country)
+                    }
+                )
+                if (LanguageManager.hasLanguage(clientLanguage)) {
+                    playerData.language = clientLanguage
+                    PlayerDataManager.save(player)
                 }
-            )
-            if (LanguageManager.hasLanguage(clientLanguage)) {
-                playerData.language = clientLanguage
-                PlayerDataManager.save(player)
             }
-        }
 
-        // force_spawn：加入服务器强制传送到主城
-        if (ConfigManager.config.forceSpawn) {
-            val spawnLocation = ConfigManager.spawnConfig.getLocation()
-            if (spawnLocation != null) TeleportUtil.teleport(player, spawnLocation)
-        }
+            // force_spawn：加入服务器强制传送到主城
+            if (ConfigManager.config.forceSpawn) {
+                val spawnLocation = ConfigManager.spawnConfig.getLocation()
+                if (spawnLocation != null) TeleportUtil.teleport(player, spawnLocation)
+            }
 
-        // 更新检查通知（有权限的管理者）
-        if (ConfigManager.config.updateCheck && PermissionType.hasPermission(player, PermissionType.VERSION)) {
-            HandySchedulerUtil.runTaskAsynchronously {
-                VersionUtil.updateCheck(player)
+            // 更新检查通知（有权限的管理者）
+            if (ConfigManager.config.updateCheck && PermissionType.hasPermission(player, PermissionType.VERSION)) {
+                HandySchedulerUtil.runTaskAsynchronously {
+                    VersionUtil.updateCheck(player)
+                }
             }
         }
     }
@@ -72,12 +77,14 @@ object TPAPlayerJoinEvent : Listener {
 object TPAPlayerQuitEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerQuit(event: PlayerQuitEvent) {
-        val player = event.player
-        val playerData = PlayerDataManager.getIfLoaded(player.uniqueId) ?: return
-        playerData.logoutLocation = player.location
-        PlayerDataManager.save(player)
-        PlayerDataManager.unload(player.uniqueId)
-        TeleportRequest.clearQueue(player.uniqueId)
+        SafeGuard.event("onPlayerQuit") {
+            val player = event.player
+            val playerData = PlayerDataManager.getIfLoaded(player.uniqueId) ?: return@event
+            playerData.logoutLocation = player.location
+            PlayerDataManager.save(player)
+            PlayerDataManager.unload(player.uniqueId)
+            TeleportRequest.clearQueue(player.uniqueId)
+        }
     }
 }
 
@@ -85,9 +92,11 @@ object TPAPlayerQuitEvent : Listener {
 object TPAPlayerRespawnEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
-        if (!ConfigManager.config.forceSpawn) return
-        val spawnLocation = ConfigManager.spawnConfig.getLocation() ?: return
-        event.respawnLocation = spawnLocation
+        SafeGuard.event("onPlayerRespawn") {
+            if (!ConfigManager.config.forceSpawn) return@event
+            val spawnLocation = ConfigManager.spawnConfig.getLocation() ?: return@event
+            event.respawnLocation = spawnLocation
+        }
     }
 }
 
@@ -95,11 +104,13 @@ object TPAPlayerRespawnEvent : Listener {
 object TPAPlayerTeleportEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
-        val cause = event.cause.name
-        if (cause != "COMMAND" && cause != "PLUGIN") return
-        val player = event.player
-        PlayerDataManager.get(player).lastLocation = event.from
-        PlayerDataManager.save(player)
+        SafeGuard.event("onPlayerTeleport") {
+            val cause = event.cause.name
+            if (cause != "COMMAND" && cause != "PLUGIN") return@event
+            val player = event.player
+            PlayerDataManager.get(player).lastLocation = event.from
+            PlayerDataManager.save(player)
+        }
     }
 }
 
@@ -107,13 +118,15 @@ object TPAPlayerTeleportEvent : Listener {
 object TPAPlayerLocaleChangeEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerLocaleChange(event: PlayerLocaleChangeEvent) {
-        val player = event.player
-        val playerData = PlayerDataManager.getIfLoaded(player.uniqueId) ?: return
-        if (playerData.setlang) return
-        val clientLanguage = LanguageManager.formatLangStr(event.locale)
-        if (LanguageManager.hasLanguage(clientLanguage) && playerData.language != clientLanguage) {
-            playerData.language = clientLanguage
-            PlayerDataManager.save(player)
+        SafeGuard.event("onPlayerLocaleChange") {
+            val player = event.player
+            val playerData = PlayerDataManager.getIfLoaded(player.uniqueId) ?: return@event
+            if (playerData.setlang) return@event
+            val clientLanguage = LanguageManager.formatLangStr(event.locale)
+            if (LanguageManager.hasLanguage(clientLanguage) && playerData.language != clientLanguage) {
+                playerData.language = clientLanguage
+                PlayerDataManager.save(player)
+            }
         }
     }
 }

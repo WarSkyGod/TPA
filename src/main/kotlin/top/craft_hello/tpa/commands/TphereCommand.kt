@@ -13,6 +13,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tphere <玩家>：请求对方传送到自己位置
@@ -21,7 +22,7 @@ object TphereCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tphere")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_HERE) }
-            .executes { context -> executeTphere(context) }
+            .executes { context -> SafeGuard.command(context) { executeTphere(context) } }
             .then(
                 Commands.argument("player", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -36,7 +37,7 @@ object TphereCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeTphere(context) }
+                    .executes { context -> SafeGuard.command(context) { executeTphere(context) } }
             )
             .build()
     }

@@ -12,6 +12,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /back：返回上一次的位置；没有记录时尝试返回主城
@@ -20,7 +21,7 @@ object BackCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("back")
             .requires { ConfigManager.config.isEnableCommand(CommandType.BACK) }
-            .executes { context -> executeBack(context) }
+            .executes { context -> SafeGuard.command(context) { executeBack(context) } }
             .build()
     }
 

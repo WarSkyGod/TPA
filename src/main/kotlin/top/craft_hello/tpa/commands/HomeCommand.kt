@@ -14,6 +14,7 @@ import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /home [名称]：传送到家；无参数传送默认家
@@ -22,7 +23,7 @@ object HomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("home")
             .requires { ConfigManager.config.isEnableCommand(CommandType.HOME) }
-            .executes { context -> executeHome(context) }
+            .executes { context -> SafeGuard.command(context) { executeHome(context) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -35,7 +36,7 @@ object HomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeHome(context) }
+                    .executes { context -> SafeGuard.command(context) { executeHome(context) } }
             )
             .build()
     }

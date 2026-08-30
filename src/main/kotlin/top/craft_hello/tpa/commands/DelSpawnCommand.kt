@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.Commands
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /delspawn：删除主城（可由控制台执行）
@@ -15,7 +16,7 @@ object DelSpawnCommand {
 
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("delspawn")
-            .executes { context -> executeDelSpawn(context) }
+            .executes { context -> SafeGuard.command(context) { executeDelSpawn(context) } }
             .build()
     }
 

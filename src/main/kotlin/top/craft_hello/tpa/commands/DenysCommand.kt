@@ -14,6 +14,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /denys [add/remove] <玩家>：黑名单管理；/denys：查看黑名单
@@ -22,7 +23,7 @@ object DenysCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("denys")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DENYS) }
-            .executes { context -> executeDenys(context) }
+            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
             .then(
                 Commands.literal("add")
                     .then(
@@ -38,7 +39,7 @@ object DenysCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> executeDenys(context) }
+                            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
                     )
             )
             .then(
@@ -56,7 +57,7 @@ object DenysCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> executeDenys(context) }
+                            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
                     )
             )
             .build()

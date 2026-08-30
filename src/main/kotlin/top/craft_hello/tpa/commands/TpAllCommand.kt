@@ -15,6 +15,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tpall [player/warp/spawn] [名称]：将在线玩家传送到指定位置（管理员）
@@ -24,7 +25,7 @@ object TpAllCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpall")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_ALL) }
-            .executes { context -> executeTpAll(context) }
+            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
             .then(
                 Commands.literal("player")
                     .then(
@@ -36,7 +37,7 @@ object TpAllCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> executeTpAll(context) }
+                            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
                     )
             )
             .then(
@@ -50,12 +51,12 @@ object TpAllCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> executeTpAll(context) }
+                            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
                     )
             )
             .then(
                 Commands.literal("spawn")
-                    .executes { context -> executeTpAll(context) }
+                    .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
             )
             .build()
     }

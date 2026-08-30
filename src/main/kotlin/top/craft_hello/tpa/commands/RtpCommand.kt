@@ -10,6 +10,7 @@ import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /rtp：随机传送
@@ -18,7 +19,7 @@ object RtpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("rtp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.RTP) }
-            .executes { context -> executeRtp(context) }
+            .executes { context -> SafeGuard.command(context) { executeRtp(context) } }
             .build()
     }
 

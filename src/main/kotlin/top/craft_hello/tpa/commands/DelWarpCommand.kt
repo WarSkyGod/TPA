@@ -13,6 +13,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /delwarp <名称>：删除传送点
@@ -21,7 +22,7 @@ object DelWarpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("delwarp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DEL_WARP) }
-            .executes { context -> executeDelWarp(context) }
+            .executes { context -> SafeGuard.command(context) { executeDelWarp(context) } }
             .then(
                 Commands.argument("warp", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -31,7 +32,7 @@ object DelWarpCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeDelWarp(context) }
+                    .executes { context -> SafeGuard.command(context) { executeDelWarp(context) } }
             )
             .build()
     }

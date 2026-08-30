@@ -12,6 +12,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /setwarp <名称>：在当前位置设置传送点
@@ -20,10 +21,10 @@ object SetWarpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("setwarp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.SET_WARP) }
-            .executes { context -> executeSetWarp(context) }
+            .executes { context -> SafeGuard.command(context) { executeSetWarp(context) } }
             .then(
                 Commands.argument("warp", StringArgumentType.word())
-                    .executes { context -> executeSetWarp(context) }
+                    .executes { context -> SafeGuard.command(context) { executeSetWarp(context) } }
             )
             .build()
     }

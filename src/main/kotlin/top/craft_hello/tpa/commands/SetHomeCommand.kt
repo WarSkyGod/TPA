@@ -13,6 +13,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /sethome <名称>：在当前位置设置家（受玩家等级家数量上限约束）
@@ -21,10 +22,10 @@ object SetHomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("sethome")
             .requires { ConfigManager.config.isEnableCommand(CommandType.SET_HOME) }
-            .executes { context -> executeSetHome(context) }
+            .executes { context -> SafeGuard.command(context) { executeSetHome(context) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
-                    .executes { context -> executeSetHome(context) }
+                    .executes { context -> SafeGuard.command(context) { executeSetHome(context) } }
             )
             .build()
     }

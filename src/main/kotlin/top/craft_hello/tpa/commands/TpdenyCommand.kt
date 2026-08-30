@@ -9,6 +9,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tpdeny：拒绝传送请求
@@ -17,7 +18,7 @@ object TpdenyCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpdeny")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_DENY) }
-            .executes { context -> executeTpdeny(context) }
+            .executes { context -> SafeGuard.command(context) { executeTpdeny(context) } }
             .build()
     }
 

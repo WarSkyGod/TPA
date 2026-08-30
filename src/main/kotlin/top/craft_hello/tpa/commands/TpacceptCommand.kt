@@ -9,6 +9,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tpaccept：接受传送请求
@@ -17,7 +18,7 @@ object TpacceptCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpaccept")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_ACCEPT) }
-            .executes { context -> executeTpaccept(context) }
+            .executes { context -> SafeGuard.command(context) { executeTpaccept(context) } }
             .build()
     }
 

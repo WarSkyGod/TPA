@@ -11,6 +11,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /spawn：传送到主城
@@ -19,7 +20,7 @@ object SpawnCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("spawn")
             .requires { ConfigManager.config.isEnableCommand(CommandType.SPAWN) }
-            .executes { context -> executeSpawn(context) }
+            .executes { context -> SafeGuard.command(context) { executeSpawn(context) } }
             .build()
     }
 

@@ -13,6 +13,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tpa <玩家>：请求传送到对方位置（管理子命令 version/setlang/reload 见 /tpac）
@@ -21,7 +22,7 @@ object TpaCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpa")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TPA) }
-            .executes { context -> executeTpa(context) }
+            .executes { context -> SafeGuard.command(context) { executeTpa(context) } }
             .then(
                 Commands.argument("player", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -36,7 +37,7 @@ object TpaCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeTpa(context) }
+                    .executes { context -> SafeGuard.command(context) { executeTpa(context) } }
             )
             .build()
     }

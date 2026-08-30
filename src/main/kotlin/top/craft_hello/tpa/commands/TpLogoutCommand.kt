@@ -15,6 +15,7 @@ import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /tplogout <玩家>：传送到目标玩家最后下线的位置
@@ -23,7 +24,7 @@ object TpLogoutCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tplogout")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_LOGOUT) }
-            .executes { context -> executeTpLogout(context) }
+            .executes { context -> SafeGuard.command(context) { executeTpLogout(context) } }
             .then(
                 Commands.argument("player", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -34,7 +35,7 @@ object TpLogoutCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeTpLogout(context) }
+                    .executes { context -> SafeGuard.command(context) { executeTpLogout(context) } }
             )
             .build()
     }

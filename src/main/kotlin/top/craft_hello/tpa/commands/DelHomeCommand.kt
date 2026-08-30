@@ -12,6 +12,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /delhome <名称>：删除家
@@ -20,7 +21,7 @@ object DelHomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("delhome")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DEL_HOME) }
-            .executes { context -> executeDelHome(context) }
+            .executes { context -> SafeGuard.command(context) { executeDelHome(context) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -33,7 +34,7 @@ object DelHomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeDelHome(context) }
+                    .executes { context -> SafeGuard.command(context) { executeDelHome(context) } }
             )
             .build()
     }

@@ -10,6 +10,7 @@ import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.PlayerDataManager
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /homes：显示家列表（含交互按钮）
@@ -18,7 +19,7 @@ object HomesCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("homes")
             .requires { ConfigManager.config.isEnableCommand(CommandType.HOMES) }
-            .executes { context -> executeHomes(context) }
+            .executes { context -> SafeGuard.command(context) { executeHomes(context) } }
             .build()
     }
 

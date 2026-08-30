@@ -14,6 +14,7 @@ import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.VersionUtil
 
@@ -22,10 +23,10 @@ object TpacCommand {
 
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpac")
-            .executes { context -> executeHelp(context.source.sender) }
+            .executes { context -> SafeGuard.command(context) { executeHelp(context.source.sender) } }
             .then(
                 Commands.literal("version")
-                    .executes { context -> executeVersion(context.source.sender) }
+                    .executes { context -> SafeGuard.command(context) { executeVersion(context.source.sender) } }
             )
             .then(
                 Commands.literal("setlang")
@@ -40,15 +41,17 @@ object TpacCommand {
                                 builder.buildFuture()
                             }
                             .executes { context ->
-                                val language = context.getArgumentOrNull<String>("language")
-                                    ?: return@executes SendMessageUtil.syntaxGenericError(context.source.sender, "tpac setlang <language/clear>")
-                                executeSetLang(context.source.sender, language)
+                                SafeGuard.command(context) {
+                                    val language = context.getArgumentOrNull<String>("language")
+                                        ?: return@command SendMessageUtil.syntaxGenericError(context.source.sender, "tpac setlang <language/clear>")
+                                    executeSetLang(context.source.sender, language)
+                                }
                             }
                     )
             )
             .then(
                 Commands.literal("reload")
-                    .executes { context -> executeReload(context.source.sender) }
+                    .executes { context -> SafeGuard.command(context) { executeReload(context.source.sender) } }
             )
             .build()
     }

@@ -13,6 +13,7 @@ import top.craft_hello.tpa.enums.PermissionType
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 
 // /warp [名称]：传送到传送点；无参数显示传送点列表
@@ -21,7 +22,7 @@ object WarpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("warp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.WARP) }
-            .executes { context -> executeWarp(context) }
+            .executes { context -> SafeGuard.command(context) { executeWarp(context) } }
             .then(
                 Commands.argument("warp", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -31,7 +32,7 @@ object WarpCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> executeWarp(context) }
+                    .executes { context -> SafeGuard.command(context) { executeWarp(context) } }
             )
             .build()
     }
