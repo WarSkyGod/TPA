@@ -3,8 +3,8 @@
 #=======================
 # Grunnleggende innstillinger
 #=======================
-prefix: "<green><bold>> </bold>"
-console_prefix: "<gray><bold>[TPA] </bold>"
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "Ingen spillere online"
 not_warps: "Ingen tilgjengelige warp-punkter"
 not_homes: "Ingen hjem definert"
@@ -17,21 +17,21 @@ lang.set_success: "<green><bold>Språk satt til </bold><gold><bold>%target%</bol
 # Knappesamhandling
 #=======================
 ## Knappetekst
-accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikk for å godta</bold><red>'>[Godta]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikk for å avvise</bold><red>'>[Avvis]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Legg til i svarteliste</bold><red>'>[Blokker]</hover></insert></click></red>  </bold>"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikk for å godta</bold></green>'>[Godta]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikk for å avvise</bold></green>'>[Avvis]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Legg til i svarteliste</bold></green>'>[Blokker]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Fjern fra svarteliste</bold></green>'>[Fjern blokkering]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Teleporter nå</bold></green>'>[Teleporter]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Sett nåværende posisjon</bold></gold>'>[Angi posisjon]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Sett som standard</bold></yellow>'>[Standard hjem]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Slett permanent</bold><red>'>[Slett]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Slett permanent</bold></green>'>[Slett]</hover></insert></click></red>  </bold>"
 
 ## Knappetips
 
 #=======================
 # Teleporteringsforespørsler
 #=======================
-request.title: "<bold><green>Teleport Request</green></bold>"
+request.title: "<bold><green>Teleporteringsforespørsel</green></bold>"
 request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>vil teleportere til deg! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>inviterer deg! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.sent_success: "<green><bold>Forespørsel sendt til </bold><gold><bold>%target%</bold>"
@@ -159,11 +159,11 @@ teleport.logout_location: "<green><bold>Siste utloggingsposisjon for </bold><gol
 #=======================
 system.config_reloaded: "<green><bold>Konfig lastet på nytt</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
-teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</green></bold>"
-system.currency_money: "money"
-system.currency_points: "points"
+error.cost_insufficient: "<bold><red>Utilstrekkelig saldo! Denne teleporteringen koster</red> <gold>{cost}</gold> {currency}<red>, saldoen din er</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleporteringen ble avbrutt fordi</red> <gold>%target%</gold> <red>ikke har tilstrekkelig saldo</red></bold>"
+teleport.cost_charged: "<bold><green>Denne teleporteringen kostet</green> <gold>{cost}</gold> {currency}<green>, saldoen din er</green> <gold>{balance}</gold></bold>"
+system.currency_money: "penger"
+system.currency_points: "poeng"
 
 system.plugin_loaded: "<green><bold>Plugin lastet! Versjon: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin avlastet</bold>"

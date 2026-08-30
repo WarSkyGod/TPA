@@ -3,8 +3,8 @@
 #=======================
 # Basisconfiguratie
 #=======================
-prefix: "<green><bold>> </bold>"
-console_prefix: "<gray><bold>[TPA] </bold>"
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "Geen online spelers"
 not_warps: "Geen warps beschikbaar"
 not_homes: "Geen homes beschikbaar"
@@ -17,21 +17,21 @@ lang.set_success: "<green><bold>Taal ingesteld op </bold><gold><bold>%target%</b
 # Knoppeninteractie
 #=======================
 ## Knopteksten
-accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klik om teleportatie te accepteren</bold><red>'>[Accepteren]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik om teleportatie te weigeren</bold><red>'>[Weigeren]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik om te weigeren en te blokkeren</bold><red>'>[Weiger en blokkeer]</hover></insert></click></red>  </bold>"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klik om teleportatie te accepteren</bold></green>'>[Accepteren]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik om teleportatie te weigeren</bold></green>'>[Weigeren]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik om te weigeren en te blokkeren</bold></green>'>[Weiger en blokkeer]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Klik om deblokkeren</bold></green>'>[Deblokkeer]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Klik om te teleporteren</bold></green>'>[Teleporteren]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Klik om huidige locatie in te stellen</bold></gold>'>[Locatie instellen]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Klik als standaard home</bold></yellow>'>[Standaard home]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik om te verwijderen</bold><red>'>[Verwijderen]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik om te verwijderen</bold></green>'>[Verwijderen]</hover></insert></click></red>  </bold>"
 
 ## Klikhints
 
 #=======================
 # Teleportatieverzoeken
 #=======================
-request.title: "<bold><green>Teleport Request</green></bold>"
+request.title: "<bold><green>Teleportatieverzoek</green></bold>"
 request.to_here: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>wil naar je teleporteren! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold>"
 request.to_target: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>nodigt je uit! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold>"
 request.sent_success: "<green><bold>Verzoek verzonden naar </bold><gold><bold>%target%!</bold>"
@@ -159,11 +159,11 @@ teleport.logout_location: "<green><bold>Geteleporteerd naar uitloglocatie van </
 #=======================
 system.config_reloaded: "<green><bold>Config herladen!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
-teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</green></bold>"
-system.currency_money: "money"
-system.currency_points: "points"
+error.cost_insufficient: "<bold><red>Onvoldoende saldo! Deze teleportatie kost</red> <gold>{cost}</gold> {currency}<red>, je saldo is</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleportatie geannuleerd omdat</red> <gold>%target%</gold> <red>niet genoeg saldo heeft</red></bold>"
+teleport.cost_charged: "<bold><green>Deze teleportatie kostte</green> <gold>{cost}</gold> {currency}<green>, je saldo is</green> <gold>{balance}</gold></bold>"
+system.currency_money: "geld"
+system.currency_points: "punten"
 
 system.plugin_loaded: "<green><bold>Plugin geladen! Versie: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin uitgeschakeld!</bold>"

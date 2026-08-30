@@ -3,8 +3,8 @@
 #=======================
 # Perusasetukset
 #=======================
-prefix: "<green><bold>> </bold>"
-console_prefix: "<gray><bold>[TPA] </bold>"
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "Ei pelaajia paikalla"
 not_warps: "Ei saatavilla olevia warp-pisteitä"
 not_homes: "Ei määritettyjä koteja"
@@ -17,21 +17,21 @@ lang.set_success: "<green><bold>Asiakkaan kieli asetettu: </bold><gold><bold>%ta
 # Painikkeiden toiminnot
 #=======================
 ## Painiketekstit
-accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikkaa hyväksyäksesi</bold><red>'>[Hyväksy]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikkaa hylätäksesi</bold><red>'>[Hylkää]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lisää mustalle listalle</bold><red>'>[Estä]</hover></insert></click></red>  </bold>"
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikkaa hyväksyäksesi</bold></green>'>[Hyväksy]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikkaa hylätäksesi</bold></green>'>[Hylkää]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lisää mustalle listalle</bold></green>'>[Estä]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Poista mustalta listalta</bold></green>'>[Poista esto]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Teleporttaa välittömästi</bold></green>'>[Teleporttaa]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Aseta nykyinen sijainti</bold></gold>'>[Aseta sijainti]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Aseta oletuskodiksi</bold></yellow>'>[Oletuskoti]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Poista pysyvästi</bold><red>'>[Poista]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Poista pysyvästi</bold></green>'>[Poista]</hover></insert></click></red>  </bold>"
 
 ## Painikevihjeet
 
 #=======================
 # Teleporttipyynnöt
 #=======================
-request.title: "<bold><green>Teleport Request</green></bold>"
+request.title: "<bold><green>Teleporttipyyntö</green></bold>"
 request.to_here: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>haluaa teleportata luoksesi! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.to_target: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>kutsuu sinut luokseen! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.sent_success: "<green><bold>Pyyntö lähetetty pelaajalle </bold><gold><bold>%target%</bold>"
@@ -159,11 +159,11 @@ teleport.logout_location: "<green><bold>Teleportattu pelaajan </bold><gold><bold
 #=======================
 system.config_reloaded: "<green><bold>Asetukset ladattu uudelleen!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
-teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</green></bold>"
-system.currency_money: "money"
-system.currency_points: "points"
+error.cost_insufficient: "<bold><red>Saldo ei riitä! Tämä teleporttaus maksaa</red> <gold>{cost}</gold> {currency}<red>, saldosi on</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleporttaus peruutettiin, koska</red> <gold>%target%</gold> <red>saldo ei ole riittävä</red></bold>"
+teleport.cost_charged: "<bold><green>Tämä teleporttaus maksoi</green> <gold>{cost}</gold> {currency}<green>, saldosi on</green> <gold>{balance}</gold></bold>"
+system.currency_money: "rahaa"
+system.currency_points: "pistettä"
 
 system.plugin_loaded: "<green><bold>Laajennus ladattu! Versio: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Laajennus poistettu!</bold>"
