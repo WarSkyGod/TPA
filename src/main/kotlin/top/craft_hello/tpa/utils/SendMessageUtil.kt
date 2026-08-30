@@ -295,6 +295,15 @@ class SendMessageUtil {
             }
         }
 
+        // 老版本配置迁移消息（对齐 3.x configVersionUpdate/configVersionUpdateSuccess）
+        fun configMigratedNotice() {
+            sendMessageForPath(Bukkit.getConsoleSender(), "system.config_migrated")
+        }
+
+        fun configMigratedSuccessNotice() {
+            sendMessageForPath(Bukkit.getConsoleSender(), "system.config_migrated_success")
+        }
+
         // =============== 成功消息 ===============
 
         // 成功设置主城消息

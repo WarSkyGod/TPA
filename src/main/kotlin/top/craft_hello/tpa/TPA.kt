@@ -33,6 +33,7 @@ import top.craft_hello.tpa.events.TPAPlayerQuitEvent
 import top.craft_hello.tpa.events.TPAPlayerRespawnEvent
 import top.craft_hello.tpa.events.TPAPlayerTeleportEvent
 import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.objects.ConfigUpdater
 import top.craft_hello.tpa.objects.DatabaseManager
 import top.craft_hello.tpa.objects.EconomyHook
 import top.craft_hello.tpa.objects.LanguageManager
@@ -50,9 +51,16 @@ class TPA : JavaPlugin() {
         HandySchedulerUtil.init(this)
         Metrics(this, 26417)
 
+        // 老版本配置自动迁移（version 键判断，幂等）：必须在 ConfigManager/LanguageManager
+        // 初始化前执行，迁移内部最后会刷新 ConfigManager，确保后续流程使用迁移后的新值
+        ConfigUpdater.migrateIfNeeded(this)
+
         // 配置与语言
         ConfigManager
         LanguageManager.loadAllLanguage()
+
+        // PlaceholderAPI（可选依赖）
+        PapiHook.registerExpansion()
 
         // 玩家数据存储（yml 默认 / 数据库可选）
         DatabaseManager.setupDatabase(this)
