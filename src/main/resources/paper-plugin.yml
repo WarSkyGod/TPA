@@ -24,8 +24,9 @@ dependencies:
       load: OMIT
       required: false
       join-classpath: true
-    Floodgate:
-      load: OMIT
+    # 注意：Floodgate 插件注册名为小写 "floodgate"，依赖名必须与其一致，否则 join-classpath 不生效
+    floodgate:
+      load: BEFORE
       required: false
       join-classpath: true
 

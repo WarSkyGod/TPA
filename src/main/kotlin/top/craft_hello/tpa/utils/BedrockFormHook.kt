@@ -9,6 +9,7 @@ import org.geysermc.cumulus.form.SimpleForm
 import org.geysermc.cumulus.form.util.FormBuilder
 import org.geysermc.floodgate.api.FloodgateApi
 import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 
 // 基岩玩家弹窗交互（可选前置 Floodgate，Java 版玩家不受影响）：
@@ -23,13 +24,17 @@ object BedrockFormHook {
 
     fun init(plugin: TPA) {
         available = try {
-            if (Bukkit.getPluginManager().getPlugin("Floodgate") != null) {
+            val floodgatePlugin = Bukkit.getPluginManager().getPlugin("Floodgate")
+            if (floodgatePlugin != null) {
                 floodgateApi = FloodgateApi.getInstance()
                 floodgateApi != null
             } else {
+                plugin.logger.info("未检测到 Floodgate 插件，基岩玩家将使用聊天交互")
                 false
             }
         } catch (e: Throwable) {
+            plugin.logger.warning("Floodgate 挂钩失败，基岩玩家将使用聊天交互: ${e.javaClass.name}: ${e.message}")
+            e.printStackTrace()
             false
         }
         if (available) plugin.logger.info("已挂钩 Floodgate（基岩玩家点击类消息将以弹窗按钮呈现）")
@@ -37,11 +42,15 @@ object BedrockFormHook {
 
     // 是否为基岩玩家（前置未安装时恒为 false，走 Java 版聊天交互）
     fun isBedrockPlayer(player: Player): Boolean {
-        return try {
+        val result = try {
             floodgateApi?.isFloodgatePlayer(player.uniqueId) ?: false
         } catch (e: Throwable) {
+            TPA.plugin.logger.warning("基岩玩家判定异常（按非基岩处理）: ${e.javaClass.name}: ${e.message}")
+            e.printStackTrace()
             false
         }
+        if (result && ConfigManager.config.debug) TPA.plugin.logger.info("[debug] 已识别基岩玩家: ${player.name}")
+        return result
     }
 
     // MiniMessage 文本剥离为纯文本（基岩表单不支持 Adventure 标签）
@@ -67,8 +76,12 @@ object BedrockFormHook {
     // 发送弹窗（FormBuilder 未 build 也可直接发送，FloodgateApi.sendForm 支持两种形态）
     private fun sendForm(player: Player, builder: FormBuilder<*, *, *>): Boolean {
         return try {
-            floodgateApi?.sendForm(player.uniqueId, builder) ?: false
+            val result = floodgateApi?.sendForm(player.uniqueId, builder) ?: false
+            if (!result) TPA.plugin.logger.warning("弹窗发送返回 false（目标 ${player.name} 可能不在线或非基岩玩家）")
+            result
         } catch (e: Throwable) {
+            TPA.plugin.logger.warning("弹窗发送异常: ${e.javaClass.name}: ${e.message}")
+            e.printStackTrace()
             false
         }
     }
