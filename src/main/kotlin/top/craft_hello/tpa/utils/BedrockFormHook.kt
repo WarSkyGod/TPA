@@ -4,7 +4,6 @@ import cn.handyplus.lib.adapter.EntitySchedulerUtil
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.geysermc.cumulus.component.ButtonComponent
 import org.geysermc.cumulus.form.SimpleForm
 import org.geysermc.cumulus.form.util.FormBuilder
 import org.geysermc.floodgate.api.FloodgateApi
@@ -111,20 +110,51 @@ object BedrockFormHook {
         return sendForm(target, builder)
     }
 
-    // 传送目标列表弹窗：每个条目一个"传送"按钮（homes/warps 通用）
-    fun sendTeleportListForm(player: Player, titlePath: String, entries: List<String>, command: String): Boolean {
-        if (!isBedrockPlayer(player) || entries.isEmpty()) return false
+    // 条目列表弹窗（homes/warps/denys 通用）：
+    // - manageOptions 为单操作（如黑名单移出）：点击条目直接执行该操作
+    // - manageOptions 为多操作（传送/设位置/设默认/删除）：点击条目弹出该条目的二级操作子表单
+    // 操作按钮文本复用现有语言键（stripTags 纯文本化），命令 = 命令前缀 + 条目名
+    fun sendEntryListForm(player: Player, titlePath: String, entries: List<String>, manageOptions: List<Pair<String, String>>): Boolean {
+        if (!isBedrockPlayer(player) || entries.isEmpty() || manageOptions.isEmpty()) return false
+        if (manageOptions.size == 1) {
+            // 单操作：主表单按钮即条目，点击直接执行
+            val (buttonKey, commandPrefix) = manageOptions[0]
+            val buttonText = plainTextOf(player, buttonKey)
+            val builder = SimpleForm.builder()
+                .title(plainTextOf(player, titlePath))
+            for (entry in entries) builder.button("$entry $buttonText")
+            builder.validResultHandler { _, response ->
+                val index = response.clickedButtonId()
+                if (index < 0 || index >= entries.size) return@validResultHandler
+                performForEntry(player, "$commandPrefix ${entries[index]}")
+            }
+            return sendForm(player, builder)
+        }
+        // 多操作：主表单列条目，点击弹出二级操作子表单
         val builder = SimpleForm.builder()
             .title(plainTextOf(player, titlePath))
-        for (name in entries) builder.button(ButtonComponent.of(name))
+        for (entry in entries) builder.button(entry)
         builder.validResultHandler { _, response ->
             val index = response.clickedButtonId()
             if (index < 0 || index >= entries.size) return@validResultHandler
             val entry = entries[index]
-            EntitySchedulerUtil.runSafeOnEntityScheduler(player) {
-                if (player.isOnline) player.performCommand("$command $entry")
+            val subBuilder = SimpleForm.builder()
+                .title(entry)
+            for ((buttonKey, _) in manageOptions) subBuilder.button(plainTextOf(player, buttonKey, entry))
+            subBuilder.validResultHandler { _, subResponse ->
+                val optionIndex = subResponse.clickedButtonId()
+                if (optionIndex < 0 || optionIndex >= manageOptions.size) return@validResultHandler
+                performForEntry(player, "${manageOptions[optionIndex].second} $entry")
             }
+            sendForm(player, subBuilder)
         }
         return sendForm(player, builder)
+    }
+
+    // 以玩家身份执行命令（回调在 Geyser 线程，调度回玩家 region 线程，Folia 兼容）
+    private fun performForEntry(player: Player, command: String) {
+        EntitySchedulerUtil.runSafeOnEntityScheduler(player) {
+            if (player.isOnline) player.performCommand(command.trim())
+        }
     }
 }

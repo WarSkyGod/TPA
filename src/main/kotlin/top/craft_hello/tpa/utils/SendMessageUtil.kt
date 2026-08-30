@@ -573,19 +573,23 @@ class SendMessageUtil {
             return PlayerDataManager.get(sender).equalsDefaultHomeName(homeName)
         }
 
-        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除 按钮；基岩玩家改用传送弹窗）
+        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除；基岩玩家为弹窗+二级操作菜单）
         fun homeListMessage(executor: Player, homeNameList: List<String>) {
             if (homeNameList.isEmpty()) {
                 // 对齐 3.x：空列表用 error.no_homes_set（not_homes 在 3.x 仅用于 tab 补全提示文字）
                 sendMessageForPath(executor, "error.no_homes_set")
                 return
             }
-            if (BedrockFormHook.sendTeleportListForm(executor, "home.list_header", homeNameList, "home")) return
+            if (BedrockFormHook.sendEntryListForm(
+                    executor, "home.list_header", homeNameList,
+                    listOf("teleport_button" to "home", "location_set_button" to "sethome", "default_home_set_button" to "setdefaulthome", "delete_button" to "delhome")
+                )
+            ) return
             sendMessageForPath(executor, "home.list_header")
             listMessage(executor, homeNameList, "home", teleportButton = true, settingButton = true, settingDefaultHomeButton = true, deleteButton = true)
         }
 
-        // 传送点列表（含 传送 按钮；控制台只显示名字；基岩玩家改用传送弹窗）
+        // 传送点列表（含 传送 / 设置位置 / 删除；控制台只显示名字；基岩玩家为弹窗+二级操作菜单）
         fun warpListMessage(sender: CommandSender, warpList: List<String>) {
             if (warpList.isEmpty()) {
                 // 对齐 3.x：空列表用 error.no_warps_set（not_warps 在 3.x 仅用于 tab 补全提示文字）
@@ -593,13 +597,16 @@ class SendMessageUtil {
                 return
             }
             if (sender is Player) {
-                // 基岩玩家：弹窗按钮逐条传送（弹窗失败回退聊天路径）
-                if (BedrockFormHook.sendTeleportListForm(sender, "warp.list_header", warpList, "warp")) return
+                // 基岩玩家：弹窗逐条传送 + 按权限的操作菜单（弹窗失败回退聊天路径）
+                val manageOptions = buildList {
+                    add("teleport_button" to "warp")
+                    if (ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP)) add("location_set_button" to "setwarp")
+                    if (ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)) add("delete_button" to "delwarp")
+                }
+                if (BedrockFormHook.sendEntryListForm(sender, "warp.list_header", warpList, manageOptions)) return
                 // 对齐 3.x：设置位置/删除按钮按管理权限显示
-                val settingButton = ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP)
-                val deleteButton = ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)
                 sendMessageForPath(sender, "warp.list_header")
-                listMessage(sender, warpList, "warp", teleportButton = true, settingButton = settingButton, deleteButton = deleteButton)
+                listMessage(sender, warpList, "warp", teleportButton = true, settingButton = ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP), deleteButton = ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP))
             } else {
                 sendMessageForPath(sender, "warp.list_header")
                 // 控制台名单行带 console_prefix
@@ -607,6 +614,8 @@ class SendMessageUtil {
                 for (warpName in warpList) sendMessage(sender, language.getFormatMessage(sender, "console_prefix").append(Component.text(warpName)))
             }
         }
+
+        // 黑名单列表（含 移出黑名单；基岩玩家为弹窗，点击直接移出）
 
         // 黑名单显示名（UUID -> 玩家名，无法解析时显示 UUID）
         fun denyDisplayName(denyUuid: String): String {
@@ -618,12 +627,13 @@ class SendMessageUtil {
             }
         }
 
-        // 黑名单列表（含 移出黑名单 按钮）
+        // 黑名单列表（含 移出黑名单；基岩玩家为弹窗，点击直接移出）
         fun denysMessage(executor: Player, denyList: List<String>) {
             if (denyList.isEmpty()) {
                 blacklistEmptyError(executor)
                 return
             }
+            if (BedrockFormHook.sendEntryListForm(executor, "blacklist.list_header", denyList.map { denyDisplayName(it) }, listOf("blacklist.remove_button" to "denys remove"))) return
             sendMessageForPath(executor, "blacklist.list_header")
             listMessage(executor, denyList.map { denyDisplayName(it) }, "denys", removeDenysButton = true)
         }
