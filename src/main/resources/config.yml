@@ -74,6 +74,7 @@ sound:
 # 传送费用设置（非管理传送命令：tpa/tphere/home/warp/spawn/back/rtp）
 # 需要可选前置：money=Vault（金钱），points=PlayerPoints（点券）
 # 对应前置未安装时费用功能自动跳过（免费传送，不阻塞使用）
+# 拥有 tpa.admin 权限的玩家无视扣费（免费传送）
 cost:
   # 是否启用传送费用
   enable: false

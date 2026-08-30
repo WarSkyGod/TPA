@@ -40,10 +40,13 @@ object TeleportCost {
     }
 
     // 实付费用：基础价 + 会员优惠。
+    // 管理员豁免：拥有 tpa.admin 权限无视扣费（免费传送）
     // discount_mode: percent=vip_discount 值为实付百分比（50=半价，夹在 [0,100]）；
     //                amount=值为固定减免金额（减免额低于 0 视为无优惠）
     // 多项会员权限命中取实付最低；实付最低为 0（减免超出基础价按 0 扣费，不产生负数）
     fun costOf(player: Player, key: String): Double {
+        // 管理员豁免：费用归零，预检与扣费全部短路为免费
+        if (PermissionType.hasPermission(player, PermissionType.ADMIN)) return 0.0
         val config = ConfigManager.config
         if (!config.costEnable) return 0.0
         val base = config.costPrices[key] ?: 0.0
