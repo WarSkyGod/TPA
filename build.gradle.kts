@@ -33,6 +33,10 @@ repositories {
     maven("https://repo.rosewooddev.io/repository/public/") {
         name = "rosewood-repo"
     }
+    // Geyser/Floodgate（可选基岩互通前置，仅编译期，官方仓库）
+    maven("https://repo.opencollab.dev/main/") {
+        name = "opencollab-repo"
+    }
 }
 
 dependencies {
@@ -47,6 +51,9 @@ dependencies {
     // VaultAPI 经 JitPack；PlayerPoints 坐标按官方 Wiki（org.black_ixx:playerpoints）
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1") { isTransitive = false }
     compileOnly("org.black_ixx:playerpoints:3.3.5") { isTransitive = false }
+    // Floodgate/Cumulus 可选前置：仅编译期，基岩玩家弹窗交互（表单版本与 Floodgate 2.2.x 配套）
+    compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT") { isTransitive = false }
+    compileOnly("org.geysermc.cumulus:cumulus:1.1.2") { isTransitive = false }
 }
 
 tasks {

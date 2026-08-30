@@ -31,6 +31,7 @@ delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/de
 #=======================
 # Teleportkérések
 #=======================
+request.title: "<bold><green>Teleport Request</green></bold>"
 request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>hoz akar teleportálni! Kérés lejár: </bold><gold><bold>%seconds% </bold><green><bold>másodperc!</bold>"
 request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>meghívott! Kérés lejár: </bold><gold><bold>%seconds% </bold><green><bold>másodperc!</bold>"
 request.sent_success: "<green><bold>Kérés elküldve </bold><gold><bold>%target% </bold><green><bold>nek!</bold>"

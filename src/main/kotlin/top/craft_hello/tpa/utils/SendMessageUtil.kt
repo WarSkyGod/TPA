@@ -409,12 +409,15 @@ class SendMessageUtil {
 
         // =============== 请求消息 ===============
 
-        // 请求方传送到目标的请求消息（目标收到 + 双方确认）
+        // 请求方传送到目标的请求消息（目标收到 + 双方确认；基岩玩家改用弹窗按钮）
         fun requestTeleportToTarget(executor : Player, target : Player, delay : String) {
             val executorName = executor.name
             val targetName = target.name
-            sendMessageForPath(target, "request.to_here", executorName, delay)
-            acceptOrDeny(target, executorName)
+            // 基岩玩家：聊天栏点击组件无效，改用 Cumulus 弹窗按钮（发送失败回退聊天路径）
+            if (!BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = false)) {
+                sendMessageForPath(target, "request.to_here", executorName, delay)
+                acceptOrDeny(target, executorName)
+            }
             successSentRequest(executor, targetName, delay)
         }
 
@@ -422,8 +425,10 @@ class SendMessageUtil {
         fun requestTargetTeleportToHere(executor : Player, target : Player, delay : String) {
             val executorName = executor.name
             val targetName = target.name
-            sendMessageForPath(target, "request.to_target", executorName, delay)
-            acceptOrDeny(target, executorName)
+            if (!BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = true)) {
+                sendMessageForPath(target, "request.to_target", executorName, delay)
+                acceptOrDeny(target, executorName)
+            }
             successSentRequest(executor, targetName, delay)
         }
 
@@ -566,31 +571,35 @@ class SendMessageUtil {
             return PlayerDataManager.get(sender).equalsDefaultHomeName(homeName)
         }
 
-        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除 按钮）
+        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除 按钮；基岩玩家改用传送弹窗）
         fun homeListMessage(executor: Player, homeNameList: List<String>) {
             if (homeNameList.isEmpty()) {
                 // 对齐 3.x：空列表用 error.no_homes_set（not_homes 在 3.x 仅用于 tab 补全提示文字）
                 sendMessageForPath(executor, "error.no_homes_set")
                 return
             }
+            if (BedrockFormHook.sendTeleportListForm(executor, "home.list_header", homeNameList, "home")) return
             sendMessageForPath(executor, "home.list_header")
             listMessage(executor, homeNameList, "home", teleportButton = true, settingButton = true, settingDefaultHomeButton = true, deleteButton = true)
         }
 
-        // 传送点列表（含 传送 按钮；控制台只显示名字）
+        // 传送点列表（含 传送 按钮；控制台只显示名字；基岩玩家改用传送弹窗）
         fun warpListMessage(sender: CommandSender, warpList: List<String>) {
             if (warpList.isEmpty()) {
                 // 对齐 3.x：空列表用 error.no_warps_set（not_warps 在 3.x 仅用于 tab 补全提示文字）
                 noWarpsSetError(sender)
                 return
             }
-            sendMessageForPath(sender, "warp.list_header")
             if (sender is Player) {
+                // 基岩玩家：弹窗按钮逐条传送（弹窗失败回退聊天路径）
+                if (BedrockFormHook.sendTeleportListForm(sender, "warp.list_header", warpList, "warp")) return
                 // 对齐 3.x：设置位置/删除按钮按管理权限显示
                 val settingButton = ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP)
                 val deleteButton = ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)
+                sendMessageForPath(sender, "warp.list_header")
                 listMessage(sender, warpList, "warp", teleportButton = true, settingButton = settingButton, deleteButton = deleteButton)
             } else {
+                sendMessageForPath(sender, "warp.list_header")
                 for (warpName in warpList) sendMessage(sender, Component.text(warpName))
             }
         }

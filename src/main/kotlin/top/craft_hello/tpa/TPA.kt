@@ -38,6 +38,7 @@ import top.craft_hello.tpa.objects.EconomyHook
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.objects.StorageMigrator
+import top.craft_hello.tpa.utils.BedrockFormHook
 import top.craft_hello.tpa.utils.PapiHook
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.VersionUtil
@@ -64,6 +65,8 @@ class TPA : JavaPlugin() {
 
         // 经济前置挂钩（Vault/PlayerPoints 可选）：费用启用但货币系统缺失时警告
         EconomyHook.init(this)
+        // 基岩弹窗交互挂钩（Floodgate 可选）：基岩玩家点击类消息改为弹窗按钮
+        BedrockFormHook.init(this)
         if (ConfigManager.config.costEnable && !EconomyHook.isCurrencyAvailable(ConfigManager.config.costCurrency)) {
             val needed = if (ConfigManager.config.costCurrency == "points") "PlayerPoints" else "Vault"
             logger.warning("传送费用已启用（cost.enable: true）但货币系统（${ConfigManager.config.costCurrency}）不可用：$needed 未安装或未提供经济/点券服务，费用将不收取")

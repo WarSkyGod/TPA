@@ -31,6 +31,7 @@ delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/de
 #=======================
 # Solicitações de teleporte
 #=======================
+request.title: "<bold><green>Teleport Request</green></bold>"
 request.to_here: "<green><bold>Jogador </bold><gold><bold>%target% </bold><green><bold>solicitou teleporte para você! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.to_target: "<green><bold>Jogador </bold><gold><bold>%target% </bold><green><bold>te convidou! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.sent_success: "<green><bold>Solicitação enviada para </bold><gold><bold>%target%</bold>"

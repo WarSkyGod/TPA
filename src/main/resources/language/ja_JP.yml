@@ -31,6 +31,7 @@ delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/de
 #=======================
 # テレポートリクエスト
 #=======================
+request.title: "<bold><green>Teleport Request</green></bold>"
 request.to_here: "<green><bold>プレイヤー </bold><gold><bold>%target% </bold><green><bold>があなたの位置へテレポートを希望しています（</bold><gold><bold>%seconds%秒</bold><green><bold>後期限切れ）</bold>"
 request.to_target: "<green><bold>プレイヤー </bold><gold><bold>%target% </bold><green><bold>が自分の位置へ招待しています（</bold><gold><bold>%seconds%秒</bold><green><bold>後期限切れ）</bold>"
 request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>へリクエストを送信しました</bold>"

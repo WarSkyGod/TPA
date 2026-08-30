@@ -31,6 +31,7 @@ delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/de
 #=======================
 # 傳送請求
 #=======================
+request.title: "<bold><green>传送请求</green></bold>"
 request.to_here: "<green><bold>玩家 </bold><gold><bold>%target% </bold><green><bold>想傳送到您嘅位置，該請求 </bold><gold><bold>%seconds% </bold><green><bold>秒後失效！</bold>"
 request.to_target: "<green><bold>玩家 </bold><gold><bold>%target% </bold><green><bold>邀請您傳送到對方嘅位置，該請求 </bold><gold><bold>%seconds% </bold><green><bold>秒後失效！</bold>"
 request.sent_success: "<green><bold>您已向 </bold><gold><bold>%target% </bold><green><bold>傳送請求！</bold>"

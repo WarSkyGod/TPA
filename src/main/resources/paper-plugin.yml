@@ -8,7 +8,8 @@ website: https://github.com/WarSkyGod/TPA
 folia-supported: true
 
 # 可选依赖：PlaceholderAPI 存在时提供 %tpa_*% 占位符；
-# Vault/PlayerPoints 存在时提供传送费用货币支持（金钱/点券）
+# Vault/PlayerPoints 存在时提供传送费用货币支持（金钱/点券）；
+# Floodgate 存在时基岩玩家使用弹窗按钮交互
 dependencies:
   server:
     PlaceholderAPI:
@@ -20,6 +21,10 @@ dependencies:
       required: false
       join-classpath: true
     PlayerPoints:
+      load: OMIT
+      required: false
+      join-classpath: true
+    Floodgate:
       load: OMIT
       required: false
       join-classpath: true

@@ -31,6 +31,7 @@ delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/de
 #=======================
 # Işınlanma Talepleri
 #=======================
+request.title: "<bold><green>Teleport Request</green></bold>"
 request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sana ışınlanmak istiyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>seni davet ediyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
 request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı oyuncuya talep gönderildi</bold>"
