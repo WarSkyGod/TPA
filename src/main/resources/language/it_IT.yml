@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>La tua richiesta a </bold><gold><bold>%target% <
 #=======================
 home.list_header: "<green><bold>Case disponibili:</bold>"
 home.set_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>impostata</bold>"
+home.default_tag: "[Predefinita]"
 home.default_set_success: "<green><bold>Home predefinita: </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>eliminata</bold>"
 home.teleport_success: "<green><bold>Teletrasportato a </bold><gold><bold>%target%</bold>"

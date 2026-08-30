@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Kérésed </bold><gold><bold>%target% </bold><re
 #=======================
 home.list_header: "<green><bold>Elérhető home-ok:</bold>"
 home.set_success: "<green><bold>Home beállítva: </bold><gold><bold>%target%</bold>"
+home.default_tag: "[Alapértelmezett]"
 home.default_set_success: "<green><bold>Alapértelmezett home: </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Home törölve: </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>Teleportálva a </bold><gold><bold>%target% </bold><green><bold>home-ba</bold>"

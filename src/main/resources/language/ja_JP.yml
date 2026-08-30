@@ -44,6 +44,7 @@ request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>�
 #=======================
 home.list_header: "<green><bold>利用可能なホーム：</bold>"
 home.set_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>を設定しました</bold>"
+home.default_tag: "[デフォルト]"
 home.default_set_success: "<green><bold>デフォルトホームを </bold><gold><bold>%target% </bold><green><bold>に設定しました</bold>"
 home.delete_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>を削除しました</bold>"
 home.teleport_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>へテレポートしました</bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Το αίτημά σας στον </bold><gold><
 #=======================
 home.list_header: "<green><bold>Διαθέσιμα σπίτια:</bold>"
 home.set_success: "<green><bold>Ορίσατε το σπίτι </bold><gold><bold>%target%</bold>"
+home.default_tag: "[Προεπιλογή]"
 home.default_set_success: "<green><bold>Ορίσατε προεπιλεγμένο σπίτι το </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Διαγράψατε το σπίτι </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>Μεταφερθήκατε στο σπίτι </bold><gold><bold>%target%</bold>"

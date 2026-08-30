@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Ваш запрос к </bold><gold><bold>%targe
 #=======================
 home.list_header: "<green><bold>Доступные дома:</bold>"
 home.set_success: "<green><bold>Дом </bold><gold><bold>%target%</bold><green><bold> установлен</bold>"
+home.default_tag: "[По умолчанию]"
 home.default_set_success: "<green><bold>Дом </bold><gold><bold>%target%</bold><green><bold> - теперь основной</bold>"
 home.delete_success: "<green><bold>Дом </bold><gold><bold>%target%</bold><green><bold> удалён</bold>"
 home.teleport_success: "<green><bold>Телепортирован в дом </bold><gold><bold>%target%</bold>"

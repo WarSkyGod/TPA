@@ -573,16 +573,24 @@ class SendMessageUtil {
             return PlayerDataManager.get(sender).equalsDefaultHomeName(homeName)
         }
 
-        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除；基岩玩家为弹窗+二级操作菜单）
+        // 家列表（含 传送 / 设置位置 / 设为默认家 / 删除；基岩玩家为弹窗+二级操作菜单，
+        // 默认家条目显示 [默认] 标记且不提供"设为默认家"操作）
         fun homeListMessage(executor: Player, homeNameList: List<String>) {
             if (homeNameList.isEmpty()) {
                 // 对齐 3.x：空列表用 error.no_homes_set（not_homes 在 3.x 仅用于 tab 补全提示文字）
                 sendMessageForPath(executor, "error.no_homes_set")
                 return
             }
+            // 条目 (显示文本, 命令参数)：默认家在显示文本后追加语言文件的 default_tag 标记
+            val defaultTag = LanguageManager.getLanguage(executor).getMessage("home.default_tag")
+            val entries = homeNameList.map { home ->
+                val label = if (defaultHomeEquals(executor, home)) "$home $defaultTag" else home
+                label to home
+            }
             if (BedrockFormHook.sendEntryListForm(
-                    executor, "home.list_header", homeNameList,
-                    listOf("teleport_button" to "home", "location_set_button" to "sethome", "default_home_set_button" to "setdefaulthome", "delete_button" to "delhome")
+                    executor, "home.list_header", entries,
+                    listOf("teleport_button" to "home", "location_set_button" to "sethome", "default_home_set_button" to "setdefaulthome", "delete_button" to "delhome"),
+                    hideOption = { arg, optionIndex -> optionIndex == 2 && defaultHomeEquals(executor, arg) }
                 )
             ) return
             sendMessageForPath(executor, "home.list_header")
@@ -603,7 +611,7 @@ class SendMessageUtil {
                     if (ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP)) add("location_set_button" to "setwarp")
                     if (ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)) add("delete_button" to "delwarp")
                 }
-                if (BedrockFormHook.sendEntryListForm(sender, "warp.list_header", warpList, manageOptions)) return
+                if (BedrockFormHook.sendEntryListForm(sender, "warp.list_header", warpList.map { it to it }, manageOptions)) return
                 // 对齐 3.x：设置位置/删除按钮按管理权限显示
                 sendMessageForPath(sender, "warp.list_header")
                 listMessage(sender, warpList, "warp", teleportButton = true, settingButton = ConfigManager.config.hasPermission(sender, PermissionType.SET_WARP), deleteButton = ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP))
@@ -633,7 +641,7 @@ class SendMessageUtil {
                 blacklistEmptyError(executor)
                 return
             }
-            if (BedrockFormHook.sendEntryListForm(executor, "blacklist.list_header", denyList.map { denyDisplayName(it) }, listOf("blacklist.remove_button" to "denys remove"))) return
+            if (BedrockFormHook.sendEntryListForm(executor, "blacklist.list_header", denyList.map { denyDisplayName(it) }.map { it to it }, listOf("blacklist.remove_button" to "denys remove"))) return
             sendMessageForPath(executor, "blacklist.list_header")
             listMessage(executor, denyList.map { denyDisplayName(it) }, "denys", removeDenysButton = true)
         }

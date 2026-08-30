@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Yêu cầu của bạn đến </bold><gold><bold
 #=======================
 home.list_header: "<green><bold>Danh sách nhà:</bold>"
 home.set_success: "<green><bold>Đã đặt nhà </bold><gold><bold>%target%</bold>"
+home.default_tag: "[Mặc định]"
 home.default_set_success: "<green><bold>Đã đặt nhà mặc định thành </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Đã xóa nhà </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>Đã dịch chuyển đến nhà </bold><gold><bold>%target%</bold>"

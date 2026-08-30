@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>您傳送畀 </bold><gold><bold>%target% </bold>
 #=======================
 home.list_header: "<green><bold>當前可用嘅家：</bold>"
 home.set_success: "<green><bold>您已設定家 </bold><gold><bold>%target%</bold>"
+home.default_tag: "[預設]"
 home.default_set_success: "<green><bold>您已將 </bold><gold><bold>%target% </bold><green><bold>設為預設家</bold>"
 home.delete_success: "<green><bold>您已刪除家 </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>您已傳送至家 </bold><gold><bold>%target%</bold>"

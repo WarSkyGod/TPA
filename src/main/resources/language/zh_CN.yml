@@ -42,6 +42,7 @@ request.expired_to: "<bold><red>您发送给</red> <gold>%target%</gold> <red>�
 #=======================
 home.list_header: "<bold><green>当前可用的家：</green></bold>"
 home.set_success: "<bold><green>已设置家</green> <gold>%target%</gold></bold>"
+home.default_tag: "[默认]"
 home.default_set_success: "<bold><green>您已将</green> <gold>%target%</gold> <green>设置为默认的家</green></bold>"
 home.delete_success: "<bold><green>您已删除家</green> <gold>%target%</gold></bold>"
 home.teleport_success: "<bold><green>您已传送至家</green> <gold>%target%</gold></bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Twoja prośba do </bold><gold><bold>%target% </b
 #=======================
 home.list_header: "<green><bold>Dostępne domy:</bold>"
 home.set_success: "<green><bold>Ustawiono dom </bold><gold><bold>%target%</bold>"
+home.default_tag: "[Domyślny]"
 home.default_set_success: "<green><bold>Ustawiono dom domyślny: </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Usunięto dom </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>Teleportowano do domu </bold><gold><bold>%target%</bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'e
 #=======================
 home.list_header: "<green><bold>Mevcut Evler:</bold>"
 home.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi oluşturuldu</bold>"
+home.default_tag: "[Varsayılan]"
 home.default_set_success: "<green><bold>Varsayılan ev </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
 home.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi silindi</bold>"
 home.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evine ışınlandın</bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>בקשתך ל</bold><gold><bold>%target% </bold>
 #=======================
 home.list_header: "<green><bold>בזמינים:</bold>"
 home.set_success: "<green><bold>בית חדש נקבע: </bold><gold><bold>%target%</bold>"
+home.default_tag: "[ברירת מחדל]"
 home.default_set_success: "<green><bold>בית ברירת המחדל נקבע ל</bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>בית נמחק: </bold><gold><bold>%target%</bold>"
 home.teleport_success: "<green><bold>התטלפת לבית </bold><gold><bold>%target%</bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Pyyntösi pelaajalle </bold><gold><bold>%target%
 #=======================
 home.list_header: "<green><bold>Käytettävissä olevat kodit:</bold>"
 home.set_success: "<green><bold>Koti </bold><gold><bold>%target% </bold><green><bold>asetettiin</bold>"
+home.default_tag: "[Oletus]"
 home.default_set_success: "<green><bold>Oletuskodiksi asetettu </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Koti </bold><gold><bold>%target% </bold><green><bold>poistettiin</bold>"
 home.teleport_success: "<green><bold>Teleportattu kotiin </bold><gold><bold>%target%</bold>"

@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Tvoj zahtevek za </bold><gold><bold>%target% </b
 #=======================
 home.list_header: "<green><bold>Dostopni domovi:</bold>"
 home.set_success: "<green><bold>Dom </bold><gold><bold>%target% </bold><green><bold>nastavljen</bold>"
+home.default_tag: "[Privzeto]"
 home.default_set_success: "<green><bold>Privzeti dom </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Dom </bold><gold><bold>%target% </bold><green><bold>izbrisan</bold>"
 home.teleport_success: "<green><bold>Teleportiran v dom </bold><gold><bold>%target%</bold>"

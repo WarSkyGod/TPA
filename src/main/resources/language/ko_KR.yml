@@ -44,6 +44,7 @@ request.expired_to: "<red><bold></bold><gold><bold>%target%</bold><red><bold>님
 #=======================
 home.list_header: "<green><bold>설정된 홈 목록:</bold>"
 home.set_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>을(를) 설정했습니다</bold>"
+home.default_tag: "[기본]"
 home.default_set_success: "<green><bold>기본 홈을 </bold><gold><bold>%target%</bold><green><bold>(으)로 설정했습니다</bold>"
 home.delete_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>을(를) 삭제했습니다</bold>"
 home.teleport_success: "<green><bold>홈 </bold><gold><bold>%target%</bold><green><bold>(으)로 이동했습니다</bold>"

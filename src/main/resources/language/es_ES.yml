@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Tu solicitud a </bold><gold><bold>%target% </bol
 #=======================
 home.list_header: "<green><bold>Hogares disponibles:</bold>"
 home.set_success: "<green><bold>Hogar </bold><gold><bold>%target% </bold><green><bold>establecido</bold>"
+home.default_tag: "[Predeterminada]"
 home.default_set_success: "<green><bold>Hogar predeterminado: </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Hogar </bold><gold><bold>%target% </bold><green><bold>eliminado</bold>"
 home.teleport_success: "<green><bold>Teletransportado a </bold><gold><bold>%target%</bold>"

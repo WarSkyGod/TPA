@@ -111,10 +111,19 @@ object BedrockFormHook {
     }
 
     // 条目列表弹窗（homes/warps/denys 通用）：
-    // - manageOptions 为单操作（如黑名单移出）：点击条目直接执行该操作
-    // - manageOptions 为多操作（传送/设位置/设默认/删除）：点击条目弹出该条目的二级操作子表单
-    // 操作按钮文本复用现有语言键（stripTags 纯文本化），命令 = 命令前缀 + 条目名
-    fun sendEntryListForm(player: Player, titlePath: String, entries: List<String>, manageOptions: List<Pair<String, String>>): Boolean {
+    // - entries: (显示文本, 命令参数) 二元组——显示文本可带标记（如默认家 [默认]），命令参数保持纯名称
+    // - manageOptions: (操作按钮语言键, 命令前缀)
+    //   · 单操作（如黑名单移出）：点击条目直接执行该操作
+    //   · 多操作（传送/设位置/设默认/删除）：点击条目弹出二级操作子表单
+    // - hideOption: (命令参数, 操作下标) → 是否对该条目隐藏该操作（如默认家隐藏"设为默认家"）
+    // 操作按钮文本复用现有语言键（stripTags 纯文本化），命令 = 命令前缀 + 条目命令参数
+    fun sendEntryListForm(
+        player: Player,
+        titlePath: String,
+        entries: List<Pair<String, String>>,
+        manageOptions: List<Pair<String, String>>,
+        hideOption: ((arg: String, optionIndex: Int) -> Boolean)? = null
+    ): Boolean {
         if (!isBedrockPlayer(player) || entries.isEmpty() || manageOptions.isEmpty()) return false
         if (manageOptions.size == 1) {
             // 单操作：主表单按钮即条目，点击直接执行
@@ -122,29 +131,31 @@ object BedrockFormHook {
             val buttonText = plainTextOf(player, buttonKey)
             val builder = SimpleForm.builder()
                 .title(plainTextOf(player, titlePath))
-            for (entry in entries) builder.button("$entry $buttonText")
+            for ((label, _) in entries) builder.button("$label $buttonText")
             builder.validResultHandler { _, response ->
                 val index = response.clickedButtonId()
                 if (index < 0 || index >= entries.size) return@validResultHandler
-                performForEntry(player, "$commandPrefix ${entries[index]}")
+                performForEntry(player, "$commandPrefix ${entries[index].second}")
             }
             return sendForm(player, builder)
         }
-        // 多操作：主表单列条目，点击弹出二级操作子表单
+        // 多操作：主表单列条目，点击弹出二级操作子表单（按条目过滤隐藏的操作项）
         val builder = SimpleForm.builder()
             .title(plainTextOf(player, titlePath))
-        for (entry in entries) builder.button(entry)
+        for ((label, _) in entries) builder.button(label)
         builder.validResultHandler { _, response ->
             val index = response.clickedButtonId()
             if (index < 0 || index >= entries.size) return@validResultHandler
-            val entry = entries[index]
+            val (label, arg) = entries[index]
+            val visibleOptions = manageOptions.withIndex().filter { hideOption?.invoke(arg, it.index) != true }
+            if (visibleOptions.isEmpty()) return@validResultHandler
             val subBuilder = SimpleForm.builder()
-                .title(entry)
-            for ((buttonKey, _) in manageOptions) subBuilder.button(plainTextOf(player, buttonKey, entry))
+                .title(label)
+            for ((_, option) in visibleOptions) subBuilder.button(plainTextOf(player, option.first, arg))
             subBuilder.validResultHandler { _, subResponse ->
                 val optionIndex = subResponse.clickedButtonId()
-                if (optionIndex < 0 || optionIndex >= manageOptions.size) return@validResultHandler
-                performForEntry(player, "${manageOptions[optionIndex].second} $entry")
+                if (optionIndex < 0 || optionIndex >= visibleOptions.size) return@validResultHandler
+                performForEntry(player, "${visibleOptions[optionIndex].value.second} $arg")
             }
             sendForm(player, subBuilder)
         }

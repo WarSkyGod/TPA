@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Vaše žádost pro </bold><gold><bold>%target% <
 #=======================
 home.list_header: "<green><bold>Dostupné domovy:</bold>"
 home.set_success: "<green><bold>Domov </bold><gold><bold>%target% </bold><green><bold>nastaven</bold>"
+home.default_tag: "[Výchozí]"
 home.default_set_success: "<green><bold>Výchozí domov nastaven na </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Domov </bold><gold><bold>%target% </bold><green><bold>smazán</bold>"
 home.teleport_success: "<green><bold>Teleportováno do domova </bold><gold><bold>%target%</bold>"

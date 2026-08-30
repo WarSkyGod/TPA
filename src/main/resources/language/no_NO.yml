@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Din forespørsel til </bold><gold><bold>%target%
 #=======================
 home.list_header: "<green><bold>Tilgjengelige hjem:</bold>"
 home.set_success: "<green><bold>Hjem </bold><gold><bold>%target% </bold><green><bold>satt</bold>"
+home.default_tag: "[Standard]"
 home.default_set_success: "<green><bold>Standard hjem satt til </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Hjem </bold><gold><bold>%target% </bold><green><bold>slettet</bold>"
 home.teleport_success: "<green><bold>Teleportert til </bold><gold><bold>%target%</bold>"

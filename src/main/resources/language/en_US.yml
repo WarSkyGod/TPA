@@ -44,6 +44,7 @@ request.expired_to: "<red><bold>Your request to </bold><gold><bold>%target%</bol
 #=======================
 home.list_header: "<green><bold>Available Homes:</bold>"
 home.set_success: "<green><bold>Home </bold><gold><bold>%target%</bold><green><bold> set</bold>"
+home.default_tag: "[Default]"
 home.default_set_success: "<green><bold>Default home set to </bold><gold><bold>%target%</bold>"
 home.delete_success: "<green><bold>Home </bold><gold><bold>%target%</bold><green><bold> deleted</bold>"
 home.teleport_success: "<green><bold>Teleported to home </bold><gold><bold>%target%</bold>"
