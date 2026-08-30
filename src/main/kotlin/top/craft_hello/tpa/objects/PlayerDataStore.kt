@@ -35,13 +35,28 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         data.setlang = config.getBoolean("setlang", false)
         data.defaultHomeName = config.getString("default_home")
         for (name in config.getConfigurationSection("homes")?.getKeys(false) ?: emptySet()) {
-            val location = config.getLocation("homes.$name") ?: continue
+            // getLocation 只认 == 序列化格式；3.x 手工分键（world=世界名）走兜底解析，确保开库迁移/未迁移旧文件不丢家
+            val location = config.getLocation("homes.$name") ?: readManualLocation(config, "homes.$name") ?: continue
             data.homes[name] = location
         }
         data.denyList.addAll(config.getStringList("deny_list"))
-        data.lastLocation = config.getLocation("last_location")
-        data.logoutLocation = config.getLocation("logout_location")
+        data.lastLocation = config.getLocation("last_location") ?: readManualLocation(config, "last_location")
+        data.logoutLocation = config.getLocation("logout_location") ?: readManualLocation(config, "logout_location")
         return data
+    }
+
+    // 3.x 手工分键 Location 读取兜底（<path>.world=世界名字符串 + x/y/z/yaw/pitch）
+    private fun readManualLocation(config: YamlConfiguration, path: String): Location? {
+        val section = config.getConfigurationSection(path) ?: return null
+        val world = Bukkit.getWorld(section.getString("world") ?: return null) ?: return null
+        return Location(
+            world,
+            section.getDouble("x"),
+            section.getDouble("y"),
+            section.getDouble("z"),
+            section.getDouble("yaw").toFloat(),
+            section.getDouble("pitch").toFloat()
+        )
     }
 
     override fun findUuidByName(name: String): UUID? {
