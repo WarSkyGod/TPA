@@ -106,6 +106,9 @@ object TpacCommand {
             return SendMessageUtil.permissionDeniedError(sender)
         }
         ConfigManager.reloadAllConfig()
-        return SendMessageUtil.configReloaded(sender)
+        val result = SendMessageUtil.configReloaded(sender)
+        // debug 开关热切换后的提醒（控制台）
+        SendMessageUtil.debugWarningNotice()
+        return result
     }
 }

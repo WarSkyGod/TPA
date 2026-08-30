@@ -89,7 +89,21 @@ data class Language(var languageFile: File, var isReplace: Boolean) {
     }
 
     fun getMessage(path: String): String {
-        return languageConfig.getString(path) ?: "null"
+        val value = languageConfig.getString(path)
+        if (value == null) warnMissingKey(languageFile.name, path)
+        return value ?: "null"
+    }
+
+    companion object {
+        // 语言文件缺键警告去重（同名文件同键只报一次，避免刷屏）
+        private val warnedMissingKeys: MutableSet<String> = HashSet()
+
+        // 旧版语言文件缺少新增键时给出明确提示（getMessage 会以 "null" 兜底显示）
+        fun warnMissingKey(fileName: String, path: String) {
+            if (warnedMissingKeys.add("$fileName:$path")) {
+                TPA.plugin.logger.warning("语言文件 $fileName 缺少键 $path（可能为旧版本文件，可删除 plugins/TPA/language 目录后重启重新生成，或手动补充该键）")
+            }
+        }
     }
 
     // 读取原文并透传 PlaceholderAPI 占位符（玩家可用时）

@@ -75,6 +75,9 @@ class TPA : JavaPlugin() {
         // PlaceholderAPI（可选依赖）
         PapiHook.registerExpansion()
 
+        // debug 模式开启提醒（控制台）
+        SendMessageUtil.debugWarningNotice()
+
         // 更新检查（GitHub Releases Latest）
         VersionUtil.init(this)
 

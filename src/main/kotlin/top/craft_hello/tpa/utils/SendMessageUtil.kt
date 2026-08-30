@@ -288,6 +288,13 @@ class SendMessageUtil {
             return Command.SINGLE_SUCCESS
         }
 
+        // debug 模式开启提醒（仅控制台，debug=false 时不发送）
+        fun debugWarningNotice() {
+            if (ConfigManager.config.debug) {
+                sendMessageForPath(Bukkit.getConsoleSender(), "system.debug_warning")
+            }
+        }
+
         // =============== 成功消息 ===============
 
         // 成功设置主城消息
