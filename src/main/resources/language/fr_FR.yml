@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Aucun point disponible!</bold>"
 error.last_location_missing: "<red><bold>Aucune position enregistrée!</bold>"
 error.logout_location_missing: "<red><bold>Position de déconnexion inconnue!</bold>"
 error.spawn_not_set: "<red><bold>Spawn non défini!</bold>"
+error.cost_insufficient: "<bold><red>Solde insuffisant ! Cette téléportation coûte</red> <gold>{cost}</gold> {currency}<red>, votre solde est de</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Téléportation annulée car</red> <gold>%target%</gold> <red>n'a pas un solde suffisant</red></bold>"
 
 ## Syntaxe
 error.syntax_generic: "<red><bold>Erreur de syntaxe: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Téléporté à la dernière position de
 #=======================
 system.config_reloaded: "<green><bold>Config rechargée!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Solde insuffisant ! Cette téléportation coûte</red> <gold>{cost}</gold> {currency}<red>, votre solde est de</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Téléportation annulée car</red> <gold>%target%</gold> <red>n'a pas un solde suffisant</red></bold>"
 teleport.cost_charged: "<bold><green>Cette téléportation a coûté</green> <gold>{cost}</gold> {currency}<green>, votre solde est de</green> <gold>{balance}</gold></bold>"
-system.currency_money: "argent"
-system.currency_points: "points"
+system.currency_money: "<bold><gold>argent</gold></bold>"
+
+system.currency_points: "<bold><green>points</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin chargé! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin déchargé!</bold>"

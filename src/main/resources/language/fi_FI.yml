@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Ei saatavilla olevia warppeja</bold>"
 error.last_location_missing: "<red><bold>Edellistä sijaintia ei tallennettu</bold>"
 error.logout_location_missing: "<red><bold>Kirjautumispaikkaa ei tallennettu</bold>"
 error.spawn_not_set: "<red><bold>Spawn-pistettä ei asetettu</bold>"
+error.cost_insufficient: "<bold><red>Saldo ei riitä! Tämä teleporttaus maksaa</red> <gold>{cost}</gold> {currency}<red>, saldosi on</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleporttaus peruutettiin, koska</red> <gold>%target%</gold> <red>saldo ei ole riittävä</red></bold>"
 
 ## Syntaksi
 error.syntax_generic: "<red><bold>Syntaksivirhe! Käytä: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleportattu pelaajan </bold><gold><bold
 #=======================
 system.config_reloaded: "<green><bold>Asetukset ladattu uudelleen!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Saldo ei riitä! Tämä teleporttaus maksaa</red> <gold>{cost}</gold> {currency}<red>, saldosi on</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleporttaus peruutettiin, koska</red> <gold>%target%</gold> <red>saldo ei ole riittävä</red></bold>"
 teleport.cost_charged: "<bold><green>Tämä teleporttaus maksoi</green> <gold>{cost}</gold> {currency}<green>, saldosi on</green> <gold>{balance}</gold></bold>"
-system.currency_money: "rahaa"
-system.currency_points: "pistettä"
+system.currency_money: "<bold><gold>rahaa</gold></bold>"
+
+system.currency_points: "<bold><green>pistettä</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Laajennus ladattu! Versio: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Laajennus poistettu!</bold>"

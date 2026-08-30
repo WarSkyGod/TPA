@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Nincs elérhető warp!</bold>"
 error.last_location_missing: "<red><bold>Nincs utolsó pozíció!</bold>"
 error.logout_location_missing: "<red><bold>Nincs kijelentkezési hely!</bold>"
 error.spawn_not_set: "<red><bold>Nincs spawn beállítva!</bold>"
+error.cost_insufficient: "<bold><red>Nincs elég egyenleg! Ehhez a teleportáláshoz</red> <gold>{cost}</gold> {currency}<red> szükséges, az egyenleged</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>A teleportálás megszakadt, mert</red> <gold>%target%</gold> <red>egyenlege nem elegendő</red></bold>"
 
 ## Parancs szintaxis
 error.syntax_generic: "<red><bold>Szintaxis hiba! Használat: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleportálva </bold><gold><bold>%target
 #=======================
 system.config_reloaded: "<green><bold>Konfig újratöltve!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Nincs elég egyenleg! Ehhez a teleportáláshoz</red> <gold>{cost}</gold> {currency}<red> szükséges, az egyenleged</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>A teleportálás megszakadt, mert</red> <gold>%target%</gold> <red>egyenlege nem elegendő</red></bold>"
 teleport.cost_charged: "<bold><green>Ez a teleportálás</green> <gold>{cost}</gold> {currency}<green>-be került, az egyenleged</green> <gold>{balance}</gold></bold>"
-system.currency_money: "pénz"
-system.currency_points: "pont"
+system.currency_money: "<bold><gold>pénz</gold></bold>"
+
+system.currency_points: "<bold><green>pont</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin betöltve! Verzió: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin kikapcsolva!</bold>"

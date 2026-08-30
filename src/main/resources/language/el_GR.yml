@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Δεν υπάρχουν σημεία μεταφ�
 error.last_location_missing: "<red><bold>Δεν υπάρχει τελευταία τοποθεσία!</bold>"
 error.logout_location_missing: "<red><bold>Δεν υπάρχει τοποθεσία αποσύνδεσης!</bold>"
 error.spawn_not_set: "<red><bold>Δεν έχει οριστεί κεντρικό σημείο!</bold>"
+error.cost_insufficient: "<bold><red>Ανεπαρκές υπόλοιπο! Αυτή η τηλεμεταφορά κοστίζει</red> <gold>{cost}</gold> {currency}<red>, το υπόλοιπό σας είναι</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Η τηλεμεταφορά ακυρώθηκε επειδή</red> <gold>%target%</gold> <red>δεν έχει αρκετό υπόλοιπο</red></bold>"
 
 ## Σύνταξη εντολής
 error.syntax_generic: "<red><bold>Συντακτικό λάθος! Χρήση: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Μεταφερθήκατε στην το
 #=======================
 system.config_reloaded: "<green><bold>Επαναφόρτωση ρυθμίσεων!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Ανεπαρκές υπόλοιπο! Αυτή η τηλεμεταφορά κοστίζει</red> <gold>{cost}</gold> {currency}<red>, το υπόλοιπό σας είναι</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Η τηλεμεταφορά ακυρώθηκε επειδή</red> <gold>%target%</gold> <red>δεν έχει αρκετό υπόλοιπο</red></bold>"
 teleport.cost_charged: "<bold><green>Αυτή η τηλεμεταφορά κόστισε</green> <gold>{cost}</gold> {currency}<green>, το υπόλοιπό σας είναι</green> <gold>{balance}</gold></bold>"
-system.currency_money: "χρήματα"
-system.currency_points: "πόντοι"
+system.currency_money: "<bold><gold>χρήματα</gold></bold>"
+
+system.currency_points: "<bold><green>πόντοι</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Το πρόσθετο φορτώθηκε! Έκδοση: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Το πρόσθετο απενεργοποιήθηκε!</bold>"

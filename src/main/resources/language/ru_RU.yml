@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Нет доступных точек!</bold>"
 error.last_location_missing: "<red><bold>Нет данных о позиции!</bold>"
 error.logout_location_missing: "<red><bold>Нет данных о выходе!</bold>"
 error.spawn_not_set: "<red><bold>Главный город не установлен!</bold>"
+error.cost_insufficient: "<bold><red>Недостаточно средств! Эта телепортация стоит</red> <gold>{cost}</gold> {currency}<red>, ваш баланс</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Телепортация отменена: у</red> <gold>%target%</gold> <red>недостаточно средств</red></bold>"
 
 ## Синтаксис
 error.syntax_generic: "<red><bold>Ошибка синтаксиса: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Телепортирован к посл
 #=======================
 system.config_reloaded: "<green><bold>Конфиг перезагружен!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Недостаточно средств! Эта телепортация стоит</red> <gold>{cost}</gold> {currency}<red>, ваш баланс</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Телепортация отменена: у</red> <gold>%target%</gold> <red>недостаточно средств</red></bold>"
 teleport.cost_charged: "<bold><green>Телепортация стоила</green> <gold>{cost}</gold> {currency}<green>, ваш баланс</green> <gold>{balance}</gold></bold>"
-system.currency_money: "деньги"
-system.currency_points: "очки"
+system.currency_money: "<bold><gold>деньги</gold></bold>"
+
+system.currency_points: "<bold><green>очки</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Плагин загружен! Версия: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Плагин выгружен!</bold>"

@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>אין נקודות טלפורט!</bold>"
 error.last_location_missing: "<red><bold>אין מיקום אחרון!</bold>"
 error.logout_location_missing: "<red><bold>אין מיקום יציאה!</bold>"
 error.spawn_not_set: "<red><bold>לא הוגדר ספawn!</bold>"
+error.cost_insufficient: "<bold><red>אין מספיק יתרה! הטלפורט הזה עולה</red> <gold>{cost}</gold> {currency}<red>, היתרה שלך היא</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>הטלפורט בוטל מכיוון של</red> <gold>%target%</gold> <red>אין מספיק יתרה</red></bold>"
 
 ## תחביר פקודה
 error.syntax_generic: "<red><bold>תחביר שגוי! השתמש: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>התטלפת למיקום יציאה ש�
 #=======================
 system.config_reloaded: "<green><bold>הגדרות נטענו מחדש!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>אין מספיק יתרה! הטלפורט הזה עולה</red> <gold>{cost}</gold> {currency}<red>, היתרה שלך היא</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>הטלפורט בוטל מכיוון של</red> <gold>%target%</gold> <red>אין מספיק יתרה</red></bold>"
 teleport.cost_charged: "<bold><green>הטלפורט הזה עלה</green> <gold>{cost}</gold> {currency}<green>, היתרה שלך היא</green> <gold>{balance}</gold></bold>"
-system.currency_money: "כסף"
-system.currency_points: "נקודות"
+system.currency_money: "<bold><gold>כסף</gold></bold>"
+
+system.currency_points: "<bold><green>נקודות</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>התוסף נטען! גרסה: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>התוסף נסגר!</bold>"

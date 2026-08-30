@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Mevcut warp yok</bold>"
 error.last_location_missing: "<red><bold>Son konum kaydı yok</bold>"
 error.logout_location_missing: "<red><bold>Çıkış konumu kaydedilmemiş</bold>"
 error.spawn_not_set: "<red><bold>Spawn noktası ayarlanmamış</bold>"
+error.cost_insufficient: "<bold><red>Yetersiz bakiye! Bu ışınlanma</red> <gold>{cost}</gold> {currency}<red> tutuyor, bakiyeniz</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> adlı oyuncunun bakiyesi yetersiz olduğu için ışınlanma iptal edildi</red></bold>"
 
 ## Sözdizimi
 error.syntax_generic: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><gree
 #=======================
 system.config_reloaded: "<green><bold>Yapılandırma yeniden yüklendi!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Yetersiz bakiye! Bu ışınlanma</red> <gold>{cost}</gold> {currency}<red> tutuyor, bakiyeniz</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> adlı oyuncunun bakiyesi yetersiz olduğu için ışınlanma iptal edildi</red></bold>"
 teleport.cost_charged: "<bold><green>Bu ışınlanma</green> <gold>{cost}</gold> {currency}<green> harcadı, bakiyeniz</green> <gold>{balance}</gold></bold>"
-system.currency_money: "para"
-system.currency_points: "puan"
+system.currency_money: "<bold><gold>para</gold></bold>"
+
+system.currency_points: "<bold><green>puan</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Eklenti yüklendi! Sürüm: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Eklenti kaldırıldı!</bold>"

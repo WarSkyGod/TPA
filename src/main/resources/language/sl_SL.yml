@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Ni dostopnih warpov</bold>"
 error.last_location_missing: "<red><bold>Ni zadnje lokacije</bold>"
 error.logout_location_missing: "<red><bold>Ni zapisa odjave</bold>"
 error.spawn_not_set: "<red><bold>Začetna točka ni nastavljena</bold>"
+error.cost_insufficient: "<bold><red>Premalo sredstev! Ta teleportacija stane</red> <gold>{cost}</gold> {currency}<red>, vaše stanje je</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleportacija je bila preklicana, ker</red> <gold>%target%</gold> <red>nima dovolj sredstev</red></bold>"
 
 ## Sintaksa ukazov
 error.syntax_generic: "<red><bold>Napačna sintaksa! Uporabi: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleportiran na zadnjo odjavo </bold><go
 #=======================
 system.config_reloaded: "<green><bold>Konfiguracija osvežena!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Premalo sredstev! Ta teleportacija stane</red> <gold>{cost}</gold> {currency}<red>, vaše stanje je</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleportacija je bila preklicana, ker</red> <gold>%target%</gold> <red>nima dovolj sredstev</red></bold>"
 teleport.cost_charged: "<bold><green>Ta teleportacija je stala</green> <gold>{cost}</gold> {currency}<green>, vaše stanje je</green> <gold>{balance}</gold></bold>"
-system.currency_money: "denar"
-system.currency_points: "točke"
+system.currency_money: "<bold><gold>denar</gold></bold>"
+
+system.currency_points: "<bold><green>točke</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Vtičnik naložen! Verzija: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Vtičnik odstranjen!</bold>"

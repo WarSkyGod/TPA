@@ -2,7 +2,7 @@
 ---
 # TPA
 [简体中文](https://github.com/WarSkyGod/TPA)  
-A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/Spigot/Paper/Folia**.
+A simple teleportation plugin that supports **Folia**, compatible with **Paper/Folia**.
 
 ## Features
 
@@ -10,6 +10,11 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
 - **Configurable**: Supports custom configuration files.
 - **Multilingual Support**: Built-in multiple language files.
 - **Customizable Language Files**: Allows users to customize language files.
+- **Database Support**: Supports SQLite / MySQL.
+- **Geyser Floodgate Support**: With the Floodgate plugin installed, Bedrock players can use form-based UI for interactions.
+- **Teleport Cost Support**: With the Vault / PlayerPoints plugin installed, teleportation fees can be enabled.
+- **PlaceholderAPI Support**: With the PlaceholderAPI plugin installed, placeholders can be used in messages.
+- **MiniMessage Support**: Use MiniMessage syntax to customize colors and even insert links with custom click events; gradient / Hex color support.
 
 ## Commands
 
@@ -62,11 +67,11 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
   Teleport to the previous location.
 - **/rtp**  
   Random teleportation.
-- **/tpa version**  
+- **/tpac version**  
   Check for plugin updates.
-- **/tpa setlang <clear/language>**  
+- **/tpac setlang <clear/language>**  
   Set the client display language.
-- **/tpa reload**  
+- **/tpac reload**  
   Reload the configuration file.
 
 ## Permissions
@@ -79,9 +84,9 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
 - **tpa.tplogout**  
   Allows using the `/tplogout` command to teleport to a player's last logout location.
 - **tpa.reload**  
-  Allows using the `/reload` command to reload the configuration file.
+  Allows using the `/tpac reload` command to reload the configuration file.
 - **tpa.version**  
-  Players with this permission will receive plugin update notifications and can use `/tpa version` to check for updates.
+  Players with this permission will receive plugin update notifications and can use `/tpac version` to check for updates.
 - **tpa.nodelay**  
   Players with this permission are not restricted by command cooldowns.
 
@@ -123,7 +128,7 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
 - **tpa.mvp**
 - **tpa.mvp+**
 - **tpa.mvp++**  
-  Allows configuring the maximum number of homes a player with this permission can set (-1 for unlimited) and command cooldowns in the configuration file.
+  Allows configuring the maximum number of homes a player with this permission can set (-1 for unlimited) and command cooldowns in the configuration file, as well as command cost discounts (if command cost is enabled).
 
 ### Others
 - **tpa.back**  
@@ -143,6 +148,7 @@ This plugin uses [FoliaLib](https://github.com/handyplus/FoliaLib) for **Folia**
 - [Apleax](https://github.com/Apleax)
 - [LFWQSP2641](https://github.com/LFWQSP2641)
 - [sky-3311](https://github.com/sky-3311)
+- [Ukiyograin](https://github.com/Ukiyograin)
 
 ### Bug Reporters
 - [fanlepian1](https://github.com/fanlepian1)
@@ -153,11 +159,27 @@ This plugin uses [FoliaLib](https://github.com/handyplus/FoliaLib) for **Folia**
 - [sky-3311](https://github.com/sky-3311)
 - [zhgiuu45](https://github.com/zhgiuu45)
 - [notwhitebear](https://github.com/notwhitebear)
+- [Amin2478](https://github.com/Amin2478)
+- [TritiumBro](https://github.com/TritiumBro)
+- [XiaoST-one](https://github.com/XiaoST-one)
+- [Cc-Cece](https://github.com/Cc-Cece)
+- [Ukiyograin](https://github.com/Ukiyograin)
+- [xszx-tbh](https://github.com/xszx-tbh)
+- [Carrot520](https://github.com/Carrot520)
+- [NightCat](https://github.com/nightlight-hk)
+
 
 ### Feature Suggesters
 - [Apleax](https://github.com/Apleax)
+- [xiaoleaw](https://github.com/xiaoleaw)
+- [Onako2](https://github.com/Onako2)
+
+
+### Translation Providers or Correctors
+- Vietnamese [Mytai20100](https://github.com/Mytai20100)
 
 ### AI Models
 - [DeepSeek](https://www.deepseek.com/)
+- [Zhipu GLM 5.3-Flash](https://www.bigmodel.cn/)
 
---- 
+---

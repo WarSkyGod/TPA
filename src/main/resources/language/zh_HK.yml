@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>當前無可用傳送點！</bold>"
 error.last_location_missing: "<red><bold>無可用嘅上次位置！</bold>"
 error.logout_location_missing: "<red><bold>該玩家無最後下線位置！</bold>"
 error.spawn_not_set: "<red><bold>伺服器未設定主城！</bold>"
+error.cost_insufficient: "<bold><red>餘額不足！本次傳送需要</red> <gold>{cost}</gold> {currency}<red>，當前餘額</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>餘額不足，本次傳送已取消</red></bold>"
 
 ## 指令語法
 error.syntax_generic: "<red><bold>指令語法錯誤！正確用法：/%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>已傳送至 </bold><gold><bold>%target%
 #=======================
 system.config_reloaded: "<green><bold>設定檔已重新載入！</bold>"
 ## 传送费用
-error.cost_insufficient: "<bold><red>餘額不足！本次傳送需要</red> <gold>{cost}</gold> {currency}<red>，當前餘額</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>餘額不足，本次傳送已取消</red></bold>"
 teleport.cost_charged: "<bold><green>本次傳送消耗</green> <gold>{cost}</gold> {currency}<green>，當前餘額</green> <gold>{balance}</gold></bold>"
-system.currency_money: "金錢"
-system.currency_points: "點券"
+system.currency_money: "<bold><gold>金錢</gold></bold>"
+
+system.currency_points: "<bold><green>點券</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>插件已啟用！版本：</bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>插件已停用！</bold>"

@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Inga warps tillgängliga</bold>"
 error.last_location_missing: "<red><bold>Ingen senaste position</bold>"
 error.logout_location_missing: "<red><bold>Ingen utloggningsposition</bold>"
 error.spawn_not_set: "<red><bold>Spawn inte inställt</bold>"
+error.cost_insufficient: "<bold><red>Otillräckligt saldo! Denna teleportering kostar</red> <gold>{cost}</gold> {currency}<red>, ditt saldo är</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleporteringen avbröts eftersom</red> <gold>%target%</gold> <red>inte har tillräckligt saldo</red></bold>"
 
 ## Syntax
 error.syntax_generic: "<red><bold>Fel syntax! Använd: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleporterad till </bold><gold><bold>%ta
 #=======================
 system.config_reloaded: "<green><bold>Konfiguration laddades om!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Otillräckligt saldo! Denna teleportering kostar</red> <gold>{cost}</gold> {currency}<red>, ditt saldo är</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleporteringen avbröts eftersom</red> <gold>%target%</gold> <red>inte har tillräckligt saldo</red></bold>"
 teleport.cost_charged: "<bold><green>Denna teleportering kostade</green> <gold>{cost}</gold> {currency}<green>, ditt saldo är</green> <gold>{balance}</gold></bold>"
-system.currency_money: "pengar"
-system.currency_points: "poäng"
+system.currency_money: "<bold><gold>pengar</gold></bold>"
+
+system.currency_points: "<bold><green>poäng</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin laddad! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin avinstallerat!</bold>"

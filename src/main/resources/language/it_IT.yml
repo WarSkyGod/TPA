@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Nessun warp disponibile</bold>"
 error.last_location_missing: "<red><bold>Nessun registro posizioni</bold>"
 error.logout_location_missing: "<red><bold>Posizione di logout assente</bold>"
 error.spawn_not_set: "<red><bold>Spawn non impostato</bold>"
+error.cost_insufficient: "<bold><red>Saldo insufficiente! Questo teletrasporto costa</red> <gold>{cost}</gold> {currency}<red>, il tuo saldo è</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teletrasporto annullato perché</red> <gold>%target%</gold> <red>non ha un saldo sufficiente</red></bold>"
 
 ## Sintassi
 error.syntax_generic: "<red><bold>Errore sintassi! Usa: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Ultima posizione di </bold><gold><bold>%
 #=======================
 system.config_reloaded: "<green><bold>Configurazione ricaricata!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Saldo insufficiente! Questo teletrasporto costa</red> <gold>{cost}</gold> {currency}<red>, il tuo saldo è</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teletrasporto annullato perché</red> <gold>%target%</gold> <red>non ha un saldo sufficiente</red></bold>"
 teleport.cost_charged: "<bold><green>Questo teletrasporto è costato</green> <gold>{cost}</gold> {currency}<green>, il tuo saldo è</green> <gold>{balance}</gold></bold>"
-system.currency_money: "denaro"
-system.currency_points: "punti"
+system.currency_money: "<bold><gold>denaro</gold></bold>"
+
+system.currency_points: "<bold><green>punti</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin caricato! Versione: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin rimosso!</bold>"

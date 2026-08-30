@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Nenhum warp disponível</bold>"
 error.last_location_missing: "<red><bold>Sem registro de localização</bold>"
 error.logout_location_missing: "<red><bold>Sem local de logout</bold>"
 error.spawn_not_set: "<red><bold>Spawn não definido</bold>"
+error.cost_insufficient: "<bold><red>Saldo insuficiente! Este teletransporte custa</red> <gold>{cost}</gold> {currency}<red>, o teu saldo é</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teletransporte cancelado porque</red> <gold>%target%</gold> <red>não tem saldo suficiente</red></bold>"
 
 ## Sintaxe
 error.syntax_generic: "<red><bold>Sintaxe incorreta! Use: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Local de logout de </bold><gold><bold>%t
 #=======================
 system.config_reloaded: "<green><bold>Configuração recarregada</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Saldo insuficiente! Este teletransporte custa</red> <gold>{cost}</gold> {currency}<red>, o teu saldo é</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teletransporte cancelado porque</red> <gold>%target%</gold> <red>não tem saldo suficiente</red></bold>"
 teleport.cost_charged: "<bold><green>Este teletransporte custou</green> <gold>{cost}</gold> {currency}<green>, o teu saldo é</green> <gold>{balance}</gold></bold>"
-system.currency_money: "dinheiro"
-system.currency_points: "pontos"
+system.currency_money: "<bold><gold>dinheiro</gold></bold>"
+
+system.currency_points: "<bold><green>pontos</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin carregado! Versão: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin descarregado</bold>"

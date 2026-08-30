@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Không có warp nào!</bold>"
 error.last_location_missing: "<red><bold>Không có vị trí trước đó!</bold>"
 error.logout_location_missing: "<red><bold>Không có vị trí đăng xuất!</bold>"
 error.spawn_not_set: "<red><bold>Spawn chưa được đặt!</bold>"
+error.cost_insufficient: "<bold><red>Số dư không đủ! Lần dịch chuyển này tốn</red> <gold>{cost}</gold> {currency}<red>, số dư của bạn là</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Dịch chuyển đã bị hủy vì</red> <gold>%target%</gold> <red>không đủ số dư</red></bold>"
 
 ## Syntax
 error.syntax_generic: "<red><bold>Sai cú pháp! Dùng: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Đã dịch chuyển đến vị trí đ
 #=======================
 system.config_reloaded: "<green><bold>Đã tải lại config!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Số dư không đủ! Lần dịch chuyển này tốn</red> <gold>{cost}</gold> {currency}<red>, số dư của bạn là</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Dịch chuyển đã bị hủy vì</red> <gold>%target%</gold> <red>không đủ số dư</red></bold>"
 teleport.cost_charged: "<bold><green>Lần dịch chuyển này đã tốn</green> <gold>{cost}</gold> {currency}<green>, số dư của bạn là</green> <gold>{balance}</gold></bold>"
-system.currency_money: "tiền"
-system.currency_points: "điểm"
+system.currency_money: "<bold><gold>tiền</gold></bold>"
+
+system.currency_points: "<bold><green>điểm</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin đã bật! Phiên bản: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin đã tắt!</bold>"

@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Keine Warps verfügbar!</bold>"
 error.last_location_missing: "<red><bold>Keine letzte Position gespeichert!</bold>"
 error.logout_location_missing: "<red><bold>Keine Abmeldeposition verfügbar!</bold>"
 error.spawn_not_set: "<red><bold>Spawn nicht gesetzt!</bold>"
+error.cost_insufficient: "<bold><red>Nicht genügend Guthaben! Diese Teleportation kostet</red> <gold>{cost}</gold> {currency}<red>, dein Guthaben beträgt</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleportation abgebrochen, weil</red> <gold>%target%</gold> <red>nicht genügend Guthaben hat</red></bold>"
 
 ## Befehlssyntax
 error.syntax_generic: "<red><bold>Syntaxfehler! Benutze: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Zu </bold><gold><bold>%target%s </bold><
 #=======================
 system.config_reloaded: "<green><bold>Konfig neu geladen!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Nicht genügend Guthaben! Diese Teleportation kostet</red> <gold>{cost}</gold> {currency}<red>, dein Guthaben beträgt</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleportation abgebrochen, weil</red> <gold>%target%</gold> <red>nicht genügend Guthaben hat</red></bold>"
 teleport.cost_charged: "<bold><green>Diese Teleportation hat gekostet</green> <gold>{cost}</gold> {currency}<green>, dein Guthaben beträgt</green> <gold>{balance}</gold></bold>"
-system.currency_money: "Geld"
-system.currency_points: "Punkte"
+system.currency_money: "<bold><gold>Geld</gold></bold>"
+
+system.currency_points: "<bold><green>Punkte</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin geladen! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin entladen!</bold>"

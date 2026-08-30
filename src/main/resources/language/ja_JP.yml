@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>利用可能なワープポイントがありま
 error.last_location_missing: "<red><bold>直前の位置が記録されていません</bold>"
 error.logout_location_missing: "<red><bold>最終ログアウト位置がありません</bold>"
 error.spawn_not_set: "<red><bold>スポーン地点が設定されていません</bold>"
+error.cost_insufficient: "<bold><red>残高が不足しています！このテレポートには</red> <gold>{cost}</gold> {currency}<red>が必要で、現在の残高は</red> <gold>{balance}</gold>です</bold>"
+error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> の残高不足のため、テレポートをキャンセルしました</red></bold>"
 
 ## コマンド構文
 error.syntax_generic: "<red><bold>構文エラー！正しい使い方：/%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><gree
 #=======================
 system.config_reloaded: "<green><bold>設定ファイルをリロードしました</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>残高が不足しています！このテレポートには</red> <gold>{cost}</gold> {currency}<red>が必要で、現在の残高は</red> <gold>{balance}</gold>です</bold>"
-error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> の残高不足のため、テレポートをキャンセルしました</red></bold>"
 teleport.cost_charged: "<bold><green>このテレポートで</green> <gold>{cost}</gold> {currency}<green>を消費しました。現在の残高は</green> <gold>{balance}</gold>です</bold>"
-system.currency_money: "マネー"
-system.currency_points: "ポイント"
+system.currency_money: "<bold><gold>マネー</gold></bold>"
+
+system.currency_points: "<bold><green>ポイント</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>プラグイン読み込み完了！バージョン：</bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>プラグインをアンロードしました</bold>"

@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>No warps available!</bold>"
 error.last_location_missing: "<red><bold>No last location!</bold>"
 error.logout_location_missing: "<red><bold>No logout location!</bold>"
 error.spawn_not_set: "<red><bold>Spawn not set!</bold>"
+error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
 
 ## Syntax
 error.syntax_generic: "<red><bold>Syntax error! Usage: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleported to </bold><gold><bold>%target
 #=======================
 system.config_reloaded: "<green><bold>Config reloaded!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
 teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</gold></bold>"
-system.currency_money: "money"
-system.currency_points: "points"
+system.currency_money: "<bold><gold>money</gold></bold>"
+
+system.currency_points: "<bold><green>points</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin loaded! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin unloaded!</bold>"

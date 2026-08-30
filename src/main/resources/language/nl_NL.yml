@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Geen warps beschikbaar!</bold>"
 error.last_location_missing: "<red><bold>Geen laatste locatie!</bold>"
 error.logout_location_missing: "<red><bold>Geen uitloglocatie!</bold>"
 error.spawn_not_set: "<red><bold>Geen spawn ingesteld!</bold>"
+error.cost_insufficient: "<bold><red>Onvoldoende saldo! Deze teleportatie kost</red> <gold>{cost}</gold> {currency}<red>, je saldo is</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleportatie geannuleerd omdat</red> <gold>%target%</gold> <red>niet genoeg saldo heeft</red></bold>"
 
 ## Commando syntax
 error.syntax_generic: "<red><bold>Syntaxisfout! Gebruik: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Geteleporteerd naar uitloglocatie van </
 #=======================
 system.config_reloaded: "<green><bold>Config herladen!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Onvoldoende saldo! Deze teleportatie kost</red> <gold>{cost}</gold> {currency}<red>, je saldo is</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleportatie geannuleerd omdat</red> <gold>%target%</gold> <red>niet genoeg saldo heeft</red></bold>"
 teleport.cost_charged: "<bold><green>Deze teleportatie kostte</green> <gold>{cost}</gold> {currency}<green>, je saldo is</green> <gold>{balance}</gold></bold>"
-system.currency_money: "geld"
-system.currency_points: "punten"
+system.currency_money: "<bold><gold>geld</gold></bold>"
+
+system.currency_points: "<bold><green>punten</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin geladen! Versie: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin uitgeschakeld!</bold>"

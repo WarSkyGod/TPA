@@ -47,7 +47,7 @@ enable_title_message: true
 # 是否启用传送音效
 enable_sound: true
 
-# 传送音效设置（enable_sound 为总开关）
+# 传送音效设置
 # name 填 Bukkit Sound 名称，非法名称回退默认
 sound:
   # 传送倒计时音效（每秒）
@@ -84,13 +84,13 @@ cost:
 
   # 各传送命令费用（0 为免费）
   price:
-    tpa: 0
-    tphere: 0
-    home: 0
-    warp: 0
-    spawn: 0
-    back: 0
-    rtp: 0
+    tpa: 10
+    tphere: 10
+    home: 10
+    warp: 10
+    spawn: 10
+    back: 10
+    rtp: 50
 
   # 会员优惠模式：percent=百分比（vip_discount 值为实付百分比，50 = 半价）
   #             amount=固定减免（vip_discount 值为直接减免的金额，5 = 少付 5）
@@ -216,7 +216,6 @@ rtp:
     - disableWorld2
 
   # 随机传送的最大范围（半径）
-  # 以使用命令的玩家为中心
   limit:
     x: 500
     z: 500

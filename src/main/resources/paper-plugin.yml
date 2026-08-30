@@ -81,22 +81,22 @@ permissions:
     description: "可使用 `/home`、`/homes`、`/sethome`、`/setdefaulthome`、`/delhome`（默认关闭权限检查）"
   tpa.default:
     default: true
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.vip:
     default: false
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.vip+:
     default: false
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.mvp:
     default: false
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.mvp+:
     default: false
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.mvp++:
     default: false
-    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）"
+    description: "可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制），以及付费传送优惠（如果开启）"
   tpa.spawn:
     default: false
     description: "可使用 /spawn 命令传送到主城（默认关闭权限检查）"

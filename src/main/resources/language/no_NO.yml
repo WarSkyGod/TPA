@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Ingen warps tilgjengelig</bold>"
 error.last_location_missing: "<red><bold>Ingen posisjonslogg</bold>"
 error.logout_location_missing: "<red><bold>Ingen utloggingsposisjon</bold>"
 error.spawn_not_set: "<red><bold>Spawn ikke satt</bold>"
+error.cost_insufficient: "<bold><red>Utilstrekkelig saldo! Denne teleporteringen koster</red> <gold>{cost}</gold> {currency}<red>, saldoen din er</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleporteringen ble avbrutt fordi</red> <gold>%target%</gold> <red>ikke har tilstrekkelig saldo</red></bold>"
 
 ## Syntaks
 error.syntax_generic: "<red><bold>Feil syntaks! Bruk: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Siste utloggingsposisjon for </bold><gol
 #=======================
 system.config_reloaded: "<green><bold>Konfig lastet på nytt</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Utilstrekkelig saldo! Denne teleporteringen koster</red> <gold>{cost}</gold> {currency}<red>, saldoen din er</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleporteringen ble avbrutt fordi</red> <gold>%target%</gold> <red>ikke har tilstrekkelig saldo</red></bold>"
 teleport.cost_charged: "<bold><green>Denne teleporteringen kostet</green> <gold>{cost}</gold> {currency}<green>, saldoen din er</green> <gold>{balance}</gold></bold>"
-system.currency_money: "penger"
-system.currency_points: "poeng"
+system.currency_money: "<bold><gold>penger</gold></bold>"
+
+system.currency_points: "<bold><green>poeng</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin lastet! Versjon: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin avlastet</bold>"

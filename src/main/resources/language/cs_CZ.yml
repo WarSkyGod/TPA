@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Žádné dostupné warpy!</bold>"
 error.last_location_missing: "<red><bold>Chybí poslední pozice!</bold>"
 error.logout_location_missing: "<red><bold>Chybí pozice odhlášení!</bold>"
 error.spawn_not_set: "<red><bold>Spawn nenastaven!</bold>"
+error.cost_insufficient: "<bold><red>Nedostatečný zůstatek! Tento teleport stojí</red> <gold>{cost}</gold> {currency}<red>, váš zůstatek je</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleport zrušen, protože</red> <gold>%target%</gold> <red>má nedostatečný zůstatek</red></bold>"
 
 ## Syntaxe příkazu
 error.syntax_generic: "<red><bold>Chybná syntaxe! Použijte: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleportováno k poslední pozici </bold
 #=======================
 system.config_reloaded: "<green><bold>Konfigurace obnovena!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Nedostatečný zůstatek! Tento teleport stojí</red> <gold>{cost}</gold> {currency}<red>, váš zůstatek je</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport zrušen, protože</red> <gold>%target%</gold> <red>má nedostatečný zůstatek</red></bold>"
 teleport.cost_charged: "<bold><green>Tento teleport stál</green> <gold>{cost}</gold> {currency}<green>, váš zůstatek je</green> <gold>{balance}</gold></bold>"
-system.currency_money: "peníze"
-system.currency_points: "body"
+system.currency_money: "<bold><gold>peníze</gold></bold>"
+
+system.currency_points: "<bold><green>body</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin načten! Verze: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin vypnut!</bold>"

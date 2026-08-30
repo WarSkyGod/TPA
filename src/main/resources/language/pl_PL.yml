@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>Brak dostępnych warpów!</bold>"
 error.last_location_missing: "<red><bold>Brak ostatniej lokalizacji!</bold>"
 error.logout_location_missing: "<red><bold>Brak lokalizacji wylogowania!</bold>"
 error.spawn_not_set: "<red><bold>Spawn nieustawiony!</bold>"
+error.cost_insufficient: "<bold><red>Niewystarczające środki! Ten teleport kosztuje</red> <gold>{cost}</gold> {currency}<red>, twoje saldo to</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleport anulowany, ponieważ</red> <gold>%target%</gold> <red>ma niewystarczające środki</red></bold>"
 
 ## Składnia komend
 error.syntax_generic: "<red><bold>Błąd składni! Użyj: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold>Teleportowano do ostatniej lokalizacji <
 #=======================
 system.config_reloaded: "<green><bold>Przeładowano konfigurację!</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>Niewystarczające środki! Ten teleport kosztuje</red> <gold>{cost}</gold> {currency}<red>, twoje saldo to</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>Teleport anulowany, ponieważ</red> <gold>%target%</gold> <red>ma niewystarczające środki</red></bold>"
 teleport.cost_charged: "<bold><green>Ten teleport kosztował</green> <gold>{cost}</gold> {currency}<green>, twoje saldo to</green> <gold>{balance}</gold></bold>"
-system.currency_money: "pieniądze"
-system.currency_points: "punkty"
+system.currency_money: "<bold><gold>pieniądze</gold></bold>"
+
+system.currency_points: "<bold><green>punkty</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>Plugin załadowany! Wersja: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin wyłączony!</bold>"

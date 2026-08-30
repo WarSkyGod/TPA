@@ -125,6 +125,8 @@ error.no_warps_set: "<red><bold>이용 가능한 워프가 없습니다</bold>"
 error.last_location_missing: "<red><bold>이전 위치 기록이 없습니다</bold>"
 error.logout_location_missing: "<red><bold>마지막 접속 위치가 기록되지 않았습니다</bold>"
 error.spawn_not_set: "<red><bold>스폰 지점이 설정되지 않았습니다</bold>"
+error.cost_insufficient: "<bold><red>잔액이 부족합니다! 이 텔레포트에는</red> <gold>{cost}</gold> {currency}<red>이 필요하며, 현재 잔액은</red> <gold>{balance}</gold>입니다</bold>"
+error.cost_teleport_blocked: "<bold><red><gold>%target%</gold>님의 잔액 부족으로 텔레포트가 취소되었습니다</red></bold>"
 
 ## 명령어 문법
 error.syntax_generic: "<red><bold>문법 오류! 사용법: /%command%</bold>"
@@ -160,11 +162,11 @@ teleport.logout_location: "<green><bold></bold><gold><bold>%target%</bold><green
 #=======================
 system.config_reloaded: "<green><bold>설정 파일을 재로드했습니다</bold>"
 ## Teleport cost
-error.cost_insufficient: "<bold><red>잔액이 부족합니다! 이 텔레포트에는</red> <gold>{cost}</gold> {currency}<red>이 필요하며, 현재 잔액은</red> <gold>{balance}</gold>입니다</bold>"
-error.cost_teleport_blocked: "<bold><red><gold>%target%</gold>님의 잔액 부족으로 텔레포트가 취소되었습니다</red></bold>"
 teleport.cost_charged: "<bold><green>이 텔레포트로</green> <gold>{cost}</gold> {currency}<green>를 소비했습니다. 현재 잔액은</green> <gold>{balance}</gold>입니다</bold>"
-system.currency_money: "머니"
-system.currency_points: "포인트"
+system.currency_money: "<bold><gold>머니</gold></bold>"
+
+system.currency_points: "<bold><green>포인트</green></bold>"
+
 
 system.plugin_loaded: "<green><bold>플러그인 로드 완료! 버전: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>플러그인 언로드 완료</bold>"

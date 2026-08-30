@@ -124,6 +124,10 @@ error.last_location_missing: "<bold><red>当前没有可用的上一次的位置
 error.logout_location_missing: "<bold><red>该玩家没有最后下线位置记录！</red></bold>"
 error.spawn_not_set: "<bold><red>服务器未设置主城传送点！</red></bold>"
 
+## 余额不足
+error.cost_insufficient: "<bold><red>余额不足！本次传送需要</red> <gold>{cost}</gold> {currency}<red>，当前余额</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>余额不足，本次传送已取消</red></bold>"
+
 ## 命令语法
 error.syntax_generic: "<bold><red>命令语法错误！正确用法：/%command%</red></bold>"
 error.syntax_tpa: "<bold><red>命令语法错误！正确用法：/%command% <玩家名称></red></bold>"
@@ -158,11 +162,9 @@ teleport.logout_location: "<bold><green>您已传送至</green> <gold>%target%</
 #=======================
 system.config_reloaded: "<bold><green>配置文件已重新加载！</green></bold>"
 ## 传送费用
-error.cost_insufficient: "<bold><red>余额不足！本次传送需要</red> <gold>{cost}</gold> {currency}<red>，当前余额</red> <gold>{balance}</gold></bold>"
-error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>余额不足，本次传送已取消</red></bold>"
 teleport.cost_charged: "<bold><green>本次传送消耗</green> <gold>{cost}</gold> {currency}<green>，当前余额</green> <gold>{balance}</gold></bold>"
-system.currency_money: "金钱"
-system.currency_points: "点券"
+system.currency_money: "<bold><gold>金钱</gold></bold>"
+system.currency_points: "<bold><green>点券</green></bold>"
 
 system.plugin_loaded: "<bold><green>插件已成功加载！当前版本为：</green><gold>%target%</gold></bold>"
 system.plugin_unloaded: "<bold><red>插件已成功卸载！</red></bold>"
