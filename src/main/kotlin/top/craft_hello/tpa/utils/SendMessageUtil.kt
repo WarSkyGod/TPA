@@ -432,13 +432,14 @@ class SendMessageUtil {
             successSentRequest(executor, targetName, delay)
         }
 
-        // 请求按钮消息（接受 / 拒绝 / 拒绝并加入黑名单，交互内嵌于语言文本）
+        // 请求按钮消息（接受 / 拒绝 / 拒绝并加入黑名单，交互内嵌于语言文本，整行带 prefix）
         fun acceptOrDeny(target : Player, executorName : String) {
             val language = LanguageManager.getLanguage(target)
+            val prefix = language.getFormatMessage(target, "prefix")
             val accept = language.getFormatMessage(target, "accept_button", executorName)
             val deny = language.getFormatMessage(target, "deny_button", executorName)
             val blacklist = language.getFormatMessage(target, "blacklist.add_button", executorName)
-            sendMessage(target, accept.append(deny).append(blacklist))
+            sendMessage(target, prefix.append(accept).append(deny).append(blacklist))
         }
 
         // 成功发送请求消息
@@ -562,7 +563,8 @@ class SendMessageUtil {
                 if (removeDenysButton) {
                     row = row.append(language.getFormatMessage(executor, "blacklist.remove_button", targetName))
                 }
-                sendMessage(executor, row)
+                // 按钮行与其他消息一致带 prefix
+                sendMessage(executor, language.getFormatMessage(executor, "prefix").append(row))
             }
         }
 
@@ -600,7 +602,9 @@ class SendMessageUtil {
                 listMessage(sender, warpList, "warp", teleportButton = true, settingButton = settingButton, deleteButton = deleteButton)
             } else {
                 sendMessageForPath(sender, "warp.list_header")
-                for (warpName in warpList) sendMessage(sender, Component.text(warpName))
+                // 控制台名单行带 console_prefix
+                val language = LanguageManager.getLanguage(sender)
+                for (warpName in warpList) sendMessage(sender, language.getFormatMessage(sender, "console_prefix").append(Component.text(warpName)))
             }
         }
 

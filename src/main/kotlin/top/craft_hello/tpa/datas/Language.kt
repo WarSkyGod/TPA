@@ -132,9 +132,10 @@ data class Language(var languageFile: File, var isReplace: Boolean) {
         return formatText(getPrefixMessage(sender, path), *vars)
     }
 
-    // 费用类消息：命名占位符 {cost}/{balance}/{currency}（值为格式化金额与语言文件货币名，无注入风险）
+    // 费用类消息：命名占位符 {cost}/{balance}/{currency}（值为格式化金额与语言文件货币名，无注入风险）；
+    // 与其它消息一致带 prefix（控制台走 console_prefix）
     fun getCostMessage(sender: CommandSender, path: String, cost: String, balance: String, currencyName: String): Component {
-        val text = getRawMessage(sender, path)
+        val text = getPrefixMessage(sender, path)
             .replace("{cost}", cost)
             .replace("{balance}", balance)
             .replace("{currency}", currencyName)
