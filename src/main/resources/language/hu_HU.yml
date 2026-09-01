@@ -1,7 +1,7 @@
-## TPA Plugin Magyar Nyelvi Fájl
+## TPA 插件简体中文语言文件
 
 #=======================
-# Alapbeállítások
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Utolsó pozíció"
 lang.set_success: "<green><bold>Nyelv beállítva: </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Gombinterakciók
+# 按钮交互
 #=======================
-## Gomb szövegek
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Kattints a teleportálás elfogadásához</bold></green>'>[Elfogadás]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Kattints a teleportálás elutasításához</bold></green>'>[Elutasítás]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Kattints az elutasításra és tiltásra</bold></green>'>[Elutasítás és tiltás]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Kattints az alapértelmezett home beállításához</bold></yellow>'>[Alapértelmezett home]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Kattints a törléshez</bold></green>'>[Törlés]</hover></insert></click></red>  </bold>"
 
-## Kattintási útmutatók
-
 #=======================
-# Teleportkérések
+# 传送请求
 #=======================
 request.title: "<bold><green>Teleportálási kérés</green></bold>"
 request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>hoz akar teleportálni! Kérés lejár: </bold><gold><bold>%seconds% </bold><green><bold>másodperc!</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Kérés </bold><gold><bold>%target% </bold><re
 request.expired_to: "<red><bold>Kérésed </bold><gold><bold>%target% </bold><red><bold>nek lejárt!</bold>"
 
 #=======================
-# Home-ok
+# 家
 #=======================
 home.list_header: "<green><bold>Elérhető home-ok:</bold>"
 home.set_success: "<green><bold>Home beállítva: </bold><gold><bold>%target%</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Maximális home szám: %max_home_amount%!</bol
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>már alapértelmezett</bold>"
 
 #=======================
-# Warp-ok
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Elérhető warp-ok:</bold>"
 warp.set_success: "<green><bold>Warp beállítva: </bold><gold><bold>%target%</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Warp törölve: </bold><gold><bold>%target%</
 warp.teleport_success: "<green><bold>Teleportálva a </bold><gold><bold>%target% </bold><green><bold>warp-hoz</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn beállítva</bold>"
 spawn.delete_success: "<green><bold>Spawn törölve</bold>"
 spawn.teleport_success: "<green><bold>Teleportálva a spawnhoz!</bold>"
 
 #=======================
-# Utolsó pozíció
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Teleportálva az utolsó pozíciódra!</bold>"
 
 #=======================
-# Véletlen teleport
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Véletlenszerű pozíció generálása...</bold>"
 rtp.success: "<green><bold>Sikeres véletlenszerű teleport!</bold>"
 rtp.failed: "<red><bold>Generálás sikertelen!</bold>"
 
 #=======================
-# Feketelista
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Feketelista:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>felkerült a listára</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>törölve a listáról</bold>"
 
 #=======================
-# Hibák
+# 错误提示
 #=======================
-## Parancs állapot
+## 命令状态
 error.command_disabled: "<red><bold>Parancs letiltva!</bold>"
 error.world_disabled: "<red><bold>Nem elérhető ebben a világban!</bold>"
 error.command_cooldown: "<red><bold>Várj </bold><gold><bold>%seconds% </bold><red><bold>másodpercet!</bold>"
 
-## Jogosultságok
+## 权限与执行
 error.console_restricted: "<red><bold>Csak játékosok használhatják!</bold>"
 error.permission_denied: "<red><bold>Nincs jogosultságod!</bold>"
 
-## Játékos állapot
+## 玩家状态
 error.no_online_players: "<red><bold>Nincs online játékos!</bold>"
 error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>nem elérhető!</bold>"
 error.self_operation: "<red><bold>Nem használhatod magadon!</bold>"
 
-## Kérés állapot
+## 请求状态
 error.no_pending_request: "<red><bold>Nincs függő kérés!</bold>"
 error.request_pending: "<red><bold>Már van aktív kérésed</bold>"
 
-## Feketelista
+## 黑名单
 error.already_blacklisted: "<red><bold>Már a listán van!</bold>"
 error.blocked_by_target: "<red><bold>Letiltottak!</bold>"
 error.blacklist_empty: "<red><bold>A lista üres!</bold>"
 error.not_blacklisted: "<red><bold>Nincs a listán!</bold>"
 
-## Home-ok
+## 家
 error.home_not_found: "<red><bold>Home </bold><gold><bold>%target% </bold><red><bold>nem létezik!</bold>"
 error.no_homes_set: "<red><bold>Nincs beállított home!</bold>"
 error.no_default_home: "<red><bold>Nincs alapértelmezett home!</bold>"
 
-## Warp-ok
+## 传送点
 error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>nem létezik!</bold>"
 error.no_warps_set: "<red><bold>Nincs elérhető warp!</bold>"
 
-## Pozíciók
+## 位置记录
 error.last_location_missing: "<red><bold>Nincs utolsó pozíció!</bold>"
 error.logout_location_missing: "<red><bold>Nincs kijelentkezési hely!</bold>"
 error.spawn_not_set: "<red><bold>Nincs spawn beállítva!</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Nincs elég egyenleg! Ehhez a teleportáláshoz</red> <gold>{cost}</gold> {currency}<red> szükséges, az egyenleged</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>A teleportálás megszakadt, mert</red> <gold>%target%</gold> <red>egyenlege nem elegendő</red></bold>"
 
-## Parancs szintaxis
+## 命令语法
 error.syntax_generic: "<red><bold>Szintaxis hiba! Használat: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Szintaxis hiba! Használat: /%command% <játékos></bold>"
 error.syntax_tpall: "<red><bold>Szintaxis hiba! Használat: /%command% [player/warp/spawn] [név]</bold>"
 error.syntax_warp: "<red><bold>Szintaxis hiba! Használat: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>Szintaxis hiba! Használat: /%command% <home></bold>"
 
-## Rendszerhibák
+## 系统错误
 error.config_not_found: "<red><bold>Új konfig generálva!</bold>"
 error.runtime: "<red><bold>Plugin hiba: %message%</bold>"
 error.forwarded_error: "<red><bold>Hiba </bold><gold><bold>%target% </bold><red><bold>től:</bold>"
 
 #=======================
-# Teleportációs folyamat
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Elfogadtad </bold><gold><bold>%target% </bold><green><bold>kérését!</bold>"
 teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>el fogadta a kérelmed!</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Admin teleportált </bold><gold><bold>%t
 teleport.tpall.to_self: "<green><bold>Admin mindenkit hozzád teleportált</bold>"
 teleport.tpall.success: "<green><bold>Mindenki teleportálva </bold><gold><bold>%target% </bold><green><bold>hoz</bold>"
 teleport.logout_location: "<green><bold>Teleportálva </bold><gold><bold>%target% </bold><green><bold>kijelentkezési helyére</bold>"
+teleport.cost_charged: "<bold><green>Ez a teleportálás</green> <gold>{cost}</gold> {currency}<green>-be került, az egyenleged</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Rendszerüzenetek
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Konfig újratöltve!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Ez a teleportálás</green> <gold>{cost}</gold> {currency}<green>-be került, az egyenleged</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>pénz</gold></bold>"
-
 system.currency_points: "<bold><green>pont</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Plugin betöltve! Verzió: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin kikapcsolva!</bold>"
 system.config_migrated_success: "<green><bold>Konfig migrálva!</bold>"
 system.config_migrated: "<green><bold>Régi konfig észlelve (biztonsági mentés készült)</bold>"
 system.debug_warning: "Figyelem: Debug mód aktív!"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "A(z) {0} nyelvi fájlból hiányzik a(z) {1} kulcs (valószínűleg régebbi verzióhoz tartozó fájl; a plugins/TPA/language mappa törlése és a szerver újraindítása után a fájl újra létrejön, vagy a kulcs kézzel is pótolható)"
+system.log.config_migrated_detail: "A régi konfiguráció át lett migrálva ({0} → {1}): a felhasználói egyéni értékek megőrizve, a régi nyelvi fájl biztonsági mentése a plugins/TPA/backup/{0}/ mappába került, és az új nyelvi fájl újragenerálásra került"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Az adatbázis-tárolás nincs engedélyezve (use_database: false), a játékosadatok a playerdata mappába lesznek mentve"
+system.log.database_pool_initialized: "Az adatbázis-kapcsolatkészlet inicializálva ({0})"
+system.log.database_connect_failed: "Az adatbázis-kapcsolat sikertelen ({0}): {1}"
+system.log.database_fallback_sqlite: "Váltás a helyi SQLite tárolóra ({0}), az adatok egyelőre helyben tárolódnak; a konfiguráció javítása után a /tpac reload automatikusan vissza fogja migrálni az adatokat az adatbázisba"
+system.log.database_fallback_create_failed: "A tartalék SQLite kapcsolatkészlet létrehozása sikertelen: {0}"
+system.log.database_memory_only: "Az adatbázis nem érhető el, és a tartalék módra váltás is sikertelen volt; az adatok csak a memóriagyorsítótárban lesznek tárolva (újraindításkor elvesznek)"
+system.log.database_get_connection_failed: "Az adatbázis-kapcsolat lekérése sikertelen: {0}"
+system.log.database_pool_closed: "Az adatbázis-kapcsolatkészlet lezárva"
+system.log.database_table_created: "A(z) {0} tábla létrejött"
+system.log.database_table_exists: "A(z) {0} tábla már létezik"
+system.log.database_table_points_created: "A tpa_points tábla létrejött (a spawn/warp pontok egységes teleportpont-tárolója)"
+system.log.database_column_added: "A player_data tábla ki lett egészítve a(z) {0} oszloppal"
+system.log.database_column_add_failed: "A(z) {0} oszlop hozzáadása a player_data táblához sikertelen: {1}"
+system.log.unsupported_database_type: "Nem támogatott adatbázistípus: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Kapcsolódva a Vault gazdasági rendszerhez (pénzbeli díj elérhető)"
+system.log.playerpoints_hooked: "Kapcsolódva a PlayerPoints pontrendszerhez (pontbeli díj elérhető)"
+system.log.cost_without_currency: "A teleportálási díj engedélyezve van (cost.enable: true), de a pénzrendszer ({0}) nem érhető el: a(z) {1} nincs telepítve, vagy nem biztosít gazdasági/pontszolgáltatást, a díj nem lesz felszámítva"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "A(z) {0} biztonsági mentése sikertelen: {1}"
+system.log.fallback_migrate_players_failed: "A játékosadatok átvitele a tartalék adatbázisból sikertelen (valószínűleg nincs player_data tábla): {0}"
+system.log.fallback_migrate_points_failed: "A teleportpontok adatainak átvitele a tartalék adatbázisból sikertelen (valószínűleg nincs tpa_points tábla): {0}"
+system.log.fallback_migrated_back: "A tartalék adatbázis adatai visszamigrálva az adatbázisba: {0} játékosrekord, {1} teleportpont"
+system.log.fallback_backup_removed: "A tartalék adatbázisról biztonsági mentés készült ide: {0}, majd eltávolításra került"
+system.log.fallback_migrate_back_failed: "A tartalék adatbázis adatainak visszamigrálása az adatbázisba sikertelen: {0}"
+system.log.spawn_migrated_to_db: "A spawn adatok át lettek migrálva az adatbázisba (tpa_points)"
+system.log.spawn_yml_backed_up: "A régi spawn.yml biztonsági mentése a backup/{0} mappába került"
+system.log.warp_migrated_to_db: "{0} warp adat át lett migrálva az adatbázisba (tpa_points)"
+system.log.warp_yml_backed_up: "A régi warp.yml biztonsági mentése a backup/{0} mappába került"
+system.log.players_migrated_to_db: "{0} játékos yml-adatai át lettek migrálva az adatbázisba (az eredeti fájlok a playerdata mappában maradtak)"
+system.log.db_file_backed_up: "Az eredeti adatbázisfájl biztonsági mentése a backup/{0} mappába került"
+system.log.points_migrated_to_yml: "Az adatbázisban lévő teleportpont-adatok visszamigrálva az yml fájlokba (spawn.yml/warp.yml): {0} rekord"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "A Floodgate plugin nem észlelhető, a Bedrock játékosok a chat-alapú interakciót fogják használni"
+system.log.floodgate_hook_failed: "A Floodgate-hez való kapcsolódás sikertelen, a Bedrock játékosok a chat-alapú interakciót fogják használni: {0}: {1}"
+system.log.floodgate_hooked: "Kapcsolódva a Floodgate-hez (a Bedrock játékosok kattintható üzenetei űrlapgombokként jelennek meg)"
+system.log.bedrock_check_failed: "Hiba a Bedrock játékos megállapításakor (nem Bedrockként kezeljük): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Bedrock játékos azonosítva: {0}"
+system.log.form_send_false: "Az űrlap küldése false értéket adott vissza (a célpont {0} esetleg nem elérhető, vagy nem Bedrock játékos)"
+system.log.form_send_failed: "Kivétel az űrlap küldésekor: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Kivétel a parancs feldolgozása során (biztonságosan elkapva): {0}: {1}"
+system.log.event_exception_caught: "Kivétel a(z) {0} esemény feldolgozása során (biztonságosan elkapva): {1}: {2}"
+
 #=======================
-# Frissítések
+# 更新
 #=======================
 update.checking: "<green><bold>Frissítések keresése...</bold>"
 update.available: "<green><bold>Új verzió: </bold><gold><bold>TPA-v%target% </bold><green><bold>Letöltés: https://modrinth.com/plugin/tpa.66666/versions</bold>"

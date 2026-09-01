@@ -100,10 +100,10 @@ cost:
   # 配置各会员等级的优惠值（含义由上方 discount_mode 决定），多项命中取最优惠，未配置的等级无优惠
   vip_discount:
     vip: 50
-    "vip+": 30
+    vip+: 30
     mvp: 20
-    "mvp+": 10
-    "mvp++": 5
+    mvp+: 10
+    mvp++: 5
 
 # 延迟设置（单位：秒）
 delay:

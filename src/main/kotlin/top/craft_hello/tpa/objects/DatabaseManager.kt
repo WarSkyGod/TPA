@@ -3,6 +3,7 @@ package top.craft_hello.tpa.objects
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.utils.SendMessageUtil
 import java.io.File
 import java.sql.Connection
 import java.sql.SQLException
@@ -39,7 +40,7 @@ object DatabaseManager {
         closeDataSource()
         val config = ConfigManager.config
         if (!config.useDatabase) {
-            plugin.logger.info("未启用数据库存储（use_database: false），玩家数据将保存到 playerdata 目录")
+            plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_disabled"))
             return false
         }
         val requestedType = config.databaseType.lowercase()
@@ -50,10 +51,10 @@ object DatabaseManager {
             databaseType = requestedType
             isFallback = false
             ensureTables()
-            plugin.logger.info("数据库连接池已初始化（$databaseType）")
+            plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_pool_initialized", databaseType))
             return true
         } catch (e: Exception) {
-            plugin.logger.warning("数据库连接失败（$requestedType）: ${e.message}")
+            plugin.logger.warning(SendMessageUtil.consoleLog("system.log.database_connect_failed", requestedType, e.message))
         }
 
         // 2. 配置 mysql 连接失败 → 降级本地 SQLite
@@ -63,14 +64,14 @@ object DatabaseManager {
                 databaseType = "sqlite"
                 isFallback = true
                 ensureTables()
-                plugin.logger.warning("已降级为本地 SQLite 存储（$fallbackFileName），数据暂存本地；配置修复后执行 /tpac reload 将自动迁移回数据库")
+                plugin.logger.warning(SendMessageUtil.consoleLog("system.log.database_fallback_sqlite", fallbackFileName))
                 return true
             } catch (e: Exception) {
-                plugin.logger.severe("降级 SQLite 连接池创建失败: ${e.message}")
+                plugin.logger.severe(SendMessageUtil.consoleLog("system.log.database_fallback_create_failed", e.message))
             }
         }
 
-        plugin.logger.severe("数据库不可用且降级失败，数据将仅保存在内存缓存（重启丢失）")
+        plugin.logger.severe(SendMessageUtil.consoleLog("system.log.database_memory_only"))
         dataSource = null
         isFallback = false
         return false
@@ -100,7 +101,7 @@ object DatabaseManager {
                     driverClassName = "com.mysql.cj.jdbc.Driver"
                 }
 
-                else -> throw IllegalArgumentException("不支持的数据库类型: $type")
+                else -> throw IllegalArgumentException(SendMessageUtil.consoleLog("system.log.unsupported_database_type", type))
             }
 
             // 连接池配置（initializationFailTimeout 快速失败：5 秒内连不上直接抛异常走降级）
@@ -119,7 +120,7 @@ object DatabaseManager {
         return try {
             dataSource?.connection
         } catch (e: SQLException) {
-            plugin.logger.severe("获取数据库连接失败: ${e.message}")
+            plugin.logger.severe(SendMessageUtil.consoleLog("system.log.database_get_connection_failed", e.message))
             null
         }
     }
@@ -129,7 +130,7 @@ object DatabaseManager {
         if (dataSource != null) {
             dataSource?.close()
             dataSource = null
-            if (this::plugin.isInitialized) plugin.logger.info("数据库连接池已关闭")
+            if (this::plugin.isInitialized) plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_pool_closed"))
         }
     }
 
@@ -163,10 +164,10 @@ object DatabaseManager {
                     """.trimIndent()
                 )
             }
-            plugin.logger.info("已创建 player_data 表")
+            plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_table_created", "player_data"))
         } else {
             upgradeTable(connection)
-            plugin.logger.info("player_data 表已存在")
+            plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_table_exists", "player_data"))
         }
     }
 
@@ -191,7 +192,7 @@ object DatabaseManager {
                 """.trimIndent()
             )
         }
-        plugin.logger.info("已创建 tpa_points 表（spawn/warp 统一传送点存储）")
+        plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_table_points_created"))
     }
 
     // 检查表是否存在
@@ -210,9 +211,9 @@ object DatabaseManager {
                     connection.createStatement().use { statement ->
                         statement.execute("ALTER TABLE player_data ADD COLUMN $column")
                     }
-                    plugin.logger.info("player_data 表已补充列 $name")
+                    plugin.logger.info(SendMessageUtil.consoleLog("system.log.database_column_added", name))
                 } catch (e: Exception) {
-                    plugin.logger.warning("player_data 表补充列 $name 失败: ${e.message}")
+                    plugin.logger.warning(SendMessageUtil.consoleLog("system.log.database_column_add_failed", name, e.message))
                 }
             }
         }

@@ -3,6 +3,7 @@ package top.craft_hello.tpa.utils
 import cn.handyplus.lib.adapter.PlayerSchedulerUtil
 import com.mojang.brigadier.Command
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
@@ -27,6 +28,14 @@ class SendMessageUtil {
         fun sendMessageForPath(sender: CommandSender, path: String, vararg vars: String) {
             val language = LanguageManager.getLanguage(sender)
             sendMessage(sender, language.getFormatPrefixMessage(sender, path, *vars))
+        }
+
+        // 后台日志文本：取语言键 → 去除 MiniMessage 标签 → {0} {1} {2} 顺序槽位填充
+        // （logger 自带 [TPA] 前缀，此处返回纯文本不带消息前缀）
+        fun consoleLog(path: String, vararg args: Any?): String {
+            var text = MiniMessage.miniMessage().stripTags(LanguageManager.getLanguage(Bukkit.getConsoleSender()).getMessage(path))
+            args.forEachIndexed { index, arg -> text = text.replace("{$index}", arg?.toString() ?: "null") }
+            return text
         }
 
         // =============== 错误消息 ===============

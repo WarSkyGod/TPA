@@ -1,7 +1,7 @@
-## TPA Plugin Český Jazykový Soubor
+## TPA 插件简体中文语言文件
 
 #=======================
-# Základní nastavení
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Poslední pozice"
 lang.set_success: "<green><bold>Jazyk klienta nastaven na </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Tlačítkové interakce
+# 按钮交互
 #=======================
-## Text tlačítek
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikněte pro přijetí teleportace</bold></green>'>[Přijmout]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikněte pro odmítnutí teleportace</bold></green>'>[Odmítnout]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klikněte pro odmítnutí a blokaci</bold></green>'>[Odmítnout a zablokovat]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Klikněte pro výchozí domov</bold></yellow>'>[Nastavit výchozí domov]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klikněte pro smazání</bold></green>'>[Smazat]</hover></insert></click></red>  </bold>"
 
-## Nápovědy pro kliknutí
-
 #=======================
-# Teleportační žádosti
+# 传送请求
 #=======================
 request.title: "<bold><green>Žádost o teleport</green></bold>"
 request.to_here: "<green><bold>Hráč </bold><gold><bold>%target% </bold><green><bold>se chce teleportovat k vám! Platnost: </bold><gold><bold>%seconds% </bold><green><bold>vteřin!</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Žádost od </bold><gold><bold>%target% </bold
 request.expired_to: "<red><bold>Vaše žádost pro </bold><gold><bold>%target% </bold><red><bold>vypršela!</bold>"
 
 #=======================
-# Domovy
+# 家
 #=======================
 home.list_header: "<green><bold>Dostupné domovy:</bold>"
 home.set_success: "<green><bold>Domov </bold><gold><bold>%target% </bold><green><bold>nastaven</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Maximální počet domovů: %max_home_amount%!
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>již je výchozí</bold>"
 
 #=======================
-# Warpy
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Dostupné warpy:</bold>"
 warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>nastaven</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><gree
 warp.teleport_success: "<green><bold>Teleportováno k warpu </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn nastaven</bold>"
 spawn.delete_success: "<green><bold>Spawn smazán</bold>"
 spawn.teleport_success: "<green><bold>Teleportováno na spawn!</bold>"
 
 #=======================
-# Poslední pozice
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Teleportováno na poslední pozici!</bold>"
 
 #=======================
-# Náhodný teleport
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Generování náhodné pozice...</bold>"
 rtp.success: "<green><bold>Úspěšný náhodný teleport!</bold>"
 rtp.failed: "<red><bold>Generování selhalo!</bold>"
 
 #=======================
-# Černá listina
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Vaše černá listina:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>přidán na listinu</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>odebrán z listiny</bold>"
 
 #=======================
-# Chybové zprávy
+# 错误提示
 #=======================
-## Stav příkazu
+## 命令状态
 error.command_disabled: "<red><bold>Příkaz je vypnutý!</bold>"
 error.world_disabled: "<red><bold>V tomto světě nelze použít!</bold>"
 error.command_cooldown: "<red><bold>Počkejte </bold><gold><bold>%seconds% </bold><red><bold>vteřin!</bold>"
 
-## Oprávnění
+## 权限与执行
 error.console_restricted: "<red><bold>Pouze pro hráče!</bold>"
 error.permission_denied: "<red><bold>Nemáte oprávnění!</bold>"
 
-## Stav hráče
+## 玩家状态
 error.no_online_players: "<red><bold>Žádní online hráči!</bold>"
 error.target_offline: "<red><bold>Hráč </bold><gold><bold>%target% </bold><red><bold>je offline!</bold>"
 error.self_operation: "<red><bold>Nelze použít na sebe!</bold>"
 
-## Stav žádosti
+## 请求状态
 error.no_pending_request: "<red><bold>Žádné čekající žádosti!</bold>"
 error.request_pending: "<red><bold>Již máte aktivní žádost</bold>"
 
-## Černá listina
+## 黑名单
 error.already_blacklisted: "<red><bold>Již na listině!</bold>"
 error.blocked_by_target: "<red><bold>Jste zablokováni!</bold>"
 error.blacklist_empty: "<red><bold>Listina je prázdná!</bold>"
 error.not_blacklisted: "<red><bold>Není na listině!</bold>"
 
-## Domovy
+## 家
 error.home_not_found: "<red><bold>Domov %target% neexistuje!</bold>"
 error.no_homes_set: "<red><bold>Nemáte nastavené domovy!</bold>"
 error.no_default_home: "<red><bold>Nemáte výchozí domov!</bold>"
 
-## Warpy
+## 传送点
 error.warp_not_found: "<red><bold>Warp %target% neexistuje!</bold>"
 error.no_warps_set: "<red><bold>Žádné dostupné warpy!</bold>"
 
-## Pozice
+## 位置记录
 error.last_location_missing: "<red><bold>Chybí poslední pozice!</bold>"
 error.logout_location_missing: "<red><bold>Chybí pozice odhlášení!</bold>"
 error.spawn_not_set: "<red><bold>Spawn nenastaven!</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Nedostatečný zůstatek! Tento teleport stojí</red> <gold>{cost}</gold> {currency}<red>, váš zůstatek je</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleport zrušen, protože</red> <gold>%target%</gold> <red>má nedostatečný zůstatek</red></bold>"
 
-## Syntaxe příkazu
+## 命令语法
 error.syntax_generic: "<red><bold>Chybná syntaxe! Použijte: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Chybná syntaxe! Použijte: /%command% <hráč></bold>"
 error.syntax_tpall: "<red><bold>Chybná syntaxe! Použijte: /%command% [player/warp/spawn] [název]</bold>"
 error.syntax_warp: "<red><bold>Chybná syntaxe! Použijte: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>Chybná syntaxe! Použijte: /%command% <domov></bold>"
 
-## Systémové chyby
+## 系统错误
 error.config_not_found: "<red><bold>Konfigurace obnovena!</bold>"
 error.runtime: "<red><bold>Chyba pluginu: %message%</bold>"
 error.forwarded_error: "<red><bold>Chyba od </bold><gold><bold>%target%:</bold>"
 
 #=======================
-# Proces teleportace
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Přijali jste žádost od </bold><gold><bold>%target%!</bold>"
 teleport.accept.target: "<green><bold>Hráč </bold><gold><bold>%target% </bold><green><bold>přijal vaši žádost!</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Admin vás teleportoval k </bold><gold><
 teleport.tpall.to_self: "<green><bold>Admin teleportoval všechny k vám</bold>"
 teleport.tpall.success: "<green><bold>Všichni teleportováni k </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Teleportováno k poslední pozici </bold><gold><bold>%target%</bold>"
+teleport.cost_charged: "<bold><green>Tento teleport stál</green> <gold>{cost}</gold> {currency}<green>, váš zůstatek je</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Systémové zprávy
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Konfigurace obnovena!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Tento teleport stál</green> <gold>{cost}</gold> {currency}<green>, váš zůstatek je</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>peníze</gold></bold>"
-
 system.currency_points: "<bold><green>body</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Plugin načten! Verze: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin vypnut!</bold>"
 system.config_migrated_success: "<green><bold>Konfigurace migrována!</bold>"
 system.config_migrated: "<green><bold>Stará konfigurace nalezena (záloha vytvořena)</bold>"
 system.debug_warning: "Varování: Debug mód aktivní!"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "V jazykovém souboru {0} chybí klíč {1} (pravděpodobně soubor ze starší verze; můžete smazat složku plugins/TPA/language a restartovat server pro jeho nové vygenerování, nebo klíč doplnit ručně)"
+system.log.config_migrated_detail: "Stará konfigurace byla převedena ({0} → {1}): uživatelské hodnoty zůstaly zachovány, starý jazykový soubor byl zazálohován do plugins/TPA/backup/{0}/ a byl znovu vygenerován nový jazykový soubor"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Ukládání do databáze není povoleno (use_database: false), data hráčů budou ukládána do složky playerdata"
+system.log.database_pool_initialized: "Fond připojení k databázi byl inicializován ({0})"
+system.log.database_connect_failed: "Připojení k databázi selhalo ({0}): {1}"
+system.log.database_fallback_sqlite: "Přepnuto na lokální SQLite úložiště ({0}), data jsou dočasně uložena lokálně; po opravě konfigurace provedením /tpac reload dojde k automatickému přenosu dat zpět do databáze"
+system.log.database_fallback_create_failed: "Vytvoření záložního fondu připojení SQLite selhalo: {0}"
+system.log.database_memory_only: "Databáze není dostupná a přechod na záložní režim selhal; data budou uložena pouze v paměťové mezipaměti (po restartu se ztratí)"
+system.log.database_get_connection_failed: "Získání připojení k databázi selhalo: {0}"
+system.log.database_pool_closed: "Fond připojení k databázi byl uzavřen"
+system.log.database_table_created: "Tabulka {0} byla vytvořena"
+system.log.database_table_exists: "Tabulka {0} již existuje"
+system.log.database_table_points_created: "Tabulka tpa_points byla vytvořena (jednotné úložiště teleportačních bodů pro spawn/warp)"
+system.log.database_column_added: "Do tabulky player_data byl doplněn sloupec {0}"
+system.log.database_column_add_failed: "Přidání sloupce {0} do tabulky player_data selhalo: {1}"
+system.log.unsupported_database_type: "Nepodporovaný typ databáze: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Napojeno na ekonomický systém Vault (peněžitý poplatek je k dispozici)"
+system.log.playerpoints_hooked: "Napojeno na bodový systém PlayerPoints (poplatek v bodech je k dispozici)"
+system.log.cost_without_currency: "Teleportační poplatek je povolen (cost.enable: true), ale měnový systém ({0}) není dostupný: {1} není nainstalován nebo neposkytuje ekonomické/bodové služby, poplatek nebude účtován"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Zálohování {0} selhalo: {1}"
+system.log.fallback_migrate_players_failed: "Přenos dat hráčů ze záložní databáze selhal (tabulka player_data pravděpodobně neexistuje): {0}"
+system.log.fallback_migrate_points_failed: "Přenos dat teleportačních bodů ze záložní databáze selhal (tabulka tpa_points pravděpodobně neexistuje): {0}"
+system.log.fallback_migrated_back: "Data ze záložní databáze byla přenesena zpět do databáze: {0} záznamů hráčů, {1} teleportačních bodů"
+system.log.fallback_backup_removed: "Záložní databáze byla zazálohována do {0} a odstraněna"
+system.log.fallback_migrate_back_failed: "Přenos dat ze záložní databáze zpět do databáze selhal: {0}"
+system.log.spawn_migrated_to_db: "Data spawn byla převedena do databáze (tpa_points)"
+system.log.spawn_yml_backed_up: "Starý soubor spawn.yml byl zazálohován do backup/{0}"
+system.log.warp_migrated_to_db: "Bylo převedeno {0} záznamů warp do databáze (tpa_points)"
+system.log.warp_yml_backed_up: "Starý soubor warp.yml byl zazálohován do backup/{0}"
+system.log.players_migrated_to_db: "Data yml od {0} hráčů byla převedena do databáze (původní soubory zůstaly ve složce playerdata)"
+system.log.db_file_backed_up: "Původní databázový soubor byl zazálohován do backup/{0}"
+system.log.points_migrated_to_yml: "Data teleportačních bodů z databáze byla přenesena zpět do souborů yml (spawn.yml/warp.yml): {0} záznamů"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Plugin Floodgate nebyl detekován, hráči na Bedrocku budou používat interakci přes chat"
+system.log.floodgate_hook_failed: "Napojení na Floodgate selhalo, hráči na Bedrocku budou používat interakci přes chat: {0}: {1}"
+system.log.floodgate_hooked: "Napojeno na Floodgate (klikatelné zprávy se hráčům na Bedrocku zobrazí jako tlačítka ve formuláři)"
+system.log.bedrock_check_failed: "Chyba při zjišťování, zda jde o hráče na Bedrocku (zpracováno jako ne-Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Rozpoznán hráč na Bedrocku: {0}"
+system.log.form_send_false: "Odeslání formuláře vrátilo false (cíl {0} může být offline nebo není hráč na Bedrocku)"
+system.log.form_send_failed: "Výjimka při odesílání formuláře: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Výjimka při zpracování příkazu (bezpečně zachyceno): {0}: {1}"
+system.log.event_exception_caught: "Výjimka při zpracování události {0} (bezpečně zachyceno): {1}: {2}"
+
 #=======================
-# Aktualizace
+# 更新
 #=======================
 update.checking: "<green><bold>Kontrola aktualizací...</bold>"
 update.available: "<green><bold>Nová verze </bold><gold><bold>TPA-v%target% </bold><green><bold>dostupná na: https://modrinth.com/plugin/tpa.66666/versions</bold>"

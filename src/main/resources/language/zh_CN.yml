@@ -156,21 +156,67 @@ teleport.tpall.to_target: "<bold><green>管理员已将您传送至</green> <gol
 teleport.tpall.to_self: "<bold><green>管理员将所有玩家传送到您的位置</green></bold>"
 teleport.tpall.success: "<bold><green>已将在线玩家传送至</green> <gold>%target%</gold></bold>"
 teleport.logout_location: "<bold><green>您已传送至</green> <gold>%target%</gold> <green>最后下线的位置</green></bold>"
+teleport.cost_charged: "<bold><green>本次传送消耗</green> <gold>{cost}</gold> {currency}<green>，当前余额</green> <gold>{balance}</gold></bold>"
 
 #=======================
 # 系统消息
 #=======================
 system.config_reloaded: "<bold><green>配置文件已重新加载！</green></bold>"
-## 传送费用
-teleport.cost_charged: "<bold><green>本次传送消耗</green> <gold>{cost}</gold> {currency}<green>，当前余额</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>金钱</gold></bold>"
 system.currency_points: "<bold><green>点券</green></bold>"
-
 system.plugin_loaded: "<bold><green>插件已成功加载！当前版本为：</green><gold>%target%</gold></bold>"
 system.plugin_unloaded: "<bold><red>插件已成功卸载！</red></bold>"
 system.config_migrated_success: "<bold><green>配置文件已迁移完成！</green></bold>"
 system.config_migrated: "<bold><green>检测到旧版本的配置文件，正在为您迁移（旧版配置文件会自动为您备份到backup目录中）</green></bold>"
 system.debug_warning: "注意，您已开启 debug 模式，请务必在使用完毕后关闭！"
+
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "语言文件 {0} 缺少键 {1}（可能为旧版本文件，可删除 plugins/TPA/language 目录后重启重新生成，或手动补充该键）"
+system.log.config_migrated_detail: "已迁移旧版配置（{0} → {1}）：用户自定义值已保留，旧语言文件已备份至 plugins/TPA/backup/{0}/ 并重新生成新版语言文件"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "未启用数据库存储（use_database: false），玩家数据将保存到 playerdata 目录"
+system.log.database_pool_initialized: "数据库连接池已初始化（{0}）"
+system.log.database_connect_failed: "数据库连接失败（{0}）: {1}"
+system.log.database_fallback_sqlite: "已降级为本地 SQLite 存储（{0}），数据暂存本地；配置修复后执行 /tpac reload 将自动迁移回数据库"
+system.log.database_fallback_create_failed: "降级 SQLite 连接池创建失败: {0}"
+system.log.database_memory_only: "数据库不可用且降级失败，数据将仅保存在内存缓存（重启丢失）"
+system.log.database_get_connection_failed: "获取数据库连接失败: {0}"
+system.log.database_pool_closed: "数据库连接池已关闭"
+system.log.database_table_created: "已创建 {0} 表"
+system.log.database_table_exists: "{0} 表已存在"
+system.log.database_table_points_created: "已创建 tpa_points 表（spawn/warp 统一传送点存储）"
+system.log.database_column_added: "player_data 表已补充列 {0}"
+system.log.database_column_add_failed: "player_data 表补充列 {0} 失败: {1}"
+system.log.unsupported_database_type: "不支持的数据库类型: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "已挂钩 Vault 经济系统（金钱费用可用）"
+system.log.playerpoints_hooked: "已挂钩 PlayerPoints 点券系统（点券费用可用）"
+system.log.cost_without_currency: "传送费用已启用（cost.enable: true）但货币系统（{0}）不可用：{1} 未安装或未提供经济/点券服务，费用将不收取"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "备份 {0} 失败: {1}"
+system.log.fallback_migrate_players_failed: "降级库玩家数据迁移失败（可能无 player_data 表）: {0}"
+system.log.fallback_migrate_points_failed: "降级库传送点数据迁移失败（可能无 tpa_points 表）: {0}"
+system.log.fallback_migrated_back: "降级库数据已迁回数据库：玩家 {0} 条，传送点 {1} 条"
+system.log.fallback_backup_removed: "降级库已备份到 {0} 并移除"
+system.log.fallback_migrate_back_failed: "降级库数据迁回数据库失败: {0}"
+system.log.spawn_migrated_to_db: "已迁移 spawn 数据到数据库（tpa_points）"
+system.log.spawn_yml_backed_up: "旧 spawn.yml 已备份到 backup/{0}"
+system.log.warp_migrated_to_db: "已迁移 {0} 个 warp 数据到数据库（tpa_points）"
+system.log.warp_yml_backed_up: "旧 warp.yml 已备份到 backup/{0}"
+system.log.players_migrated_to_db: "已迁移 {0} 个玩家的 yml 数据到数据库（原文件保留于 playerdata 目录）"
+system.log.db_file_backed_up: "原数据库文件已备份到 backup/{0}"
+system.log.points_migrated_to_yml: "数据库中的传送点数据已迁回 yml 文件（spawn.yml/warp.yml）：{0} 条"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "未检测到 Floodgate 插件，基岩玩家将使用聊天交互"
+system.log.floodgate_hook_failed: "Floodgate 挂钩失败，基岩玩家将使用聊天交互: {0}: {1}"
+system.log.floodgate_hooked: "已挂钩 Floodgate（基岩玩家点击类消息将以弹窗按钮呈现）"
+system.log.bedrock_check_failed: "基岩玩家判定异常（按非基岩处理）: {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] 已识别基岩玩家: {0}"
+system.log.form_send_false: "弹窗发送返回 false（目标 {0} 可能不在线或非基岩玩家）"
+system.log.form_send_failed: "弹窗发送异常: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "命令处理异常（已兜底拦截）: {0}: {1}"
+system.log.event_exception_caught: "{0} 事件处理异常（已兜底拦截）: {1}: {2}"
 
 #=======================
 # 更新

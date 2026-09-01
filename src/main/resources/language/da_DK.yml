@@ -1,7 +1,7 @@
-## TPA Plugin Dansk Sprogfil
+## TPA 插件简体中文语言文件
 
 #=======================
-# Grundindstillinger
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -9,14 +9,14 @@ not_online_players: "Ingen online spillere"
 not_warps: "Ingen tilgængelige teleportationspunkter"
 not_homes: "Ingen tilgængelige hjem"
 spawn_name: "Spawn"
+rtp_name: "随机传送点"
 last_location: "Sidste position"
-rtp: "Tilfældigt teleportationspunkt"
 lang.set_success: "<green><bold>Du har sat klientens sprog til </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Knapper og interaktion
+# 按钮交互
 #=======================
-## Knappetekster
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klik her for at acceptere teleportation</bold></green>'>[Accepter]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik her for at afslå teleportation</bold></green>'>[Afslå]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik for at afslå og blokere spilleren</bold></green>'>[Afslå og bloker]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Klik for at sætte som standardhjem</bold></yellow>'>[Sæt som standardhjem]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik for at slette</bold></green>'>[Slet]</hover></insert></click></red>  </bold>"
 
-## Knappetips
-
 #=======================
-# Teleportationsanmodninger
+# 传送请求
 #=======================
 request.title: "<bold><green>Teleporteringsanmodning</green></bold>"
 request.to_here: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>vil teleportere til dig. Anmodning udløber om </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Teleportationsanmodning fra </bold><gold><bold
 request.expired_to: "<red><bold>Din anmodning til </bold><gold><bold>%target% </bold><red><bold>er udløbet!</bold>"
 
 #=======================
-# Hjem
+# 家
 #=======================
 home.list_header: "<green><bold>Tilgængelige hjem:</bold>"
 home.set_success: "<green><bold>Du har sat hjemmet </bold><gold><bold>%target%</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Du kan maksimalt have %max_home_amount% hjem!<
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>er allerede dit standardhjem</bold>"
 
 #=======================
-# Teleportationspunkter
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Tilgængelige teleportationspunkter:</bold>"
 warp.set_success: "<green><bold>Du har sat teleportationspunktet </bold><gold><bold>%target%</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Du har slettet teleportationspunktet </bold><
 warp.teleport_success: "<green><bold>Du er teleporteret til </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Du har sat spawnpunktet</bold>"
 spawn.delete_success: "<green><bold>Du har slettet spawnpunktet</bold>"
 spawn.teleport_success: "<green><bold>Du er teleporteret til spawn!</bold>"
 
 #=======================
-# Sidste position
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Du er teleporteret til din sidste position!</bold>"
 
 #=======================
-# Tilfældig teleportation
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Genererer tilfældigt teleportationspunkt, vent venligst...</bold>"
 rtp.success: "<green><bold>Du er teleporteret til et tilfældigt sted!</bold>"
 rtp.failed: "<red><bold>Kunne ikke generere teleportationspunkt!</bold>"
 
 #=======================
-# Sortliste
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Din sortliste:</bold>"
 blacklist.add_success: "<green><bold>Du har blokeret </bold><gold><bold>%target%</bold>"
 blacklist.remove_success: "<green><bold>Du har fjernet blokeringen af </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Fejlmeddelelser
+# 错误提示
 #=======================
-## Kommandostatus
+## 命令状态
 error.command_disabled: "<red><bold>Denne kommando er deaktiveret!</bold>"
 error.world_disabled: "<red><bold>Denne kommando er ikke tilgængelig i denne verden!</bold>"
 error.command_cooldown: "<red><bold>Vent venligst %seconds% sekunder før brug!</bold>"
 
-## Tilladelser
+## 权限与执行
 error.console_restricted: "<red><bold>Kun spillere kan bruge denne kommando!</bold>"
 error.permission_denied: "<red><bold>Manglende tilladelse!</bold>"
 
-## Spillerstatus
+## 玩家状态
 error.no_online_players: "<red><bold>Ingen spillere online!</bold>"
 error.target_offline: "<red><bold>Spiller </bold><gold><bold>%target% </bold><red><bold>er offline!</bold>"
 error.self_operation: "<red><bold>Kan ikke bruges på dig selv!</bold>"
 
-## Anmodningsstatus
+## 请求状态
 error.no_pending_request: "<red><bold>Ingen ventende anmodninger!</bold>"
 error.request_pending: "<red><bold>Der er allerede en aktiv anmodning</bold>"
 
-## Sortliste
+## 黑名单
 error.already_blacklisted: "<red><bold>Spilleren er allerede blokeret!</bold>"
 error.blocked_by_target: "<red><bold>Du er blokeret af denne spiller!</bold>"
 error.blacklist_empty: "<red><bold>Din sortliste er tom!</bold>"
 error.not_blacklisted: "<red><bold>Spilleren er ikke blokeret!</bold>"
 
-## Hjem
+## 家
 error.home_not_found: "<red><bold>Hjemmet %target% findes ikke!</bold>"
 error.no_homes_set: "<red><bold>Du har ingen hjem defineret!</bold>"
 error.no_default_home: "<red><bold>Intet standardhjem sat!</bold>"
 
-## Teleportationspunkter
+## 传送点
 error.warp_not_found: "<red><bold>Teleportationspunktet %target% findes ikke!</bold>"
 error.no_warps_set: "<red><bold>Ingen teleportationspunkter tilgængelige!</bold>"
 
-## Positionsdata
+## 位置记录
 error.last_location_missing: "<red><bold>Ingen sidste position registreret!</bold>"
 error.logout_location_missing: "<red><bold>Ingen logud-position registreret!</bold>"
 error.spawn_not_set: "<red><bold>Intet spawnpunkt defineret!</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Utilstrækkelig saldo! Denne teleportering koster</red> <gold>{cost}</gold> {currency}<red>, din saldo er</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleporteringen blev annulleret, fordi</red> <gold>%target%</gold> <red>ikke har tilstrækkelig saldo</red></bold>"
 
-## Kommandosyntaks
+## 命令语法
 error.syntax_generic: "<red><bold>Ugyldig kommando! Brug: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Ugyldig kommando! Brug: /%command% <spillernavn></bold>"
 error.syntax_tpall: "<red><bold>Ugyldig kommando! Brug: /%command% [spiller/warp/spawn] [navn]</bold>"
 error.syntax_warp: "<red><bold>Ugyldig kommando! Brug: /%command% <teleportationspunkt></bold>"
 error.syntax_home: "<red><bold>Ugyldig kommando! Brug: /%command% <hjemnavn></bold>"
 
-## Systemfejl
+## 系统错误
 error.config_not_found: "<red><bold>Konfigurationsfil mangler - genererer ny!</bold>"
 error.runtime: "<red><bold>Pluginfejl: %message%</bold>"
 error.forwarded_error: "<red><bold>Fejl fra </bold><gold><bold>%target%:</bold>"
 
 #=======================
-# Teleportationsprocessen
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Du accepterede anmodning fra </bold><gold><bold>%target%!</bold>"
 teleport.accept.target: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>accepterede din anmodning!</bold>"
@@ -156,28 +156,75 @@ teleport.tpall.to_target: "<green><bold>En admin har teleporteret dig til </bold
 teleport.tpall.to_self: "<green><bold>En admin teleporterede alle spillere til dig</bold>"
 teleport.tpall.success: "<green><bold>Alle spillere teleporteret til </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Teleporteret til </bold><gold><bold>%target%s logud-position</bold>"
+teleport.cost_charged: "<bold><green>Denne teleportering kostede</green> <gold>{cost}</gold> {currency}<green>, din saldo er</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Systembeskeder
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Konfiguration genindlæst!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Denne teleportering kostede</green> <gold>{cost}</gold> {currency}<green>, din saldo er</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>penge</gold></bold>"
-
 system.currency_points: "<bold><green>point</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Plugin indlæst! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin afsluttet!</bold>"
 system.config_migrated_success: "<green><bold>Konfiguration migreret!</bold>"
 system.config_migrated: "<green><bold>Ældre konfiguration fundet - migrerer (backup i backup-mappen)</bold>"
 system.debug_warning: "Advarsel: Debug-tilstand er aktiv - deaktiver efter brug!"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Sprogfilen {0} mangler nøglen {1} (muligvis en fil fra en ældre version; slet mappen plugins/TPA/language og genstart for at oprette filen igen, eller tilføj nøglen manuelt)"
+system.log.config_migrated_detail: "Den gamle konfiguration er migreret ({0} → {1}): brugerdefinerede værdier er bevaret, den gamle sprogfil er blevet sikkerhedskopieret til plugins/TPA/backup/{0}/, og en ny sprogfil er blevet oprettet"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Databaselagring er ikke aktiveret (use_database: false); spillerdata gemmes i mappen playerdata"
+system.log.database_pool_initialized: "Databasens forbindelsespulje er initialiseret ({0})"
+system.log.database_connect_failed: "Databaseforbindelsen mislykkedes ({0}): {1}"
+system.log.database_fallback_sqlite: "Er faldet tilbage til lokal SQLite-lagring ({0}); data gemmes foreløbigt lokalt. Kør /tpac reload, når konfigurationen er rettet, så migreres data automatisk tilbage til databasen"
+system.log.database_fallback_create_failed: "Det mislykkedes at oprette forbindelsespuljen til SQLite-fallback: {0}"
+system.log.database_memory_only: "Databasen er utilgængelig, og fallbacken mislykkedes; data gemmes kun i hukommelsescachen (går tabt ved genstart)"
+system.log.database_get_connection_failed: "Det mislykkedes at hente en databaseforbindelse: {0}"
+system.log.database_pool_closed: "Databasens forbindelsespulje er lukket"
+system.log.database_table_created: "Har oprettet tabellen {0}"
+system.log.database_table_exists: "Tabellen {0} findes allerede"
+system.log.database_table_points_created: "Har oprettet tabellen tpa_points (samlet lager for spawn/warp-teleportpunkter)"
+system.log.database_column_added: "Kolonnen {0} er blevet tilføjet til tabellen player_data"
+system.log.database_column_add_failed: "Det mislykkedes at tilføje kolonnen {0} til tabellen player_data: {1}"
+system.log.unsupported_database_type: "Databasetypen understøttes ikke: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Har koblet til økonomisystemet Vault (pengepriser er tilgængelige)"
+system.log.playerpoints_hooked: "Har koblet til pointsystemet PlayerPoints (pointpriser er tilgængelige)"
+system.log.cost_without_currency: "Teleportpriser er aktiveret (cost.enable: true), men valutasystemet ({0}) er ikke tilgængeligt: {1} er ikke installeret eller tilbyder ikke en økonomi-/pointtjeneste; der opkræves ingen pris"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Det mislykkedes at sikkerhedskopiere {0}: {1}"
+system.log.fallback_migrate_players_failed: "Det mislykkedes at migrere spillerdata fra fallback-databasen (tabellen player_data mangler muligvis): {0}"
+system.log.fallback_migrate_points_failed: "Det mislykkedes at migrere teleportpunktdata fra fallback-databasen (tabellen tpa_points mangler muligvis): {0}"
+system.log.fallback_migrated_back: "Data er migreret tilbage fra fallback-databasen til databasen: {0} spillere, {1} teleportpunkter"
+system.log.fallback_backup_removed: "Fallback-databasen er sikkerhedskopieret til {0} og fjernet"
+system.log.fallback_migrate_back_failed: "Det mislykkedes at migrere data fra fallback-databasen tilbage til databasen: {0}"
+system.log.spawn_migrated_to_db: "spawn-data er migreret til databasen (tpa_points)"
+system.log.spawn_yml_backed_up: "Den gamle spawn.yml er sikkerhedskopieret til backup/{0}"
+system.log.warp_migrated_to_db: "{0} warp-poster er migreret til databasen (tpa_points)"
+system.log.warp_yml_backed_up: "Den gamle warp.yml er sikkerhedskopieret til backup/{0}"
+system.log.players_migrated_to_db: "yml-data for {0} spillere er migreret til databasen (originalfilerne bevares i mappen playerdata)"
+system.log.db_file_backed_up: "Den oprindelige databasefil er sikkerhedskopieret til backup/{0}"
+system.log.points_migrated_to_yml: "Teleportpunktdata i databasen er migreret tilbage til yml-filer (spawn.yml/warp.yml): {0} poster"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate-pluginet blev ikke fundet; Bedrock-spillere bruger chatinteraktion"
+system.log.floodgate_hook_failed: "Det mislykkedes at koble til Floodgate; Bedrock-spillere bruger chatinteraktion: {0}: {1}"
+system.log.floodgate_hooked: "Har koblet til Floodgate (klikbare beskeder til Bedrock-spillere vises som formularknapper)"
+system.log.bedrock_check_failed: "Fejl ved kontrol af Bedrock-spiller (spilleren behandles som ikke-Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Bedrock-spiller identificeret: {0}"
+system.log.form_send_false: "Formularafsendelsen returnerede false (modtageren {0} er muligvis ikke online eller ikke er en Bedrock-spiller)"
+system.log.form_send_failed: "Fejl under afsendelse af formular: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Undtagelse under kommandohåndtering (blev fanget af sikkerhedsnettet): {0}: {1}"
+system.log.event_exception_caught: "Undtagelse under håndtering af hændelsen {0} (blev fanget af sikkerhedsnettet): {1}: {2}"
+
 #=======================
-# Opdateringer
+# 更新
 #=======================
 update.checking: "<green><bold>Søger efter opdateringer...</bold>"
 update.available: "<green><bold>Ny version tilgængelig: </bold><gold><bold>TPA-v%target% </bold><green><bold>hent den fra </bold><gold><bold>https://modrinth.com/plugin/tpa.66666/versions</bold>"
 update.latest: "<green><bold>Du kører den seneste version</bold>"
 update.failed: "<red><bold>Kunne ikke tjekke for opdateringer!</bold>"
+
+## 以下键未在 zh_CN.yml 中定义（自动保留）
+rtp: "Tilfældigt teleportationspunkt"

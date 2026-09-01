@@ -6,6 +6,7 @@ import org.black_ixx.playerpoints.PlayerPointsAPI
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.utils.SendMessageUtil
 
 // 可选经济前置挂钩（启动时检测，未安装时对应货币功能自动不可用）：
 // - Vault（金钱）：通过 ServicesManager 获取已注册的 Economy 实现
@@ -30,7 +31,7 @@ object EconomyHook {
         } catch (e: Throwable) {
             false
         }
-        if (vaultAvailable) plugin.logger.info("已挂钩 Vault 经济系统（金钱费用可用）")
+        if (vaultAvailable) plugin.logger.info(SendMessageUtil.consoleLog("system.log.vault_hooked"))
 
         pointsAvailable = try {
             if (Bukkit.getPluginManager().isPluginEnabled("PlayerPoints")) {
@@ -42,7 +43,7 @@ object EconomyHook {
         } catch (e: Throwable) {
             false
         }
-        if (pointsAvailable) plugin.logger.info("已挂钩 PlayerPoints 点券系统（点券费用可用）")
+        if (pointsAvailable) plugin.logger.info(SendMessageUtil.consoleLog("system.log.playerpoints_hooked"))
     }
 
     // 指定货币类型是否有可用提供者（money=Vault / points=PlayerPoints）

@@ -1,7 +1,7 @@
-## Fichier de langue français pour TPA
+## TPA 插件简体中文语言文件
 
 #=======================
-# Configuration de base
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Position précédente"
 lang.set_success: "<green><bold>Langue du client définie sur </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Interactions des boutons
+# 按钮交互
 #=======================
-## Texte des boutons
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Cliquez pour accepter</bold></green>'>[Accepter]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Cliquez pour refuser</bold></green>'>[Refuser]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Cliquez pour bloquer</bold></green>'>[Bloquer]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Définir comme maison</bold></yellow>'>[Définir maison]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Cliquez pour supprimer</bold></green>'>[Supprimer]</hover></insert></click></red>  </bold>"
 
-## Infobulles
-
 #=======================
-# Demandes de téléportation
+# 传送请求
 #=======================
 request.title: "<bold><green>Demande de téléportation</green></bold>"
 request.to_here: "<green><bold>Le joueur </bold><gold><bold>%target% </bold><green><bold>souhaite vous rejoindre! Expire dans </bold><gold><bold>%seconds%</bold><green><bold> secondes!</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Demande de </bold><gold><bold>%target%</bold><
 request.expired_to: "<red><bold>Votre demande à </bold><gold><bold>%target%</bold><red><bold> a expiré!</bold>"
 
 #=======================
-# Système de maisons
+# 家
 #=======================
 home.list_header: "<green><bold>Maisons disponibles:</bold>"
 home.set_success: "<green><bold>Maison </bold><gold><bold>%target%</bold><green><bold> définie</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Limite de </bold><gold><bold>%max_home_amount%
 error.default_home_already_set: "<gold><bold>%target%</bold><red><bold> est déjà la maison principale</bold>"
 
 #=======================
-# Points de téléportation
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Points disponibles:</bold>"
 warp.set_success: "<green><bold>Point </bold><gold><bold>%target%</bold><green><bold> créé</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Point </bold><gold><bold>%target%</bold><gree
 warp.teleport_success: "<green><bold>Téléporté au point </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn principal
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn principal défini</bold>"
 spawn.delete_success: "<green><bold>Spawn principal supprimé</bold>"
 spawn.teleport_success: "<green><bold>Téléporté au spawn principal!</bold>"
 
 #=======================
-# Position précédente
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Retour à la position précédente!</bold>"
 
 #=======================
-# Téléportation aléatoire
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Génération de position...</bold>"
 rtp.success: "<green><bold>Téléportation aléatoire réussie!</bold>"
 rtp.failed: "<red><bold>Échec de génération!</bold>"
 
 #=======================
-# Liste noire
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Liste noire:</bold>"
 blacklist.add_success: "<green><bold>Joueur </bold><gold><bold>%target%</bold><green><bold> bloqué</bold>"
 blacklist.remove_success: "<green><bold>Joueur </bold><gold><bold>%target%</bold><green><bold> débloqué</bold>"
 
 #=======================
-# Erreurs
+# 错误提示
 #=======================
-## État des commandes
+## 命令状态
 error.command_disabled: "<red><bold>Commande désactivée!</bold>"
 error.world_disabled: "<red><bold>Indisponible dans ce monde!</bold>"
 error.command_cooldown: "<red><bold>Attendez </bold><gold><bold>%seconds%</bold><red><bold> secondes!</bold>"
 
-## Permissions
+## 权限与执行
 error.console_restricted: "<red><bold>Réservé aux joueurs!</bold>"
 error.permission_denied: "<red><bold>Permission refusée!</bold>"
 
-## État des joueurs
+## 玩家状态
 error.no_online_players: "<red><bold>Aucun joueur en ligne!</bold>"
 error.target_offline: "<red><bold>Joueur </bold><gold><bold>%target%</bold><red><bold> hors ligne!</bold>"
 error.self_operation: "<red><bold>Impossible sur soi-même!</bold>"
 
-## Demandes
+## 请求状态
 error.no_pending_request: "<red><bold>Aucune demande en attente!</bold>"
 error.request_pending: "<red><bold>Demande déjà en cours!</bold>"
 
-## Liste noire
+## 黑名单
 error.already_blacklisted: "<red><bold>Déjà dans la liste noire!</bold>"
 error.blocked_by_target: "<red><bold>Vous êtes bloqué!</bold>"
 error.blacklist_empty: "<red><bold>Liste noire vide!</bold>"
 error.not_blacklisted: "<red><bold>Pas dans la liste noire!</bold>"
 
-## Maisons
+## 家
 error.home_not_found: "<red><bold>Maison </bold><gold><bold>%target%</bold><red><bold> introuvable!</bold>"
 error.no_homes_set: "<red><bold>Aucune maison définie!</bold>"
 error.no_default_home: "<red><bold>Maison principale non définie!</bold>"
 
-## Points de téléportation
+## 传送点
 error.warp_not_found: "<red><bold>Point </bold><gold><bold>%target%</bold><red><bold> introuvable!</bold>"
 error.no_warps_set: "<red><bold>Aucun point disponible!</bold>"
 
-## Positions
+## 位置记录
 error.last_location_missing: "<red><bold>Aucune position enregistrée!</bold>"
 error.logout_location_missing: "<red><bold>Position de déconnexion inconnue!</bold>"
 error.spawn_not_set: "<red><bold>Spawn non défini!</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Solde insuffisant ! Cette téléportation coûte</red> <gold>{cost}</gold> {currency}<red>, votre solde est de</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Téléportation annulée car</red> <gold>%target%</gold> <red>n'a pas un solde suffisant</red></bold>"
 
-## Syntaxe
+## 命令语法
 error.syntax_generic: "<red><bold>Erreur de syntaxe: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Erreur de syntaxe: /%command% <joueur></bold>"
 error.syntax_tpall: "<red><bold>Erreur de syntaxe: /%command% [player/warp/spawn] [nom]</bold>"
 error.syntax_warp: "<red><bold>Erreur de syntaxe: /%command% <point></bold>"
 error.syntax_home: "<red><bold>Erreur de syntaxe: /%command% <maison></bold>"
 
-## Système
+## 系统错误
 error.config_not_found: "<red><bold>Config recréée!</bold>"
 error.runtime: "<red><bold>Erreur du plugin: %message%</bold>"
 error.forwarded_error: "<red><bold>Erreur de </bold><gold><bold>%target%:</bold>"
 
 #=======================
-# Processus de téléportation
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Demande de </bold><gold><bold>%target%</bold><green><bold> acceptée!</bold>"
 teleport.accept.target: "<green><bold>Le joueur </bold><gold><bold>%target%</bold><green><bold> a accepté!</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Téléporté par admin vers </bold><gold
 teleport.tpall.to_self: "<green><bold>Tous les joueurs téléportés à vous</bold>"
 teleport.tpall.success: "<green><bold>Tous téléportés vers </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Téléporté à la dernière position de </bold><gold><bold>%target%</bold>"
+teleport.cost_charged: "<bold><green>Cette téléportation a coûté</green> <gold>{cost}</gold> {currency}<green>, votre solde est de</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Messages système
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Config rechargée!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Cette téléportation a coûté</green> <gold>{cost}</gold> {currency}<green>, votre solde est de</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>argent</gold></bold>"
-
 system.currency_points: "<bold><green>points</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Plugin chargé! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin déchargé!</bold>"
 system.config_migrated_success: "<green><bold>Migration réussie!</bold>"
 system.config_migrated: "<green><bold>Ancienne config détectée (sauvegardée)</bold>"
 system.debug_warning: "<red><bold>Mode debug activé!</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Le fichier de langue {0} ne contient pas la clé {1} (fichier probablement issu d'une ancienne version ; vous pouvez supprimer le dossier plugins/TPA/language puis redémarrer pour le régénérer, ou ajouter la clé manuellement)"
+system.log.config_migrated_detail: "Ancienne configuration migrée ({0} → {1}) : les valeurs personnalisées ont été conservées, l'ancien fichier de langue a été sauvegardé dans plugins/TPA/backup/{0}/ et le nouveau fichier de langue a été régénéré"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Stockage en base de données non activé (use_database: false), les données des joueurs seront enregistrées dans le dossier playerdata"
+system.log.database_pool_initialized: "Pool de connexions à la base de données initialisé ({0})"
+system.log.database_connect_failed: "Échec de connexion à la base de données ({0}) : {1}"
+system.log.database_fallback_sqlite: "Repli effectué vers le stockage SQLite local ({0}), les données sont conservées temporairement en local ; une fois la configuration corrigée, l'exécution de /tpac reload migrera automatiquement les données vers la base de données"
+system.log.database_fallback_create_failed: "Échec de création du pool de connexions SQLite de secours : {0}"
+system.log.database_memory_only: "Base de données indisponible et échec du repli ; les données seront conservées uniquement dans le cache mémoire (elles seront perdues au redémarrage)"
+system.log.database_get_connection_failed: "Échec de l'obtention d'une connexion à la base de données : {0}"
+system.log.database_pool_closed: "Pool de connexions à la base de données fermé"
+system.log.database_table_created: "Table {0} créée"
+system.log.database_table_exists: "La table {0} existe déjà"
+system.log.database_table_points_created: "Table tpa_points créée (stockage unifié des points de téléportation spawn/warp)"
+system.log.database_column_added: "Colonne {0} ajoutée à la table player_data"
+system.log.database_column_add_failed: "Échec de l'ajout de la colonne {0} à la table player_data : {1}"
+system.log.unsupported_database_type: "Type de base de données non pris en charge : {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Connecté au système économique Vault (frais en argent disponibles)"
+system.log.playerpoints_hooked: "Connecté au système de points PlayerPoints (frais en points disponibles)"
+system.log.cost_without_currency: "Les frais de téléportation sont activés (cost.enable: true), mais le système de monnaie ({0}) est indisponible : {1} n'est pas installé ou ne fournit pas de service d'économie/points ; aucun frais ne sera prélevé"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Échec de la sauvegarde de {0} : {1}"
+system.log.fallback_migrate_players_failed: "Échec de la migration des données des joueurs depuis la base de secours (la table player_data est peut-être absente) : {0}"
+system.log.fallback_migrate_points_failed: "Échec de la migration des données de points de téléportation depuis la base de secours (la table tpa_points est peut-être absente) : {0}"
+system.log.fallback_migrated_back: "Données de la base de secours migrées vers la base de données : {0} enregistrements de joueurs, {1} enregistrements de points de téléportation"
+system.log.fallback_backup_removed: "Base de secours sauvegardée dans {0} puis supprimée"
+system.log.fallback_migrate_back_failed: "Échec de la migration des données de la base de secours vers la base de données : {0}"
+system.log.spawn_migrated_to_db: "Données spawn migrées vers la base de données (tpa_points)"
+system.log.spawn_yml_backed_up: "Ancien spawn.yml sauvegardé dans backup/{0}"
+system.log.warp_migrated_to_db: "{0} entrées warp migrées vers la base de données (tpa_points)"
+system.log.warp_yml_backed_up: "Ancien warp.yml sauvegardé dans backup/{0}"
+system.log.players_migrated_to_db: "Données yml de {0} joueurs migrées vers la base de données (fichiers d'origine conservés dans le dossier playerdata)"
+system.log.db_file_backed_up: "Fichier de base de données d'origine sauvegardé dans backup/{0}"
+system.log.points_migrated_to_yml: "Les points de téléportation de la base de données ont été migrés vers les fichiers yml (spawn.yml/warp.yml) : {0} enregistrements"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Plugin Floodgate non détecté ; les joueurs Bedrock utiliseront l'interaction par chat"
+system.log.floodgate_hook_failed: "Échec de la connexion à Floodgate ; les joueurs Bedrock utiliseront l'interaction par chat : {0} : {1}"
+system.log.floodgate_hooked: "Connecté à Floodgate (les messages cliquables pour les joueurs Bedrock s'afficheront sous forme de boutons dans un popup)"
+system.log.bedrock_check_failed: "Erreur lors de la vérification d'un joueur Bedrock (il sera traité comme non Bedrock) : {0} : {1}"
+system.log.bedrock_identified_debug: "[debug] Joueur Bedrock identifié : {0}"
+system.log.form_send_false: "L'envoi du popup a renvoyé false (la cible {0} est peut-être hors ligne ou n'est pas un joueur Bedrock)"
+system.log.form_send_failed: "Erreur lors de l'envoi du popup : {0} : {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Exception lors du traitement d'une commande (interceptée par le gestionnaire de secours) : {0} : {1}"
+system.log.event_exception_caught: "Exception lors du traitement de l'événement {0} (interceptée par le gestionnaire de secours) : {1} : {2}"
+
 #=======================
-# Mises à jour
+# 更新
 #=======================
 update.checking: "<green><bold>Recherche de mises à jour...</bold>"
 update.available: "<green><bold>Nouvelle version disponible: </bold><gold><bold>TPA-v%target% </bold><green><bold>- </bold><gold><bold>https://modrinth.com/plugin/tpa.66666/versions</bold>"

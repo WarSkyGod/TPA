@@ -77,7 +77,7 @@ class TPA : JavaPlugin() {
         BedrockFormHook.init(this)
         if (ConfigManager.config.costEnable && !EconomyHook.isCurrencyAvailable(ConfigManager.config.costCurrency)) {
             val needed = if (ConfigManager.config.costCurrency == "points") "PlayerPoints" else "Vault"
-            logger.warning("传送费用已启用（cost.enable: true）但货币系统（${ConfigManager.config.costCurrency}）不可用：$needed 未安装或未提供经济/点券服务，费用将不收取")
+            logger.warning(SendMessageUtil.consoleLog("system.log.cost_without_currency", ConfigManager.config.costCurrency, needed))
         }
 
         // PlaceholderAPI（可选依赖）

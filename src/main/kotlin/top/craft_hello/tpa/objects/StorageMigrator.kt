@@ -3,6 +3,7 @@ package top.craft_hello.tpa.objects
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.utils.SendMessageUtil
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
@@ -39,7 +40,7 @@ object StorageMigrator {
             Files.copy(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING)
             target
         } catch (e: Exception) {
-            plugin.logger.warning("备份 ${source.name} 失败: ${e.message}")
+            plugin.logger.warning(SendMessageUtil.consoleLog("system.log.backup_failed", source.name, e.message))
             null
         }
     }
@@ -89,7 +90,7 @@ object StorageMigrator {
                             }
                         }
                     } catch (e: Exception) {
-                        plugin.logger.warning("降级库玩家数据迁移失败（可能无 player_data 表）: ${e.message}")
+                        plugin.logger.warning(SendMessageUtil.consoleLog("system.log.fallback_migrate_players_failed", e.message))
                     }
                     // 传送点：主库缺失才写入（单独容错）
                     var migratedPoints = 0
@@ -104,17 +105,17 @@ object StorageMigrator {
                             }
                         }
                     } catch (e: Exception) {
-                        plugin.logger.warning("降级库传送点数据迁移失败（可能无 tpa_points 表）: ${e.message}")
+                        plugin.logger.warning(SendMessageUtil.consoleLog("system.log.fallback_migrate_points_failed", e.message))
                     }
-                    plugin.logger.info("降级库数据已迁回数据库：玩家 $migratedPlayers 条，传送点 $migratedPoints 条")
+                    plugin.logger.info(SendMessageUtil.consoleLog("system.log.fallback_migrated_back", migratedPlayers, migratedPoints))
                 }
             }
             // 迁移完成：备份降级文件后删除
             backup(fallback)?.let {
-                if (fallback.delete()) plugin.logger.info("降级库已备份到 ${it.name} 并移除")
+                if (fallback.delete()) plugin.logger.info(SendMessageUtil.consoleLog("system.log.fallback_backup_removed", it.name))
             }
         } catch (e: Exception) {
-            plugin.logger.warning("降级库数据迁回数据库失败: ${e.message}")
+            plugin.logger.warning(SendMessageUtil.consoleLog("system.log.fallback_migrate_back_failed", e.message))
         }
     }
 
@@ -137,8 +138,8 @@ object StorageMigrator {
                 val yamlSpawn = yamlStore.loadSpawn()
                 if (yamlSpawn != null && !DatabasePointStore.spawnPointExists(connection)) {
                     DatabasePointStore.writePoint(connection, DatabaseManager.databaseType, "spawn", "spawn", yamlSpawn)
-                    plugin.logger.info("已迁移 spawn 数据到数据库（tpa_points）")
-                    backup(yamlStore.spawnFile)?.let { plugin.logger.info("旧 spawn.yml 已备份到 backup/${it.name}") }
+                    plugin.logger.info(SendMessageUtil.consoleLog("system.log.spawn_migrated_to_db"))
+                    backup(yamlStore.spawnFile)?.let { plugin.logger.info(SendMessageUtil.consoleLog("system.log.spawn_yml_backed_up", it.name)) }
                 }
             }
             // warp：逐个迁移库中缺失的条目
@@ -151,8 +152,8 @@ object StorageMigrator {
                     migrated++
                 }
                 if (migrated > 0) {
-                    plugin.logger.info("已迁移 $migrated 个 warp 数据到数据库（tpa_points）")
-                    backup(yamlStore.warpFile)?.let { plugin.logger.info("旧 warp.yml 已备份到 backup/${it.name}") }
+                    plugin.logger.info(SendMessageUtil.consoleLog("system.log.warp_migrated_to_db", migrated))
+                    backup(yamlStore.warpFile)?.let { plugin.logger.info(SendMessageUtil.consoleLog("system.log.warp_yml_backed_up", it.name)) }
                 }
             }
         }
@@ -182,7 +183,7 @@ object StorageMigrator {
                 )
                 migrated++
             }
-            if (migrated > 0) plugin.logger.info("已迁移 $migrated 个玩家的 yml 数据到数据库（原文件保留于 playerdata 目录）")
+            if (migrated > 0) plugin.logger.info(SendMessageUtil.consoleLog("system.log.players_migrated_to_db", migrated))
         }
     }
 
@@ -211,8 +212,8 @@ object StorageMigrator {
                     migrated++
                 }
                 if (migrated > 0) {
-                    backup(sqliteFile)?.let { plugin.logger.info("原数据库文件已备份到 backup/${it.name}") }
-                    plugin.logger.info("数据库中的传送点数据已迁回 yml 文件（spawn.yml/warp.yml）：$migrated 条")
+                    backup(sqliteFile)?.let { plugin.logger.info(SendMessageUtil.consoleLog("system.log.db_file_backed_up", it.name)) }
+                    plugin.logger.info(SendMessageUtil.consoleLog("system.log.points_migrated_to_yml", migrated))
                 }
             }
         } catch (e: Exception) {

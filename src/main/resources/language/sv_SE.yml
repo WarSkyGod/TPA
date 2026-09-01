@@ -1,7 +1,7 @@
-## TPA-plugin svenskt språkpaket
+## TPA 插件简体中文语言文件
 
 #=======================
-# Grundinställningar
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Senaste position"
 lang.set_success: "<green><bold>Klientens språk satt till </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Knappinteraktioner
+# 按钮交互
 #=======================
-## Knapptexter
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klicka för att acceptera</bold></green>'>[Acceptera]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klicka för att avvisa</bold></green>'>[Avvisa]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lägg till i svartlista</bold></green>'>[Blockera]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Sätt som standardhem</bold></yellow>'>[Standardhem]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Radera permanent</bold></green>'>[Radera]</hover></insert></click></red>  </bold>"
 
-## Knapptips
-
 #=======================
-# Teleportförfrågningar
+# 传送请求
 #=======================
 request.title: "<bold><green>Teleporteringsförfrågan</green></bold>"
 request.to_here: "<green><bold>Spelare </bold><gold><bold>%target% </bold><green><bold>vill teleportera till dig! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Förfrågan från </bold><gold><bold>%target% 
 request.expired_to: "<red><bold>Din förfrågan till </bold><gold><bold>%target% </bold><red><bold>utgick</bold>"
 
 #=======================
-# Hem
+# 家
 #=======================
 home.list_header: "<green><bold>Tillgängliga hem:</bold>"
 home.set_success: "<green><bold>Hem </bold><gold><bold>%target% </bold><green><bold>skapades</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Max </bold><gold><bold>%max_home_amount% </bol
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>är redan standardhem</bold>"
 
 #=======================
-# Warp-punkter
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Tillgängliga warps:</bold>"
 warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>skapades</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><gree
 warp.teleport_success: "<green><bold>Teleporterad till </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn satt</bold>"
 spawn.delete_success: "<green><bold>Spawn borttaget</bold>"
 spawn.teleport_success: "<green><bold>Teleporterad till spawn!</bold>"
 
 #=======================
-# Senaste position
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Återvänd till senaste position!</bold>"
 
 #=======================
-# Slumpmässig teleport
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Genererar slumpmässig position...</bold>"
 rtp.success: "<green><bold>Slumpmässig teleport lyckades!</bold>"
 rtp.failed: "<red><bold>Slumpmässig teleport misslyckades!</bold>"
 
 #=======================
-# Svartlista
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Din svartlista:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>blev svartlistad</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>togs bort från svartlistan</bold>"
 
 #=======================
-# Felmeddelanden
+# 错误提示
 #=======================
-## Kommandostatus
+## 命令状态
 error.command_disabled: "<red><bold>Kommandot är inaktiverat</bold>"
 error.world_disabled: "<red><bold>Inte tillgängligt i denna värld</bold>"
 error.command_cooldown: "<red><bold>Vänta </bold><gold><bold>%seconds%s</bold>"
 
-## Behörigheter
+## 权限与执行
 error.console_restricted: "<red><bold>Endast spelare</bold>"
 error.permission_denied: "<red><bold>Du har inte behörighet!</bold>"
 
-## Spelarstatus
+## 玩家状态
 error.no_online_players: "<red><bold>Inga spelare online</bold>"
 error.target_offline: "<red><bold>Spelare </bold><gold><bold>%target% </bold><red><bold>är offline</bold>"
 error.self_operation: "<red><bold>Kan inte användas på dig själv</bold>"
 
-## Förfrågningsstatus
+## 请求状态
 error.no_pending_request: "<red><bold>Inga väntande förfrågningar</bold>"
 error.request_pending: "<red><bold>Pågående förfrågan</bold>"
 
-## Svartlista
+## 黑名单
 error.already_blacklisted: "<red><bold>Redan svartlistad</bold>"
 error.blocked_by_target: "<red><bold>Du är blockerad</bold>"
 error.blacklist_empty: "<red><bold>Svartlistan är tom</bold>"
 error.not_blacklisted: "<red><bold>Inte svartlistad</bold>"
 
-## Hem
+## 家
 error.home_not_found: "<red><bold>Hem </bold><gold><bold>%target% </bold><red><bold>finns inte</bold>"
 error.no_homes_set: "<red><bold>Inga hem inställda</bold>"
 error.no_default_home: "<red><bold>Inget standardhem</bold>"
 
-## Warps
+## 传送点
 error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>finns inte</bold>"
 error.no_warps_set: "<red><bold>Inga warps tillgängliga</bold>"
 
-## Positioner
+## 位置记录
 error.last_location_missing: "<red><bold>Ingen senaste position</bold>"
 error.logout_location_missing: "<red><bold>Ingen utloggningsposition</bold>"
 error.spawn_not_set: "<red><bold>Spawn inte inställt</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Otillräckligt saldo! Denna teleportering kostar</red> <gold>{cost}</gold> {currency}<red>, ditt saldo är</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleporteringen avbröts eftersom</red> <gold>%target%</gold> <red>inte har tillräckligt saldo</red></bold>"
 
-## Syntax
+## 命令语法
 error.syntax_generic: "<red><bold>Fel syntax! Använd: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Fel syntax! Använd: /%command% <spelare></bold>"
 error.syntax_tpall: "<red><bold>Fel syntax! Använd: /%command% [player/warp/spawn] [namn]</bold>"
 error.syntax_warp: "<red><bold>Fel syntax! Använd: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>Fel syntax! Använd: /%command% <hem></bold>"
 
-## Systemfel
+## 系统错误
 error.config_not_found: "<red><bold>Konfiguration återskapades</bold>"
 error.runtime: "<red><bold>Pluginfel: %message%</bold>"
 error.forwarded_error: "<red><bold>Fel från </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
-# Teleportprocess
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Accepterade förfrågan från </bold><gold><bold>%target%</bold>"
 teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>accepterade din förfrågan</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Admin teleporterade dig till </bold><gol
 teleport.tpall.to_self: "<green><bold>Admin hämtade alla spelare</bold>"
 teleport.tpall.success: "<green><bold>Alla teleporterade till </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Teleporterad till </bold><gold><bold>%target%s utloggningsposition</bold>"
+teleport.cost_charged: "<bold><green>Denna teleportering kostade</green> <gold>{cost}</gold> {currency}<green>, ditt saldo är</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Systemmeddelanden
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Konfiguration laddades om!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Denna teleportering kostade</green> <gold>{cost}</gold> {currency}<green>, ditt saldo är</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>pengar</gold></bold>"
-
 system.currency_points: "<bold><green>poäng</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Plugin laddad! Version: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Plugin avinstallerat!</bold>"
 system.config_migrated_success: "<green><bold>Konfigmigration klar!</bold>"
 system.config_migrated: "<green><bold>Migrerar gammal konfig (automatisk backup)</bold>"
 system.debug_warning: "<red><bold>Debug-läge aktivt - stäng av efter användning!</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Språkfilen {0} saknar nyckeln {1} (troligen en fil från en äldre version; ta bort katalogen plugins/TPA/language och starta om för att skapa filen på nytt, eller lägg till nyckeln manuellt)"
+system.log.config_migrated_detail: "Den gamla konfigurationen har migrerats ({0} → {1}): egna värden har bevarats, den gamla språkfilen har säkerhetskopierats till plugins/TPA/backup/{0}/ och en ny språkfil har skapats"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Databaslagring är inte aktiverad (use_database: false); spelardata sparas i katalogen playerdata"
+system.log.database_pool_initialized: "Databasens anslutningspool har initierats ({0})"
+system.log.database_connect_failed: "Databasanslutningen misslyckades ({0}): {1}"
+system.log.database_fallback_sqlite: "Har fallit tillbaka på lokal SQLite-lagring ({0}); data lagras tillsvidare lokalt. Kör /tpac reload när konfigurationen har åtgärdats, så migreras data automatiskt tillbaka till databasen"
+system.log.database_fallback_create_failed: "Det gick inte att skapa anslutningspoolen för SQLite-fallback: {0}"
+system.log.database_memory_only: "Databasen är otillgänglig och fallbacken misslyckades; data sparas endast i minnescachen (försvinner vid omstart)"
+system.log.database_get_connection_failed: "Det gick inte att hämta en databasanslutning: {0}"
+system.log.database_pool_closed: "Databasens anslutningspool har stängts"
+system.log.database_table_created: "Har skapat tabellen {0}"
+system.log.database_table_exists: "Tabellen {0} finns redan"
+system.log.database_table_points_created: "Har skapat tabellen tpa_points (enhetlig lagring för spawn/warp-teleportpunkter)"
+system.log.database_column_added: "Kolumnen {0} har lagts till i tabellen player_data"
+system.log.database_column_add_failed: "Det gick inte att lägga till kolumnen {0} i tabellen player_data: {1}"
+system.log.unsupported_database_type: "Databastypen stöds inte: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Har kopplat till ekonomisystemet Vault (pengakostnader är tillgängliga)"
+system.log.playerpoints_hooked: "Har kopplat till poängsystemet PlayerPoints (poängkostnader är tillgängliga)"
+system.log.cost_without_currency: "Teleportkostnader är aktiverade (cost.enable: true), men valutasystemet ({0}) är inte tillgängligt: {1} är inte installerat eller tillhandahåller ingen ekonomi-/poängtjänst; ingen kostnad debiteras"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Det gick inte att säkerhetskopiera {0}: {1}"
+system.log.fallback_migrate_players_failed: "Det gick inte att migrera spelardata från fallback-databasen (tabellen player_data kanske saknas): {0}"
+system.log.fallback_migrate_points_failed: "Det gick inte att migrera teleportpunktdata från fallback-databasen (tabellen tpa_points kanske saknas): {0}"
+system.log.fallback_migrated_back: "Data har migrerats tillbaka från fallback-databasen till databasen: {0} spelare, {1} teleportpunkter"
+system.log.fallback_backup_removed: "Fallback-databasen har säkerhetskopierats till {0} och tagits bort"
+system.log.fallback_migrate_back_failed: "Det gick inte att migrera data från fallback-databasen tillbaka till databasen: {0}"
+system.log.spawn_migrated_to_db: "spawn-data har migrerats till databasen (tpa_points)"
+system.log.spawn_yml_backed_up: "Den gamla spawn.yml har säkerhetskopierats till backup/{0}"
+system.log.warp_migrated_to_db: "{0} warp-poster har migrerats till databasen (tpa_points)"
+system.log.warp_yml_backed_up: "Den gamla warp.yml har säkerhetskopierats till backup/{0}"
+system.log.players_migrated_to_db: "yml-data för {0} spelare har migrerats till databasen (originalfilerna behålls i katalogen playerdata)"
+system.log.db_file_backed_up: "Den ursprungliga databasfilen har säkerhetskopierats till backup/{0}"
+system.log.points_migrated_to_yml: "Teleportpunktdata i databasen har migrerats tillbaka till yml-filer (spawn.yml/warp.yml): {0} poster"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate-pluginet hittades inte; Bedrock-spelare använder chattinteraktion"
+system.log.floodgate_hook_failed: "Det gick inte att koppla till Floodgate; Bedrock-spelare använder chattinteraktion: {0}: {1}"
+system.log.floodgate_hooked: "Har kopplat till Floodgate (klickbara meddelanden för Bedrock-spelare visas som formulärknappar)"
+system.log.bedrock_check_failed: "Fel vid kontroll av Bedrock-spelare (spelaren behandlas som icke-Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Bedrock-spelare har identifierats: {0}"
+system.log.form_send_false: "Formulärsändningen returnerade false (mottagaren {0} kanske inte är online eller inte är en Bedrock-spelare)"
+system.log.form_send_failed: "Fel vid sändning av formulär: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Undantag vid kommandohantering (fångades av säkerhetsnätet): {0}: {1}"
+system.log.event_exception_caught: "Undantag vid hantering av händelsen {0} (fångades av säkerhetsnätet): {1}: {2}"
+
 #=======================
-# Uppdateringar
+# 更新
 #=======================
 update.checking: "<green><bold>Söker uppdateringar...</bold>"
 update.available: "<green><bold>Ny version </bold><gold><bold>TPA-v%target%</bold><green><bold> tillgänglig: https://modrinth.com/plugin/tpa.66666/versions</bold>"

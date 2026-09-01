@@ -10,6 +10,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.PapiHook
+import top.craft_hello.tpa.utils.SendMessageUtil
 import java.io.File
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
@@ -101,7 +102,7 @@ data class Language(var languageFile: File, var isReplace: Boolean) {
         // 旧版语言文件缺少新增键时给出明确提示（getMessage 会以 "null" 兜底显示）
         fun warnMissingKey(fileName: String, path: String) {
             if (warnedMissingKeys.add("$fileName:$path")) {
-                TPA.plugin.logger.warning("语言文件 $fileName 缺少键 $path（可能为旧版本文件，可删除 plugins/TPA/language 目录后重启重新生成，或手动补充该键）")
+                TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.language_missing_key", fileName, path))
             }
         }
     }

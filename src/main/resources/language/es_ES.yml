@@ -1,7 +1,7 @@
-## Archivo de idioma español para el plugin TPA
+## TPA 插件简体中文语言文件
 
 #=======================
-# Configuración básica
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Última ubicación"
 lang.set_success: "<green><bold>Idioma establecido a </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Interacción de botones
+# 按钮交互
 #=======================
-## Texto de botones
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Haz clic para aceptar</bold></green>'>[Aceptar]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Haz clic para rechazar</bold></green>'>[Rechazar]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Bloquear jugador</bold></green>'>[Bloquear]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Establecer como predeterminado</bold></yellow>'>[Hogar predeterminado]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Eliminar permanentemente</bold></green>'>[Eliminar]</hover></insert></click></red>  </bold>"
 
-## Sugerencias de botones
-
 #=======================
-# Solicitudes de teletransporte
+# 传送请求
 #=======================
 request.title: "<bold><green>Solicitud de teletransporte</green></bold>"
 request.to_here: "<green><bold>¡</bold><gold><bold>%target% </bold><green><bold>quiere teletransportarse a ti! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Solicitud de </bold><gold><bold>%target% </bol
 request.expired_to: "<red><bold>Tu solicitud a </bold><gold><bold>%target% </bold><red><bold>expirada</bold>"
 
 #=======================
-# Hogares
+# 家
 #=======================
 home.list_header: "<green><bold>Hogares disponibles:</bold>"
 home.set_success: "<green><bold>Hogar </bold><gold><bold>%target% </bold><green><bold>establecido</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Límite: </bold><gold><bold>%max_home_amount% 
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>ya es predeterminado</bold>"
 
 #=======================
-# Puntos de teletransporte
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Warps disponibles:</bold>"
 warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>creado</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><gree
 warp.teleport_success: "<green><bold>Teletransportado a </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn establecido</bold>"
 spawn.delete_success: "<green><bold>Spawn eliminado</bold>"
 spawn.teleport_success: "<green><bold>¡Teletransportado al spawn!</bold>"
 
 #=======================
-# Última ubicación
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>¡Regresado a la última ubicación!</bold>"
 
 #=======================
-# Teletransporte aleatorio
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Generando ubicación...</bold>"
 rtp.success: "<green><bold>¡Teletransporte exitoso!</bold>"
 rtp.failed: "<red><bold>¡Error al teletransportar!</bold>"
 
 #=======================
-# Lista negra
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Lista negra:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>bloqueado</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>desbloqueado</bold>"
 
 #=======================
-# Mensajes de error
+# 错误提示
 #=======================
-## Estado de comandos
+## 命令状态
 error.command_disabled: "<red><bold>Comando desactivado</bold>"
 error.world_disabled: "<red><bold>No disponible aquí</bold>"
 error.command_cooldown: "<red><bold>Espera </bold><gold><bold>%seconds%s</bold>"
 
-## Permisos
+## 权限与执行
 error.console_restricted: "<red><bold>Solo jugadores</bold>"
 error.permission_denied: "<red><bold>¡Permiso denegado!</bold>"
 
-## Estado de jugadores
+## 玩家状态
 error.no_online_players: "<red><bold>Nadie en línea</bold>"
 error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>offline</bold>"
 error.self_operation: "<red><bold>No aplicable a ti</bold>"
 
-## Solicitudes
+## 请求状态
 error.no_pending_request: "<red><bold>Sin solicitudes</bold>"
 error.request_pending: "<red><bold>Solicitud pendiente</bold>"
 
-## Lista negra
+## 黑名单
 error.already_blacklisted: "<red><bold>Ya bloqueado</bold>"
 error.blocked_by_target: "<red><bold>¡Estás bloqueado!</bold>"
 error.blacklist_empty: "<red><bold>Lista vacía</bold>"
 error.not_blacklisted: "<red><bold>No bloqueado</bold>"
 
-## Hogares
+## 家
 error.home_not_found: "<red><bold>Hogar </bold><gold><bold>%target% </bold><red><bold>no existe</bold>"
 error.no_homes_set: "<red><bold>Sin hogares</bold>"
 error.no_default_home: "<red><bold>Sin hogar predeterminado</bold>"
 
-## Warps
+## 传送点
 error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>no existe</bold>"
 error.no_warps_set: "<red><bold>Sin warps</bold>"
 
-## Ubicaciones
+## 位置记录
 error.last_location_missing: "<red><bold>Sin registro</bold>"
 error.logout_location_missing: "<red><bold>Sin última posición</bold>"
 error.spawn_not_set: "<red><bold>Spawn no configurado</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>¡Saldo insuficiente! Este teletransporte cuesta</red> <gold>{cost}</gold> {currency}<red>, tu saldo es</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teletransporte cancelado porque</red> <gold>%target%</gold> <red>no tiene saldo suficiente</red></bold>"
 
-## Sintaxis
+## 命令语法
 error.syntax_generic: "<red><bold>¡Sintaxis incorrecta! Uso: /%command%</bold>"
 error.syntax_tpa: "<red><bold>¡Sintaxis incorrecta! Uso: /%command% <jugador></bold>"
 error.syntax_tpall: "<red><bold>¡Sintaxis incorrecta! Uso: /%command% [player/warp/spawn] [nombre]</bold>"
 error.syntax_warp: "<red><bold>¡Sintaxis incorrecta! Uso: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>¡Sintaxis incorrecta! Uso: /%command% <hogar></bold>"
 
-## Errores del sistema
+## 系统错误
 error.config_not_found: "<red><bold>¡Config recreada!</bold>"
 error.runtime: "<red><bold>Error: %message%</bold>"
 error.forwarded_error: "<red><bold>Error de </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
-# Proceso de teletransporte
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Solicitud de </bold><gold><bold>%target% </bold><green><bold>aceptada</bold>"
 teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>aceptó</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Admin te movió a </bold><gold><bold>%ta
 teleport.tpall.to_self: "<green><bold>Admin trajo a todos</bold>"
 teleport.tpall.success: "<green><bold>Todos movidos a </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Última posición de </bold><gold><bold>%target%</bold>"
+teleport.cost_charged: "<bold><green>Este teletransporte costó</green> <gold>{cost}</gold> {currency}<green>, tu saldo es</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Mensajes del sistema
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>¡Config recargada!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Este teletransporte costó</green> <gold>{cost}</gold> {currency}<green>, tu saldo es</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>dinero</gold></bold>"
-
 system.currency_points: "<bold><green>puntos</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>¡Plugin cargado! Versión: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>¡Plugin descargado!</bold>"
 system.config_migrated_success: "<green><bold>¡Migración exitosa!</bold>"
 system.config_migrated: "<green><bold>Migrando config antigua (backup automático)</bold>"
 system.debug_warning: "<red><bold>¡Modo debug activo!</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Al archivo de idioma {0} le falta la clave {1} (posiblemente un archivo de una versión anterior; se puede eliminar el directorio plugins/TPA/language y reiniciar para regenerarlo, o añadir la clave manualmente)"
+system.log.config_migrated_detail: "Configuración antigua migrada ({0} → {1}): los valores personalizados se han conservado, se ha guardado una copia de seguridad del archivo de idioma antiguo en plugins/TPA/backup/{0}/ y se ha regenerado el nuevo archivo de idioma"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Almacenamiento en base de datos no activado (use_database: false), los datos de los jugadores se guardarán en el directorio playerdata"
+system.log.database_pool_initialized: "Pool de conexiones de la base de datos inicializado ({0})"
+system.log.database_connect_failed: "Error de conexión a la base de datos ({0}): {1}"
+system.log.database_fallback_sqlite: "Se ha cambiado al almacenamiento SQLite local ({0}), los datos se guardan temporalmente de forma local; tras corregir la configuración, ejecutar /tpac reload migrará automáticamente los datos de vuelta a la base de datos"
+system.log.database_fallback_create_failed: "Error al crear el pool de conexiones SQLite de respaldo: {0}"
+system.log.database_memory_only: "La base de datos no está disponible y el respaldo falló; los datos se guardarán solo en la caché de memoria (se perderán al reiniciar)"
+system.log.database_get_connection_failed: "Error al obtener una conexión a la base de datos: {0}"
+system.log.database_pool_closed: "Pool de conexiones de la base de datos cerrado"
+system.log.database_table_created: "Tabla {0} creada"
+system.log.database_table_exists: "La tabla {0} ya existe"
+system.log.database_table_points_created: "Tabla tpa_points creada (almacenamiento unificado de puntos de teletransporte spawn/warp)"
+system.log.database_column_added: "Columna {0} añadida a la tabla player_data"
+system.log.database_column_add_failed: "Error al añadir la columna {0} a la tabla player_data: {1}"
+system.log.unsupported_database_type: "Tipo de base de datos no compatible: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Conectado al sistema económico de Vault (coste en dinero disponible)"
+system.log.playerpoints_hooked: "Conectado al sistema de puntos PlayerPoints (coste en puntos disponible)"
+system.log.cost_without_currency: "El coste de teletransporte está activado (cost.enable: true), pero el sistema monetario ({0}) no está disponible: {1} no está instalado o no ofrece servicio de economía/puntos; no se cobrará ningún coste"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Error al hacer una copia de seguridad de {0}: {1}"
+system.log.fallback_migrate_players_failed: "Error al migrar los datos de los jugadores desde la base de respaldo (puede que falte la tabla player_data): {0}"
+system.log.fallback_migrate_points_failed: "Error al migrar los datos de los puntos de teletransporte desde la base de respaldo (puede que falte la tabla tpa_points): {0}"
+system.log.fallback_migrated_back: "Datos de la base de respaldo migrados a la base de datos: {0} registros de jugadores, {1} registros de puntos de teletransporte"
+system.log.fallback_backup_removed: "La base de respaldo se ha copiado en {0} y se ha eliminado"
+system.log.fallback_migrate_back_failed: "Error al migrar los datos de la base de respaldo a la base de datos: {0}"
+system.log.spawn_migrated_to_db: "Datos de spawn migrados a la base de datos (tpa_points)"
+system.log.spawn_yml_backed_up: "El antiguo spawn.yml se ha copiado en backup/{0}"
+system.log.warp_migrated_to_db: "{0} entradas de warp migradas a la base de datos (tpa_points)"
+system.log.warp_yml_backed_up: "El antiguo warp.yml se ha copiado en backup/{0}"
+system.log.players_migrated_to_db: "Datos yml de {0} jugadores migrados a la base de datos (los archivos originales se conservan en el directorio playerdata)"
+system.log.db_file_backed_up: "El archivo original de la base de datos se ha copiado en backup/{0}"
+system.log.points_migrated_to_yml: "Los puntos de teletransporte de la base de datos se han migrado a los archivos yml (spawn.yml/warp.yml): {0} registros"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "No se ha detectado el plugin Floodgate; los jugadores Bedrock usarán la interacción por chat"
+system.log.floodgate_hook_failed: "Error al conectar con Floodgate; los jugadores Bedrock usarán la interacción por chat: {0}: {1}"
+system.log.floodgate_hooked: "Conectado a Floodgate (los mensajes clicables para los jugadores Bedrock se mostrarán como botones en una ventana emergente)"
+system.log.bedrock_check_failed: "Error al comprobar si el jugador es Bedrock (se tratará como no Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Jugador Bedrock identificado: {0}"
+system.log.form_send_false: "El envío de la ventana emergente devolvió false (el destino {0} puede estar desconectado o no ser un jugador Bedrock)"
+system.log.form_send_failed: "Error al enviar la ventana emergente: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Excepción al procesar el comando (interceptada por el gestor de excepciones general): {0}: {1}"
+system.log.event_exception_caught: "Excepción al procesar el evento {0} (interceptada por el gestor de excepciones general): {1}: {2}"
+
 #=======================
-# Actualizaciones
+# 更新
 #=======================
 update.checking: "<green><bold>Buscando actualizaciones...</bold>"
 update.available: "<green><bold>¡Nueva versión </bold><gold><bold>TPA-v%target%</bold><green><bold> disponible! https://modrinth.com/plugin/tpa.66666/versions</bold>"

@@ -28,15 +28,15 @@ object BedrockFormHook {
                 floodgateApi = FloodgateApi.getInstance()
                 floodgateApi != null
             } else {
-                plugin.logger.info("未检测到 Floodgate 插件，基岩玩家将使用聊天交互")
+                plugin.logger.info(SendMessageUtil.consoleLog("system.log.floodgate_missing"))
                 false
             }
         } catch (e: Throwable) {
-            plugin.logger.warning("Floodgate 挂钩失败，基岩玩家将使用聊天交互: ${e.javaClass.name}: ${e.message}")
+            plugin.logger.warning(SendMessageUtil.consoleLog("system.log.floodgate_hook_failed", e.javaClass.name, e.message))
             e.printStackTrace()
             false
         }
-        if (available) plugin.logger.info("已挂钩 Floodgate（基岩玩家点击类消息将以弹窗按钮呈现）")
+        if (available) plugin.logger.info(SendMessageUtil.consoleLog("system.log.floodgate_hooked"))
     }
 
     // 是否为基岩玩家（前置未安装时恒为 false，走 Java 版聊天交互）
@@ -44,11 +44,11 @@ object BedrockFormHook {
         val result = try {
             floodgateApi?.isFloodgatePlayer(player.uniqueId) ?: false
         } catch (e: Throwable) {
-            TPA.plugin.logger.warning("基岩玩家判定异常（按非基岩处理）: ${e.javaClass.name}: ${e.message}")
+            TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.bedrock_check_failed", e.javaClass.name, e.message))
             e.printStackTrace()
             false
         }
-        if (result && ConfigManager.config.debug) TPA.plugin.logger.info("[debug] 已识别基岩玩家: ${player.name}")
+        if (result && ConfigManager.config.debug) TPA.plugin.logger.info(SendMessageUtil.consoleLog("system.log.bedrock_identified_debug", player.name))
         return result
     }
 
@@ -76,10 +76,10 @@ object BedrockFormHook {
     private fun sendForm(player: Player, builder: FormBuilder<*, *, *>): Boolean {
         return try {
             val result = floodgateApi?.sendForm(player.uniqueId, builder) ?: false
-            if (!result) TPA.plugin.logger.warning("弹窗发送返回 false（目标 ${player.name} 可能不在线或非基岩玩家）")
+            if (!result) TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.form_send_false", player.name))
             result
         } catch (e: Throwable) {
-            TPA.plugin.logger.warning("弹窗发送异常: ${e.javaClass.name}: ${e.message}")
+            TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.form_send_failed", e.javaClass.name, e.message))
             e.printStackTrace()
             false
         }

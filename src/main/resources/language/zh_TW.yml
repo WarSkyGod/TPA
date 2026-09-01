@@ -1,7 +1,7 @@
-## TPA 插件繁體中文（中國台灣）語言檔案
+## TPA 插件简体中文语言文件
 
 #=======================
-# 基礎設定
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "上次位置"
 lang.set_success: "<green><bold>已設定客戶端顯示語言為 </bold><gold><bold>%target%</bold>"
 
 #=======================
-# 按鈕互動
+# 按钮交互
 #=======================
-## 按鈕文字
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>點擊此處接受傳送</bold></green>'>[接受]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>點擊此處拒絕傳送</bold></green>'>[拒絕]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>點擊拒絕並加入黑名單</bold></green>'>[拒絕並加入黑名單]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>點擊設為預設家園</bold></yellow>'>[設為預設家]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>點擊刪除</bold></green>'>[刪除]</hover></insert></click></red>  </bold>"
 
-## 按鈕提示
-
 #=======================
-# 傳送請求
+# 传送请求
 #=======================
 request.title: "<bold><green>傳送請求</green></bold>"
 request.to_here: "<green><bold>玩家 </bold><gold><bold>%target% </bold><green><bold>想傳送到您的位置，該請求 </bold><gold><bold>%seconds% </bold><green><bold>秒後失效！</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>來自 </bold><gold><bold>%target% </bold><red
 request.expired_to: "<red><bold>傳送給 </bold><gold><bold>%target% </bold><red><bold>的請求已失效！</bold>"
 
 #=======================
-# 家園系統
+# 家
 #=======================
 home.list_header: "<green><bold>可用家園：</bold>"
 home.set_success: "<green><bold>已設定家園 </bold><gold><bold>%target%</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>最多只能擁有 %max_home_amount% 個家園
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>已是預設家園</bold>"
 
 #=======================
-# 傳送點系統
+# 传送点
 #=======================
 warp.list_header: "<green><bold>可用傳送點：</bold>"
 warp.set_success: "<green><bold>已設定傳送點 </bold><gold><bold>%target%</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>已刪除傳送點 </bold><gold><bold>%target
 warp.teleport_success: "<green><bold>已傳送至傳送點 </bold><gold><bold>%target%</bold>"
 
 #=======================
-# 主城系統
+# 主城
 #=======================
 spawn.set_success: "<green><bold>已設定 </bold><gold><bold>主城位置</bold>"
 spawn.delete_success: "<green><bold>已移除 </bold><gold><bold>主城設定</bold>"
 spawn.teleport_success: "<green><bold>已傳送至 </bold><gold><bold>主城！</bold>"
 
 #=======================
-# 位置記錄
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>已傳送至 </bold><gold><bold>上次位置！</bold>"
 
 #=======================
-# 隨機傳送
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>正在產生隨機傳送點...</bold>"
 rtp.success: "<green><bold>已傳送至 </bold><gold><bold>隨機傳送點！</bold>"
 rtp.failed: "<red><bold>產生隨機傳送點失敗！</bold>"
 
 #=======================
-# 黑名單系統
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>您的黑名單：</bold>"
 blacklist.add_success: "<green><bold>已將 </bold><gold><bold>%target% </bold><green><bold>加入黑名單</bold>"
 blacklist.remove_success: "<green><bold>已將 </bold><gold><bold>%target% </bold><green><bold>移出黑名單</bold>"
 
 #=======================
-# 錯誤提示
+# 错误提示
 #=======================
-## 指令狀態
+## 命令状态
 error.command_disabled: "<red><bold>伺服器未啟用此指令！</bold>"
 error.world_disabled: "<red><bold>此世界無法使用此指令！</bold>"
 error.command_cooldown: "<red><bold>請等待 </bold><gold><bold>%seconds% </bold><red><bold>秒後再使用！</bold>"
 
-## 權限相關
+## 权限与执行
 error.console_restricted: "<red><bold>此指令限玩家使用！</bold>"
 error.permission_denied: "<red><bold>您沒有執行權限！</bold>"
 
-## 玩家狀態
+## 玩家状态
 error.no_online_players: "<red><bold>目前沒有線上玩家！</bold>"
 error.target_offline: "<red><bold>玩家 </bold><gold><bold>%target% </bold><red><bold>不在線上！</bold>"
 error.self_operation: "<red><bold>無法對自己執行此操作！</bold>"
 
-## 請求狀態
+## 请求状态
 error.no_pending_request: "<red><bold>沒有待處理的傳送請求！</bold>"
 error.request_pending: "<red><bold>您或對方有未處理的請求！</bold>"
 
-## 黑名單
+## 黑名单
 error.already_blacklisted: "<red><bold>對方已在您的黑名單！</bold>"
 error.blocked_by_target: "<red><bold>您已被對方封鎖！</bold>"
 error.blacklist_empty: "<red><bold>黑名單是空的！</bold>"
 error.not_blacklisted: "<red><bold>對方不在黑名單中！</bold>"
 
-## 家園
+## 家
 error.home_not_found: "<red><bold>家園 </bold><gold><bold>%target% </bold><red><bold>不存在！</bold>"
 error.no_homes_set: "<red><bold>尚未設定任何家園！</bold>"
 error.no_default_home: "<red><bold>未設定預設家園！</bold>"
 
-## 傳送點
+## 传送点
 error.warp_not_found: "<red><bold>傳送點 </bold><gold><bold>%target% </bold><red><bold>不存在！</bold>"
 error.no_warps_set: "<red><bold>目前沒有傳送點！</bold>"
 
-## 位置記錄
+## 位置记录
 error.last_location_missing: "<red><bold>沒有上次位置記錄！</bold>"
 error.logout_location_missing: "<red><bold>該玩家沒有登出位置記錄！</bold>"
 error.spawn_not_set: "<red><bold>尚未設定主城位置！</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>餘額不足！本次傳送需要</red> <gold>{cost}</gold> {currency}<red>，目前餘額</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>因</red> <gold>%target%</gold> <red>餘額不足，本次傳送已取消</red></bold>"
 
-## 指令語法
+## 命令语法
 error.syntax_generic: "<red><bold>指令語法錯誤！正確用法：/%command%</bold>"
 error.syntax_tpa: "<red><bold>指令語法錯誤！正確用法：/%command% <玩家名稱></bold>"
 error.syntax_tpall: "<red><bold>指令語法錯誤！正確用法：/%command% [player/warp/spawn] [名稱]</bold>"
 error.syntax_warp: "<red><bold>指令語法錯誤！正確用法：/%command% <傳送點></bold>"
 error.syntax_home: "<red><bold>指令語法錯誤！正確用法：/%command% <家園名稱></bold>"
 
-## 系統錯誤
+## 系统错误
 error.config_not_found: "<red><bold>設定檔不存在，已重新建立！</bold>"
 error.runtime: "<red><bold>插件錯誤：%message%</bold>"
 error.forwarded_error: "<red><bold>來自 </bold><gold><bold>%target% </bold><red><bold>的錯誤訊息：</bold>"
 
 #=======================
-# 傳送過程提示
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>您已接受 </bold><gold><bold>%target% </bold><green><bold>的傳送請求！</bold>"
 teleport.accept.target: "<green><bold>玩家 </bold><gold><bold>%target% </bold><green><bold>接受了您的請求！</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>管理員已將您傳送至 </bold><gold
 teleport.tpall.to_self: "<green><bold>所有玩家已傳送至您的位置</bold>"
 teleport.tpall.success: "<green><bold>已傳送所有線上玩家至 </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>已傳送至 </bold><gold><bold>%target% </bold><green><bold>最後登出位置</bold>"
+teleport.cost_charged: "<bold><green>本次傳送花費</green> <gold>{cost}</gold> {currency}<green>，目前餘額</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# 系統訊息
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>設定檔已重新載入！</bold>"
-## 传送费用
-teleport.cost_charged: "<bold><green>本次傳送花費</green> <gold>{cost}</gold> {currency}<green>，目前餘額</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>金錢</gold></bold>"
-
 system.currency_points: "<bold><green>點數</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>插件已啟用！目前版本：</bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>插件已停用！</bold>"
 system.config_migrated_success: "<green><bold>設定檔遷移完成！</bold>"
 system.config_migrated: "<green><bold>偵測到舊版設定檔，正在遷移（舊檔備份於backup目錄）</bold>"
 system.debug_warning: "<red><bold>偵錯模式已啟用，使用後請務必關閉！</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "語言檔案 {0} 缺少鍵 {1}（可能是舊版本檔案，刪除 plugins/TPA/language 目錄後重新啟動即可重新產生，或手動補上該鍵）"
+system.log.config_migrated_detail: "已遷移舊版設定（{0} → {1}）：使用者自訂值已保留，舊語言檔案已備份至 plugins/TPA/backup/{0}/ 並重新產生新版語言檔案"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "未啟用資料庫儲存（use_database: false），玩家資料將儲存到 playerdata 目錄"
+system.log.database_pool_initialized: "資料庫連線池已初始化（{0}）"
+system.log.database_connect_failed: "資料庫連線失敗（{0}）: {1}"
+system.log.database_fallback_sqlite: "已降級為本機 SQLite 儲存（{0}），資料暫存於本機；設定修復後執行 /tpac reload 將自動遷移回資料庫"
+system.log.database_fallback_create_failed: "降級 SQLite 連線池建立失敗: {0}"
+system.log.database_memory_only: "資料庫不可用且降級失敗，資料將僅保存在記憶體快取（重新啟動後遺失）"
+system.log.database_get_connection_failed: "取得資料庫連線失敗: {0}"
+system.log.database_pool_closed: "資料庫連線池已關閉"
+system.log.database_table_created: "已建立 {0} 資料表"
+system.log.database_table_exists: "{0} 資料表已存在"
+system.log.database_table_points_created: "已建立 tpa_points 資料表（spawn/warp 統一傳送點儲存）"
+system.log.database_column_added: "player_data 資料表已補上欄位 {0}"
+system.log.database_column_add_failed: "player_data 資料表補上欄位 {0} 失敗: {1}"
+system.log.unsupported_database_type: "不支援的資料庫類型: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "已掛鉤 Vault 經濟系統（金錢費用可用）"
+system.log.playerpoints_hooked: "已掛鉤 PlayerPoints 點數系統（點數費用可用）"
+system.log.cost_without_currency: "傳送費用已啟用（cost.enable: true）但貨幣系統（{0}）不可用：{1} 未安裝或未提供經濟/點數服務，將不收取費用"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "備份 {0} 失敗: {1}"
+system.log.fallback_migrate_players_failed: "降級資料庫的玩家資料遷移失敗（可能沒有 player_data 資料表）: {0}"
+system.log.fallback_migrate_points_failed: "降級資料庫的傳送點資料遷移失敗（可能沒有 tpa_points 資料表）: {0}"
+system.log.fallback_migrated_back: "降級資料庫的資料已遷回資料庫：玩家 {0} 筆，傳送點 {1} 筆"
+system.log.fallback_backup_removed: "降級資料庫已備份到 {0} 並移除"
+system.log.fallback_migrate_back_failed: "降級資料庫的資料遷回資料庫失敗: {0}"
+system.log.spawn_migrated_to_db: "已遷移 spawn 資料到資料庫（tpa_points）"
+system.log.spawn_yml_backed_up: "舊 spawn.yml 已備份到 backup/{0}"
+system.log.warp_migrated_to_db: "已遷移 {0} 筆 warp 資料到資料庫（tpa_points）"
+system.log.warp_yml_backed_up: "舊 warp.yml 已備份到 backup/{0}"
+system.log.players_migrated_to_db: "已遷移 {0} 位玩家的 yml 資料到資料庫（原始檔案保留於 playerdata 目錄）"
+system.log.db_file_backed_up: "原始資料庫檔案已備份到 backup/{0}"
+system.log.points_migrated_to_yml: "資料庫中的傳送點資料已遷回 yml 檔案（spawn.yml/warp.yml）：{0} 筆"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "未偵測到 Floodgate 外掛，基岩玩家將使用聊天互動"
+system.log.floodgate_hook_failed: "Floodgate 掛鉤失敗，基岩玩家將使用聊天互動: {0}: {1}"
+system.log.floodgate_hooked: "已掛鉤 Floodgate（基岩玩家的點擊類訊息將以彈出式視窗按鈕呈現）"
+system.log.bedrock_check_failed: "基岩玩家判定發生異常（按非基岩處理）: {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] 已識別基岩玩家: {0}"
+system.log.form_send_false: "彈出式視窗傳送回傳 false（目標 {0} 可能不在線上或非基岩玩家）"
+system.log.form_send_failed: "彈出式視窗傳送時發生例外: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "指令處理時發生例外（已捕捉攔截）: {0}: {1}"
+system.log.event_exception_caught: "{0} 事件處理時發生例外（已捕捉攔截）: {1}: {2}"
+
 #=======================
-# 更新系統
+# 更新
 #=======================
 update.checking: "<green><bold>正在檢查更新...</bold>"
 update.available: "<green><bold>發現新版本：</bold><gold><bold>TPA-v%target%</bold><green><bold> 請至 </bold><gold><bold>https://modrinth.com/plugin/tpa.66666/versions </bold><green><bold>查看</bold>"

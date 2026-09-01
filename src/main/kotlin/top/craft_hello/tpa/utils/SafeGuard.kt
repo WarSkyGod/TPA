@@ -17,7 +17,7 @@ object SafeGuard {
         return try {
             block()
         } catch (e: Throwable) {
-            TPA.plugin.logger.warning("命令处理异常（已兜底拦截）: ${e.javaClass.name}: ${e.message}")
+            TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.command_exception_caught", e.javaClass.name, e.message))
             val sender = context.source.sender
             if (sender is Player) SendMessageUtil.runtimeError(sender, e.javaClass.simpleName)
             0
@@ -33,7 +33,7 @@ object SafeGuard {
         try {
             block()
         } catch (e: Throwable) {
-            TPA.plugin.logger.warning("$name 事件处理异常（已兜底拦截）: ${e.javaClass.name}: ${e.message}")
+            TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.event_exception_caught", name, e.javaClass.name, e.message))
         }
     }
 }

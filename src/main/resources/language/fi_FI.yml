@@ -1,7 +1,7 @@
-## TPA-laajennuksen suomenkielinen kielitiedosto
+## TPA 插件简体中文语言文件
 
 #=======================
-# Perusasetukset
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Edellinen sijainti"
 lang.set_success: "<green><bold>Asiakkaan kieli asetettu: </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Painikkeiden toiminnot
+# 按钮交互
 #=======================
-## Painiketekstit
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klikkaa hyväksyäksesi</bold></green>'>[Hyväksy]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klikkaa hylätäksesi</bold></green>'>[Hylkää]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Lisää mustalle listalle</bold></green>'>[Estä]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Aseta oletuskodiksi</bold></yellow>'>[Oletuskoti]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Poista pysyvästi</bold></green>'>[Poista]</hover></insert></click></red>  </bold>"
 
-## Painikevihjeet
-
 #=======================
-# Teleporttipyynnöt
+# 传送请求
 #=======================
 request.title: "<bold><green>Teleporttipyyntö</green></bold>"
 request.to_here: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>haluaa teleportata luoksesi! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold>Pyyntö pelaajalta </bold><gold><bold>%target%
 request.expired_to: "<red><bold>Pyyntösi pelaajalle </bold><gold><bold>%target% </bold><red><bold>vanhentui</bold>"
 
 #=======================
-# Kodit
+# 家
 #=======================
 home.list_header: "<green><bold>Käytettävissä olevat kodit:</bold>"
 home.set_success: "<green><bold>Koti </bold><gold><bold>%target% </bold><green><bold>asetettiin</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Maksimi </bold><gold><bold>%max_home_amount% <
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>on jo oletuskoti</bold>"
 
 #=======================
-# Warp-pisteet
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Käytettävissä olevat warpit:</bold>"
 warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>luotiin</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><gree
 warp.teleport_success: "<green><bold>Teleportattu warppiin </bold><gold><bold>%target%</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn-piste asetettu</bold>"
 spawn.delete_success: "<green><bold>Spawn-piste poistettu</bold>"
 spawn.teleport_success: "<green><bold>Teleportattu spawn-pisteeseen!</bold>"
 
 #=======================
-# Edellinen sijainti
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Palattu edelliseen sijaintiin!</bold>"
 
 #=======================
-# Satunnainen teleportti
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Luodaan satunnaista sijaintia...</bold>"
 rtp.success: "<green><bold>Satunnainen teleportti onnistui!</bold>"
 rtp.failed: "<red><bold>Satunnainen teleportti epäonnistui!</bold>"
 
 #=======================
-# Musta lista
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Mustasi lista:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>lisättiin mustalle listalle</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>poistettiin mustalta listalta</bold>"
 
 #=======================
-# Virheilmoitukset
+# 错误提示
 #=======================
-## Komentotila
+## 命令状态
 error.command_disabled: "<red><bold>Komento ei käytössä</bold>"
 error.world_disabled: "<red><bold>Ei saatavilla tässä maailmassa</bold>"
 error.command_cooldown: "<red><bold>Odota </bold><gold><bold>%seconds%s</bold>"
 
-## Oikeudet
+## 权限与执行
 error.console_restricted: "<red><bold>Vain pelaajat voivat käyttää</bold>"
 error.permission_denied: "<red><bold>Ei käyttöoikeutta!</bold>"
 
-## Pelaajatila
+## 玩家状态
 error.no_online_players: "<red><bold>Ei paikalla olevia pelaajia</bold>"
 error.target_offline: "<red><bold>Pelaaja </bold><gold><bold>%target% </bold><red><bold>ei ole paikalla</bold>"
 error.self_operation: "<red><bold>Ei sovellettavissa itseesi</bold>"
 
-## Pyyntötila
+## 请求状态
 error.no_pending_request: "<red><bold>Ei odottavia pyyntöjä</bold>"
 error.request_pending: "<red><bold>Käsittelyssä oleva pyyntö</bold>"
 
-## Musta lista
+## 黑名单
 error.already_blacklisted: "<red><bold>Jo mustalla listalla</bold>"
 error.blocked_by_target: "<red><bold>Sinut on estetty</bold>"
 error.blacklist_empty: "<red><bold>Mustasi lista on tyhjä</bold>"
 error.not_blacklisted: "<red><bold>Ei mustalla listalla</bold>"
 
-## Kodit
+## 家
 error.home_not_found: "<red><bold>Kotia </bold><gold><bold>%target% </bold><red><bold>ei löydy</bold>"
 error.no_homes_set: "<red><bold>Ei määritettyjä koteja</bold>"
 error.no_default_home: "<red><bold>Ei oletuskotia</bold>"
 
-## Warpit
+## 传送点
 error.warp_not_found: "<red><bold>Warpia </bold><gold><bold>%target% </bold><red><bold>ei löydy</bold>"
 error.no_warps_set: "<red><bold>Ei saatavilla olevia warppeja</bold>"
 
-## Sijainnit
+## 位置记录
 error.last_location_missing: "<red><bold>Edellistä sijaintia ei tallennettu</bold>"
 error.logout_location_missing: "<red><bold>Kirjautumispaikkaa ei tallennettu</bold>"
 error.spawn_not_set: "<red><bold>Spawn-pistettä ei asetettu</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Saldo ei riitä! Tämä teleporttaus maksaa</red> <gold>{cost}</gold> {currency}<red>, saldosi on</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleporttaus peruutettiin, koska</red> <gold>%target%</gold> <red>saldo ei ole riittävä</red></bold>"
 
-## Syntaksi
+## 命令语法
 error.syntax_generic: "<red><bold>Syntaksivirhe! Käytä: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Syntaksivirhe! Käytä: /%command% <pelaaja></bold>"
 error.syntax_tpall: "<red><bold>Syntaksivirhe! Käytä: /%command% [player/warp/spawn] [nimi]</bold>"
 error.syntax_warp: "<red><bold>Syntaksivirhe! Käytä: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>Syntaksivirhe! Käytä: /%command% <koti></bold>"
 
-## Järjestelmävirheet
+## 系统错误
 error.config_not_found: "<red><bold>Asetustiedosto luotiin uudelleen</bold>"
 error.runtime: "<red><bold>Laajennusvirhe: %message%</bold>"
 error.forwarded_error: "<red><bold>Virhe käyttäjältä </bold><gold><bold>%target%</bold><red><bold>:</bold>"
 
 #=======================
-# Teleporttiprosessi
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold>Hyväksyit pyynnön pelaajalta </bold><gold><bold>%target%</bold>"
 teleport.accept.target: "<green><bold>Pelaaja </bold><gold><bold>%target% </bold><green><bold>hyväksyi pyyntösi</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Ylläpitäjä teleporttasi sinut </bold>
 teleport.tpall.to_self: "<green><bold>Ylläpitäjä toi kaikki pelaajat luoksesi</bold>"
 teleport.tpall.success: "<green><bold>Kaikki teleportattu kohteeseen </bold><gold><bold>%target%</bold>"
 teleport.logout_location: "<green><bold>Teleportattu pelaajan </bold><gold><bold>%target% </bold><green><bold>viimeiseen sijaintiin</bold>"
+teleport.cost_charged: "<bold><green>Tämä teleporttaus maksoi</green> <gold>{cost}</gold> {currency}<green>, saldosi on</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Järjestelmäviestit
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Asetukset ladattu uudelleen!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Tämä teleporttaus maksoi</green> <gold>{cost}</gold> {currency}<green>, saldosi on</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>rahaa</gold></bold>"
-
 system.currency_points: "<bold><green>pistettä</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Laajennus ladattu! Versio: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Laajennus poistettu!</bold>"
 system.config_migrated_success: "<green><bold>Asetusten migraatio valmis!</bold>"
 system.config_migrated: "<green><bold>Vanhat asetukset migroidaan (varmuuskopio luotu)</bold>"
 system.debug_warning: "<red><bold>Debug-tila päällä - sammuta käytön jälkeen!</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Kielitiedostosta {0} puuttuu avain {1} (todennäköisesti vanhemman version tiedosto; voit poistaa plugins/TPA/language-kansion ja käynnistää palvelimen uudelleen tiedoston uudelleenluomiseksi tai lisätä avaimen manuaalisesti)"
+system.log.config_migrated_detail: "Vanha kokoonpano siirretty ({0} → {1}): käyttäjän mukautetut arvot säilytetty, vanha kielitiedosto varmuuskopioitu kohteeseen plugins/TPA/backup/{0}/ ja uuden version kielitiedosto luotu uudelleen"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Tietokantatallennusta ei ole käytössä (use_database: false), pelaajatiedot tallennetaan playerdata-kansioon"
+system.log.database_pool_initialized: "Tietokannan yhteyspooli alustettu ({0})"
+system.log.database_connect_failed: "Tietokantayhteys epäonnistui ({0}): {1}"
+system.log.database_fallback_sqlite: "Vaihdettiin paikalliseen SQLite-tallennukseen ({0}), tiedot säilytetään toistaiseksi paikallisesti; kun asetukset on korjattu, /tpac reload siirtää tiedot automaattisesti takaisin tietokantaan"
+system.log.database_fallback_create_failed: "Varalla olevan SQLite-yhteyspoolin luonti epäonnistui: {0}"
+system.log.database_memory_only: "Tietokanta ei ole käytettävissä ja varajärjestelmään siirtyminen epäonnistui; tiedot tallennetaan vain muistivälimuistiin (katoavat uudelleenkäynnistyksessä)"
+system.log.database_get_connection_failed: "Tietokantayhteyden saaminen epäonnistui: {0}"
+system.log.database_pool_closed: "Tietokannan yhteyspooli suljettu"
+system.log.database_table_created: "Taulu {0} luotu"
+system.log.database_table_exists: "Taulu {0} on jo olemassa"
+system.log.database_table_points_created: "tpa_points-taulu luotu (spawn/warp-teleporttipisteiden yhtenäinen tallennus)"
+system.log.database_column_added: "player_data-tauluun lisätty sarake {0}"
+system.log.database_column_add_failed: "Sarakkeen {0} lisääminen player_data-tauluun epäonnistui: {1}"
+system.log.unsupported_database_type: "Ei tuettu tietokantatyyppi: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Vault-talousjärjestelmä kytketty (rahapohjainen maksu käytettävissä)"
+system.log.playerpoints_hooked: "PlayerPoints-pistejärjestelmä kytketty (pistepohjainen maksu käytettävissä)"
+system.log.cost_without_currency: "Teleporttimaksu on käytössä (cost.enable: true), mutta valuuttajärjestelmä ({0}) ei ole käytettävissä: {1} ei ole asennettu tai se ei tarjoa talous- tai pistepalvelua, maksua ei peritä"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Kohteen {0} varmuuskopiointi epäonnistui: {1}"
+system.log.fallback_migrate_players_failed: "Pelaajatietojen siirto varatietokannasta epäonnistui (player_data-taulua ei ehkä ole): {0}"
+system.log.fallback_migrate_points_failed: "Teleporttipistetietojen siirto varatietokannasta epäonnistui (tpa_points-taulua ei ehkä ole): {0}"
+system.log.fallback_migrated_back: "Varatietokannan tiedot siirretty takaisin tietokantaan: {0} pelaajatietuetta, {1} teleporttipistettä"
+system.log.fallback_backup_removed: "Varatietokanta varmuuskopioitu kohteeseen {0} ja poistettu"
+system.log.fallback_migrate_back_failed: "Varatietokannan tietojen siirto takaisin tietokantaan epäonnistui: {0}"
+system.log.spawn_migrated_to_db: "spawn-tiedot siirretty tietokantaan (tpa_points)"
+system.log.spawn_yml_backed_up: "Vanha spawn.yml varmuuskopioitu kohteeseen backup/{0}"
+system.log.warp_migrated_to_db: "{0} warp-tietoa siirretty tietokantaan (tpa_points)"
+system.log.warp_yml_backed_up: "Vanha warp.yml varmuuskopioitu kohteeseen backup/{0}"
+system.log.players_migrated_to_db: "{0} pelaajan yml-tiedot siirretty tietokantaan (alkuperäiset tiedostot säilytetty playerdata-kansiossa)"
+system.log.db_file_backed_up: "Alkuperäinen tietokantatiedosto varmuuskopioitu kohteeseen backup/{0}"
+system.log.points_migrated_to_yml: "Tietokannan teleporttipistetiedot siirretty takaisin yml-tiedostoihin (spawn.yml/warp.yml): {0} tietuetta"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate-lisäosaa ei havaittu, Bedrock-pelaajat käyttävät chat-vuorovaikutusta"
+system.log.floodgate_hook_failed: "Floodgateen kytkeminen epäonnistui, Bedrock-pelaajat käyttävät chat-vuorovaikutusta: {0}: {1}"
+system.log.floodgate_hooked: "Floodgate kytketty (Bedrock-pelaajien klikkausviestit näytetään lomakepainikkeina)"
+system.log.bedrock_check_failed: "Virhe Bedrock-pelaajan tunnistamisessa (käsitellään ei-Bedrock-pelaajana): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Tunnistettu Bedrock-pelaaja: {0}"
+system.log.form_send_false: "Lomakkeen lähetys palautti arvon false (kohde {0} ei ehkä ole paikalla tai ei ole Bedrock-pelaaja)"
+system.log.form_send_failed: "Poikkeus lomakkeen lähetyksessä: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Poikkeus komennon käsittelyssä (siepattu turvatoiminnolla): {0}: {1}"
+system.log.event_exception_caught: "Poikkeus tapahtuman {0} käsittelyssä (siepattu turvatoiminnolla): {1}: {2}"
+
 #=======================
-# Päivitykset
+# 更新
 #=======================
 update.checking: "<green><bold>Tarkistetaan päivityksiä...</bold>"
 update.available: "<green><bold>Uusi versio </bold><gold><bold>TPA-v%target%</bold><green><bold> saatavilla: https://modrinth.com/plugin/tpa.66666/versions</bold>"

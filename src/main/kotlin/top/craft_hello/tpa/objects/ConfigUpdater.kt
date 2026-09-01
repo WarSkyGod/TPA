@@ -70,7 +70,7 @@ object ConfigUpdater {
 
         // 对齐 3.x offUpdateConfiguration：迁移完成消息
         SendMessageUtil.configMigratedSuccessNotice()
-        plugin.logger.info("已迁移旧版配置（$configVersion → $currentVersion）：用户自定义值已保留，旧语言文件已备份至 plugins/TPA/backup/$configVersion/ 并重新生成新版语言文件")
+        plugin.logger.info(SendMessageUtil.consoleLog("system.log.config_migrated_detail", configVersion, currentVersion))
 
         // 刷新配置包装（ConfigManager 单例在 onEnable 后续流程使用的是迁移后的新值）
         ConfigManager.reloadConfig()

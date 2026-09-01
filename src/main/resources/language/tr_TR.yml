@@ -1,7 +1,7 @@
-## TPA Eklentisi Türkçe Dil Dosyası
+## TPA 插件简体中文语言文件
 
 #=======================
-# Temel Ayarlar
+# 基础配置
 #=======================
 prefix: "<green><bold>></bold></green> "
 console_prefix: "<gray><bold>[TPA]</bold></gray> "
@@ -14,9 +14,9 @@ last_location: "Son konum"
 lang.set_success: "<green><bold>İstemci dili </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
 
 #=======================
-# Düğme Etkileşimleri
+# 按钮交互
 #=======================
-## Düğme Metinleri
+## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Tıklayarak kabul et</bold></green>'>[Kabul Et]</hover></insert></click></green>  </bold>"
 deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Tıklayarak reddet</bold></green>'>[Reddet]</hover></insert></click></red>  </bold>"
 blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Kara listeye ekle</bold></green>'>[Kara Listeye Ekle]</hover></insert></click></red>  </bold>"
@@ -26,10 +26,8 @@ location_set_button: "<bold><gold><click:run_command:/set%command% %target%><ins
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Varsayılan ev yap</bold></yellow>'>[Varsayılan Ev]</hover></insert></click></yellow>  </bold>"
 delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Kalıcı olarak sil</bold></green>'>[Sil]</hover></insert></click></red>  </bold>"
 
-## Düğme İpuçları
-
 #=======================
-# Işınlanma Talepleri
+# 传送请求
 #=======================
 request.title: "<bold><green>Işınlanma İsteği</green></bold>"
 request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sana ışınlanmak istiyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
@@ -40,7 +38,7 @@ request.expired_from: "<red><bold></bold><gold><bold>%target% </bold><red><bold>
 request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'e gönderdiğin talep süresi doldu</bold>"
 
 #=======================
-# Evler
+# 家
 #=======================
 home.list_header: "<green><bold>Mevcut Evler:</bold>"
 home.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi oluşturuldu</bold>"
@@ -52,7 +50,7 @@ home.max_limit_error: "<red><bold>Maksimum </bold><gold><bold>%max_home_amount% 
 error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>zaten varsayılan ev</bold>"
 
 #=======================
-# Işınlanma Noktaları
+# 传送点
 #=======================
 warp.list_header: "<green><bold>Mevcut Warpler:</bold>"
 warp.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası oluşturuldu</bold>"
@@ -60,88 +58,90 @@ warp.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bo
 warp.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktasına ışınlandın</bold>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
 spawn.set_success: "<green><bold>Spawn noktası ayarlandı</bold>"
 spawn.delete_success: "<green><bold>Spawn noktası kaldırıldı</bold>"
 spawn.teleport_success: "<green><bold>Spawn noktasına ışınlandın!</bold>"
 
 #=======================
-# Son Konum
+# 上一次的位置
 #=======================
 back.teleport_success: "<green><bold>Son konuma dönüldü!</bold>"
 
 #=======================
-# Rastgele Işınlanma
+# 随机传送
 #=======================
 rtp.generating: "<green><bold>Rastgele konum oluşturuluyor...</bold>"
 rtp.success: "<green><bold>Rastgele ışınlanma başarılı!</bold>"
 rtp.failed: "<red><bold>Rastgele ışınlanma başarısız!</bold>"
 
 #=======================
-# Kara Liste
+# 黑名单
 #=======================
 blacklist.list_header: "<green><bold>Kara Listeniz:</bold>"
 blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeye eklendi</bold>"
 blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeden çıkarıldı</bold>"
 
 #=======================
-# Hata Mesajları
+# 错误提示
 #=======================
-## Komut Durumu
+## 命令状态
 error.command_disabled: "<red><bold>Bu komut devre dışı</bold>"
 error.world_disabled: "<red><bold>Bu dünyada kullanılamaz</bold>"
 error.command_cooldown: "<red><bold>Tekrar denemeden önce </bold><gold><bold>%seconds%s</bold><red><bold> bekle</bold>"
 
-## Yetkilendirme
+## 权限与执行
 error.console_restricted: "<red><bold>Sadece oyuncular kullanabilir</bold>"
 error.permission_denied: "<red><bold>Yetkiniz yok!</bold>"
 
-## Oyuncu Durumu
+## 玩家状态
 error.no_online_players: "<red><bold>Çevrimiçi oyuncu yok</bold>"
 error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>çevrimdışı</bold>"
 error.self_operation: "<red><bold>Kendine uygulanamaz</bold>"
 
-## Talep Durumu
+## 请求状态
 error.no_pending_request: "<red><bold>Bekleyen talep yok</bold>"
 error.request_pending: "<red><bold>İşlenmekte olan talep var</bold>"
 
-## Kara Liste
+## 黑名单
 error.already_blacklisted: "<red><bold>Zaten kara listede</bold>"
 error.blocked_by_target: "<red><bold>Engellendiniz</bold>"
 error.blacklist_empty: "<red><bold>Kara liste boş</bold>"
 error.not_blacklisted: "<red><bold>Kara listede değil</bold>"
 
-## Evler
+## 家
 error.home_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>evi bulunamadı</bold>"
 error.no_homes_set: "<red><bold>Ayarlı ev yok</bold>"
 error.no_default_home: "<red><bold>Varsayılan ev ayarlanmamış</bold>"
 
-## Warpler
+## 传送点
 error.warp_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>warp noktası yok</bold>"
 error.no_warps_set: "<red><bold>Mevcut warp yok</bold>"
 
-## Konum Kayıtları
+## 位置记录
 error.last_location_missing: "<red><bold>Son konum kaydı yok</bold>"
 error.logout_location_missing: "<red><bold>Çıkış konumu kaydedilmemiş</bold>"
 error.spawn_not_set: "<red><bold>Spawn noktası ayarlanmamış</bold>"
+
+## 余额不足
 error.cost_insufficient: "<bold><red>Yetersiz bakiye! Bu ışınlanma</red> <gold>{cost}</gold> {currency}<red> tutuyor, bakiyeniz</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> adlı oyuncunun bakiyesi yetersiz olduğu için ışınlanma iptal edildi</red></bold>"
 
-## Sözdizimi
+## 命令语法
 error.syntax_generic: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command%</bold>"
 error.syntax_tpa: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <oyuncu></bold>"
 error.syntax_tpall: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% [player/warp/spawn] [isim]</bold>"
 error.syntax_warp: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <warp></bold>"
 error.syntax_home: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <ev></bold>"
 
-## Sistem Hataları
+## 系统错误
 error.config_not_found: "<red><bold>Yapılandırma dosyası yeniden oluşturuldu</bold>"
 error.runtime: "<red><bold>Eklenti hatası: %message%</bold>"
 error.forwarded_error: "<red><bold></bold><gold><bold>%target%</bold><red><bold>'den hata:</bold>"
 
 #=======================
-# Işınlanma Süreci
+# 传送过程提示
 #=======================
 teleport.accept.self: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın talebi kabul edildi</bold>"
 teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>talebinizi kabul etti</bold>"
@@ -156,26 +156,70 @@ teleport.tpall.to_target: "<green><bold>Yönetici seni </bold><gold><bold>%targe
 teleport.tpall.to_self: "<green><bold>Yönetici herkesi sana getirdi</bold>"
 teleport.tpall.success: "<green><bold>Tüm oyuncular </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandı</bold>"
 teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın son çıkış konumuna ışınlandın</bold>"
+teleport.cost_charged: "<bold><green>Bu ışınlanma</green> <gold>{cost}</gold> {currency}<green> harcadı, bakiyeniz</green> <gold>{balance}</gold></bold>"
 
 #=======================
-# Sistem Mesajları
+# 系统消息
 #=======================
 system.config_reloaded: "<green><bold>Yapılandırma yeniden yüklendi!</bold>"
-## Teleport cost
-teleport.cost_charged: "<bold><green>Bu ışınlanma</green> <gold>{cost}</gold> {currency}<green> harcadı, bakiyeniz</green> <gold>{balance}</gold></bold>"
 system.currency_money: "<bold><gold>para</gold></bold>"
-
 system.currency_points: "<bold><green>puan</green></bold>"
-
-
 system.plugin_loaded: "<green><bold>Eklenti yüklendi! Sürüm: </bold><gold><bold>%target%</bold>"
 system.plugin_unloaded: "<red><bold>Eklenti kaldırıldı!</bold>"
 system.config_migrated_success: "<green><bold>Yapılandırma taşıması tamamlandı!</bold>"
 system.config_migrated: "<green><bold>Eski yapılandırma taşınıyor (otomatik yedekleme aktif)</bold>"
 system.debug_warning: "<red><bold>Debug modu aktif - kullanım sonrası kapatın!</bold>"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Dil dosyası {0} içinde {1} anahtarı eksik (muhtemelen eski sürüme ait bir dosya; plugins/TPA/language klasörünü silip sunucuyu yeniden başlatarak dosyayı yeniden oluşturabilir veya bu anahtarı elle ekleyebilirsiniz)"
+system.log.config_migrated_detail: "Eski yapılandırma geçirildi ({0} → {1}): kullanıcı tanımlı değerler korundu, eski dil dosyası plugins/TPA/backup/{0}/ yoluna yedeklendi ve yeni sürüm dil dosyası yeniden oluşturuldu"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Veritabanı depolama etkin değil (use_database: false), oyuncu verileri playerdata klasörüne kaydedilecek"
+system.log.database_pool_initialized: "Veritabanı bağlantı havuzu başlatıldı ({0})"
+system.log.database_connect_failed: "Veritabanı bağlantısı başarısız oldu ({0}): {1}"
+system.log.database_fallback_sqlite: "Yerel SQLite depolamasına geçildi ({0}), veriler geçici olarak yerelde tutuluyor; yapılandırma düzeltildikten sonra /tpac reload çalıştırıldığında veriler otomatik olarak veritabanına geri taşınacak"
+system.log.database_fallback_create_failed: "Yedek SQLite bağlantı havuzu oluşturulamadı: {0}"
+system.log.database_memory_only: "Veritabanı kullanılamıyor ve yedek moda geçiş başarısız; veriler yalnızca bellek önbelleğinde tutulacak (yeniden başlatmada kaybolur)"
+system.log.database_get_connection_failed: "Veritabanı bağlantısı alınamadı: {0}"
+system.log.database_pool_closed: "Veritabanı bağlantı havuzu kapatıldı"
+system.log.database_table_created: "{0} tablosu oluşturuldu"
+system.log.database_table_exists: "{0} tablosu zaten mevcut"
+system.log.database_table_points_created: "tpa_points tablosu oluşturuldu (spawn/warp için birleşik teleport noktası deposu)"
+system.log.database_column_added: "player_data tablosuna {0} sütunu eklendi"
+system.log.database_column_add_failed: "player_data tablosuna {0} sütunu eklenemedi: {1}"
+system.log.unsupported_database_type: "Desteklenmeyen veritabanı türü: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Vault ekonomi sistemiyle bağlantı kuruldu (para ücreti kullanılabilir)"
+system.log.playerpoints_hooked: "PlayerPoints puan sistemiyle bağlantı kuruldu (puan ücreti kullanılabilir)"
+system.log.cost_without_currency: "Teleport ücreti etkin (cost.enable: true) ancak para birimi sistemi ({0}) kullanılamıyor: {1} yüklü değil veya ekonomi/puan hizmeti sunmuyor, ücret alınmayacak"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "{0} yedeklenemedi: {1}"
+system.log.fallback_migrate_players_failed: "Yedek veritabanındaki oyuncu verilerinin taşınması başarısız oldu (player_data tablosu olmayabilir): {0}"
+system.log.fallback_migrate_points_failed: "Yedek veritabanındaki teleport noktası verilerinin taşınması başarısız oldu (tpa_points tablosu olmayabilir): {0}"
+system.log.fallback_migrated_back: "Yedek veritabanındaki veriler veritabanına geri taşındı: {0} oyuncu kaydı, {1} teleport noktası kaydı"
+system.log.fallback_backup_removed: "Yedek veritabanı {0} konumuna yedeklendi ve kaldırıldı"
+system.log.fallback_migrate_back_failed: "Yedek veritabanındaki verilerin veritabanına geri taşınması başarısız oldu: {0}"
+system.log.spawn_migrated_to_db: "spawn verileri veritabanına taşındı (tpa_points)"
+system.log.spawn_yml_backed_up: "Eski spawn.yml dosyası backup/{0} konumuna yedeklendi"
+system.log.warp_migrated_to_db: "{0} warp verisi veritabanına taşındı (tpa_points)"
+system.log.warp_yml_backed_up: "Eski warp.yml dosyası backup/{0} konumuna yedeklendi"
+system.log.players_migrated_to_db: "{0} oyuncunun yml verileri veritabanına taşındı (orijinal dosyalar playerdata klasöründe korundu)"
+system.log.db_file_backed_up: "Özgün veritabanı dosyası backup/{0} konumuna yedeklendi"
+system.log.points_migrated_to_yml: "Veritabanındaki teleport noktası verileri yml dosyalarına (spawn.yml/warp.yml) geri taşındı: {0} kayıt"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate eklentisi algılanmadı, Bedrock oyuncuları sohbet etkileşimini kullanacak"
+system.log.floodgate_hook_failed: "Floodgate bağlantısı kurulamadı, Bedrock oyuncuları sohbet etkileşimini kullanacak: {0}: {1}"
+system.log.floodgate_hooked: "Floodgate bağlantısı kuruldu (Bedrock oyuncularında tıklanabilir mesajlar form düğmeleri olarak gösterilecek)"
+system.log.bedrock_check_failed: "Bedrock oyuncusu kontrolü sırasında hata oluştu (Bedrock dışı olarak işlendi): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Bedrock oyuncusu tanımlandı: {0}"
+system.log.form_send_false: "Form gönderimi false döndürdü (hedef {0} çevrimdışı veya Bedrock oyuncusu olmayabilir)"
+system.log.form_send_failed: "Form gönderiminde istisna oluştu: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Komut işlenirken istisna oluştu (güvenli biçimde yakalandı): {0}: {1}"
+system.log.event_exception_caught: "{0} olayı işlenirken istisna oluştu (güvenli biçimde yakalandı): {1}: {2}"
+
 #=======================
-# Güncellemeler
+# 更新
 #=======================
 update.checking: "<green><bold>Güncellemeler kontrol ediliyor...</bold>"
 update.available: "<green><bold>Yeni sürüm </bold><gold><bold>TPA-v%target%</bold><green><bold> mevcut: https://modrinth.com/plugin/tpa.66666/versions</bold>"
