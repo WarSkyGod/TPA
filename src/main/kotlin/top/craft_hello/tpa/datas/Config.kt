@@ -137,11 +137,24 @@ data class Config(var config: FileConfiguration) {
     var rtpCenterOnPlayer = config.getBoolean("rtp.center_on_player", true)
 
     companion object {
-        // 逐级尝试的 Material 名称解析：兼容 1.9/1.13/1.14/1.16/1.17 各批枚举改名，
-        // 旧版服务器解析不到的名字安全跳过（不参与黑名单）
+        // 跨版本枚举改名对照（新名 → 旧名候选）：仅覆盖"同一方块"的枚举改名，不含语义替代；
+        // 低版本确实不存在的方块（营火/细雪/滴水石锥等）无旧名可回退，安全跳过（不参与黑名单）
+        private val MATERIAL_LEGACY_NAMES: Map<String, List<String>> = mapOf(
+            "MAGMA_BLOCK" to listOf("MAGMA"),         // 1.10-1.12: MAGMA（1.8 无岩浆块，跳过）
+            "NETHER_PORTAL" to listOf("PORTAL"),      // 1.8-1.12: PORTAL
+            "COBWEB" to listOf("WEB"),                // 1.8-1.12: WEB
+            "END_PORTAL" to listOf("ENDER_PORTAL"),   // 1.9+ 改名 END_PORTAL（1.8: ENDER_PORTAL）
+        )
+
+        // 逐级尝试的 Material 名称解析：本名 → 跨版本旧名对照 → 安全返回 null。
+        // 读到当前版本没有的方块名时先查对照表换旧名再试，低版本没有对应方块则直接略过；
+        // 绝不让配置解析抛异常拖垮配置初始化或 RTP 流程
         private fun resolveMaterial(vararg names: String): Material? {
             for (name in names) {
                 runCatching { return Material.valueOf(name) }
+                for (legacy in MATERIAL_LEGACY_NAMES[name].orEmpty()) {
+                    runCatching { return Material.valueOf(legacy) }
+                }
             }
             return null
         }
@@ -154,7 +167,7 @@ data class Config(var config: FileConfiguration) {
             resolveMaterial("WATER"),                   // 水：溺水/湿身
             resolveMaterial("FIRE"),                    // 火：烧灼
             resolveMaterial("SOUL_FIRE"),               // 灵魂火：烧灼（1.16+）
-            resolveMaterial("MAGMA_BLOCK", "MAGMA"),    // 岩浆块：站立烧灼（1.8-1.12: MAGMA）
+            resolveMaterial("MAGMA_BLOCK", "MAGMA"),    // 岩浆块：站立烧灼（1.10-1.12: MAGMA，1.8 无此方块）
             resolveMaterial("BEDROCK"),                 // 基岩：基岩层上方无可站立空间
             resolveMaterial("CACTUS"),                  // 仙人掌：站立扎伤
             resolveMaterial("CAMPFIRE"),                // 营火：站立烧灼（1.14+）
@@ -164,7 +177,7 @@ data class Config(var config: FileConfiguration) {
             resolveMaterial("SWEET_BERRY_BUSH"),        // 甜浆果丛：穿行扎伤（1.14+）
             resolveMaterial("WITHER_ROSE"),             // 凋零玫瑰：凋零效果（1.14+）
             resolveMaterial("NETHER_PORTAL", "PORTAL"), // 下界传送门：误触发维度传送（1.8-1.12: PORTAL）
-            resolveMaterial("END_PORTAL"),              // 末地传送门：误触发维度传送
+            resolveMaterial("END_PORTAL"),              // 末地传送门：误触发维度传送（1.8: ENDER_PORTAL，对照表自动换名）
             resolveMaterial("END_GATEWAY"),             // 末地折跃门：误触发维度传送（1.9+）
             resolveMaterial("BUBBLE_COLUMN"),           // 气泡柱：卷入水柱（1.13+）
             resolveMaterial("COBWEB", "WEB"),           // 蜘蛛网：被困（1.8-1.12: WEB）

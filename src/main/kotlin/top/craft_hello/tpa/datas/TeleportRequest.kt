@@ -398,11 +398,16 @@ class TeleportRequest private constructor(
             var found: Location? = null
             val minHeight = worldMinHeight(world)
             if (!isScanningWorld) {
-                // getHighestBlockYAt 返回最高实体方块所在层（站立地面层），脚层是其上一格
-                val groundY = world.getHighestBlockYAt(x, z)
-                // 虚空：整列为空或低于世界最低可用高度
-                if (groundY > minHeight && isSafeStanding(world, x, groundY + 1, z)) {
-                    found = Location(world, x + 0.5, (groundY + 1).toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                // getHighestBlockYAt 的 y 语义跨版本不同：1.8-1.12 返回 heightMap 值（最高
+                // 方块上方一格，即站立层）；1.13+ 返回最高方块自身 y（站立层需再 +1）。
+                // 两个候选层各探测一次、任一安全即用：现代语义下第一候选即中，
+                // 1.8 语义下按现代取层会把站立层当地面判层（ground=空气）导致全部失败
+                val scanY = world.getHighestBlockYAt(x, z)
+                for (y in intArrayOf(scanY + 1, scanY)) {
+                    if (y > minHeight && isSafeStanding(world, x, y, z)) {
+                        found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                        break
+                    }
                 }
             } else {
                 // 下界/末地：同一 chunk 列内自低向高找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
