@@ -11,164 +11,164 @@ not_homes: "Không có nhà nào"
 spawn_name: "Spawn"
 rtp_name: "Dịch Chuyển Ngẫu Nhiên"
 last_location: "Vị Trí Trước"
-lang.set_success: "<green><bold>Ngôn ngữ đã đổi thành </bold><gold><bold>%target%</bold>"
+lang.set_success: "<green><bold>Ngôn ngữ đã đổi thành </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 按钮交互
 #=======================
 ## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Click để chấp nhận dịch chuyển</bold></green>'>[Đồng Ý]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Click để từ chối dịch chuyển</bold></green>'>[Từ Chối]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Click để từ chối và chặn</bold></green>'>[Từ Chối & Chặn]</hover></insert></click></red>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Click để từ chối dịch chuyển</bold></red>'>[Từ Chối]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Click để từ chối và chặn</bold></red>'>[Từ Chối & Chặn]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Click để bỏ khỏi danh sách chặn</bold></green>'>[Bỏ Chặn]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Click để dịch chuyển</bold></green>'>[Dịch Chuyển]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Click để đặt vị trí hiện tại</bold></gold>'>[Đặt Vị Trí]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Click để đặt làm nhà mặc định</bold></yellow>'>[Đặt Nhà Mặc Định]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Click để xóa</bold></green>'>[Xóa]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Click để xóa</bold></red>'>[Xóa]</hover></insert></click></red>  </bold>"
 
 #=======================
 # 传送请求
 #=======================
 request.title: "<bold><green>Yêu cầu dịch chuyển</green></bold>"
-request.to_here: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> muốn dịch chuyển đến bạn! Hết hạn sau </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold>"
-request.to_target: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> mời bạn đến vị trí của họ! Hết hạn sau </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold>"
-request.sent_success: "<green><bold>Đã gửi yêu cầu đến </bold><gold><bold>%target%</bold><green><bold>!</bold>"
-request.timeout_notice: "<green><bold>Yêu cầu có hiệu lực trong </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold>"
-request.expired_from: "<red><bold>Yêu cầu từ </bold><gold><bold>%target%</bold><red><bold> đã hết hạn!</bold>"
-request.expired_to: "<red><bold>Yêu cầu của bạn đến </bold><gold><bold>%target%</bold><red><bold> đã hết hạn!</bold>"
+request.to_here: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> muốn dịch chuyển đến bạn! Hết hạn sau </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> mời bạn đến vị trí của họ! Hết hạn sau </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold>Đã gửi yêu cầu đến </bold><gold><bold>%target%</bold><green><bold>!</bold></green></gold></green>"
+request.timeout_notice: "<green><bold>Yêu cầu có hiệu lực trong </bold><gold><bold>%seconds%</bold><green><bold> giây!</bold></green></gold></green>"
+request.expired_from: "<red><bold>Yêu cầu từ </bold><gold><bold>%target%</bold><red><bold> đã hết hạn!</bold></red></gold></red>"
+request.expired_to: "<red><bold>Yêu cầu của bạn đến </bold><gold><bold>%target%</bold><red><bold> đã hết hạn!</bold></red></gold></red>"
 
 #=======================
 # 家
 #=======================
-home.list_header: "<green><bold>Danh sách nhà:</bold>"
-home.set_success: "<green><bold>Đã đặt nhà </bold><gold><bold>%target%</bold>"
+home.list_header: "<green><bold>Danh sách nhà:</bold></green>"
+home.set_success: "<green><bold>Đã đặt nhà </bold><gold><bold>%target%</bold></gold></green>"
 home.default_tag: "[Mặc định]"
-home.default_set_success: "<green><bold>Đã đặt nhà mặc định thành </bold><gold><bold>%target%</bold>"
-home.delete_success: "<green><bold>Đã xóa nhà </bold><gold><bold>%target%</bold>"
-home.teleport_success: "<green><bold>Đã dịch chuyển đến nhà </bold><gold><bold>%target%</bold>"
-home.max_limit_error: "<red><bold>Bạn chỉ được đặt tối đa </bold><gold><bold>%max_home_amount%</bold><red><bold> nhà!</bold>"
-error.default_home_already_set: "<gold><bold>%target%</bold><red><bold> đã là nhà mặc định rồi</bold>"
+home.default_set_success: "<green><bold>Đã đặt nhà mặc định thành </bold><gold><bold>%target%</bold></gold></green>"
+home.delete_success: "<green><bold>Đã xóa nhà </bold><gold><bold>%target%</bold></gold></green>"
+home.teleport_success: "<green><bold>Đã dịch chuyển đến nhà </bold><gold><bold>%target%</bold></gold></green>"
+home.max_limit_error: "<red><bold>Bạn chỉ được đặt tối đa </bold><gold><bold>%max_home_amount%</bold><red><bold> nhà!</bold></red></gold></red>"
+error.default_home_already_set: "<gold><bold>%target%</bold><red><bold> đã là nhà mặc định rồi</bold></red></gold>"
 
 #=======================
 # 传送点
 #=======================
-warp.list_header: "<green><bold>Danh sách warp:</bold>"
-warp.set_success: "<green><bold>Đã tạo warp </bold><gold><bold>%target%</bold>"
-warp.delete_success: "<green><bold>Đã xóa warp </bold><gold><bold>%target%</bold>"
-warp.teleport_success: "<green><bold>Đã dịch chuyển đến warp </bold><gold><bold>%target%</bold>"
+warp.list_header: "<green><bold>Danh sách warp:</bold></green>"
+warp.set_success: "<green><bold>Đã tạo warp </bold><gold><bold>%target%</bold></gold></green>"
+warp.delete_success: "<green><bold>Đã xóa warp </bold><gold><bold>%target%</bold></gold></green>"
+warp.teleport_success: "<green><bold>Đã dịch chuyển đến warp </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 主城
 #=======================
-spawn.set_success: "<green><bold>Đã đặt vị trí spawn</bold>"
-spawn.delete_success: "<green><bold>Đã xóa vị trí spawn</bold>"
-spawn.teleport_success: "<green><bold>Đã dịch chuyển đến spawn!</bold>"
+spawn.set_success: "<green><bold>Đã đặt vị trí spawn</bold></green>"
+spawn.delete_success: "<green><bold>Đã xóa vị trí spawn</bold></green>"
+spawn.teleport_success: "<green><bold>Đã dịch chuyển đến spawn!</bold></green>"
 
 #=======================
 # 上一次的位置
 #=======================
-back.teleport_success: "<green><bold>Đã dịch chuyển về vị trí trước!</bold>"
+back.teleport_success: "<green><bold>Đã dịch chuyển về vị trí trước!</bold></green>"
 
 #=======================
 # 随机传送
 #=======================
-rtp.generating: "<green><bold>Đang tạo vị trí ngẫu nhiên...</bold>"
-rtp.success: "<green><bold>Đã dịch chuyển đến</bold><gold><bold> vị trí ngẫu nhiên!</bold>"
-rtp.failed: "<red><bold>Không thể tạo vị trí ngẫu nhiên!</bold>"
+rtp.generating: "<green><bold>Đang tạo vị trí ngẫu nhiên...</bold></green>"
+rtp.success: "<green><bold>Đã dịch chuyển đến</bold><gold><bold> vị trí ngẫu nhiên!</bold></gold></green>"
+rtp.failed: "<red><bold>Không thể tạo vị trí ngẫu nhiên!</bold></red>"
 
 #=======================
 # 黑名单
 #=======================
-blacklist.list_header: "<green><bold>Danh sách chặn của bạn:</bold>"
-blacklist.add_success: "<green><bold>Đã chặn </bold><gold><bold>%target%</bold>"
-blacklist.remove_success: "<green><bold>Đã bỏ chặn </bold><gold><bold>%target%</bold>"
+blacklist.list_header: "<green><bold>Danh sách chặn của bạn:</bold></green>"
+blacklist.add_success: "<green><bold>Đã chặn </bold><gold><bold>%target%</bold></gold></green>"
+blacklist.remove_success: "<green><bold>Đã bỏ chặn </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 错误提示
 #=======================
 ## 命令状态
-error.command_disabled: "<red><bold>Lệnh này đã bị tắt!</bold>"
-error.world_disabled: "<red><bold>Lệnh bị tắt trong thế giới này!</bold>"
-error.command_cooldown: "<red><bold>Chờ </bold><gold><bold>%seconds%</bold><red><bold> giây nữa để dùng!</bold>"
+error.command_disabled: "<red><bold>Lệnh này đã bị tắt!</bold></red>"
+error.world_disabled: "<red><bold>Lệnh bị tắt trong thế giới này!</bold></red>"
+error.command_cooldown: "<red><bold>Chờ </bold><gold><bold>%seconds%</bold><red><bold> giây nữa để dùng!</bold></red></gold></red>"
 
 ## 权限与执行
-error.console_restricted: "<red><bold>Lệnh này chỉ dành cho người chơi!</bold>"
-error.permission_denied: "<red><bold>Bạn không có quyền!</bold>"
+error.console_restricted: "<red><bold>Lệnh này chỉ dành cho người chơi!</bold></red>"
+error.permission_denied: "<red><bold>Bạn không có quyền!</bold></red>"
 
 ## 玩家状态
-error.no_online_players: "<red><bold>Không có người chơi nào online!</bold>"
-error.target_offline: "<red><bold>Người chơi </bold><gold><bold>%target%</bold><red><bold> không online!</bold>"
-error.self_operation: "<red><bold>Không thể thực hiện với chính mình!</bold>"
+error.no_online_players: "<red><bold>Không có người chơi nào online!</bold></red>"
+error.target_offline: "<red><bold>Người chơi </bold><gold><bold>%target%</bold><red><bold> không online!</bold></red></gold></red>"
+error.self_operation: "<red><bold>Không thể thực hiện với chính mình!</bold></red>"
 
 ## 请求状态
-error.no_pending_request: "<red><bold>Không có yêu cầu nào đang chờ!</bold>"
-error.request_pending: "<red><bold>Đã có yêu cầu đang chờ xử lý!</bold>"
+error.no_pending_request: "<red><bold>Không có yêu cầu nào đang chờ!</bold></red>"
+error.request_pending: "<red><bold>Đã có yêu cầu đang chờ xử lý!</bold></red>"
 
 ## 黑名单
-error.already_blacklisted: "<red><bold>Đã có trong danh sách chặn rồi!</bold>"
-error.blocked_by_target: "<red><bold>Bạn đã bị người chơi này chặn!</bold>"
-error.blacklist_empty: "<red><bold>Danh sách chặn trống!</bold>"
-error.not_blacklisted: "<red><bold>Không có trong danh sách chặn!</bold>"
+error.already_blacklisted: "<red><bold>Đã có trong danh sách chặn rồi!</bold></red>"
+error.blocked_by_target: "<red><bold>Bạn đã bị người chơi này chặn!</bold></red>"
+error.blacklist_empty: "<red><bold>Danh sách chặn trống!</bold></red>"
+error.not_blacklisted: "<red><bold>Không có trong danh sách chặn!</bold></red>"
 
 ## 家
-error.home_not_found: "<red><bold>Không tìm thấy nhà </bold><gold><bold>%target%</bold><red><bold>!</bold>"
-error.no_homes_set: "<red><bold>Bạn chưa đặt nhà nào!</bold>"
-error.no_default_home: "<red><bold>Bạn chưa có nhà mặc định!</bold>"
+error.home_not_found: "<red><bold>Không tìm thấy nhà </bold><gold><bold>%target%</bold><red><bold>!</bold></red></gold></red>"
+error.no_homes_set: "<red><bold>Bạn chưa đặt nhà nào!</bold></red>"
+error.no_default_home: "<red><bold>Bạn chưa có nhà mặc định!</bold></red>"
 
 ## 传送点
-error.warp_not_found: "<red><bold>Không tìm thấy warp </bold><gold><bold>%target%</bold><red><bold>!</bold>"
-error.no_warps_set: "<red><bold>Không có warp nào!</bold>"
+error.warp_not_found: "<red><bold>Không tìm thấy warp </bold><gold><bold>%target%</bold><red><bold>!</bold></red></gold></red>"
+error.no_warps_set: "<red><bold>Không có warp nào!</bold></red>"
 
 ## 位置记录
-error.last_location_missing: "<red><bold>Không có vị trí trước đó!</bold>"
-error.logout_location_missing: "<red><bold>Không có vị trí đăng xuất!</bold>"
-error.spawn_not_set: "<red><bold>Spawn chưa được đặt!</bold>"
+error.last_location_missing: "<red><bold>Không có vị trí trước đó!</bold></red>"
+error.logout_location_missing: "<red><bold>Không có vị trí đăng xuất!</bold></red>"
+error.spawn_not_set: "<red><bold>Spawn chưa được đặt!</bold></red>"
 
 ## 余额不足
 error.cost_insufficient: "<bold><red>Số dư không đủ! Lần dịch chuyển này tốn</red> <gold>{cost}</gold> {currency}<red>, số dư của bạn là</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Dịch chuyển đã bị hủy vì</red> <gold>%target%</gold> <red>không đủ số dư</red></bold>"
 
 ## 命令语法
-error.syntax_generic: "<red><bold>Sai cú pháp! Dùng: /%command%</bold>"
-error.syntax_tpa: "<red><bold>Sai cú pháp! Dùng: /%command% <player></bold>"
-error.syntax_tpall: "<red><bold>Sai cú pháp! Dùng: /%command% [player/warp/spawn] [name]</bold>"
-error.syntax_warp: "<red><bold>Sai cú pháp! Dùng: /%command% <warp></bold>"
-error.syntax_home: "<red><bold>Sai cú pháp! Dùng: /%command% <home></bold>"
+error.syntax_generic: "<red><bold>Sai cú pháp! Dùng: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Sai cú pháp! Dùng: /%command% <player></bold></red>"
+error.syntax_tpall: "<red><bold>Sai cú pháp! Dùng: /%command% [player/warp/spawn] [name]</bold></red>"
+error.syntax_warp: "<red><bold>Sai cú pháp! Dùng: /%command% <warp></bold></red>"
+error.syntax_home: "<red><bold>Sai cú pháp! Dùng: /%command% <home></bold></red>"
 
 ## 系统错误
-error.config_not_found: "<red><bold>Đã tạo lại config!</bold>"
-error.runtime: "<red><bold>Lỗi plugin: %message%</bold>"
-error.forwarded_error: "<red><bold>Lỗi từ </bold><gold><bold>%target%:</bold>"
+error.config_not_found: "<red><bold>Đã tạo lại config!</bold></red>"
+error.runtime: "<red><bold>Lỗi plugin: %message%</bold></red>"
+error.forwarded_error: "<red><bold>Lỗi từ </bold><gold><bold>%target%:</bold></gold></red>"
 
 #=======================
 # 传送过程提示
 #=======================
-teleport.accept.self: "<green><bold>Đã chấp nhận yêu cầu từ </bold><gold><bold>%target%</bold><green><bold>!</bold>"
-teleport.accept.target: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> đã chấp nhận yêu cầu của bạn!</bold>"
-teleport.deny.self: "<red><bold>Đã từ chối yêu cầu từ </bold><gold><bold>%target%</bold><red><bold>!</bold>"
-teleport.deny.target: "<red><bold>Người chơi </bold><gold><bold>%target%</bold><red><bold> đã từ chối yêu cầu của bạn!</bold>"
-teleport.countdown: "<green><bold>Sẽ dịch chuyển sau </bold><gold><bold>%seconds%</bold><green><bold> giây đến </bold><gold><bold>%target%</bold>"
-teleport.cancel_on_move: "<green><bold>Di chuyển sẽ hủy dịch chuyển!</bold>"
-teleport.canceled.self: "<red><bold>Đã hủy dịch chuyển!</bold>"
-teleport.canceled.target: "<red><bold>Mục tiêu đã hủy dịch chuyển!</bold>"
-teleport.generic_success: "<green><bold>Đã dịch chuyển đến </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_target: "<green><bold>Admin đã dịch chuyển bạn đến </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_self: "<green><bold>Admin đã dịch chuyển tất cả người chơi đến bạn</bold>"
-teleport.tpall.success: "<green><bold>Đã dịch chuyển tất cả người chơi đến </bold><gold><bold>%target%</bold>"
-teleport.logout_location: "<green><bold>Đã dịch chuyển đến vị trí đăng xuất của </bold><gold><bold>%target%</bold>"
+teleport.accept.self: "<green><bold>Đã chấp nhận yêu cầu từ </bold><gold><bold>%target%</bold><green><bold>!</bold></green></gold></green>"
+teleport.accept.target: "<green><bold>Người chơi </bold><gold><bold>%target%</bold><green><bold> đã chấp nhận yêu cầu của bạn!</bold></green></gold></green>"
+teleport.deny.self: "<red><bold>Đã từ chối yêu cầu từ </bold><gold><bold>%target%</bold><red><bold>!</bold></red></gold></red>"
+teleport.deny.target: "<red><bold>Người chơi </bold><gold><bold>%target%</bold><red><bold> đã từ chối yêu cầu của bạn!</bold></red></gold></red>"
+teleport.countdown: "<green><bold>Sẽ dịch chuyển sau </bold><gold><bold>%seconds%</bold><green><bold> giây đến </bold><gold><bold>%target%</bold></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Di chuyển sẽ hủy dịch chuyển!</bold></green>"
+teleport.canceled.self: "<red><bold>Đã hủy dịch chuyển!</bold></red>"
+teleport.canceled.target: "<red><bold>Mục tiêu đã hủy dịch chuyển!</bold></red>"
+teleport.generic_success: "<green><bold>Đã dịch chuyển đến </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_target: "<green><bold>Admin đã dịch chuyển bạn đến </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_self: "<green><bold>Admin đã dịch chuyển tất cả người chơi đến bạn</bold></green>"
+teleport.tpall.success: "<green><bold>Đã dịch chuyển tất cả người chơi đến </bold><gold><bold>%target%</bold></gold></green>"
+teleport.logout_location: "<green><bold>Đã dịch chuyển đến vị trí đăng xuất của </bold><gold><bold>%target%</bold></gold></green>"
 teleport.cost_charged: "<bold><green>Lần dịch chuyển này đã tốn</green> <gold>{cost}</gold> {currency}<green>, số dư của bạn là</green> <gold>{balance}</gold></bold>"
 
 #=======================
 # 系统消息
 #=======================
-system.config_reloaded: "<green><bold>Đã tải lại config!</bold>"
+system.config_reloaded: "<green><bold>Đã tải lại config!</bold></green>"
 system.currency_money: "<bold><gold>tiền</gold></bold>"
 system.currency_points: "<bold><green>điểm</green></bold>"
-system.plugin_loaded: "<green><bold>Plugin đã bật! Phiên bản: </bold><gold><bold>%target%</bold>"
-system.plugin_unloaded: "<red><bold>Plugin đã tắt!</bold>"
-system.config_migrated_success: "<green><bold>Đã chuyển đổi config xong!</bold>"
-system.config_migrated: "<green><bold>Đang chuyển đổi config cũ (đã tạo bản backup)</bold>"
-system.debug_warning: "<red><bold>Chế độ debug đang bật - hãy tắt sau khi dùng xong!</bold>"
+system.plugin_loaded: "<green><bold>Plugin đã bật! Phiên bản: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Plugin đã tắt!</bold></red>"
+system.config_migrated_success: "<green><bold>Đã chuyển đổi config xong!</bold></green>"
+system.config_migrated: "<green><bold>Đang chuyển đổi config cũ (đã tạo bản backup)</bold></green>"
+system.debug_warning: "<red><bold>Chế độ debug đang bật - hãy tắt sau khi dùng xong!</bold></red>"
 
 ## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
 system.log.language_missing_key: "Tệp ngôn ngữ {0} thiếu khóa {1} (có thể là tệp của phiên bản cũ, bạn có thể xóa thư mục plugins/TPA/language rồi khởi động lại để tạo lại tệp, hoặc tự bổ sung khóa này)"
@@ -221,7 +221,7 @@ system.log.event_exception_caught: "Ngoại lệ khi xử lý sự kiện {0} (�
 #=======================
 # 更新
 #=======================
-update.checking: "<green><bold>Đang kiểm tra cập nhật...</bold>"
-update.available: "<green><bold>Phiên bản mới: </bold><gold><bold>TPA-v%target%</bold><green><bold> tại</bold><gold><bold> https://modrinth.com/plugin/tpa.66666/versions</bold>"
-update.latest: "<green><bold>Đang dùng phiên bản mới nhất</bold>"
-update.failed: "<red><bold>Kiểm tra cập nhật thất bại!</bold>"
+update.checking: "<green><bold>Đang kiểm tra cập nhật...</bold></green>"
+update.available: "<green><bold>Phiên bản mới: </bold><gold><bold>TPA-v%target%</bold><green><bold> tại</bold><gold><bold> https://modrinth.com/plugin/tpa.66666/versions</bold></gold></green></gold></green>"
+update.latest: "<green><bold>Đang dùng phiên bản mới nhất</bold></green>"
+update.failed: "<red><bold>Kiểm tra cập nhật thất bại!</bold></red>"

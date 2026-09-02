@@ -11,164 +11,164 @@ not_homes: "Mevcut ev bulunamadı"
 spawn_name: "Spawn"
 rtp_name: "Rastgele ışınlanma"
 last_location: "Son konum"
-lang.set_success: "<green><bold>İstemci dili </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
+lang.set_success: "<green><bold>İstemci dili </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold></green></gold></green>"
 
 #=======================
 # 按钮交互
 #=======================
 ## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Tıklayarak kabul et</bold></green>'>[Kabul Et]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Tıklayarak reddet</bold></green>'>[Reddet]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Kara listeye ekle</bold></green>'>[Kara Listeye Ekle]</hover></insert></click></red>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Tıklayarak reddet</bold></red>'>[Reddet]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Kara listeye ekle</bold></red>'>[Kara Listeye Ekle]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Kara listeden çıkar</bold></green>'>[Listeden Çıkar]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Hemen ışınlan</bold></green>'>[Işınlan]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Mevcut konumu ayarla</bold></gold>'>[Konum Belirle]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Varsayılan ev yap</bold></yellow>'>[Varsayılan Ev]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Kalıcı olarak sil</bold></green>'>[Sil]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Kalıcı olarak sil</bold></red>'>[Sil]</hover></insert></click></red>  </bold>"
 
 #=======================
 # 传送请求
 #=======================
 request.title: "<bold><green>Işınlanma İsteği</green></bold>"
-request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sana ışınlanmak istiyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
-request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>seni davet ediyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold>"
-request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı oyuncuya talep gönderildi</bold>"
-request.timeout_notice: "<green><bold>Talep </bold><gold><bold>%seconds%s</bold><green><bold> içinde geçerli</bold>"
-request.expired_from: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'den gelen talep süresi doldu</bold>"
-request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'e gönderdiğin talep süresi doldu</bold>"
+request.to_here: "<green><bold></bold><gold><bold>%target% </bold><green><bold>sana ışınlanmak istiyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>seni davet ediyor! (</bold><gold><bold>%seconds%s</bold><green><bold>)</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı oyuncuya talep gönderildi</bold></green></gold></green>"
+request.timeout_notice: "<green><bold>Talep </bold><gold><bold>%seconds%s</bold><green><bold> içinde geçerli</bold></green></gold></green>"
+request.expired_from: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'den gelen talep süresi doldu</bold></red></gold></red>"
+request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'e gönderdiğin talep süresi doldu</bold></red></gold></red>"
 
 #=======================
 # 家
 #=======================
-home.list_header: "<green><bold>Mevcut Evler:</bold>"
-home.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi oluşturuldu</bold>"
+home.list_header: "<green><bold>Mevcut Evler:</bold></green>"
+home.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi oluşturuldu</bold></green></gold></green>"
 home.default_tag: "[Varsayılan]"
-home.default_set_success: "<green><bold>Varsayılan ev </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold>"
-home.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi silindi</bold>"
-home.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evine ışınlandın</bold>"
-home.max_limit_error: "<red><bold>Maksimum </bold><gold><bold>%max_home_amount% </bold><red><bold>ev sınırı</bold>"
-error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>zaten varsayılan ev</bold>"
+home.default_set_success: "<green><bold>Varsayılan ev </bold><gold><bold>%target% </bold><green><bold>olarak ayarlandı</bold></green></gold></green>"
+home.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evi silindi</bold></green></gold></green>"
+home.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>evine ışınlandın</bold></green></gold></green>"
+home.max_limit_error: "<red><bold>Maksimum </bold><gold><bold>%max_home_amount% </bold><red><bold>ev sınırı</bold></red></gold></red>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>zaten varsayılan ev</bold></red></gold>"
 
 #=======================
 # 传送点
 #=======================
-warp.list_header: "<green><bold>Mevcut Warpler:</bold>"
-warp.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası oluşturuldu</bold>"
-warp.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası silindi</bold>"
-warp.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktasına ışınlandın</bold>"
+warp.list_header: "<green><bold>Mevcut Warpler:</bold></green>"
+warp.set_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası oluşturuldu</bold></green></gold></green>"
+warp.delete_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktası silindi</bold></green></gold></green>"
+warp.teleport_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>warp noktasına ışınlandın</bold></green></gold></green>"
 
 #=======================
 # 主城
 #=======================
-spawn.set_success: "<green><bold>Spawn noktası ayarlandı</bold>"
-spawn.delete_success: "<green><bold>Spawn noktası kaldırıldı</bold>"
-spawn.teleport_success: "<green><bold>Spawn noktasına ışınlandın!</bold>"
+spawn.set_success: "<green><bold>Spawn noktası ayarlandı</bold></green>"
+spawn.delete_success: "<green><bold>Spawn noktası kaldırıldı</bold></green>"
+spawn.teleport_success: "<green><bold>Spawn noktasına ışınlandın!</bold></green>"
 
 #=======================
 # 上一次的位置
 #=======================
-back.teleport_success: "<green><bold>Son konuma dönüldü!</bold>"
+back.teleport_success: "<green><bold>Son konuma dönüldü!</bold></green>"
 
 #=======================
 # 随机传送
 #=======================
-rtp.generating: "<green><bold>Rastgele konum oluşturuluyor...</bold>"
-rtp.success: "<green><bold>Rastgele ışınlanma başarılı!</bold>"
-rtp.failed: "<red><bold>Rastgele ışınlanma başarısız!</bold>"
+rtp.generating: "<green><bold>Rastgele konum oluşturuluyor...</bold></green>"
+rtp.success: "<green><bold>Rastgele ışınlanma başarılı!</bold></green>"
+rtp.failed: "<red><bold>Rastgele ışınlanma başarısız!</bold></red>"
 
 #=======================
 # 黑名单
 #=======================
-blacklist.list_header: "<green><bold>Kara Listeniz:</bold>"
-blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeye eklendi</bold>"
-blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeden çıkarıldı</bold>"
+blacklist.list_header: "<green><bold>Kara Listeniz:</bold></green>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeye eklendi</bold></green></gold></green>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>kara listeden çıkarıldı</bold></green></gold></green>"
 
 #=======================
 # 错误提示
 #=======================
 ## 命令状态
-error.command_disabled: "<red><bold>Bu komut devre dışı</bold>"
-error.world_disabled: "<red><bold>Bu dünyada kullanılamaz</bold>"
-error.command_cooldown: "<red><bold>Tekrar denemeden önce </bold><gold><bold>%seconds%s</bold><red><bold> bekle</bold>"
+error.command_disabled: "<red><bold>Bu komut devre dışı</bold></red>"
+error.world_disabled: "<red><bold>Bu dünyada kullanılamaz</bold></red>"
+error.command_cooldown: "<red><bold>Tekrar denemeden önce </bold><gold><bold>%seconds%s</bold><red><bold> bekle</bold></red></gold></red>"
 
 ## 权限与执行
-error.console_restricted: "<red><bold>Sadece oyuncular kullanabilir</bold>"
-error.permission_denied: "<red><bold>Yetkiniz yok!</bold>"
+error.console_restricted: "<red><bold>Sadece oyuncular kullanabilir</bold></red>"
+error.permission_denied: "<red><bold>Yetkiniz yok!</bold></red>"
 
 ## 玩家状态
-error.no_online_players: "<red><bold>Çevrimiçi oyuncu yok</bold>"
-error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>çevrimdışı</bold>"
-error.self_operation: "<red><bold>Kendine uygulanamaz</bold>"
+error.no_online_players: "<red><bold>Çevrimiçi oyuncu yok</bold></red>"
+error.target_offline: "<red><bold></bold><gold><bold>%target% </bold><red><bold>çevrimdışı</bold></red></gold></red>"
+error.self_operation: "<red><bold>Kendine uygulanamaz</bold></red>"
 
 ## 请求状态
-error.no_pending_request: "<red><bold>Bekleyen talep yok</bold>"
-error.request_pending: "<red><bold>İşlenmekte olan talep var</bold>"
+error.no_pending_request: "<red><bold>Bekleyen talep yok</bold></red>"
+error.request_pending: "<red><bold>İşlenmekte olan talep var</bold></red>"
 
 ## 黑名单
-error.already_blacklisted: "<red><bold>Zaten kara listede</bold>"
-error.blocked_by_target: "<red><bold>Engellendiniz</bold>"
-error.blacklist_empty: "<red><bold>Kara liste boş</bold>"
-error.not_blacklisted: "<red><bold>Kara listede değil</bold>"
+error.already_blacklisted: "<red><bold>Zaten kara listede</bold></red>"
+error.blocked_by_target: "<red><bold>Engellendiniz</bold></red>"
+error.blacklist_empty: "<red><bold>Kara liste boş</bold></red>"
+error.not_blacklisted: "<red><bold>Kara listede değil</bold></red>"
 
 ## 家
-error.home_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>evi bulunamadı</bold>"
-error.no_homes_set: "<red><bold>Ayarlı ev yok</bold>"
-error.no_default_home: "<red><bold>Varsayılan ev ayarlanmamış</bold>"
+error.home_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>evi bulunamadı</bold></red></gold></red>"
+error.no_homes_set: "<red><bold>Ayarlı ev yok</bold></red>"
+error.no_default_home: "<red><bold>Varsayılan ev ayarlanmamış</bold></red>"
 
 ## 传送点
-error.warp_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>warp noktası yok</bold>"
-error.no_warps_set: "<red><bold>Mevcut warp yok</bold>"
+error.warp_not_found: "<red><bold></bold><gold><bold>%target% </bold><red><bold>warp noktası yok</bold></red></gold></red>"
+error.no_warps_set: "<red><bold>Mevcut warp yok</bold></red>"
 
 ## 位置记录
-error.last_location_missing: "<red><bold>Son konum kaydı yok</bold>"
-error.logout_location_missing: "<red><bold>Çıkış konumu kaydedilmemiş</bold>"
-error.spawn_not_set: "<red><bold>Spawn noktası ayarlanmamış</bold>"
+error.last_location_missing: "<red><bold>Son konum kaydı yok</bold></red>"
+error.logout_location_missing: "<red><bold>Çıkış konumu kaydedilmemiş</bold></red>"
+error.spawn_not_set: "<red><bold>Spawn noktası ayarlanmamış</bold></red>"
 
 ## 余额不足
 error.cost_insufficient: "<bold><red>Yetersiz bakiye! Bu ışınlanma</red> <gold>{cost}</gold> {currency}<red> tutuyor, bakiyeniz</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> adlı oyuncunun bakiyesi yetersiz olduğu için ışınlanma iptal edildi</red></bold>"
 
 ## 命令语法
-error.syntax_generic: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command%</bold>"
-error.syntax_tpa: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <oyuncu></bold>"
-error.syntax_tpall: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% [player/warp/spawn] [isim]</bold>"
-error.syntax_warp: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <warp></bold>"
-error.syntax_home: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <ev></bold>"
+error.syntax_generic: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <oyuncu></bold></red>"
+error.syntax_tpall: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% [player/warp/spawn] [isim]</bold></red>"
+error.syntax_warp: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <warp></bold></red>"
+error.syntax_home: "<red><bold>Sözdizimi hatası! Doğru kullanım: /%command% <ev></bold></red>"
 
 ## 系统错误
-error.config_not_found: "<red><bold>Yapılandırma dosyası yeniden oluşturuldu</bold>"
-error.runtime: "<red><bold>Eklenti hatası: %message%</bold>"
-error.forwarded_error: "<red><bold></bold><gold><bold>%target%</bold><red><bold>'den hata:</bold>"
+error.config_not_found: "<red><bold>Yapılandırma dosyası yeniden oluşturuldu</bold></red>"
+error.runtime: "<red><bold>Eklenti hatası: %message%</bold></red>"
+error.forwarded_error: "<red><bold></bold><gold><bold>%target%</bold><red><bold>'den hata:</bold></red></gold></red>"
 
 #=======================
 # 传送过程提示
 #=======================
-teleport.accept.self: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın talebi kabul edildi</bold>"
-teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>talebinizi kabul etti</bold>"
-teleport.deny.self: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'ın talebi reddedildi</bold>"
-teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>talebinizi reddetti</bold>"
-teleport.countdown: "<green><bold></bold><gold><bold>%seconds%s</bold><green><bold> sonra ışınlanacaksın</bold>"
-teleport.cancel_on_move: "<green><bold>Hareket edersen iptal olur!</bold>"
-teleport.canceled.self: "<red><bold>Işınlanma iptal edildi</bold>"
-teleport.canceled.target: "<red><bold>Karşı taraf iptal etti</bold>"
-teleport.generic_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandın</bold>"
-teleport.tpall.to_target: "<green><bold>Yönetici seni </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınladı</bold>"
-teleport.tpall.to_self: "<green><bold>Yönetici herkesi sana getirdi</bold>"
-teleport.tpall.success: "<green><bold>Tüm oyuncular </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandı</bold>"
-teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın son çıkış konumuna ışınlandın</bold>"
+teleport.accept.self: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın talebi kabul edildi</bold></green></gold></green>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>talebinizi kabul etti</bold></green></gold></green>"
+teleport.deny.self: "<red><bold></bold><gold><bold>%target% </bold><red><bold>'ın talebi reddedildi</bold></red></gold></red>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>talebinizi reddetti</bold></red></gold></red>"
+teleport.countdown: "<green><bold></bold><gold><bold>%seconds%s</bold><green><bold> sonra ışınlanacaksın</bold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Hareket edersen iptal olur!</bold></green>"
+teleport.canceled.self: "<red><bold>Işınlanma iptal edildi</bold></red>"
+teleport.canceled.target: "<red><bold>Karşı taraf iptal etti</bold></red>"
+teleport.generic_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandın</bold></green></gold></green>"
+teleport.tpall.to_target: "<green><bold>Yönetici seni </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınladı</bold></green></gold></green>"
+teleport.tpall.to_self: "<green><bold>Yönetici herkesi sana getirdi</bold></green>"
+teleport.tpall.success: "<green><bold>Tüm oyuncular </bold><gold><bold>%target% </bold><green><bold>'adlı yere ışınlandı</bold></green></gold></green>"
+teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><green><bold>'ın son çıkış konumuna ışınlandın</bold></green></gold></green>"
 teleport.cost_charged: "<bold><green>Bu ışınlanma</green> <gold>{cost}</gold> {currency}<green> harcadı, bakiyeniz</green> <gold>{balance}</gold></bold>"
 
 #=======================
 # 系统消息
 #=======================
-system.config_reloaded: "<green><bold>Yapılandırma yeniden yüklendi!</bold>"
+system.config_reloaded: "<green><bold>Yapılandırma yeniden yüklendi!</bold></green>"
 system.currency_money: "<bold><gold>para</gold></bold>"
 system.currency_points: "<bold><green>puan</green></bold>"
-system.plugin_loaded: "<green><bold>Eklenti yüklendi! Sürüm: </bold><gold><bold>%target%</bold>"
-system.plugin_unloaded: "<red><bold>Eklenti kaldırıldı!</bold>"
-system.config_migrated_success: "<green><bold>Yapılandırma taşıması tamamlandı!</bold>"
-system.config_migrated: "<green><bold>Eski yapılandırma taşınıyor (otomatik yedekleme aktif)</bold>"
-system.debug_warning: "<red><bold>Debug modu aktif - kullanım sonrası kapatın!</bold>"
+system.plugin_loaded: "<green><bold>Eklenti yüklendi! Sürüm: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Eklenti kaldırıldı!</bold></red>"
+system.config_migrated_success: "<green><bold>Yapılandırma taşıması tamamlandı!</bold></green>"
+system.config_migrated: "<green><bold>Eski yapılandırma taşınıyor (otomatik yedekleme aktif)</bold></green>"
+system.debug_warning: "<red><bold>Debug modu aktif - kullanım sonrası kapatın!</bold></red>"
 
 ## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
 system.log.language_missing_key: "Dil dosyası {0} içinde {1} anahtarı eksik (muhtemelen eski sürüme ait bir dosya; plugins/TPA/language klasörünü silip sunucuyu yeniden başlatarak dosyayı yeniden oluşturabilir veya bu anahtarı elle ekleyebilirsiniz)"
@@ -221,7 +221,7 @@ system.log.event_exception_caught: "{0} olayı işlenirken istisna oluştu (güv
 #=======================
 # 更新
 #=======================
-update.checking: "<green><bold>Güncellemeler kontrol ediliyor...</bold>"
-update.available: "<green><bold>Yeni sürüm </bold><gold><bold>TPA-v%target%</bold><green><bold> mevcut: https://modrinth.com/plugin/tpa.66666/versions</bold>"
-update.latest: "<green><bold>En son sürüm kullanılıyor</bold>"
-update.failed: "<red><bold>Güncelleme kontrolü başarısız</bold>"
+update.checking: "<green><bold>Güncellemeler kontrol ediliyor...</bold></green>"
+update.available: "<green><bold>Yeni sürüm </bold><gold><bold>TPA-v%target%</bold><green><bold> mevcut: https://modrinth.com/plugin/tpa.66666/versions</bold></green></gold></green>"
+update.latest: "<green><bold>En son sürüm kullanılıyor</bold></green>"
+update.failed: "<red><bold>Güncelleme kontrolü başarısız</bold></red>"

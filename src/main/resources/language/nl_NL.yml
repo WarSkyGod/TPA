@@ -11,163 +11,163 @@ not_homes: "Geen homes beschikbaar"
 spawn_name: "Spawn"
 rtp_name: "Willekeurige teleportatie"
 last_location: "Laatste locatie"
-lang.set_success: "<green><bold>Taal ingesteld op </bold><gold><bold>%target%</bold>"
+lang.set_success: "<green><bold>Taal ingesteld op </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 按钮交互
 #=======================
 ## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klik om teleportatie te accepteren</bold></green>'>[Accepteren]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik om teleportatie te weigeren</bold></green>'>[Weigeren]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik om te weigeren en te blokkeren</bold></green>'>[Weiger en blokkeer]</hover></insert></click></red>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik om teleportatie te weigeren</bold></red>'>[Weigeren]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik om te weigeren en te blokkeren</bold></red>'>[Weiger en blokkeer]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Klik om deblokkeren</bold></green>'>[Deblokkeer]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Klik om te teleporteren</bold></green>'>[Teleporteren]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Klik om huidige locatie in te stellen</bold></gold>'>[Locatie instellen]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Klik als standaard home</bold></yellow>'>[Standaard home]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik om te verwijderen</bold></green>'>[Verwijderen]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik om te verwijderen</bold></red>'>[Verwijderen]</hover></insert></click></red>  </bold>"
 
 #=======================
 # 传送请求
 #=======================
 request.title: "<bold><green>Teleportatieverzoek</green></bold>"
-request.to_here: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>wil naar je teleporteren! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold>"
-request.to_target: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>nodigt je uit! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold>"
-request.sent_success: "<green><bold>Verzoek verzonden naar </bold><gold><bold>%target%!</bold>"
-request.timeout_notice: "<green><bold>Verzoek geldig voor </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold>"
-request.expired_from: "<red><bold>Verzoek van </bold><gold><bold>%target% </bold><red><bold>is verlopen!</bold>"
-request.expired_to: "<red><bold>Verzoek aan </bold><gold><bold>%target% </bold><red><bold>is verlopen!</bold>"
+request.to_here: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>wil naar je teleporteren! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>Speler </bold><gold><bold>%target% </bold><green><bold>nodigt je uit! Verloopt over </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold>Verzoek verzonden naar </bold><gold><bold>%target%!</bold></gold></green>"
+request.timeout_notice: "<green><bold>Verzoek geldig voor </bold><gold><bold>%seconds% </bold><green><bold>seconden!</bold></green></gold></green>"
+request.expired_from: "<red><bold>Verzoek van </bold><gold><bold>%target% </bold><red><bold>is verlopen!</bold></red></gold></red>"
+request.expired_to: "<red><bold>Verzoek aan </bold><gold><bold>%target% </bold><red><bold>is verlopen!</bold></red></gold></red>"
 
 #=======================
 # 家
 #=======================
-home.list_header: "<green><bold>Beschikbare homes:</bold>"
-home.set_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>ingesteld</bold>"
+home.list_header: "<green><bold>Beschikbare homes:</bold></green>"
+home.set_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>ingesteld</bold></green></gold></green>"
 home.default_tag: "[Standaard]"
-home.default_set_success: "<green><bold>Standaard home ingesteld op </bold><gold><bold>%target%</bold>"
-home.delete_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>verwijderd</bold>"
-home.teleport_success: "<green><bold>Geteleporteerd naar home </bold><gold><bold>%target%</bold>"
-home.max_limit_error: "<red><bold>Maximaal %max_home_amount% homes!</bold>"
-error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>is al standaard home</bold>"
+home.default_set_success: "<green><bold>Standaard home ingesteld op </bold><gold><bold>%target%</bold></gold></green>"
+home.delete_success: "<green><bold>Home </bold><gold><bold>%target% </bold><green><bold>verwijderd</bold></green></gold></green>"
+home.teleport_success: "<green><bold>Geteleporteerd naar home </bold><gold><bold>%target%</bold></gold></green>"
+home.max_limit_error: "<red><bold>Maximaal %max_home_amount% homes!</bold></red>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>is al standaard home</bold></red></gold>"
 
 #=======================
 # 传送点
 #=======================
-warp.list_header: "<green><bold>Beschikbare warps:</bold>"
-warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>ingesteld</bold>"
-warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>verwijderd</bold>"
-warp.teleport_success: "<green><bold>Geteleporteerd naar warp </bold><gold><bold>%target%</bold>"
+warp.list_header: "<green><bold>Beschikbare warps:</bold></green>"
+warp.set_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>ingesteld</bold></green></gold></green>"
+warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target% </bold><green><bold>verwijderd</bold></green></gold></green>"
+warp.teleport_success: "<green><bold>Geteleporteerd naar warp </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 主城
 #=======================
-spawn.set_success: "<green><bold>Spawn ingesteld</bold>"
-spawn.delete_success: "<green><bold>Spawn verwijderd</bold>"
-spawn.teleport_success: "<green><bold>Geteleporteerd naar spawn!</bold>"
+spawn.set_success: "<green><bold>Spawn ingesteld</bold></green>"
+spawn.delete_success: "<green><bold>Spawn verwijderd</bold></green>"
+spawn.teleport_success: "<green><bold>Geteleporteerd naar spawn!</bold></green>"
 
 #=======================
 # 上一次的位置
 #=======================
-back.teleport_success: "<green><bold>Geteleporteerd naar laatste locatie!</bold>"
+back.teleport_success: "<green><bold>Geteleporteerd naar laatste locatie!</bold></green>"
 
 #=======================
 # 随机传送
 #=======================
-rtp.generating: "<green><bold>Bezig met genereren...</bold>"
-rtp.success: "<green><bold>Willekeurig geteleporteerd!</bold>"
-rtp.failed: "<red><bold>Genereren mislukt!</bold>"
+rtp.generating: "<green><bold>Bezig met genereren...</bold></green>"
+rtp.success: "<green><bold>Willekeurig geteleporteerd!</bold></green>"
+rtp.failed: "<red><bold>Genereren mislukt!</bold></red>"
 
 #=======================
 # 黑名单
 #=======================
-blacklist.list_header: "<green><bold>Zwarte lijst:</bold>"
-blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>geblokkeerd</bold>"
-blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>gedeblokkeerd</bold>"
+blacklist.list_header: "<green><bold>Zwarte lijst:</bold></green>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>geblokkeerd</bold></green></gold></green>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>gedeblokkeerd</bold></green></gold></green>"
 
 #=======================
 # 错误提示
 #=======================
 ## 命令状态
-error.command_disabled: "<red><bold>Commando uitgeschakeld!</bold>"
-error.world_disabled: "<red><bold>Niet beschikbaar in deze wereld!</bold>"
-error.command_cooldown: "<red><bold>Wacht </bold><gold><bold>%seconds% </bold><red><bold>seconden!</bold>"
+error.command_disabled: "<red><bold>Commando uitgeschakeld!</bold></red>"
+error.world_disabled: "<red><bold>Niet beschikbaar in deze wereld!</bold></red>"
+error.command_cooldown: "<red><bold>Wacht </bold><gold><bold>%seconds% </bold><red><bold>seconden!</bold></red></gold></red>"
 
 ## 权限与执行
-error.console_restricted: "<red><bold>Alleen voor spelers!</bold>"
-error.permission_denied: "<red><bold>Geen toestemming!</bold>"
+error.console_restricted: "<red><bold>Alleen voor spelers!</bold></red>"
+error.permission_denied: "<red><bold>Geen toestemming!</bold></red>"
 
 ## 玩家状态
-error.no_online_players: "<red><bold>Geen online spelers!</bold>"
-error.target_offline: "<red><bold>Speler </bold><gold><bold>%target% </bold><red><bold>is offline!</bold>"
-error.self_operation: "<red><bold>Niet op jezelf gebruiken!</bold>"
+error.no_online_players: "<red><bold>Geen online spelers!</bold></red>"
+error.target_offline: "<red><bold>Speler </bold><gold><bold>%target% </bold><red><bold>is offline!</bold></red></gold></red>"
+error.self_operation: "<red><bold>Niet op jezelf gebruiken!</bold></red>"
 
 ## 请求状态
-error.no_pending_request: "<red><bold>Geen openstaande verzoeken!</bold>"
-error.request_pending: "<red><bold>Er loopt al een verzoek</bold>"
+error.no_pending_request: "<red><bold>Geen openstaande verzoeken!</bold></red>"
+error.request_pending: "<red><bold>Er loopt al een verzoek</bold></red>"
 
 ## 黑名单
-error.already_blacklisted: "<red><bold>Al geblokkeerd!</bold>"
-error.blocked_by_target: "<red><bold>Je bent geblokkeerd!</bold>"
-error.blacklist_empty: "<red><bold>Zwarte lijst is leeg!</bold>"
-error.not_blacklisted: "<red><bold>Niet geblokkeerd!</bold>"
+error.already_blacklisted: "<red><bold>Al geblokkeerd!</bold></red>"
+error.blocked_by_target: "<red><bold>Je bent geblokkeerd!</bold></red>"
+error.blacklist_empty: "<red><bold>Zwarte lijst is leeg!</bold></red>"
+error.not_blacklisted: "<red><bold>Niet geblokkeerd!</bold></red>"
 
 ## 家
-error.home_not_found: "<red><bold>Home </bold><gold><bold>%target% </bold><red><bold>niet gevonden!</bold>"
-error.no_homes_set: "<red><bold>Geen homes ingesteld!</bold>"
-error.no_default_home: "<red><bold>Geen standaard home!</bold>"
+error.home_not_found: "<red><bold>Home </bold><gold><bold>%target% </bold><red><bold>niet gevonden!</bold></red></gold></red>"
+error.no_homes_set: "<red><bold>Geen homes ingesteld!</bold></red>"
+error.no_default_home: "<red><bold>Geen standaard home!</bold></red>"
 
 ## 传送点
-error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>niet gevonden!</bold>"
-error.no_warps_set: "<red><bold>Geen warps beschikbaar!</bold>"
+error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target% </bold><red><bold>niet gevonden!</bold></red></gold></red>"
+error.no_warps_set: "<red><bold>Geen warps beschikbaar!</bold></red>"
 
 ## 位置记录
-error.last_location_missing: "<red><bold>Geen laatste locatie!</bold>"
-error.logout_location_missing: "<red><bold>Geen uitloglocatie!</bold>"
-error.spawn_not_set: "<red><bold>Geen spawn ingesteld!</bold>"
+error.last_location_missing: "<red><bold>Geen laatste locatie!</bold></red>"
+error.logout_location_missing: "<red><bold>Geen uitloglocatie!</bold></red>"
+error.spawn_not_set: "<red><bold>Geen spawn ingesteld!</bold></red>"
 
 ## 余额不足
 error.cost_insufficient: "<bold><red>Onvoldoende saldo! Deze teleportatie kost</red> <gold>{cost}</gold> {currency}<red>, je saldo is</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleportatie geannuleerd omdat</red> <gold>%target%</gold> <red>niet genoeg saldo heeft</red></bold>"
 
 ## 命令语法
-error.syntax_generic: "<red><bold>Syntaxisfout! Gebruik: /%command%</bold>"
-error.syntax_tpa: "<red><bold>Syntaxisfout! Gebruik: /%command% <speler></bold>"
-error.syntax_tpall: "<red><bold>Syntaxisfout! Gebruik: /%command% [speler/warp/spawn] [naam]</bold>"
-error.syntax_warp: "<red><bold>Syntaxisfout! Gebruik: /%command% <warp></bold>"
-error.syntax_home: "<red><bold>Syntaxisfout! Gebruik: /%command% <home></bold>"
+error.syntax_generic: "<red><bold>Syntaxisfout! Gebruik: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Syntaxisfout! Gebruik: /%command% <speler></bold></red>"
+error.syntax_tpall: "<red><bold>Syntaxisfout! Gebruik: /%command% [speler/warp/spawn] [naam]</bold></red>"
+error.syntax_warp: "<red><bold>Syntaxisfout! Gebruik: /%command% <warp></bold></red>"
+error.syntax_home: "<red><bold>Syntaxisfout! Gebruik: /%command% <home></bold></red>"
 
 ## 系统错误
-error.config_not_found: "<red><bold>Config hersteld!</bold>"
-error.runtime: "<red><bold>Pluginfout: %message%</bold>"
-error.forwarded_error: "<red><bold>Fout van </bold><gold><bold>%target%:</bold>"
+error.config_not_found: "<red><bold>Config hersteld!</bold></red>"
+error.runtime: "<red><bold>Pluginfout: %message%</bold></red>"
+error.forwarded_error: "<red><bold>Fout van </bold><gold><bold>%target%:</bold></gold></red>"
 
 #=======================
 # 传送过程提示
 #=======================
-teleport.accept.self: "<green><bold>Verzoek van </bold><gold><bold>%target% </bold><green><bold>geaccepteerd!</bold>"
-teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>heeft geaccepteerd!</bold>"
-teleport.deny.self: "<red><bold>Verzoek van </bold><gold><bold>%target% </bold><red><bold>geweigerd!</bold>"
-teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>heeft geweigerd!</bold>"
-teleport.countdown: "<green><bold>Teleportatie over </bold><gold><bold>%seconds% </bold><green><bold>seconden naar </bold><gold><bold>%target%</bold>"
-teleport.cancel_on_move: "<green><bold>Bewegen annuleert teleportatie!</bold>"
-teleport.canceled.self: "<red><bold>Teleportatie geannuleerd!</bold>"
-teleport.canceled.target: "<red><bold>Andere partij annuleerde!</bold>"
-teleport.generic_success: "<green><bold>Geteleporteerd naar </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_target: "<green><bold>Admin teleporteerde je naar </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_self: "<green><bold>Admin teleporteerde iedereen naar jou</bold>"
-teleport.tpall.success: "<green><bold>Iedereen geteleporteerd naar </bold><gold><bold>%target%</bold>"
-teleport.logout_location: "<green><bold>Geteleporteerd naar uitloglocatie van </bold><gold><bold>%target%</bold>"
+teleport.accept.self: "<green><bold>Verzoek van </bold><gold><bold>%target% </bold><green><bold>geaccepteerd!</bold></green></gold></green>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>heeft geaccepteerd!</bold></green></gold></green>"
+teleport.deny.self: "<red><bold>Verzoek van </bold><gold><bold>%target% </bold><red><bold>geweigerd!</bold></red></gold></red>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>heeft geweigerd!</bold></red></gold></red>"
+teleport.countdown: "<green><bold>Teleportatie over </bold><gold><bold>%seconds% </bold><green><bold>seconden naar </bold><gold><bold>%target%</bold></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Bewegen annuleert teleportatie!</bold></green>"
+teleport.canceled.self: "<red><bold>Teleportatie geannuleerd!</bold></red>"
+teleport.canceled.target: "<red><bold>Andere partij annuleerde!</bold></red>"
+teleport.generic_success: "<green><bold>Geteleporteerd naar </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_target: "<green><bold>Admin teleporteerde je naar </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_self: "<green><bold>Admin teleporteerde iedereen naar jou</bold></green>"
+teleport.tpall.success: "<green><bold>Iedereen geteleporteerd naar </bold><gold><bold>%target%</bold></gold></green>"
+teleport.logout_location: "<green><bold>Geteleporteerd naar uitloglocatie van </bold><gold><bold>%target%</bold></gold></green>"
 teleport.cost_charged: "<bold><green>Deze teleportatie kostte</green> <gold>{cost}</gold> {currency}<green>, je saldo is</green> <gold>{balance}</gold></bold>"
 
 #=======================
 # 系统消息
 #=======================
-system.config_reloaded: "<green><bold>Config herladen!</bold>"
+system.config_reloaded: "<green><bold>Config herladen!</bold></green>"
 system.currency_money: "<bold><gold>geld</gold></bold>"
 system.currency_points: "<bold><green>punten</green></bold>"
-system.plugin_loaded: "<green><bold>Plugin geladen! Versie: </bold><gold><bold>%target%</bold>"
-system.plugin_unloaded: "<red><bold>Plugin uitgeschakeld!</bold>"
-system.config_migrated_success: "<green><bold>Config gemigreerd!</bold>"
-system.config_migrated: "<green><bold>Oude config gedetecteerd (backup in backup-map)</bold>"
+system.plugin_loaded: "<green><bold>Plugin geladen! Versie: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Plugin uitgeschakeld!</bold></red>"
+system.config_migrated_success: "<green><bold>Config gemigreerd!</bold></green>"
+system.config_migrated: "<green><bold>Oude config gedetecteerd (backup in backup-map)</bold></green>"
 system.debug_warning: "Waarschuwing: Debug-modus actief!"
 
 ## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
@@ -221,7 +221,7 @@ system.log.event_exception_caught: "Uitzondering bij het verwerken van het event
 #=======================
 # 更新
 #=======================
-update.checking: "<green><bold>Zoeken naar updates...</bold>"
-update.available: "<green><bold>Nieuwe versie </bold><gold><bold>TPA-v%target% </bold><green><bold>beschikbaar: https://modrinth.com/plugin/tpa.66666/versions</bold>"
-update.latest: "<green><bold>Je gebruikt de nieuwste versie</bold>"
-update.failed: "<red><bold>Updatecontrole mislukt!</bold>"
+update.checking: "<green><bold>Zoeken naar updates...</bold></green>"
+update.available: "<green><bold>Nieuwe versie </bold><gold><bold>TPA-v%target% </bold><green><bold>beschikbaar: https://modrinth.com/plugin/tpa.66666/versions</bold></green></gold></green>"
+update.latest: "<green><bold>Je gebruikt de nieuwste versie</bold></green>"
+update.failed: "<red><bold>Updatecontrole mislukt!</bold></red>"

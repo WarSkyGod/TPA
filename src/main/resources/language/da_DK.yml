@@ -11,163 +11,163 @@ not_homes: "Ingen tilgængelige hjem"
 spawn_name: "Spawn"
 rtp_name: "随机传送点"
 last_location: "Sidste position"
-lang.set_success: "<green><bold>Du har sat klientens sprog til </bold><gold><bold>%target%</bold>"
+lang.set_success: "<green><bold>Du har sat klientens sprog til </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 按钮交互
 #=======================
 ## 按钮文本
 accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Klik her for at acceptere teleportation</bold></green>'>[Accepter]</hover></insert></click></green>  </bold>"
-deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik her for at afslå teleportation</bold></green>'>[Afslå]</hover></insert></click></red>  </bold>"
-blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik for at afslå og blokere spilleren</bold></green>'>[Afslå og bloker]</hover></insert></click></red>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Klik her for at afslå teleportation</bold></red>'>[Afslå]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Klik for at afslå og blokere spilleren</bold></red>'>[Afslå og bloker]</hover></insert></click></red>  </bold>"
 blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Klik for at fjerne blokering</bold></green>'>[Fjern blokering]</hover></insert></click></green>  </bold>"
 teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Klik for at teleportere</bold></green>'>[Teleporter]</hover></insert></click></green>  </bold>"
 location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Klik for at sætte nuværende position</bold></gold>'>[Sæt position]</hover></insert></click></gold>  </bold>"
 default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Klik for at sætte som standardhjem</bold></yellow>'>[Sæt som standardhjem]</hover></insert></click></yellow>  </bold>"
-delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik for at slette</bold></green>'>[Slet]</hover></insert></click></red>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Klik for at slette</bold></red>'>[Slet]</hover></insert></click></red>  </bold>"
 
 #=======================
 # 传送请求
 #=======================
 request.title: "<bold><green>Teleporteringsanmodning</green></bold>"
-request.to_here: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>vil teleportere til dig. Anmodning udløber om </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold>"
-request.to_target: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>inviterer dig til deres position. Anmodning udløber om </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold>"
-request.sent_success: "<green><bold>Teleportationsanmodning sendt til </bold><gold><bold>%target%!</bold>"
-request.timeout_notice: "<green><bold>Anmodningen er gyldig i </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold>"
-request.expired_from: "<red><bold>Teleportationsanmodning fra </bold><gold><bold>%target% </bold><red><bold>er udløbet!</bold>"
-request.expired_to: "<red><bold>Din anmodning til </bold><gold><bold>%target% </bold><red><bold>er udløbet!</bold>"
+request.to_here: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>vil teleportere til dig. Anmodning udløber om </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>inviterer dig til deres position. Anmodning udløber om </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold>Teleportationsanmodning sendt til </bold><gold><bold>%target%!</bold></gold></green>"
+request.timeout_notice: "<green><bold>Anmodningen er gyldig i </bold><gold><bold>%seconds% </bold><green><bold>sekunder!</bold></green></gold></green>"
+request.expired_from: "<red><bold>Teleportationsanmodning fra </bold><gold><bold>%target% </bold><red><bold>er udløbet!</bold></red></gold></red>"
+request.expired_to: "<red><bold>Din anmodning til </bold><gold><bold>%target% </bold><red><bold>er udløbet!</bold></red></gold></red>"
 
 #=======================
 # 家
 #=======================
-home.list_header: "<green><bold>Tilgængelige hjem:</bold>"
-home.set_success: "<green><bold>Du har sat hjemmet </bold><gold><bold>%target%</bold>"
+home.list_header: "<green><bold>Tilgængelige hjem:</bold></green>"
+home.set_success: "<green><bold>Du har sat hjemmet </bold><gold><bold>%target%</bold></gold></green>"
 home.default_tag: "[Standard]"
-home.default_set_success: "<green><bold>Du har sat </bold><gold><bold>%target% </bold><green><bold>som standardhjem</bold>"
-home.delete_success: "<green><bold>Du har slettet hjemmet </bold><gold><bold>%target%</bold>"
-home.teleport_success: "<green><bold>Du er teleporteret til hjemmet </bold><gold><bold>%target%</bold>"
-home.max_limit_error: "<red><bold>Du kan maksimalt have %max_home_amount% hjem!</bold>"
-error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>er allerede dit standardhjem</bold>"
+home.default_set_success: "<green><bold>Du har sat </bold><gold><bold>%target% </bold><green><bold>som standardhjem</bold></green></gold></green>"
+home.delete_success: "<green><bold>Du har slettet hjemmet </bold><gold><bold>%target%</bold></gold></green>"
+home.teleport_success: "<green><bold>Du er teleporteret til hjemmet </bold><gold><bold>%target%</bold></gold></green>"
+home.max_limit_error: "<red><bold>Du kan maksimalt have %max_home_amount% hjem!</bold></red>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>er allerede dit standardhjem</bold></red></gold>"
 
 #=======================
 # 传送点
 #=======================
-warp.list_header: "<green><bold>Tilgængelige teleportationspunkter:</bold>"
-warp.set_success: "<green><bold>Du har sat teleportationspunktet </bold><gold><bold>%target%</bold>"
-warp.delete_success: "<green><bold>Du har slettet teleportationspunktet </bold><gold><bold>%target%</bold>"
-warp.teleport_success: "<green><bold>Du er teleporteret til </bold><gold><bold>%target%</bold>"
+warp.list_header: "<green><bold>Tilgængelige teleportationspunkter:</bold></green>"
+warp.set_success: "<green><bold>Du har sat teleportationspunktet </bold><gold><bold>%target%</bold></gold></green>"
+warp.delete_success: "<green><bold>Du har slettet teleportationspunktet </bold><gold><bold>%target%</bold></gold></green>"
+warp.teleport_success: "<green><bold>Du er teleporteret til </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 主城
 #=======================
-spawn.set_success: "<green><bold>Du har sat spawnpunktet</bold>"
-spawn.delete_success: "<green><bold>Du har slettet spawnpunktet</bold>"
-spawn.teleport_success: "<green><bold>Du er teleporteret til spawn!</bold>"
+spawn.set_success: "<green><bold>Du har sat spawnpunktet</bold></green>"
+spawn.delete_success: "<green><bold>Du har slettet spawnpunktet</bold></green>"
+spawn.teleport_success: "<green><bold>Du er teleporteret til spawn!</bold></green>"
 
 #=======================
 # 上一次的位置
 #=======================
-back.teleport_success: "<green><bold>Du er teleporteret til din sidste position!</bold>"
+back.teleport_success: "<green><bold>Du er teleporteret til din sidste position!</bold></green>"
 
 #=======================
 # 随机传送
 #=======================
-rtp.generating: "<green><bold>Genererer tilfældigt teleportationspunkt, vent venligst...</bold>"
-rtp.success: "<green><bold>Du er teleporteret til et tilfældigt sted!</bold>"
-rtp.failed: "<red><bold>Kunne ikke generere teleportationspunkt!</bold>"
+rtp.generating: "<green><bold>Genererer tilfældigt teleportationspunkt, vent venligst...</bold></green>"
+rtp.success: "<green><bold>Du er teleporteret til et tilfældigt sted!</bold></green>"
+rtp.failed: "<red><bold>Kunne ikke generere teleportationspunkt!</bold></red>"
 
 #=======================
 # 黑名单
 #=======================
-blacklist.list_header: "<green><bold>Din sortliste:</bold>"
-blacklist.add_success: "<green><bold>Du har blokeret </bold><gold><bold>%target%</bold>"
-blacklist.remove_success: "<green><bold>Du har fjernet blokeringen af </bold><gold><bold>%target%</bold>"
+blacklist.list_header: "<green><bold>Din sortliste:</bold></green>"
+blacklist.add_success: "<green><bold>Du har blokeret </bold><gold><bold>%target%</bold></gold></green>"
+blacklist.remove_success: "<green><bold>Du har fjernet blokeringen af </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
 # 错误提示
 #=======================
 ## 命令状态
-error.command_disabled: "<red><bold>Denne kommando er deaktiveret!</bold>"
-error.world_disabled: "<red><bold>Denne kommando er ikke tilgængelig i denne verden!</bold>"
-error.command_cooldown: "<red><bold>Vent venligst %seconds% sekunder før brug!</bold>"
+error.command_disabled: "<red><bold>Denne kommando er deaktiveret!</bold></red>"
+error.world_disabled: "<red><bold>Denne kommando er ikke tilgængelig i denne verden!</bold></red>"
+error.command_cooldown: "<red><bold>Vent venligst %seconds% sekunder før brug!</bold></red>"
 
 ## 权限与执行
-error.console_restricted: "<red><bold>Kun spillere kan bruge denne kommando!</bold>"
-error.permission_denied: "<red><bold>Manglende tilladelse!</bold>"
+error.console_restricted: "<red><bold>Kun spillere kan bruge denne kommando!</bold></red>"
+error.permission_denied: "<red><bold>Manglende tilladelse!</bold></red>"
 
 ## 玩家状态
-error.no_online_players: "<red><bold>Ingen spillere online!</bold>"
-error.target_offline: "<red><bold>Spiller </bold><gold><bold>%target% </bold><red><bold>er offline!</bold>"
-error.self_operation: "<red><bold>Kan ikke bruges på dig selv!</bold>"
+error.no_online_players: "<red><bold>Ingen spillere online!</bold></red>"
+error.target_offline: "<red><bold>Spiller </bold><gold><bold>%target% </bold><red><bold>er offline!</bold></red></gold></red>"
+error.self_operation: "<red><bold>Kan ikke bruges på dig selv!</bold></red>"
 
 ## 请求状态
-error.no_pending_request: "<red><bold>Ingen ventende anmodninger!</bold>"
-error.request_pending: "<red><bold>Der er allerede en aktiv anmodning</bold>"
+error.no_pending_request: "<red><bold>Ingen ventende anmodninger!</bold></red>"
+error.request_pending: "<red><bold>Der er allerede en aktiv anmodning</bold></red>"
 
 ## 黑名单
-error.already_blacklisted: "<red><bold>Spilleren er allerede blokeret!</bold>"
-error.blocked_by_target: "<red><bold>Du er blokeret af denne spiller!</bold>"
-error.blacklist_empty: "<red><bold>Din sortliste er tom!</bold>"
-error.not_blacklisted: "<red><bold>Spilleren er ikke blokeret!</bold>"
+error.already_blacklisted: "<red><bold>Spilleren er allerede blokeret!</bold></red>"
+error.blocked_by_target: "<red><bold>Du er blokeret af denne spiller!</bold></red>"
+error.blacklist_empty: "<red><bold>Din sortliste er tom!</bold></red>"
+error.not_blacklisted: "<red><bold>Spilleren er ikke blokeret!</bold></red>"
 
 ## 家
-error.home_not_found: "<red><bold>Hjemmet %target% findes ikke!</bold>"
-error.no_homes_set: "<red><bold>Du har ingen hjem defineret!</bold>"
-error.no_default_home: "<red><bold>Intet standardhjem sat!</bold>"
+error.home_not_found: "<red><bold>Hjemmet %target% findes ikke!</bold></red>"
+error.no_homes_set: "<red><bold>Du har ingen hjem defineret!</bold></red>"
+error.no_default_home: "<red><bold>Intet standardhjem sat!</bold></red>"
 
 ## 传送点
-error.warp_not_found: "<red><bold>Teleportationspunktet %target% findes ikke!</bold>"
-error.no_warps_set: "<red><bold>Ingen teleportationspunkter tilgængelige!</bold>"
+error.warp_not_found: "<red><bold>Teleportationspunktet %target% findes ikke!</bold></red>"
+error.no_warps_set: "<red><bold>Ingen teleportationspunkter tilgængelige!</bold></red>"
 
 ## 位置记录
-error.last_location_missing: "<red><bold>Ingen sidste position registreret!</bold>"
-error.logout_location_missing: "<red><bold>Ingen logud-position registreret!</bold>"
-error.spawn_not_set: "<red><bold>Intet spawnpunkt defineret!</bold>"
+error.last_location_missing: "<red><bold>Ingen sidste position registreret!</bold></red>"
+error.logout_location_missing: "<red><bold>Ingen logud-position registreret!</bold></red>"
+error.spawn_not_set: "<red><bold>Intet spawnpunkt defineret!</bold></red>"
 
 ## 余额不足
 error.cost_insufficient: "<bold><red>Utilstrækkelig saldo! Denne teleportering koster</red> <gold>{cost}</gold> {currency}<red>, din saldo er</red> <gold>{balance}</gold></bold>"
 error.cost_teleport_blocked: "<bold><red>Teleporteringen blev annulleret, fordi</red> <gold>%target%</gold> <red>ikke har tilstrækkelig saldo</red></bold>"
 
 ## 命令语法
-error.syntax_generic: "<red><bold>Ugyldig kommando! Brug: /%command%</bold>"
-error.syntax_tpa: "<red><bold>Ugyldig kommando! Brug: /%command% <spillernavn></bold>"
-error.syntax_tpall: "<red><bold>Ugyldig kommando! Brug: /%command% [spiller/warp/spawn] [navn]</bold>"
-error.syntax_warp: "<red><bold>Ugyldig kommando! Brug: /%command% <teleportationspunkt></bold>"
-error.syntax_home: "<red><bold>Ugyldig kommando! Brug: /%command% <hjemnavn></bold>"
+error.syntax_generic: "<red><bold>Ugyldig kommando! Brug: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Ugyldig kommando! Brug: /%command% <spillernavn></bold></red>"
+error.syntax_tpall: "<red><bold>Ugyldig kommando! Brug: /%command% [spiller/warp/spawn] [navn]</bold></red>"
+error.syntax_warp: "<red><bold>Ugyldig kommando! Brug: /%command% <teleportationspunkt></bold></red>"
+error.syntax_home: "<red><bold>Ugyldig kommando! Brug: /%command% <hjemnavn></bold></red>"
 
 ## 系统错误
-error.config_not_found: "<red><bold>Konfigurationsfil mangler - genererer ny!</bold>"
-error.runtime: "<red><bold>Pluginfejl: %message%</bold>"
-error.forwarded_error: "<red><bold>Fejl fra </bold><gold><bold>%target%:</bold>"
+error.config_not_found: "<red><bold>Konfigurationsfil mangler - genererer ny!</bold></red>"
+error.runtime: "<red><bold>Pluginfejl: %message%</bold></red>"
+error.forwarded_error: "<red><bold>Fejl fra </bold><gold><bold>%target%:</bold></gold></red>"
 
 #=======================
 # 传送过程提示
 #=======================
-teleport.accept.self: "<green><bold>Du accepterede anmodning fra </bold><gold><bold>%target%!</bold>"
-teleport.accept.target: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>accepterede din anmodning!</bold>"
-teleport.deny.self: "<red><bold>Du afslog anmodning fra </bold><gold><bold>%target%!</bold>"
-teleport.deny.target: "<red><bold>Spiller </bold><gold><bold>%target% </bold><red><bold>afslog din anmodning!</bold>"
-teleport.countdown: "<green><bold>Teleportation om </bold><gold><bold>%seconds% </bold><green><bold>sekunder til </bold><gold><bold>%target%</bold>"
-teleport.cancel_on_move: "<green><bold>Bevægelse annullerer teleportation!</bold>"
-teleport.canceled.self: "<red><bold>Teleportation annulleret!</bold>"
-teleport.canceled.target: "<red><bold>Modpart annullerede teleportation!</bold>"
-teleport.generic_success: "<green><bold>Teleporteret til </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_target: "<green><bold>En admin har teleporteret dig til </bold><gold><bold>%target%</bold>"
-teleport.tpall.to_self: "<green><bold>En admin teleporterede alle spillere til dig</bold>"
-teleport.tpall.success: "<green><bold>Alle spillere teleporteret til </bold><gold><bold>%target%</bold>"
-teleport.logout_location: "<green><bold>Teleporteret til </bold><gold><bold>%target%s logud-position</bold>"
+teleport.accept.self: "<green><bold>Du accepterede anmodning fra </bold><gold><bold>%target%!</bold></gold></green>"
+teleport.accept.target: "<green><bold>Spiller </bold><gold><bold>%target% </bold><green><bold>accepterede din anmodning!</bold></green></gold></green>"
+teleport.deny.self: "<red><bold>Du afslog anmodning fra </bold><gold><bold>%target%!</bold></gold></red>"
+teleport.deny.target: "<red><bold>Spiller </bold><gold><bold>%target% </bold><red><bold>afslog din anmodning!</bold></red></gold></red>"
+teleport.countdown: "<green><bold>Teleportation om </bold><gold><bold>%seconds% </bold><green><bold>sekunder til </bold><gold><bold>%target%</bold></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Bevægelse annullerer teleportation!</bold></green>"
+teleport.canceled.self: "<red><bold>Teleportation annulleret!</bold></red>"
+teleport.canceled.target: "<red><bold>Modpart annullerede teleportation!</bold></red>"
+teleport.generic_success: "<green><bold>Teleporteret til </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_target: "<green><bold>En admin har teleporteret dig til </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_self: "<green><bold>En admin teleporterede alle spillere til dig</bold></green>"
+teleport.tpall.success: "<green><bold>Alle spillere teleporteret til </bold><gold><bold>%target%</bold></gold></green>"
+teleport.logout_location: "<green><bold>Teleporteret til </bold><gold><bold>%target%s logud-position</bold></gold></green>"
 teleport.cost_charged: "<bold><green>Denne teleportering kostede</green> <gold>{cost}</gold> {currency}<green>, din saldo er</green> <gold>{balance}</gold></bold>"
 
 #=======================
 # 系统消息
 #=======================
-system.config_reloaded: "<green><bold>Konfiguration genindlæst!</bold>"
+system.config_reloaded: "<green><bold>Konfiguration genindlæst!</bold></green>"
 system.currency_money: "<bold><gold>penge</gold></bold>"
 system.currency_points: "<bold><green>point</green></bold>"
-system.plugin_loaded: "<green><bold>Plugin indlæst! Version: </bold><gold><bold>%target%</bold>"
-system.plugin_unloaded: "<red><bold>Plugin afsluttet!</bold>"
-system.config_migrated_success: "<green><bold>Konfiguration migreret!</bold>"
-system.config_migrated: "<green><bold>Ældre konfiguration fundet - migrerer (backup i backup-mappen)</bold>"
+system.plugin_loaded: "<green><bold>Plugin indlæst! Version: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Plugin afsluttet!</bold></red>"
+system.config_migrated_success: "<green><bold>Konfiguration migreret!</bold></green>"
+system.config_migrated: "<green><bold>Ældre konfiguration fundet - migrerer (backup i backup-mappen)</bold></green>"
 system.debug_warning: "Advarsel: Debug-tilstand er aktiv - deaktiver efter brug!"
 
 ## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
@@ -221,10 +221,10 @@ system.log.event_exception_caught: "Undtagelse under håndtering af hændelsen {
 #=======================
 # 更新
 #=======================
-update.checking: "<green><bold>Søger efter opdateringer...</bold>"
-update.available: "<green><bold>Ny version tilgængelig: </bold><gold><bold>TPA-v%target% </bold><green><bold>hent den fra </bold><gold><bold>https://modrinth.com/plugin/tpa.66666/versions</bold>"
-update.latest: "<green><bold>Du kører den seneste version</bold>"
-update.failed: "<red><bold>Kunne ikke tjekke for opdateringer!</bold>"
+update.checking: "<green><bold>Søger efter opdateringer...</bold></green>"
+update.available: "<green><bold>Ny version tilgængelig: </bold><gold><bold>TPA-v%target% </bold><green><bold>hent den fra </bold><gold><bold>https://modrinth.com/plugin/tpa.66666/versions</bold></gold></green></gold></green>"
+update.latest: "<green><bold>Du kører den seneste version</bold></green>"
+update.failed: "<red><bold>Kunne ikke tjekke for opdateringer!</bold></red>"
 
 ## 以下键未在 zh_CN.yml 中定义（自动保留）
 rtp: "Tilfældigt teleportationspunkt"
