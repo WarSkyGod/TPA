@@ -36,3 +36,33 @@
 - **未闭合标签**：全量 strict 解析发现 **1937 行**依赖宽松模式隐式闭合（如 `<green><bold>…<gold><bold>%target%</bold>` 行尾无 `</green>`），按 strict 异常自动逆序补齐。
 - **最终校验**：25 份文件 **3626 条值全部通过 MiniMessage strict 解析**（failures=0）；标签开合配对审计 200 条 hover 全部正确；修复后重新打包并冒烟通过（语言文件加载正常、零 ERROR）。
 - 说明：宽松模式下未闭合标签会自动闭合、逐条解析亦无样式泄漏（渲染不受影响），本次补齐消除的是对宽松行为的隐式依赖。
+
+## 1.8.8 实测反馈修复（597d41f）
+
+### ① 更新检查 `NoSuchMethodError`（已修复）
+
+- **根因**：`JsonParser.parseString` 是 Gson 2.8.6+ API。编译期 classpath 中 spigot-api 1.8.8 携带的 gson 2.2.4 与 paper-api 携带的新版 gson 发生依赖调解，Gradle 选了高版本 → 编译通过；运行时 1.8.8 服务器只有内嵌 gson 2.2.4 → `NoSuchMethodError`。
+- **修复**：`VersionUtil` 弃用 gson，改用正则提取 GitHub API 响应中的 `tag_name`（该场景仅需这一个字段，零依赖最稳）。字节码复核已无任何 gson 引用。
+
+### ② yml 编码统一（已修复）
+
+1.8–1.12 服务器的 `YamlConfiguration.load(File)/save(File)` 与 `JavaPlugin.getConfig` 按 JVM 系统编码（中文 Windows 为 GBK）读写文件，会把 UTF-8 中文读乱/写坏。新增 `utils/YamlIO.kt` 统一封装：
+
+- **读**：显式 UTF-8 解析；检出 U+FFFD 替换符时回退系统编码重读（兼容 3.x 旧档在 1.8 上按系统编码写入的中文）；
+- **写**：`saveToString()` 经 UTF-8 输出流落盘，杜绝 `FileWriter` 系统编码覆盖；
+- **覆盖范围**：config.yml（覆盖 `getConfig/reloadConfig/saveConfig`）、playerdata、spawn.yml、warp.yml、语言文件、迁移读写全部走 `YamlIO`。
+
+### ③ 控制台中文乱码显示（环境问题，附解决办法）
+
+**机制定位**：模拟复现输出与用户日志**逐字符一致**（`鏈惎鐢ㄦ暟鎹簱` = 「未启用数据库」的 UTF-8 字节被按 GBK 解码），且 GBK 回编可还原原始 UTF-8 字节（负负得正）。即：
+
+- **插件消息字符串本身是正确的**（游戏内聊天不受影响，用户实测 `/tpa`、`/tpaccept` 交互正常）；
+- 乱码发生在**服务端控制台输出链**：1.8 服务端 stdout 产出 UTF-8 字节，而终端按 GBK 解码显示。3.x 时代同机显示"正常"是因为旧语言文件恰为系统编码（GBK 字节按 GBK 读再按 GBK 输出还原），4.0 释放全新 UTF-8 语言文件后字符串正确、终端解码不匹配的矛盾显露。
+
+**解决办法（任选其一）**：
+1. 启动脚本去掉 `-Dfile.encoding=UTF-8`（终端为 GBK 时），或改为 `-Dfile.encoding=GBK`；
+2. 启动前在控制台执行 `chcp 65001` 将终端切到 UTF-8（推荐 Windows Terminal）；
+3. 直接查看 `logs/latest.log`（UTF-8 编码，用文本编辑器打开显示正常）。
+
+控制台显示乱码**不影响任何功能**与游戏内消息。
+
