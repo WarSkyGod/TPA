@@ -21,17 +21,18 @@ jobs:
       - name: 获取项目信息
         id: project-info
         run: |
-          # 从 build.gradle.kts 提取项目信息
-          PROJECT_NAME=$(./gradlew properties -q | grep "rootProject.name" | awk '{print $2}' | tr -d "'")
-          if [ -z "$PROJECT_NAME" ]; then
-            PROJECT_NAME=$(./gradlew properties -q | grep "name:" | awk '{print $2}' | tr -d "'")
-          fi
+          # 直接从构建脚本提取项目名与版本（不依赖 Gradle 运行时，避免 runner java 版本不兼容导致提取失败）
+          PROJECT_NAME=$(grep -oP 'rootProject\.name\s*=\s*"\K[^"]+' settings.gradle.kts | head -n1 || true)
           if [ -z "$PROJECT_NAME" ]; then
             PROJECT_NAME=$(basename `pwd`)
           fi
-          
-          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}' | tr -d "'")
-          
+
+          VERSION=$(grep -oP '(?m)^version\s*=\s*"\K[^"]+' build.gradle.kts | head -n1 || true)
+          if [ -z "$VERSION" ]; then
+            echo "::error::无法从 build.gradle.kts 自动提取 version"
+            exit 1
+          fi
+
           echo "name=${PROJECT_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
