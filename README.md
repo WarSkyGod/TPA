@@ -3,7 +3,7 @@
 # TPA
 [English](https://github.com/WarSkyGod/TPA/blob/main/README_en-US.md)
 
-一个支持 **Folia** 的简易传送插件，支持 **Paper/Folia**。
+一个支持 **Folia** 的简易传送插件，支持 **Bukkit/Spigot/Paper/Folia**。
 
 ## 特点
 

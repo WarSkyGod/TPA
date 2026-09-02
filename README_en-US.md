@@ -2,7 +2,7 @@
 ---
 # TPA
 [简体中文](https://github.com/WarSkyGod/TPA)  
-A simple teleportation plugin that supports **Folia**, compatible with **Paper/Folia**.
+A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/Spigot/Paper/Folia**.
 
 ## Features
 
