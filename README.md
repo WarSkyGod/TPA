@@ -168,12 +168,22 @@
 - [xszx-tbh](https://github.com/xszx-tbh)
 - [Carrot520](https://github.com/Carrot520)
 - [NightCat](https://github.com/nightlight-hk)
+- [ikundeb](https://github.com/ikundeb)
+- [moses0823](https://github.com/moses0823)
+- [CristopherFuentes](https://github.com/CristopherFuentes)
+- [Minecraft0122](https://github.com/Minecraft0122)
+- [UsefullSpoon](https://github.com/UsefullSpoon)
+- [NewSentientRook131](https://github.com/NewSentientRook131)
 
 
 ### 功能建议者
 - [Apleax](https://github.com/Apleax)
 - [xiaoleaw](https://github.com/xiaoleaw)
 - [Onako2](https://github.com/Onako2)
+- [xiaolanb](https://github.com/xiaolanb)
+- [li2012China](https://github.com/li2012China)
+- [Minecraft0122](https://github.com/Minecraft0122)
+- [ghostzwc](https://github.com/ghostzwc)
 
 
 ### 翻译提供或修正
