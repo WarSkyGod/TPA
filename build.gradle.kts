@@ -68,9 +68,9 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     // Paper API 仅提供 Brigadier 命令 API（io.papermc.paper.command.brigadier.*），
     // 运行时仅在 Paper 1.20.6+ 上通过独立注册器触达，低版本走 legacy 路由不会加载这些类
-    compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
+    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("cn.handyplus.lib.adapter:FoliaLib:1.3.0")
+    implementation("cn.handyplus.lib.adapter:FoliaLib:1.3.3")
     implementation("org.bstats:bstats-bukkit:3.2.1")
     implementation("com.zaxxer:HikariCP:4.0.3")
     // Brigadier 纯 Java 库：随包分发（不 relocate，须与 Paper API 签名一致），

@@ -41,7 +41,7 @@ database_password: ""
 # 是否每次进入服务器或死亡都强制传送到 spawn
 force_spawn: true
 
-# 是否启用 title 传送消息（1.12 以下版本将自动关闭）
+# 是否启用 title 传送消息
 enable_title_message: true
 
 # 是否启用传送音效
