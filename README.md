@@ -11,6 +11,11 @@
 - **可配置**：支持自定义配置文件。
 - **多语言支持**：内置多种语言文件。
 - **可自定义语言文件**：支持用户自定义语言文件。
+- **数据库支持**：支持 SQLite / MySQL。
+- **Geyser Floodgate支持**：安装 Floodgate 插件后基岩玩家可用弹窗操作。
+- **传送付费支持**：安装 Vault / PlayerPoints 插件后可使用传送付费功能。
+- **PlaceholderAPI 支持**：安装 PlaceholderAPI 插件后可支持占位符使用。
+- **MiniMessage 支持**：使用 MiniMessage 支持的语法来自定义颜色甚至插入链接自定义点击事件，混色 / Hex颜色支持。
 
 ## 命令
 
@@ -63,11 +68,11 @@
   传送到上一次的位置。
 - **/rtp**  
   随机传送。
-- **/tpa version**  
+- **/tpac version**  
   检查插件更新。
-- **/tpa setlang <clear/语言>**  
+- **/tpac setlang <clear/语言>**  
   设置客户端显示语言。
-- **/tpa reload**  
+- **/tpac reload**  
   重新加载配置文件。
 
 ## 权限
@@ -80,9 +85,9 @@
 - **tpa.tplogout**  
   可使用 `/tplogout` 传送到玩家最后的下线位置。  
 - **tpa.reload**  
-  可使用 `/reload` 命令重新加载配置文件。
+  可使用 `/tpac reload` 命令重新加载配置文件。
 - **tpa.version**  
-  拥有这个权限的玩家会收到插件更新通知，可使用 `/tpa version` 来检查插件更新。
+  拥有这个权限的玩家会收到插件更新通知，可使用 `/tpac version` 来检查插件更新。
 - **tpa.nodelay**  
   拥有这个权限的玩家不会受到命令等待时间的限制。  
 
@@ -124,7 +129,7 @@
 - **tpa.mvp**
 - **tpa.mvp+**
 - **tpa.mvp++**  
-  可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）以及命令间隔时间等。
+  可在配置文件中设置拥有该权限的玩家最多可以设置多少个家（-1 为不限制）以及命令间隔时间，命令使用优惠（如果开启命令付费）
 
 ### 其他
 - **tpa.back**  
@@ -163,19 +168,29 @@
 - [xszx-tbh](https://github.com/xszx-tbh)
 - [Carrot520](https://github.com/Carrot520)
 - [NightCat](https://github.com/nightlight-hk)
+- [ikundeb](https://github.com/ikundeb)
+- [moses0823](https://github.com/moses0823)
+- [CristopherFuentes](https://github.com/CristopherFuentes)
+- [Minecraft0122](https://github.com/Minecraft0122)
+- [UsefullSpoon](https://github.com/UsefullSpoon)
+- [NewSentientRook131](https://github.com/NewSentientRook131)
 
 
 ### 功能建议者
 - [Apleax](https://github.com/Apleax)
 - [xiaoleaw](https://github.com/xiaoleaw)
 - [Onako2](https://github.com/Onako2)
+- [xiaolanb](https://github.com/xiaolanb)
+- [li2012China](https://github.com/li2012China)
+- [Minecraft0122](https://github.com/Minecraft0122)
+- [ghostzwc](https://github.com/ghostzwc)
 
 
 ### 翻译提供或修正
 - 越南语 [Mytai20100](https://github.com/Mytai20100)
 
-
 ### AI 大模型
 - [DeepSeek](https://www.deepseek.com/)
+- [智谱 GLM 5.3-Flash](https://www.bigmodel.cn/)
 
 ---

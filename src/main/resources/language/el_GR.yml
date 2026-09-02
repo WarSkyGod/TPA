@@ -1,180 +1,227 @@
-## Αρχείο γλώσσας TPA Plugin (Ελληνικά)
+## TPA 插件简体中文语言文件
 
 #=======================
-# Βασικές ρυθμίσεις
+# 基础配置
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "Δεν υπάρχουν συνδεδεμένοι παίκτες"
 not_warps: "Δεν υπάρχουν διαθέσιμα σημεία μεταφοράς"
 not_homes: "Δεν υπάρχουν διαθέσιμα σπίτια"
 spawn_name: "Κεντρικό σημείο"
 rtp_name: "Τυχαία μεταφορά"
 last_location: "Τελευταία τοποθεσία"
-lang.set_success: "&a&lΟρίσατε τη γλώσσα ως &6&l<target>"
+lang.set_success: "<green><bold>Ορίσατε τη γλώσσα ως </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
-# Διαδραστικά κουμπιά
+# 按钮交互
 #=======================
-## Κείμενο κουμπιών
-accept_button: "&a&l[Αποδοχή]"
-deny_button: "&c&l[Απόρριψη]"
-blacklist.add_button: "&c&l[Απόρριψη και μπλακλίστ]"
-blacklist.remove_button: "&a&l[Αφαίρεση από μπλακλίστ]"
-teleport_button: "&a&l[Μεταφορά]"
-location_set_button: "&6&l[Ορισμός τοποθεσίας]"
-default_home_set_button: "&e&l[Προεπιλεγμένο σπίτι]"
-delete_button: "&c&l[Διαγραφή]"
-
-## Υποδείξεις κλικ
-accept_click_hint: "&a&lΚάντε κλικ για αποδοχή μεταφοράς"
-deny_click_hint: "&c&lΚάντε κλικ για απόρριψη μεταφοράς"
-blacklist.add_hint: "&c&lΚάντε κλικ για απόρριψη και μπλακλίστ"
-blacklist.remove_hint: "&a&lΚάντε κλικ για αφαίρεση από μπλακλίστ"
-teleport_click_hint: "&a&lΚάντε κλικ για μεταφορά"
-set_location_hint: "&6&lΚάντε κλικ για ορισμό τρέχουσας τοποθεσίας"
-set_default_home_hint: "&e&lΚάντε κλικ για προεπιλεγμένο σπίτι"
-delete_click_hint: "&c&lΚάντε κλικ για διαγραφή"
+## 按钮文本
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Κάντε κλικ για αποδοχή μεταφοράς</bold></green>'>[Αποδοχή]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Κάντε κλικ για απόρριψη μεταφοράς</bold></red>'>[Απόρριψη]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Κάντε κλικ για απόρριψη και μπλακλίστ</bold></red>'>[Απόρριψη και μπλακλίστ]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Κάντε κλικ για αφαίρεση από μπλακλίστ</bold></green>'>[Αφαίρεση από μπλακλίστ]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Κάντε κλικ για μεταφορά</bold></green>'>[Μεταφορά]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Κάντε κλικ για ορισμό τρέχουσας τοποθεσίας</bold></gold>'>[Ορισμός τοποθεσίας]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Κάντε κλικ για προεπιλεγμένο σπίτι</bold></yellow>'>[Προεπιλεγμένο σπίτι]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Κάντε κλικ για διαγραφή</bold></red>'>[Διαγραφή]</hover></insert></click></red>  </bold>"
 
 #=======================
-# Αιτήματα μεταφοράς
+# 传送请求
 #=======================
-request.to_here: "&a&lΟ παίκτης &6&l<target> &a&lθέλει να μεταφερθεί σε εσάς! Λήγει σε &6&l<seconds> &a&lδευτερόλεπτα!"
-request.to_target: "&a&lΟ παίκτης &6&l<target> &a&lσας προσκαλεί! Λήγει σε &6&l<seconds> &a&lδευτερόλεπτα!"
-request.sent_success: "&a&lΑίτημα μεταφοράς στάλθηκε στον &6&l<target>!"
-request.timeout_notice: "&a&lΤο αίτημα ισχύει για &6&l<seconds> &a&lδευτερόλεπτα!"
-request.expired_from: "&c&lΑίτημα από &6&l<target> &c&lέληξε!"
-request.expired_to: "&c&lΤο αίτημά σας στον &6&l<target> &c&lέληξε!"
+request.title: "<bold><green>Αίτημα τηλεμεταφοράς</green></bold>"
+request.to_here: "<green><bold>Ο παίκτης </bold><gold><bold>%target% </bold><green><bold>θέλει να μεταφερθεί σε εσάς! Λήγει σε </bold><gold><bold>%seconds% </bold><green><bold>δευτερόλεπτα!</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>Ο παίκτης </bold><gold><bold>%target% </bold><green><bold>σας προσκαλεί! Λήγει σε </bold><gold><bold>%seconds% </bold><green><bold>δευτερόλεπτα!</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold>Αίτημα μεταφοράς στάλθηκε στον </bold><gold><bold>%target%!</bold></gold></green>"
+request.timeout_notice: "<green><bold>Το αίτημα ισχύει για </bold><gold><bold>%seconds% </bold><green><bold>δευτερόλεπτα!</bold></green></gold></green>"
+request.expired_from: "<red><bold>Αίτημα από </bold><gold><bold>%target% </bold><red><bold>έληξε!</bold></red></gold></red>"
+request.expired_to: "<red><bold>Το αίτημά σας στον </bold><gold><bold>%target% </bold><red><bold>έληξε!</bold></red></gold></red>"
 
 #=======================
-# Σπίτια
+# 家
 #=======================
-home.list_header: "&a&lΔιαθέσιμα σπίτια:"
-home.set_success: "&a&lΟρίσατε το σπίτι &6&l<target>"
-home.default_set_success: "&a&lΟρίσατε προεπιλεγμένο σπίτι το &6&l<target>"
-home.delete_success: "&a&lΔιαγράψατε το σπίτι &6&l<target>"
-home.teleport_success: "&a&lΜεταφερθήκατε στο σπίτι &6&l<target>"
-home.max_limit_error: "&c&lΜέγιστο όριο <max_home_amount> σπιτιών!"
-error.default_home_already_set: "&6&l<target> &c&lείναι ήδη προεπιλεγμένο"
+home.list_header: "<green><bold>Διαθέσιμα σπίτια:</bold></green>"
+home.set_success: "<green><bold>Ορίσατε το σπίτι </bold><gold><bold>%target%</bold></gold></green>"
+home.default_tag: "[Προεπιλογή]"
+home.default_set_success: "<green><bold>Ορίσατε προεπιλεγμένο σπίτι το </bold><gold><bold>%target%</bold></gold></green>"
+home.delete_success: "<green><bold>Διαγράψατε το σπίτι </bold><gold><bold>%target%</bold></gold></green>"
+home.teleport_success: "<green><bold>Μεταφερθήκατε στο σπίτι </bold><gold><bold>%target%</bold></gold></green>"
+home.max_limit_error: "<red><bold>Μέγιστο όριο %max_home_amount% σπιτιών!</bold></red>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>είναι ήδη προεπιλεγμένο</bold></red></gold>"
 
 #=======================
-# Σημεία μεταφοράς
+# 传送点
 #=======================
-warp.list_header: "&a&lΔιαθέσιμα σημεία:"
-warp.set_success: "&a&lΟρίσατε το σημείο &6&l<target>"
-warp.delete_success: "&a&lΔιαγράψατε το σημείο &6&l<target>"
-warp.teleport_success: "&a&lΜεταφερθήκατε στο &6&l<target>"
-
-#=======================
-# Κεντρικό σημείο
-#=======================
-spawn.set_success: "&a&lΟρίσατε το κεντρικό σημείο"
-spawn.delete_success: "&a&lΔιαγράψατε το κεντρικό σημείο"
-spawn.teleport_success: "&a&lΜεταφερθήκατε στο κεντρικό σημείο!"
+warp.list_header: "<green><bold>Διαθέσιμα σημεία:</bold></green>"
+warp.set_success: "<green><bold>Ορίσατε το σημείο </bold><gold><bold>%target%</bold></gold></green>"
+warp.delete_success: "<green><bold>Διαγράψατε το σημείο </bold><gold><bold>%target%</bold></gold></green>"
+warp.teleport_success: "<green><bold>Μεταφερθήκατε στο </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
-# Τελευταία τοποθεσία
+# 主城
 #=======================
-back.teleport_success: "&a&lΜεταφερθήκατε στην τελευταία σας τοποθεσία!"
-
-#=======================
-# Τυχαία μεταφορά
-#=======================
-rtp.generating: "&a&lΔημιουργία τυχαίας τοποθεσίας..."
-rtp.success: "&a&lΜεταφερθήκατε τυχαία!"
-rtp.failed: "&c&lΑποτυχία δημιουργίας!"
+spawn.set_success: "<green><bold>Ορίσατε το κεντρικό σημείο</bold></green>"
+spawn.delete_success: "<green><bold>Διαγράψατε το κεντρικό σημείο</bold></green>"
+spawn.teleport_success: "<green><bold>Μεταφερθήκατε στο κεντρικό σημείο!</bold></green>"
 
 #=======================
-# Μαύρη λίστα
+# 上一次的位置
 #=======================
-blacklist.list_header: "&a&lΜαύρη λίστα:"
-blacklist.add_success: "&a&lΠροστέθηκε ο &6&l<target> &a&lστη μαύρη λίστα"
-blacklist.remove_success: "&a&lΑφαιρέθηκε ο &6&l<target> &a&lαπό τη μαύρη λίστα"
+back.teleport_success: "<green><bold>Μεταφερθήκατε στην τελευταία σας τοποθεσία!</bold></green>"
 
 #=======================
-# Μηνύματα σφάλματος
+# 随机传送
 #=======================
-## Κατάσταση εντολής
-error.command_disabled: "&c&lΗ εντολή είναι απενεργοποιημένη!"
-error.world_disabled: "&c&lΜη διαθέσιμο σε αυτόν τον κόσμο!"
-error.command_cooldown: "&c&lΠεριμένετε &6&l<seconds> &c&lδευτερόλεπτα!"
-
-## Δικαιώματα
-error.console_restricted: "&c&lΜόνο για παίκτες!"
-error.permission_denied: "&c&lΔεν έχετε δικαίωμα!"
-
-## Κατάσταση παίκτη
-error.no_online_players: "&c&lΔεν υπάρχουν συνδεδεμένοι παίκτες!"
-error.target_offline: "&c&lΟ παίκτης &6&l<target> &c&lείναι εκτός σύνδεσης!"
-error.self_operation: "&c&lΔεν επιτρέπεται στον εαυτό σας!"
-
-## Κατάσταση αιτήματος
-error.no_pending_request: "&c&lΔεν υπάρχουν εκκρεμή αιτήματα!"
-error.request_pending: "&c&lΥπάρχει ενεργό αίτημα"
-
-## Μαύρη λίστα
-error.already_blacklisted: "&c&lΕίναι ήδη στη μαύρη λίστα!"
-error.blocked_by_target: "&c&lΣας μπλόκαραν!"
-error.blacklist_empty: "&c&lΗ μαύρη λίστα είναι άδεια!"
-error.not_blacklisted: "&c&lΔεν είναι στη μαύρη λίστα!"
-
-## Σπίτια
-error.home_not_found: "&c&lΤο σπίτι <target> δεν υπάρχει!"
-error.no_homes_set: "&c&lΔεν έχετε ορίσει σπίτια!"
-error.no_default_home: "&c&lΔεν έχετε προεπιλεγμένο σπίτι!"
-
-## Σημεία μεταφοράς
-error.warp_not_found: "&c&lΤο σημείο <target> δεν υπάρχει!"
-error.no_warps_set: "&c&lΔεν υπάρχουν σημεία μεταφοράς!"
-
-## Τοποθεσίες
-error.last_location_missing: "&c&lΔεν υπάρχει τελευταία τοποθεσία!"
-error.logout_location_missing: "&c&lΔεν υπάρχει τοποθεσία αποσύνδεσης!"
-error.spawn_not_set: "&c&lΔεν έχει οριστεί κεντρικό σημείο!"
-
-## Σύνταξη εντολής
-error.syntax_generic: "&c&lΣυντακτικό λάθος! Χρήση: /<command>"
-error.syntax_tpa: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <παίκτης>"
-error.syntax_tpall: "&c&lΣυντακτικό λάθος! Χρήση: /<command> [player/warp/spawn] [όνομα]"
-error.syntax_warp: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <σημείο>"
-error.syntax_home: "&c&lΣυντακτικό λάθος! Χρήση: /<command> <σπίτι>"
-
-## Σφάλματα συστήματος
-error.config_not_found: "&c&lΔημιουργήθηκε νέο αρχείο ρυθμίσεων!"
-error.runtime: "&c&lΣφάλμα πρόσθετου: <message>"
-error.forwarded_error: "&c&lΣφάλμα από &6&l<target>:"
+rtp.generating: "<green><bold>Δημιουργία τυχαίας τοποθεσίας...</bold></green>"
+rtp.success: "<green><bold>Μεταφερθήκατε τυχαία!</bold></green>"
+rtp.failed: "<red><bold>Αποτυχία δημιουργίας!</bold></red>"
 
 #=======================
-# Διαδικασία μεταφοράς
+# 黑名单
 #=======================
-teleport.accept.self: "&a&lΔέχτηκε αίτημα από &6&l<target>!"
-teleport.accept.target: "&a&lΟ &6&l<target> &a&lδέχτηκε το αίτημά σας!"
-teleport.deny.self: "&c&lΑπορρίψατε αίτημα από &6&l<target>!"
-teleport.deny.target: "&c&lΟ &6&l<target> &c&lαπέρριψε το αίτημά σας!"
-teleport.countdown: "&a&lΜεταφορά σε &6&l<seconds> &a&lδευτερόλεπτα προς &6&l<target>"
-teleport.cancel_on_move: "&a&lΚίνηση ακυρώνει τη μεταφορά!"
-teleport.canceled.self: "&c&lΑκυρώσατε τη μεταφορά!"
-teleport.canceled.target: "&c&lΑκυρώθηκε από τον άλλο παίκτη!"
-teleport.generic_success: "&a&lΜεταφερθήκατε στο &6&l<target>"
-teleport.tpall.to_target: "&a&lΔιαχειριστής σας μετέφερε στο &6&l<target>"
-teleport.tpall.to_self: "&a&lΔιαχειριστής μετέφερε όλους σε εσάς"
-teleport.tpall.success: "&a&lΌλοι μεταφέρθηκαν στο &6&l<target>"
-teleport.logout_location: "&a&lΜεταφερθήκατε στην τοποθεσία αποσύνδεσης του &6&l<target>"
+blacklist.list_header: "<green><bold>Μαύρη λίστα:</bold></green>"
+blacklist.add_success: "<green><bold>Προστέθηκε ο </bold><gold><bold>%target% </bold><green><bold>στη μαύρη λίστα</bold></green></gold></green>"
+blacklist.remove_success: "<green><bold>Αφαιρέθηκε ο </bold><gold><bold>%target% </bold><green><bold>από τη μαύρη λίστα</bold></green></gold></green>"
 
 #=======================
-# Συστημικά μηνύματα
+# 错误提示
 #=======================
-system.config_reloaded: "&a&lΕπαναφόρτωση ρυθμίσεων!"
-system.plugin_loaded: "&a&lΤο πρόσθετο φορτώθηκε! Έκδοση: &6&l<target>"
-system.plugin_unloaded: "&c&lΤο πρόσθετο απενεργοποιήθηκε!"
-system.config_migrated_success: "&a&lΕπιτυχής μετεγκατάσταση ρυθμίσεων!"
-system.config_migrated: "&a&lΕντοπίστηκε παλιά έκδοση ρυθμίσεων (δημιουργήθηκε αντίγραφο)"
+## 命令状态
+error.command_disabled: "<red><bold>Η εντολή είναι απενεργοποιημένη!</bold></red>"
+error.world_disabled: "<red><bold>Μη διαθέσιμο σε αυτόν τον κόσμο!</bold></red>"
+error.command_cooldown: "<red><bold>Περιμένετε </bold><gold><bold>%seconds% </bold><red><bold>δευτερόλεπτα!</bold></red></gold></red>"
+
+## 权限与执行
+error.console_restricted: "<red><bold>Μόνο για παίκτες!</bold></red>"
+error.permission_denied: "<red><bold>Δεν έχετε δικαίωμα!</bold></red>"
+
+## 玩家状态
+error.no_online_players: "<red><bold>Δεν υπάρχουν συνδεδεμένοι παίκτες!</bold></red>"
+error.target_offline: "<red><bold>Ο παίκτης </bold><gold><bold>%target% </bold><red><bold>είναι εκτός σύνδεσης!</bold></red></gold></red>"
+error.self_operation: "<red><bold>Δεν επιτρέπεται στον εαυτό σας!</bold></red>"
+
+## 请求状态
+error.no_pending_request: "<red><bold>Δεν υπάρχουν εκκρεμή αιτήματα!</bold></red>"
+error.request_pending: "<red><bold>Υπάρχει ενεργό αίτημα</bold></red>"
+
+## 黑名单
+error.already_blacklisted: "<red><bold>Είναι ήδη στη μαύρη λίστα!</bold></red>"
+error.blocked_by_target: "<red><bold>Σας μπλόκαραν!</bold></red>"
+error.blacklist_empty: "<red><bold>Η μαύρη λίστα είναι άδεια!</bold></red>"
+error.not_blacklisted: "<red><bold>Δεν είναι στη μαύρη λίστα!</bold></red>"
+
+## 家
+error.home_not_found: "<red><bold>Το σπίτι %target% δεν υπάρχει!</bold></red>"
+error.no_homes_set: "<red><bold>Δεν έχετε ορίσει σπίτια!</bold></red>"
+error.no_default_home: "<red><bold>Δεν έχετε προεπιλεγμένο σπίτι!</bold></red>"
+
+## 传送点
+error.warp_not_found: "<red><bold>Το σημείο %target% δεν υπάρχει!</bold></red>"
+error.no_warps_set: "<red><bold>Δεν υπάρχουν σημεία μεταφοράς!</bold></red>"
+
+## 位置记录
+error.last_location_missing: "<red><bold>Δεν υπάρχει τελευταία τοποθεσία!</bold></red>"
+error.logout_location_missing: "<red><bold>Δεν υπάρχει τοποθεσία αποσύνδεσης!</bold></red>"
+error.spawn_not_set: "<red><bold>Δεν έχει οριστεί κεντρικό σημείο!</bold></red>"
+
+## 余额不足
+error.cost_insufficient: "<bold><red>Ανεπαρκές υπόλοιπο! Αυτή η τηλεμεταφορά κοστίζει</red> <gold>{cost}</gold> {currency}<red>, το υπόλοιπό σας είναι</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Η τηλεμεταφορά ακυρώθηκε επειδή</red> <gold>%target%</gold> <red>δεν έχει αρκετό υπόλοιπο</red></bold>"
+
+## 命令语法
+error.syntax_generic: "<red><bold>Συντακτικό λάθος! Χρήση: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Συντακτικό λάθος! Χρήση: /%command% <παίκτης></bold></red>"
+error.syntax_tpall: "<red><bold>Συντακτικό λάθος! Χρήση: /%command% [player/warp/spawn] [όνομα]</bold></red>"
+error.syntax_warp: "<red><bold>Συντακτικό λάθος! Χρήση: /%command% <σημείο></bold></red>"
+error.syntax_home: "<red><bold>Συντακτικό λάθος! Χρήση: /%command% <σπίτι></bold></red>"
+
+## 系统错误
+error.config_not_found: "<red><bold>Δημιουργήθηκε νέο αρχείο ρυθμίσεων!</bold></red>"
+error.runtime: "<red><bold>Σφάλμα πρόσθετου: %message%</bold></red>"
+error.forwarded_error: "<red><bold>Σφάλμα από </bold><gold><bold>%target%:</bold></gold></red>"
+
+#=======================
+# 传送过程提示
+#=======================
+teleport.accept.self: "<green><bold>Δέχτηκε αίτημα από </bold><gold><bold>%target%!</bold></gold></green>"
+teleport.accept.target: "<green><bold>Ο </bold><gold><bold>%target% </bold><green><bold>δέχτηκε το αίτημά σας!</bold></green></gold></green>"
+teleport.deny.self: "<red><bold>Απορρίψατε αίτημα από </bold><gold><bold>%target%!</bold></gold></red>"
+teleport.deny.target: "<red><bold>Ο </bold><gold><bold>%target% </bold><red><bold>απέρριψε το αίτημά σας!</bold></red></gold></red>"
+teleport.countdown: "<green><bold>Μεταφορά σε </bold><gold><bold>%seconds% </bold><green><bold>δευτερόλεπτα προς </bold><gold><bold>%target%</bold></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Κίνηση ακυρώνει τη μεταφορά!</bold></green>"
+teleport.canceled.self: "<red><bold>Ακυρώσατε τη μεταφορά!</bold></red>"
+teleport.canceled.target: "<red><bold>Ακυρώθηκε από τον άλλο παίκτη!</bold></red>"
+teleport.generic_success: "<green><bold>Μεταφερθήκατε στο </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_target: "<green><bold>Διαχειριστής σας μετέφερε στο </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_self: "<green><bold>Διαχειριστής μετέφερε όλους σε εσάς</bold></green>"
+teleport.tpall.success: "<green><bold>Όλοι μεταφέρθηκαν στο </bold><gold><bold>%target%</bold></gold></green>"
+teleport.logout_location: "<green><bold>Μεταφερθήκατε στην τοποθεσία αποσύνδεσης του </bold><gold><bold>%target%</bold></gold></green>"
+teleport.cost_charged: "<bold><green>Αυτή η τηλεμεταφορά κόστισε</green> <gold>{cost}</gold> {currency}<green>, το υπόλοιπό σας είναι</green> <gold>{balance}</gold></bold>"
+
+#=======================
+# 系统消息
+#=======================
+system.config_reloaded: "<green><bold>Επαναφόρτωση ρυθμίσεων!</bold></green>"
+system.currency_money: "<bold><gold>χρήματα</gold></bold>"
+system.currency_points: "<bold><green>πόντοι</green></bold>"
+system.plugin_loaded: "<green><bold>Το πρόσθετο φορτώθηκε! Έκδοση: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Το πρόσθετο απενεργοποιήθηκε!</bold></red>"
+system.config_migrated_success: "<green><bold>Επιτυχής μετεγκατάσταση ρυθμίσεων!</bold></green>"
+system.config_migrated: "<green><bold>Εντοπίστηκε παλιά έκδοση ρυθμίσεων (δημιουργήθηκε αντίγραφο)</bold></green>"
 system.debug_warning: "Προσοχή: Ενεργή λειτουργία debug!"
 
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Το αρχείο γλώσσας {0} δεν περιέχει το κλειδί {1} (πιθανώς αρχείο παλιάς έκδοσης, μπορείτε να διαγράψετε τον φάκελο plugins/TPA/language και να κάνετε επανεκκίνηση για να δημιουργηθεί ξανά, ή να προσθέσετε το κλειδί χειροκίνητα)"
+system.log.config_migrated_detail: "Έγινε μετεγκατάσταση της ρύθμισης παλιάς έκδοσης ({0} → {1}): οι προσαρμοσμένες τιμές του χρήστη διατηρήθηκαν, δημιουργήθηκε αντίγραφο ασφαλείας των παλιών αρχείων γλώσσας στο plugins/TPA/backup/{0}/ και τα νέα αρχεία γλώσσας ξαναδημιουργήθηκαν"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Η αποθήκευση σε βάση δεδομένων δεν είναι ενεργοποιημένη (use_database: false), τα δεδομένα των παικτών θα αποθηκεύονται στον φάκελο playerdata"
+system.log.database_pool_initialized: "Η δεξαμενή συνδέσεων της βάσης δεδομένων αρχικοποιήθηκε ({0})"
+system.log.database_connect_failed: "Αποτυχία σύνδεσης με τη βάση δεδομένων ({0}): {1}"
+system.log.database_fallback_sqlite: "Έγινε μετάβαση σε τοπική αποθήκευση SQLite ({0}), τα δεδομένα αποθηκεύονται προσωρινά τοπικά, μετά τη διόρθωση της ρύθμισης η εντολή /tpac reload θα μεταφέρει αυτόματα τα δεδομένα πίσω στη βάση δεδομένων"
+system.log.database_fallback_create_failed: "Αποτυχία δημιουργίας δεξαμενής συνδέσεων SQLite για την εφεδρική λειτουργία: {0}"
+system.log.database_memory_only: "Η βάση δεδομένων δεν είναι διαθέσιμη και η εφεδρική λειτουργία απέτυχε, τα δεδομένα θα διατηρηθούν μόνο στην προσωρινή μνήμη (χάνονται με την επανεκκίνηση)"
+system.log.database_get_connection_failed: "Αποτυχία λήψης σύνδεσης βάσης δεδομένων: {0}"
+system.log.database_pool_closed: "Η δεξαμενή συνδέσεων της βάσης δεδομένων έκλεισε"
+system.log.database_table_created: "Δημιουργήθηκε ο πίνακας {0}"
+system.log.database_table_exists: "Ο πίνακας {0} υπάρχει ήδη"
+system.log.database_table_points_created: "Δημιουργήθηκε ο πίνακας tpa_points (ενιαία αποθήκευση των σημείων τηλεμεταφοράς spawn/warp)"
+system.log.database_column_added: "Η στήλη {0} προστέθηκε στον πίνακα player_data"
+system.log.database_column_add_failed: "Αποτυχία προσθήκης της στήλης {0} στον πίνακα player_data: {1}"
+system.log.unsupported_database_type: "Μη υποστηριζόμενος τύπος βάσης δεδομένων: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Συνδέθηκε το οικονομικό σύστημα Vault (διαθέσιμη χρέωση σε χρήμα)"
+system.log.playerpoints_hooked: "Συνδέθηκε το σύστημα πόντων PlayerPoints (διαθέσιμη χρέωση σε πόντους)"
+system.log.cost_without_currency: "Η χρέωση τηλεμεταφοράς είναι ενεργοποιημένη (cost.enable: true) αλλά το σύστημα νομίσματος ({0}) δεν είναι διαθέσιμο: το {1} δεν είναι εγκατεστημένο ή δεν παρέχει υπηρεσία οικονομίας/πόντων, επομένως δεν θα χρεώνονται τέλη"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Αποτυχία δημιουργίας αντιγράφου ασφαλείας του {0}: {1}"
+system.log.fallback_migrate_players_failed: "Αποτυχία μετεγκατάστασης των δεδομένων παικτών από την εφεδρική βάση (πιθανώς δεν υπάρχει ο πίνακας player_data): {0}"
+system.log.fallback_migrate_points_failed: "Αποτυχία μετεγκατάστασης των δεδομένων σημείων τηλεμεταφοράς από την εφεδρική βάση (πιθανώς δεν υπάρχει ο πίνακας tpa_points): {0}"
+system.log.fallback_migrated_back: "Τα δεδομένα της εφεδρικής βάσης μεταφέρθηκαν πίσω στη βάση δεδομένων: {0} εγγραφές παικτών, {1} εγγραφές σημείων τηλεμεταφοράς"
+system.log.fallback_backup_removed: "Δημιουργήθηκε αντίγραφο ασφαλείας της εφεδρικής βάσης στο {0} και στη συνέχεια αφαιρέθηκε"
+system.log.fallback_migrate_back_failed: "Αποτυχία μεταφοράς των δεδομένων της εφεδρικής βάσης πίσω στη βάση δεδομένων: {0}"
+system.log.spawn_migrated_to_db: "Τα δεδομένα spawn μεταφέρθηκαν στη βάση δεδομένων (tpa_points)"
+system.log.spawn_yml_backed_up: "Δημιουργήθηκε αντίγραφο ασφαλείας του παλιού spawn.yml στο backup/{0}"
+system.log.warp_migrated_to_db: "Μεταφέρθηκαν {0} εγγραφές warp στη βάση δεδομένων (tpa_points)"
+system.log.warp_yml_backed_up: "Δημιουργήθηκε αντίγραφο ασφαλείας του παλιού warp.yml στο backup/{0}"
+system.log.players_migrated_to_db: "Μεταφέρθηκαν στη βάση δεδομένων τα δεδομένα yml {0} παικτών (τα αρχικά αρχεία διατηρούνται στον φάκελο playerdata)"
+system.log.db_file_backed_up: "Δημιουργήθηκε αντίγραφο ασφαλείας του αρχικού αρχείου βάσης δεδομένων στο backup/{0}"
+system.log.points_migrated_to_yml: "Τα δεδομένα σημείων τηλεμεταφοράς από τη βάση δεδομένων μεταφέρθηκαν πίσω στα αρχεία yml (spawn.yml/warp.yml): {0} εγγραφές"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Δεν εντοπίστηκε το πρόσθετο Floodgate, οι παίκτες Bedrock θα χρησιμοποιούν αλληλεπίδραση μέσω συνομιλίας"
+system.log.floodgate_hook_failed: "Αποτυχία σύνδεσης με το Floodgate, οι παίκτες Bedrock θα χρησιμοποιούν αλληλεπίδραση μέσω συνομιλίας: {0}: {1}"
+system.log.floodgate_hooked: "Συνδέθηκε το Floodgate (τα μηνύματα τύπου κλικ για παίκτες Bedrock θα εμφανίζονται ως κουμπιά σε αναδυόμενο παράθυρο)"
+system.log.bedrock_check_failed: "Σφάλμα στον προσδιορισμό παίκτη Bedrock (θα αντιμετωπιστεί ως παίκτης που δεν είναι Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Αναγνωρίστηκε παίκτης Bedrock: {0}"
+system.log.form_send_false: "Η αποστολή του αναδυόμενου παραθύρου επέστρεψε false (ο στόχος {0} μπορεί να μην είναι συνδεδεμένος ή να μην είναι παίκτης Bedrock)"
+system.log.form_send_failed: "Εξαίρεση κατά την αποστολή του αναδυόμενου παραθύρου: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Εξαίρεση κατά την επεξεργασία εντολής (χειρίστηκε με ασφάλεια): {0}: {1}"
+system.log.event_exception_caught: "Εξαίρεση κατά την επεξεργασία του συμβάντος {0} (χειρίστηκε με ασφάλεια): {1}: {2}"
+
 #=======================
-# Ενημερώσεις
+# 更新
 #=======================
-update.checking: "&a&lΈλεγχος για ενημερώσεις..."
-update.available: "&a&lΝέα έκδοση &6&lTPA-v<target> &a&lδιαθέσιμη: https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lΈχετε την τελευταία έκδοση"
-update.failed: "&c&lΑποτυχία ελέγχου ενημερώσεων!"
+update.checking: "<green><bold>Έλεγχος για ενημερώσεις...</bold></green>"
+update.available: "<green><bold>Νέα έκδοση </bold><gold><bold>TPA-v%target% </bold><green><bold>διαθέσιμη: https://modrinth.com/plugin/tpa.66666/versions</bold></green></gold></green>"
+update.latest: "<green><bold>Έχετε την τελευταία έκδοση</bold></green>"
+update.failed: "<red><bold>Αποτυχία ελέγχου ενημερώσεων!</bold></red>"

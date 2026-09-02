@@ -1,0 +1,152 @@
+package top.craft_hello.tpa.datas
+
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
+import org.bukkit.Bukkit
+import org.bukkit.command.CommandSender
+import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.entity.Player
+import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.objects.ConfigManager
+import top.craft_hello.tpa.utils.PapiHook
+import top.craft_hello.tpa.utils.SendMessageUtil
+import top.craft_hello.tpa.utils.YamlIO
+import java.io.File
+
+// 语言文件封装（MiniMessage 格式）。
+// 占位符采用 4.0 重构设计：%target%、%seconds%、%command%、%message%、%max_home_amount%。
+// 若服务器安装了 PlaceholderAPI，消息会先经过 PAPI 占位符处理（可选依赖）。
+data class Language(var languageFile: File, var isReplace: Boolean) {
+    val plugin = TPA.plugin
+    var languageConfig: FileConfiguration
+    private val miniMessage = MiniMessage.miniMessage()
+
+    init {
+        languageConfig = loadLanguage(languageFile, isReplace)
+    }
+
+    constructor(languageFile: File): this(languageFile, false)
+
+    private fun loadLanguage(languageFile: File, isReplace: Boolean): FileConfiguration {
+        if (isReplace || !languageFile.exists()) {
+            plugin.saveResource(buildString {
+                append("language/")
+                append(languageFile.name)
+            }, isReplace)
+            if (!languageFile.exists()){
+                plugin.saveResource(buildString {
+                    append("language/")
+                    append(ConfigManager.config.language)
+                    append(".yml")
+                }, isReplace)
+            }
+        }
+        return YamlIO.load(languageFile)
+    }
+
+    private fun formatText(text: String): Component {
+        return miniMessage.deserialize(text)
+    }
+
+    // 替换占位符并组件化。
+    // 单变量时 %target%/%command%/%message%/%max_home_amount%/%seconds% 共用该值；
+    // 双变量时 %target% 取第一个，%command%/%message%/%max_home_amount%/%seconds% 取第二个。
+    // 变量值来自玩家名等外部输入，先做 MiniMessage 转义，避免注入标签。
+    private fun formatText(text: String, vararg vars: String): Component {
+        val escaped = vars.map { MiniMessage.miniMessage().escapeTags(it) }
+        var t = text
+        when (vars.size){
+            1 -> {
+                t = t.replace("%target%", escaped[0])
+                    .replace("%command%", escaped[0])
+                    .replace("%message%", escaped[0])
+                    .replace("%max_home_amount%", escaped[0])
+                    .replace("%seconds%", escaped[0])
+            }
+            2 -> {
+                t = t.replace("%target%", escaped[0])
+                    .replace("%command%", escaped[1])
+                    .replace("%message%", escaped[1])
+                    .replace("%max_home_amount%", escaped[1])
+                    .replace("%seconds%", escaped[1])
+            }
+        }
+        return formatText(t)
+    }
+
+    fun getPrefix(): String {
+        return getPrefix(Bukkit.getConsoleSender())
+    }
+
+    fun getPrefix(sender: CommandSender): String {
+        return if(sender is Player) getMessage("prefix") else getMessage("console_prefix")
+    }
+
+    fun getMessage(path: String): String {
+        val value = languageConfig.getString(path)
+        if (value == null) warnMissingKey(languageFile.name, path)
+        return value ?: "null"
+    }
+
+    companion object {
+        // 语言文件缺键警告去重（同名文件同键只报一次，避免刷屏）
+        private val warnedMissingKeys: MutableSet<String> = HashSet()
+
+        // 旧版语言文件缺少新增键时给出明确提示（getMessage 会以 "null" 兜底显示）
+        fun warnMissingKey(fileName: String, path: String) {
+            if (warnedMissingKeys.add("$fileName:$path")) {
+                TPA.plugin.logger.warning(SendMessageUtil.consoleLog("system.log.language_missing_key", fileName, path))
+            }
+        }
+    }
+
+    // 读取原文并透传 PlaceholderAPI 占位符（玩家可用时）
+    fun getRawMessage(sender: CommandSender?, path: String): String {
+        val raw = getMessage(path)
+        return if (sender is Player) PapiHook.setPlaceholders(sender, raw) else raw
+    }
+
+    fun getFormatMessage(path: String, vararg vars: String): Component {
+        return formatText(getMessage(path), *vars)
+    }
+
+    fun getFormatMessage(sender: CommandSender, path: String, vararg vars: String): Component {
+        return formatText(getRawMessage(sender, path), *vars)
+    }
+
+    fun getPrefixMessage(path: String): String {
+        return buildString {
+            append(getPrefix())
+            append(getMessage(path))
+        }
+    }
+
+    fun getPrefixMessage(sender: CommandSender, path: String): String {
+        return buildString {
+            append(getPrefix(sender))
+            append(getRawMessage(sender, path))
+        }
+    }
+
+    fun getFormatPrefixMessage(path: String): Component {
+        return formatText(getPrefixMessage(path))
+    }
+
+    fun getFormatPrefixMessage(path: String, vararg vars: String): Component {
+        return formatText(getPrefixMessage(path), *vars)
+    }
+
+    fun getFormatPrefixMessage(sender: CommandSender, path: String, vararg vars: String): Component {
+        return formatText(getPrefixMessage(sender, path), *vars)
+    }
+
+    // 费用类消息：命名占位符 {cost}/{balance}/{currency}（值为格式化金额与语言文件货币名，无注入风险）；
+    // 与其它消息一致带 prefix（控制台走 console_prefix）
+    fun getCostMessage(sender: CommandSender, path: String, cost: String, balance: String, currencyName: String): Component {
+        val text = getPrefixMessage(sender, path)
+            .replace("{cost}", cost)
+            .replace("{balance}", balance)
+            .replace("{currency}", currencyName)
+        return formatText(text)
+    }
+}

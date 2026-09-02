@@ -1,180 +1,227 @@
-## TPA Plugin Language File
+## TPA 插件简体中文语言文件
 
 #=======================
-# Basic Configuration
+# 基础配置
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "No online players"
 not_warps: "No available warps"
 not_homes: "No available homes"
 spawn_name: "Spawn"
 rtp_name: "Random Teleport"
 last_location: "Last Location"
-lang.set_success: "&a&lClient language set to &6&l<target>"
+lang.set_success: "<green><bold>Client language set to </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
-# Button Interactions
+# 按钮交互
 #=======================
-## Button Texts
-accept_button: "&a&l[Accept]"
-deny_button: "&c&l[Deny]"
-blacklist.add_button: "&c&l[Deny and Blacklist]"
-blacklist.remove_button: "&a&l[Remove Blacklist]"
-teleport_button: "&a&l[Teleport]"
-location_set_button: "&6&l[Set Location]"
-default_home_set_button: "&e&l[Set Default Home]"
-delete_button: "&c&l[Delete]"
-
-## Button Hints
-accept_click_hint: "&a&lClick to accept teleport"
-deny_click_hint: "&c&lClick to deny teleport"
-blacklist.add_hint: "&c&lClick to deny and blacklist"
-blacklist.remove_hint: "&a&lClick to remove from blacklist"
-teleport_click_hint: "&a&lClick to teleport"
-set_location_hint: "&6&lClick to set current location"
-set_default_home_hint: "&e&lClick to set as default home"
-delete_click_hint: "&c&lClick to delete"
+## 按钮文本
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>Click to accept teleport</bold></green>'>[Accept]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>Click to deny teleport</bold></red>'>[Deny]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>Click to deny and blacklist</bold></red>'>[Deny and Blacklist]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>Click to remove from blacklist</bold></green>'>[Remove Blacklist]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>Click to teleport</bold></green>'>[Teleport]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>Click to set current location</bold></gold>'>[Set Location]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>Click to set as default home</bold></yellow>'>[Set Default Home]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>Click to delete</bold></red>'>[Delete]</hover></insert></click></red>  </bold>"
 
 #=======================
-# Teleport Requests
+# 传送请求
 #=======================
-request.to_here: "&a&lPlayer &6&l<target>&a&l wants to teleport to you! Expires in &6&l<seconds>&a&l seconds!"
-request.to_target: "&a&lPlayer &6&l<target>&a&l invites you to their location! Expires in &6&l<seconds>&a&l seconds!"
-request.sent_success: "&a&lRequest sent to &6&l<target>&a&l!"
-request.timeout_notice: "&a&lRequest valid for &6&l<seconds>&a&l seconds!"
-request.expired_from: "&c&lRequest from &6&l<target>&c&l has expired!"
-request.expired_to: "&c&lYour request to &6&l<target>&c&l has expired!"
+request.title: "<bold><green>Teleport Request</green></bold>"
+request.to_here: "<green><bold>Player </bold><gold><bold>%target%</bold><green><bold> wants to teleport to you! Expires in </bold><gold><bold>%seconds%</bold><green><bold> seconds!</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>Player </bold><gold><bold>%target%</bold><green><bold> invites you to their location! Expires in </bold><gold><bold>%seconds%</bold><green><bold> seconds!</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold>Request sent to </bold><gold><bold>%target%</bold><green><bold>!</bold></green></gold></green>"
+request.timeout_notice: "<green><bold>Request valid for </bold><gold><bold>%seconds%</bold><green><bold> seconds!</bold></green></gold></green>"
+request.expired_from: "<red><bold>Request from </bold><gold><bold>%target%</bold><red><bold> has expired!</bold></red></gold></red>"
+request.expired_to: "<red><bold>Your request to </bold><gold><bold>%target%</bold><red><bold> has expired!</bold></red></gold></red>"
 
 #=======================
-# Homes
+# 家
 #=======================
-home.list_header: "&a&lAvailable Homes:"
-home.set_success: "&a&lHome &6&l<target>&a&l set"
-home.default_set_success: "&a&lDefault home set to &6&l<target>"
-home.delete_success: "&a&lHome &6&l<target>&a&l deleted"
-home.teleport_success: "&a&lTeleported to home &6&l<target>"
-home.max_limit_error: "&c&lMaximum &6&l<max_home_amount>&c&l homes allowed!"
-error.default_home_already_set: "&6&l<target>&c&l is already default home"
+home.list_header: "<green><bold>Available Homes:</bold></green>"
+home.set_success: "<green><bold>Home </bold><gold><bold>%target%</bold><green><bold> set</bold></green></gold></green>"
+home.default_tag: "[Default]"
+home.default_set_success: "<green><bold>Default home set to </bold><gold><bold>%target%</bold></gold></green>"
+home.delete_success: "<green><bold>Home </bold><gold><bold>%target%</bold><green><bold> deleted</bold></green></gold></green>"
+home.teleport_success: "<green><bold>Teleported to home </bold><gold><bold>%target%</bold></gold></green>"
+home.max_limit_error: "<red><bold>Maximum </bold><gold><bold>%max_home_amount%</bold><red><bold> homes allowed!</bold></red></gold></red>"
+error.default_home_already_set: "<gold><bold>%target%</bold><red><bold> is already default home</bold></red></gold>"
 
 #=======================
-# Warps
+# 传送点
 #=======================
-warp.list_header: "&a&lAvailable Warps:"
-warp.set_success: "&a&lWarp &6&l<target>&a&l set"
-warp.delete_success: "&a&lWarp &6&l<target>&a&l deleted"
-warp.teleport_success: "&a&lTeleported to warp &6&l<target>"
+warp.list_header: "<green><bold>Available Warps:</bold></green>"
+warp.set_success: "<green><bold>Warp </bold><gold><bold>%target%</bold><green><bold> set</bold></green></gold></green>"
+warp.delete_success: "<green><bold>Warp </bold><gold><bold>%target%</bold><green><bold> deleted</bold></green></gold></green>"
+warp.teleport_success: "<green><bold>Teleported to warp </bold><gold><bold>%target%</bold></gold></green>"
 
 #=======================
-# Spawn
+# 主城
 #=======================
-spawn.set_success: "&a&lSpawn location set"
-spawn.delete_success: "&a&lSpawn location removed"
-spawn.teleport_success: "&a&lTeleported to spawn!"
-
-#=======================
-# Last Location
-#=======================
-back.teleport_success: "&a&lTeleported to last location!"
+spawn.set_success: "<green><bold>Spawn location set</bold></green>"
+spawn.delete_success: "<green><bold>Spawn location removed</bold></green>"
+spawn.teleport_success: "<green><bold>Teleported to spawn!</bold></green>"
 
 #=======================
-# Random Teleport
+# 上一次的位置
 #=======================
-rtp.generating: "&a&lGenerating random location..."
-rtp.success: "&a&lTeleported to&6&l random location!"
-rtp.failed: "&c&lFailed to generate location!"
+back.teleport_success: "<green><bold>Teleported to last location!</bold></green>"
 
 #=======================
-# Blacklist
+# 随机传送
 #=======================
-blacklist.list_header: "&a&lYour Blacklist:"
-blacklist.add_success: "&a&lAdded &6&l<target>&a&l to blacklist"
-blacklist.remove_success: "&a&lRemoved &6&l<target>&a&l from blacklist"
-
-#=======================
-# Error Messages
-#=======================
-## Command Status
-error.command_disabled: "&c&lThis command is disabled!"
-error.world_disabled: "&c&lCommand disabled in this world!"
-error.command_cooldown: "&c&lWait &6&l<seconds>&c&l seconds to use!"
-
-## Permissions
-error.console_restricted: "&c&lPlayer-only command!"
-error.permission_denied: "&c&lNo permission!"
-
-## Player Status
-error.no_online_players: "&c&lNo online players!"
-error.target_offline: "&c&lPlayer &6&l<target>&c&l is offline!"
-error.self_operation: "&c&lCannot perform on yourself!"
-
-## Requests
-error.no_pending_request: "&c&lNo pending requests!"
-error.request_pending: "&c&lPending request exists!"
-
-## Blacklist
-error.already_blacklisted: "&c&lAlready in blacklist!"
-error.blocked_by_target: "&c&lYou're blocked by target!"
-error.blacklist_empty: "&c&lBlacklist is empty!"
-error.not_blacklisted: "&c&lNot in blacklist!"
-
-## Homes
-error.home_not_found: "&c&lHome &6&l<target>&c&l not found!"
-error.no_homes_set: "&c&lNo homes set!"
-error.no_default_home: "&c&lNo default home!"
-
-## Warps
-error.warp_not_found: "&c&lWarp &6&l<target>&c&l not found!"
-error.no_warps_set: "&c&lNo warps available!"
-
-## Locations
-error.last_location_missing: "&c&lNo last location!"
-error.logout_location_missing: "&c&lNo logout location!"
-error.spawn_not_set: "&c&lSpawn not set!"
-
-## Syntax
-error.syntax_generic: "&c&lSyntax error! Usage: /<command>"
-error.syntax_tpa: "&c&lSyntax error! Usage: /<command> <player>"
-error.syntax_tpall: "&c&lSyntax error! Usage: /<command> [player/warp/spawn] [name]"
-error.syntax_warp: "&c&lSyntax error! Usage: /<command> <warp>"
-error.syntax_home: "&c&lSyntax error! Usage: /<command> <home>"
-
-## System
-error.config_not_found: "&c&lConfig regenerated!"
-error.runtime: "&c&lPlugin error: <message>"
-error.forwarded_error: "&c&lError from &6&l<target>:"
+rtp.generating: "<green><bold>Generating random location...</bold></green>"
+rtp.success: "<green><bold>Teleported to</bold><gold><bold> random location!</bold></gold></green>"
+rtp.failed: "<red><bold>Failed to generate location!</bold></red>"
 
 #=======================
-# Teleport Process
+# 黑名单
 #=======================
-teleport.accept.self: "&a&lAccepted request from &6&l<target>!"
-teleport.accept.target: "&a&lPlayer &6&l<target>&a&l accepted your request!"
-teleport.deny.self: "&c&lDenied request from &6&l<target>!"
-teleport.deny.target: "&c&lPlayer &6&l<target>&c&l denied your request!"
-teleport.countdown: "&a&lTeleporting in &6&l<seconds>&a&l seconds to &6&l<target>"
-teleport.cancel_on_move: "&a&lMoving cancels teleport!"
-teleport.canceled.self: "&c&lTeleport canceled!"
-teleport.canceled.target: "&c&lTarget canceled teleport!"
-teleport.generic_success: "&a&lTeleported to &6&l<target>"
-teleport.tpall.to_target: "&a&lAdmin teleported you to &6&l<target>"
-teleport.tpall.to_self: "&a&lAdmin teleported all players to you"
-teleport.tpall.success: "&a&lTeleported all players to &6&l<target>"
-teleport.logout_location: "&a&lTeleported to &6&l<target>'s logout location"
+blacklist.list_header: "<green><bold>Your Blacklist:</bold></green>"
+blacklist.add_success: "<green><bold>Added </bold><gold><bold>%target%</bold><green><bold> to blacklist</bold></green></gold></green>"
+blacklist.remove_success: "<green><bold>Removed </bold><gold><bold>%target%</bold><green><bold> from blacklist</bold></green></gold></green>"
 
 #=======================
-# System Messages
+# 错误提示
 #=======================
-system.config_reloaded: "&a&lConfig reloaded!"
-system.plugin_loaded: "&a&lPlugin loaded! Version: &6&l<target>"
-system.plugin_unloaded: "&c&lPlugin unloaded!"
-system.config_migrated_success: "&a&lConfig migration completed!"
-system.config_migrated: "&a&lMigrating old config (backup created)"
-system.debug_warning: "&c&lDebug mode enabled - disable after use!"
+## 命令状态
+error.command_disabled: "<red><bold>This command is disabled!</bold></red>"
+error.world_disabled: "<red><bold>Command disabled in this world!</bold></red>"
+error.command_cooldown: "<red><bold>Wait </bold><gold><bold>%seconds%</bold><red><bold> seconds to use!</bold></red></gold></red>"
+
+## 权限与执行
+error.console_restricted: "<red><bold>Player-only command!</bold></red>"
+error.permission_denied: "<red><bold>No permission!</bold></red>"
+
+## 玩家状态
+error.no_online_players: "<red><bold>No online players!</bold></red>"
+error.target_offline: "<red><bold>Player </bold><gold><bold>%target%</bold><red><bold> is offline!</bold></red></gold></red>"
+error.self_operation: "<red><bold>Cannot perform on yourself!</bold></red>"
+
+## 请求状态
+error.no_pending_request: "<red><bold>No pending requests!</bold></red>"
+error.request_pending: "<red><bold>Pending request exists!</bold></red>"
+
+## 黑名单
+error.already_blacklisted: "<red><bold>Already in blacklist!</bold></red>"
+error.blocked_by_target: "<red><bold>You're blocked by target!</bold></red>"
+error.blacklist_empty: "<red><bold>Blacklist is empty!</bold></red>"
+error.not_blacklisted: "<red><bold>Not in blacklist!</bold></red>"
+
+## 家
+error.home_not_found: "<red><bold>Home </bold><gold><bold>%target%</bold><red><bold> not found!</bold></red></gold></red>"
+error.no_homes_set: "<red><bold>No homes set!</bold></red>"
+error.no_default_home: "<red><bold>No default home!</bold></red>"
+
+## 传送点
+error.warp_not_found: "<red><bold>Warp </bold><gold><bold>%target%</bold><red><bold> not found!</bold></red></gold></red>"
+error.no_warps_set: "<red><bold>No warps available!</bold></red>"
+
+## 位置记录
+error.last_location_missing: "<red><bold>No last location!</bold></red>"
+error.logout_location_missing: "<red><bold>No logout location!</bold></red>"
+error.spawn_not_set: "<red><bold>Spawn not set!</bold></red>"
+
+## 余额不足
+error.cost_insufficient: "<bold><red>Insufficient balance! This teleport costs</red> <gold>{cost}</gold> {currency}<red>, your balance is</red> <gold>{balance}</gold></bold>"
+error.cost_teleport_blocked: "<bold><red>Teleport cancelled because</red> <gold>%target%</gold> <red>has insufficient balance</red></bold>"
+
+## 命令语法
+error.syntax_generic: "<red><bold>Syntax error! Usage: /%command%</bold></red>"
+error.syntax_tpa: "<red><bold>Syntax error! Usage: /%command% <player></bold></red>"
+error.syntax_tpall: "<red><bold>Syntax error! Usage: /%command% [player/warp/spawn] [name]</bold></red>"
+error.syntax_warp: "<red><bold>Syntax error! Usage: /%command% <warp></bold></red>"
+error.syntax_home: "<red><bold>Syntax error! Usage: /%command% <home></bold></red>"
+
+## 系统错误
+error.config_not_found: "<red><bold>Config regenerated!</bold></red>"
+error.runtime: "<red><bold>Plugin error: %message%</bold></red>"
+error.forwarded_error: "<red><bold>Error from </bold><gold><bold>%target%:</bold></gold></red>"
 
 #=======================
-# Updates
+# 传送过程提示
 #=======================
-update.checking: "&a&lChecking updates..."
-update.available: "&a&lNew version: &6&lTPA-v<target>&a&l at&6&l https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&lAlready latest version"
-update.failed: "&c&lUpdate check failed!"
+teleport.accept.self: "<green><bold>Accepted request from </bold><gold><bold>%target%!</bold></gold></green>"
+teleport.accept.target: "<green><bold>Player </bold><gold><bold>%target%</bold><green><bold> accepted your request!</bold></green></gold></green>"
+teleport.deny.self: "<red><bold>Denied request from </bold><gold><bold>%target%!</bold></gold></red>"
+teleport.deny.target: "<red><bold>Player </bold><gold><bold>%target%</bold><red><bold> denied your request!</bold></red></gold></red>"
+teleport.countdown: "<green><bold>Teleporting in </bold><gold><bold>%seconds%</bold><green><bold> seconds to </bold><gold><bold>%target%</bold></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>Moving cancels teleport!</bold></green>"
+teleport.canceled.self: "<red><bold>Teleport canceled!</bold></red>"
+teleport.canceled.target: "<red><bold>Target canceled teleport!</bold></red>"
+teleport.generic_success: "<green><bold>Teleported to </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_target: "<green><bold>Admin teleported you to </bold><gold><bold>%target%</bold></gold></green>"
+teleport.tpall.to_self: "<green><bold>Admin teleported all players to you</bold></green>"
+teleport.tpall.success: "<green><bold>Teleported all players to </bold><gold><bold>%target%</bold></gold></green>"
+teleport.logout_location: "<green><bold>Teleported to </bold><gold><bold>%target%'s logout location</bold></gold></green>"
+teleport.cost_charged: "<bold><green>This teleport cost</green> <gold>{cost}</gold> {currency}<green>, your balance is</green> <gold>{balance}</gold></bold>"
+
+#=======================
+# 系统消息
+#=======================
+system.config_reloaded: "<green><bold>Config reloaded!</bold></green>"
+system.currency_money: "<bold><gold>money</gold></bold>"
+system.currency_points: "<bold><green>points</green></bold>"
+system.plugin_loaded: "<green><bold>Plugin loaded! Version: </bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>Plugin unloaded!</bold></red>"
+system.config_migrated_success: "<green><bold>Config migration completed!</bold></green>"
+system.config_migrated: "<green><bold>Migrating old config (backup created)</bold></green>"
+system.debug_warning: "<red><bold>Debug mode enabled - disable after use!</bold></red>"
+
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "Language file {0} is missing key {1} (possibly an outdated file; delete the plugins/TPA/language directory and restart to regenerate the file, or add the key manually)"
+system.log.config_migrated_detail: "Migrated the old configuration ({0} → {1}): custom values have been preserved, the old language file has been backed up to plugins/TPA/backup/{0}/, and a new language file has been regenerated"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "Database storage is not enabled (use_database: false); player data will be saved to the playerdata directory"
+system.log.database_pool_initialized: "Database connection pool initialized ({0})"
+system.log.database_connect_failed: "Database connection failed ({0}): {1}"
+system.log.database_fallback_sqlite: "Fell back to local SQLite storage ({0}); data is stored locally for now. After the configuration is fixed, running /tpac reload will automatically migrate the data back to the database"
+system.log.database_fallback_create_failed: "Failed to create the fallback SQLite connection pool: {0}"
+system.log.database_memory_only: "The database is unavailable and the fallback failed; data will be kept only in the memory cache (lost on restart)"
+system.log.database_get_connection_failed: "Failed to get a database connection: {0}"
+system.log.database_pool_closed: "Database connection pool closed"
+system.log.database_table_created: "Created table {0}"
+system.log.database_table_exists: "Table {0} already exists"
+system.log.database_table_points_created: "Created the tpa_points table (unified storage for spawn/warp teleport points)"
+system.log.database_column_added: "Added column {0} to the player_data table"
+system.log.database_column_add_failed: "Failed to add column {0} to the player_data table: {1}"
+system.log.unsupported_database_type: "Unsupported database type: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Hooked into the Vault economy system (money costs are available)"
+system.log.playerpoints_hooked: "Hooked into the PlayerPoints points system (points costs are available)"
+system.log.cost_without_currency: "Teleport costs are enabled (cost.enable: true) but the currency system ({0}) is unavailable: {1} is not installed or does not provide an economy/points service; no cost will be charged"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "Failed to back up {0}: {1}"
+system.log.fallback_migrate_players_failed: "Failed to migrate player data from the fallback database (the player_data table may be missing): {0}"
+system.log.fallback_migrate_points_failed: "Failed to migrate teleport point data from the fallback database (the tpa_points table may be missing): {0}"
+system.log.fallback_migrated_back: "Data migrated back from the fallback database to the database: {0} players, {1} teleport points"
+system.log.fallback_backup_removed: "The fallback database has been backed up to {0} and removed"
+system.log.fallback_migrate_back_failed: "Failed to migrate the fallback database data back to the database: {0}"
+system.log.spawn_migrated_to_db: "Migrated spawn data to the database (tpa_points)"
+system.log.spawn_yml_backed_up: "Old spawn.yml backed up to backup/{0}"
+system.log.warp_migrated_to_db: "Migrated {0} warp entries to the database (tpa_points)"
+system.log.warp_yml_backed_up: "Old warp.yml backed up to backup/{0}"
+system.log.players_migrated_to_db: "Migrated yml data for {0} players to the database (original files kept in the playerdata directory)"
+system.log.db_file_backed_up: "Original database file backed up to backup/{0}"
+system.log.points_migrated_to_yml: "Teleport point data has been migrated back from the database to yml files (spawn.yml/warp.yml): {0} entries"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate plugin not detected; Bedrock players will use chat interaction"
+system.log.floodgate_hook_failed: "Failed to hook into Floodgate; Bedrock players will use chat interaction: {0}: {1}"
+system.log.floodgate_hooked: "Hooked into Floodgate (clickable messages for Bedrock players will be shown as form buttons)"
+system.log.bedrock_check_failed: "Bedrock player check failed (treating the player as non-Bedrock): {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] Identified Bedrock player: {0}"
+system.log.form_send_false: "Form send returned false (target {0} may be offline or not a Bedrock player)"
+system.log.form_send_failed: "Error while sending the form: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "Exception while handling a command (caught by a catch-all handler): {0}: {1}"
+system.log.event_exception_caught: "Exception while handling the {0} event (caught by a catch-all handler): {1}: {2}"
+
+#=======================
+# 更新
+#=======================
+update.checking: "<green><bold>Checking updates...</bold></green>"
+update.available: "<green><bold>New version: </bold><gold><bold>TPA-v%target%</bold><green><bold> at</bold><gold><bold> https://modrinth.com/plugin/tpa.66666/versions</bold></gold></green></gold></green>"
+update.latest: "<green><bold>Already latest version</bold></green>"
+update.failed: "<red><bold>Update check failed!</bold></red>"

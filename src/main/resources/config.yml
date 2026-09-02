@@ -2,7 +2,7 @@
 ## Github：https://github.com/WarSkyGod/TPA
 
 # 插件版本，请勿自行修改
-version: ${project.version}
+version: ${version}
 
 # 服务端显示语言，默认为简体中文（zh_CN）,支持多种语言
 # 客户端会自动根据客户端的语言选择合适的语言脚本，如果不存在对应的语言脚本默认使用这里设置的语言
@@ -16,14 +16,94 @@ debug: false
 # 关闭后服务器后台和拥有 tpa.version 或 tpa.admin 权限的玩家将不会收到插件更新提醒
 update_check: true
 
+# 是否使用数据库存储
+use_database: false
+
+# 使用的数据库类型
+# 可选：sqlite mysql
+database_type: "sqlite"
+
+# 数据库地址
+database_address: "localhost"
+
+# 数据库端口
+database_port: 3306
+
+# 数据库名称
+database_name: "database"
+
+# 数据库用户名
+database_username: "root"
+
+# 数据库密码
+database_password: ""
+
 # 是否每次进入服务器或死亡都强制传送到 spawn
 force_spawn: true
 
-# 是否启用 title 传送消息（1.12 以下版本将自动关闭）
+# 是否启用 title 传送消息
 enable_title_message: true
 
-# 是否启用传送音效（需要 enable_title_message 为 true）
+# 是否启用传送音效
 enable_sound: true
+
+# 传送音效设置
+# name 填 Bukkit Sound 名称，非法名称回退默认
+sound:
+  # 传送倒计时音效（每秒）
+  countdown:
+    name: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 1.0
+    pitch: 1.0
+  # 传送成功音效
+  success:
+    name: ENTITY_ENDERMAN_TELEPORT
+    volume: 1.0
+    pitch: 1.0
+  # 传送失败音效
+  fail:
+    name: ENTITY_VILLAGER_NO
+    volume: 1.0
+    pitch: 1.0
+  # 取消传送音效（移动取消）
+  cancel:
+    name: BLOCK_NOTE_BLOCK_BASS
+    volume: 1.0
+    pitch: 1.0
+
+# 传送费用设置（非管理传送命令：tpa/tphere/home/warp/spawn/back/rtp）
+# 需要可选前置：money=Vault（金钱），points=PlayerPoints（点券）
+# 对应前置未安装时费用功能自动跳过（免费传送，不阻塞使用）
+# 拥有 tpa.admin 权限的玩家无视扣费（免费传送）
+cost:
+  # 是否启用传送费用
+  enable: false
+
+  # 费用货币类型：money=金钱（Vault）/ points=点券（PlayerPoints）
+  currency: money
+
+  # 各传送命令费用（0 为免费）
+  price:
+    tpa: 10
+    tphere: 10
+    home: 10
+    warp: 10
+    spawn: 10
+    back: 10
+    rtp: 50
+
+  # 会员优惠模式：percent=百分比（vip_discount 值为实付百分比，50 = 半价）
+  #             amount=固定减免（vip_discount 值为直接减免的金额，5 = 少付 5）
+  discount_mode: percent
+
+  # 会员优惠：沿用 tpa.vip / tpa.vip+ / tpa.mvp / tpa.mvp+ / tpa.mvp++ 既有权限（不引入新权限）
+  # 配置各会员等级的优惠值（含义由上方 discount_mode 决定），多项命中取最优惠，未配置的等级无优惠
+  vip_discount:
+    vip: 50
+    vip+: 30
+    mvp: 20
+    mvp+: 10
+    mvp++: 5
 
 # 延迟设置（单位：秒）
 delay:
@@ -136,11 +216,42 @@ rtp:
     - disableWorld2
 
   # 随机传送的最大范围（半径）
-  # 以使用命令的玩家为中心
-  # 对末地无效，末地默认为主岛为中心正负100
   limit:
     x: 500
     z: 500
+
+  # 随机传送点的最大生成尝试次数
+  # 尝试次数内全部生成失败时才会提示无法生成传送点
+  generate_attempts: 5
+
+  # 传送位置的黑名单方块列表（脚下/所在/头顶命中任一则该位置无效并重新生成）
+  # 填 Bukkit Material 名称；读到当前版本没有的方块名时自动查新旧名对照表，
+  # 低版本没有对应方块则直接略过（如 1.8 会把 COBWEB 解析为 WEB，营火等直接跳过）；
+  # 旧配置文件缺失本项时使用与下方相同的默认规则；设为空列表 [] 可关闭黑名单检查
+  blacklisted_blocks:
+    - LAVA              # 岩浆：烧灼
+    - WATER             # 水：溺水/湿身
+    - FIRE              # 火：烧灼
+    - SOUL_FIRE         # 灵魂火：烧灼
+    - MAGMA_BLOCK       # 岩浆块：站立烧灼
+    - BEDROCK           # 基岩：基岩层上方无可站立空间
+    - CACTUS            # 仙人掌：站立扎伤
+    - CAMPFIRE          # 营火：站立烧灼
+    - SOUL_CAMPFIRE     # 灵魂营火：站立烧灼
+    - POINTED_DRIPSTONE # 滴水石锥：坠落刺伤
+    - POWDER_SNOW       # 细雪：陷入冻伤
+    - SWEET_BERRY_BUSH  # 甜浆果丛：穿行扎伤
+    - WITHER_ROSE       # 凋零玫瑰：凋零效果
+    - NETHER_PORTAL     # 下界传送门：误触发维度传送
+    - END_PORTAL        # 末地传送门：误触发维度传送
+    - END_GATEWAY       # 末地折跃门：误触发维度传送
+    - BUBBLE_COLUMN     # 气泡柱：卷入水柱
+    - COBWEB            # 蜘蛛网：被困
+
+  # 是否以玩家坐标为随机传送中心
+  # true: 以玩家当前位置为中心（默认）
+  # false: 以世界出生点为中心
+  center_on_player: true
 
 # warp 命令设置
 warp:

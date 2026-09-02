@@ -1,0 +1,248 @@
+package top.craft_hello.tpa.objects
+
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.configuration.file.YamlConfiguration
+import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.datas.PlayerData
+import top.craft_hello.tpa.utils.YamlIO
+import java.io.File
+import java.util.UUID
+
+// 玩家数据存储抽象：yml（默认，兼容 3.x playerdata 文件）与数据库（use_database=true）
+interface PlayerDataStore {
+    fun load(uuid: UUID): PlayerData?
+    fun save(data: PlayerData)
+
+    // 按玩家名查找数据对应的 UUID（在线/离线均可查，用于 /tplogout 等场景）
+    fun findUuidByName(name: String): UUID?
+}
+
+// 默认存储：plugins/TPA/playerdata/<uuid>.yml，与 3.x 格式互通
+class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
+    private val folder = File(plugin.dataFolder, "playerdata")
+
+    private fun fileOf(uuid: UUID): File = File(folder, "$uuid.yml")
+
+    override fun load(uuid: UUID): PlayerData? {
+        val file = fileOf(uuid)
+        if (!file.exists()) return null
+        val config = YamlIO.load(file)
+        val data = PlayerData(uuid)
+        data.playerName = config.getString("player_name")
+        data.language = config.getString("language")
+        data.setlang = config.getBoolean("setlang", false)
+        data.defaultHomeName = config.getString("default_home")
+        for (name in config.getConfigurationSection("homes")?.getKeys(false) ?: emptySet()) {
+            val location = readLocation(config, "homes.$name") ?: continue
+            data.homes[name] = location
+        }
+        data.denyList.addAll(config.getStringList("deny_list"))
+        data.lastLocation = readLocation(config, "last_location")
+        data.logoutLocation = readLocation(config, "logout_location")
+        return data
+    }
+
+    // Location 读取双路径：手工分键（3.x 格式 + 本插件 save 补写）优先；
+    // == 序列化格式回退反射 getLocation（该 API 自 1.13+ 才有，1.8 编译兜底下不可直接引用）
+    private fun readLocation(config: YamlConfiguration, path: String): Location? {
+        readManualLocation(config, path)?.let { return it }
+        return runCatching {
+            config.javaClass.getMethod("getLocation", String::class.java).invoke(config, path) as? Location
+        }.getOrNull()
+    }
+
+    // 3.x 手工分键 Location 读取兜底（<path>.world=世界名字符串 + x/y/z/yaw/pitch）
+    private fun readManualLocation(config: YamlConfiguration, path: String): Location? {
+        val section = config.getConfigurationSection(path) ?: return null
+        val world = Bukkit.getWorld(section.getString("world") ?: return null) ?: return null
+        return Location(
+            world,
+            section.getDouble("x"),
+            section.getDouble("y"),
+            section.getDouble("z"),
+            section.getDouble("yaw").toFloat(),
+            section.getDouble("pitch").toFloat()
+        )
+    }
+
+    override fun findUuidByName(name: String): UUID? {
+        if (!folder.exists()) return null
+        val files = folder.listFiles { file -> file.extension.equals("yml", ignoreCase = true) } ?: return null
+        for (file in files) {
+            val uuid = runCatching { UUID.fromString(file.nameWithoutExtension) }.getOrNull() ?: continue
+            val playerName = YamlIO.load(file).getString("player_name") ?: continue
+            if (playerName.equals(name, ignoreCase = true)) return uuid
+        }
+        return null
+    }
+
+    override fun save(data: PlayerData) {
+        if (!folder.exists()) folder.mkdirs()
+        val config = YamlConfiguration()
+        config.set("player_name", data.playerName)
+        config.set("language", data.language)
+        config.set("setlang", data.setlang)
+        config.set("default_home", data.defaultHomeName)
+        // 双写：Location 对象（== 序列化，老数据兼容）+ 手工分键（1.8 兼容读取与 3.x 格式互通）
+        for ((name, location) in data.homes) {
+            config.set("homes.$name", location)
+            writeManualLocation(config, "homes.$name", location)
+        }
+        config.set("deny_list", data.denyList)
+        config.set("last_location", data.lastLocation)
+        writeManualLocation(config, "last_location", data.lastLocation)
+        config.set("logout_location", data.logoutLocation)
+        writeManualLocation(config, "logout_location", data.logoutLocation)
+        YamlIO.save(config, fileOf(data.uuid))
+    }
+
+    // 手工分键 Location 写入（location 为 null 时清除该节）
+    private fun writeManualLocation(config: YamlConfiguration, path: String, location: Location?) {
+        if (location == null) {
+            config.set(path, null)
+            return
+        }
+        config.set("$path.world", location.world?.name)
+        config.set("$path.x", location.x)
+        config.set("$path.y", location.y)
+        config.set("$path.z", location.z)
+        config.set("$path.yaw", location.yaw.toDouble())
+        config.set("$path.pitch", location.pitch.toDouble())
+    }
+}
+
+// 数据库存储：复用 DatabaseManager 连接池，homes/位置以字符串编码
+class DatabasePlayerDataStore(private val database: DatabaseManager) : PlayerDataStore {
+    private val gson = Gson()
+    private val homesType = object : TypeToken<Map<String, String>>() {}.type
+
+    private fun encodeLocation(location: Location?): String? {
+        if (location == null || location.world == null) return null
+        return buildString {
+            append(location.world.name).append(";")
+            append(location.x).append(";")
+            append(location.y).append(";")
+            append(location.z).append(";")
+            append(location.yaw).append(";")
+            append(location.pitch)
+        }
+    }
+
+    private fun decodeLocation(raw: String?): Location? {
+        if (raw.isNullOrBlank()) return null
+        val parts = raw.split(";")
+        if (parts.size < 6) return null
+        val world = Bukkit.getWorld(parts[0]) ?: return null
+        return Location(
+            world,
+            parts[1].toDoubleOrNull() ?: return null,
+            parts[2].toDoubleOrNull() ?: return null,
+            parts[3].toDoubleOrNull() ?: return null,
+            parts[4].toFloatOrNull() ?: 0f,
+            parts[5].toFloatOrNull() ?: 0f
+        )
+    }
+
+    override fun load(uuid: UUID): PlayerData? {
+        return database.getConnection()?.use { connection ->
+            connection.prepareStatement(
+                "SELECT player_name, language, setlang, default_home, homes, last_location, logout_location FROM player_data WHERE uuid = ?"
+            ).use { statement ->
+                statement.setString(1, uuid.toString())
+                statement.executeQuery().use { rs ->
+                    if (!rs.next()) return@use null
+                    val data = PlayerData(uuid)
+                    data.playerName = rs.getString("player_name")
+                    data.language = rs.getString("language")
+                    data.setlang = rs.getBoolean("setlang")
+                    data.defaultHomeName = rs.getString("default_home")
+                    val homesRaw: Map<String, String>? = gson.fromJson(rs.getString("homes"), homesType)
+                    for ((name, raw) in homesRaw ?: emptyMap()) {
+                        decodeLocation(raw)?.let { data.homes[name] = it }
+                    }
+                    data.lastLocation = decodeLocation(rs.getString("last_location"))
+                    data.logoutLocation = decodeLocation(rs.getString("logout_location"))
+                    data.denyList.addAll(loadDenyList(connection, uuid))
+                    data
+                }
+            }
+        }
+    }
+
+    override fun findUuidByName(name: String): UUID? {
+        // LOWER() 比较同时兼容 SQLite 与 MySQL（MySQL 默认排序规则本就大小写不敏感）
+        return database.getConnection()?.use { connection ->
+            connection.prepareStatement("SELECT uuid FROM player_data WHERE LOWER(player_name) = LOWER(?) LIMIT 1").use { statement ->
+                statement.setString(1, name)
+                statement.executeQuery().use { rs ->
+                    if (rs.next()) runCatching { UUID.fromString(rs.getString("uuid")) }.getOrNull() else null
+                }
+            }
+        }
+    }
+
+    override fun save(data: PlayerData) {
+        val homesRaw = data.homes.mapValues { encodeLocation(it.value) ?: "" }
+        database.getConnection()?.use { connection ->
+            // 方言分支：MySQL 用 ON DUPLICATE KEY UPDATE，SQLite 用 ON CONFLICT
+            val upsert = if (database.databaseType == "mysql") {
+                """
+                INSERT INTO player_data (uuid, player_name, language, setlang, default_home, homes, last_location, logout_location, deny_list, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE
+                    player_name = VALUES(player_name),
+                    language = VALUES(language),
+                    setlang = VALUES(setlang),
+                    default_home = VALUES(default_home),
+                    homes = VALUES(homes),
+                    last_location = VALUES(last_location),
+                    logout_location = VALUES(logout_location),
+                    deny_list = VALUES(deny_list),
+                    updated_at = CURRENT_TIMESTAMP
+                """.trimIndent()
+            } else {
+                """
+                INSERT INTO player_data (uuid, player_name, language, setlang, default_home, homes, last_location, logout_location, deny_list, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(uuid) DO UPDATE SET
+                    player_name = excluded.player_name,
+                    language = excluded.language,
+                    setlang = excluded.setlang,
+                    default_home = excluded.default_home,
+                    homes = excluded.homes,
+                    last_location = excluded.last_location,
+                    logout_location = excluded.logout_location,
+                    deny_list = excluded.deny_list,
+                    updated_at = CURRENT_TIMESTAMP
+                """.trimIndent()
+            }
+            connection.prepareStatement(upsert).use { statement ->
+                statement.setString(1, data.uuid.toString())
+                statement.setString(2, data.playerName)
+                statement.setString(3, data.language)
+                statement.setInt(4, if (data.setlang) 1 else 0)
+                statement.setString(5, data.defaultHomeName)
+                statement.setString(6, gson.toJson(homesRaw))
+                statement.setString(7, encodeLocation(data.lastLocation))
+                statement.setString(8, encodeLocation(data.logoutLocation))
+                statement.setString(9, data.denyList.joinToString(","))
+                statement.executeUpdate()
+            }
+        }
+    }
+
+    // 黑名单与家/语言分列：deny_list 以逗号分隔存储于独立列
+    private fun loadDenyList(connection: java.sql.Connection, uuid: UUID): List<String> {
+        connection.prepareStatement("SELECT deny_list FROM player_data WHERE uuid = ?").use { statement ->
+            statement.setString(1, uuid.toString())
+            statement.executeQuery().use { rs ->
+                if (!rs.next()) return emptyList()
+                val raw = rs.getString("deny_list") ?: return emptyList()
+                return raw.split(",").filter { it.isNotBlank() }
+            }
+        }
+    }
+}

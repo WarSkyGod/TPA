@@ -1,4 +1,4 @@
-name: 自动构建与发布
+name: 自动构建与发布 Paper 插件
 
 on:
   push:
@@ -21,13 +21,16 @@ jobs:
       - name: 获取项目信息
         id: project-info
         run: |
-          # 从pom.xml提取项目信息
-          PROJECT_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-          if [ "$PROJECT_NAME" = "null" ]; then
-            PROJECT_NAME=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+          # 从 build.gradle.kts 提取项目信息
+          PROJECT_NAME=$(./gradlew properties -q | grep "rootProject.name" | awk '{print $2}' | tr -d "'")
+          if [ -z "$PROJECT_NAME" ]; then
+            PROJECT_NAME=$(./gradlew properties -q | grep "name:" | awk '{print $2}' | tr -d "'")
+          fi
+          if [ -z "$PROJECT_NAME" ]; then
+            PROJECT_NAME=$(basename `pwd`)
           fi
           
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tr -d '\n')
+          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}' | tr -d "'")
           
           echo "name=${PROJECT_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
@@ -35,21 +38,24 @@ jobs:
       - name: 设置Java环境
         uses: actions/setup-java@v3
         with:
-          java-version: '25'
+          java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
 
-      - name: Maven构建项目
-        run: mvn -B clean package
+      - name: 授予gradlew执行权限
+        run: chmod +x gradlew
+
+      - name: 构建Paper插件
+        run: ./gradlew clean build
 
       - name: 验证构建结果
         run: |
-          if [ ! -d "target" ]; then
-            echo "::error::构建失败，未生成target目录"
+          if [ ! -d "build/libs" ]; then
+            echo "::error::构建失败，未生成build/libs目录"
             exit 1
           fi
           echo "=== 构建产物 ==="
-          ls -lh target/
+          ls -lh build/libs/
 
       - name: 获取提交信息
         id: get-commit
@@ -68,8 +74,8 @@ jobs:
           echo '```' >> hashes.md
 
           found_files=false
-          for file in target/*.jar; do
-            if [[ -f "$file" ]]; then
+          for file in build/libs/*.jar; do
+            if [[ -f "$file" && ! "$file" == *"-sources.jar" && ! "$file" == *"-javadoc.jar" ]]; then
               hash=$(sha256sum "$file" | awk '{print $1}')
               filename=$(basename "$file")
               echo "${filename}: ${hash}" >> hashes.md
@@ -115,7 +121,7 @@ jobs:
 
             > 本发布由 GitHub Actions 自动生成
           files: |
-            target/*.jar
+            build/libs/*.jar
           draft: false
           prerelease: false
         env:

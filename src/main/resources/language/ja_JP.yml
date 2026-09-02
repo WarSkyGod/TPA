@@ -1,180 +1,227 @@
-## TPAプラグイン日本語言語ファイル
+## TPA 插件简体中文语言文件
 
 #=======================
-# 基本設定
+# 基础配置
 #=======================
-prefix: "&a&l> "
-console_prefix: "&7&l[TPA] "
+prefix: "<green><bold>></bold></green> "
+console_prefix: "<gray><bold>[TPA]</bold></gray> "
 not_online_players: "オンラインプレイヤーがいません"
 not_warps: "利用可能なワープポイントがありません"
 not_homes: "設定されたホームがありません"
 spawn_name: "スポーン地点"
 rtp_name: "ランダムテレポート"
 last_location: "直前の位置"
-lang.set_success: "&a&lクライアント表示言語を &6&l<target> &a&lに設定しました"
+lang.set_success: "<green><bold>クライアント表示言語を </bold><gold><bold>%target% </bold><green><bold>に設定しました</bold></green></gold></green>"
 
 #=======================
-# ボタン操作
+# 按钮交互
 #=======================
-## ボタンテキスト
-accept_button: "&a&l[承諾]"
-deny_button: "&c&l[拒否]"
-blacklist.add_button: "&c&l[拒否してブラックリスト追加]"
-blacklist.remove_button: "&a&l[ブラックリスト解除]"
-teleport_button: "&a&l[テレポート]"
-location_set_button: "&6&l[位置設定]"
-default_home_set_button: "&e&l[デフォルトホーム設定]"
-delete_button: "&c&l[削除]"
-
-## ボタンヒント
-accept_click_hint: "&a&lクリックでテレポート承諾"
-deny_click_hint: "&c&lクリックでテレポート拒否"
-blacklist.add_hint: "&c&lクリックでブラックリスト追加"
-blacklist.remove_hint: "&a&lクリックでブラックリスト解除"
-teleport_click_hint: "&a&lクリックでテレポート"
-set_location_hint: "&6&l現在地を設定"
-set_default_home_hint: "&e&lデフォルトホームに設定"
-delete_click_hint: "&c&lクリックで削除"
+## 按钮文本
+accept_button: "<bold><green><click:run_command:/tpaccept><insert:/tpaccept><hover:show_text:'<green><bold>クリックでテレポート承諾</bold></green>'>[承諾]</hover></insert></click></green>  </bold>"
+deny_button: "<bold><red><click:run_command:/tpdeny><insert:/tpdeny><hover:show_text:'<red><bold>クリックでテレポート拒否</bold></red>'>[拒否]</hover></insert></click></red>  </bold>"
+blacklist.add_button: "<bold><red><click:run_command:/denys add %target%><insert:/denys add %target%><hover:show_text:'<red><bold>クリックでブラックリスト追加</bold></red>'>[拒否してブラックリスト追加]</hover></insert></click></red>  </bold>"
+blacklist.remove_button: "<bold><green><click:run_command:/denys remove %target%><insert:/denys remove %target%><hover:show_text:'<green><bold>クリックでブラックリスト解除</bold></green>'>[ブラックリスト解除]</hover></insert></click></green>  </bold>"
+teleport_button: "<bold><green><click:run_command:/%command% %target%><insert:/%command% %target%><hover:show_text:'<green><bold>クリックでテレポート</bold></green>'>[テレポート]</hover></insert></click></green>  </bold>"
+location_set_button: "<bold><gold><click:run_command:/set%command% %target%><insert:/set%command% %target%><hover:show_text:'<gold><bold>現在地を設定</bold></gold>'>[位置設定]</hover></insert></click></gold>  </bold>"
+default_home_set_button: "<bold><yellow><click:run_command:/setdefaulthome %target%><insert:/setdefaulthome %target%><hover:show_text:'<yellow><bold>デフォルトホームに設定</bold></yellow>'>[デフォルトホーム設定]</hover></insert></click></yellow>  </bold>"
+delete_button: "<bold><red><click:run_command:/del%command% %target%><insert:/del%command% %target%><hover:show_text:'<red><bold>クリックで削除</bold></red>'>[削除]</hover></insert></click></red>  </bold>"
 
 #=======================
-# テレポートリクエスト
+# 传送请求
 #=======================
-request.to_here: "&a&lプレイヤー &6&l<target> &a&lがあなたの位置へテレポートを希望しています（&6&l<seconds>秒&a&l後期限切れ）"
-request.to_target: "&a&lプレイヤー &6&l<target> &a&lが自分の位置へ招待しています（&6&l<seconds>秒&a&l後期限切れ）"
-request.sent_success: "&a&l&6&l<target> &a&lへリクエストを送信しました"
-request.timeout_notice: "&a&lリクエスト有効時間 &6&l<seconds>秒"
-request.expired_from: "&c&l&6&l<target> &c&lからのリクエストが期限切れました"
-request.expired_to: "&c&l&6&l<target> &c&lへのリクエストが期限切れました"
+request.title: "<bold><green>テレポートリクエスト</green></bold>"
+request.to_here: "<green><bold>プレイヤー </bold><gold><bold>%target% </bold><green><bold>があなたの位置へテレポートを希望しています（</bold><gold><bold>%seconds%秒</bold><green><bold>後期限切れ）</bold></green></gold></green></gold></green>"
+request.to_target: "<green><bold>プレイヤー </bold><gold><bold>%target% </bold><green><bold>が自分の位置へ招待しています（</bold><gold><bold>%seconds%秒</bold><green><bold>後期限切れ）</bold></green></gold></green></gold></green>"
+request.sent_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>へリクエストを送信しました</bold></green></gold></green>"
+request.timeout_notice: "<green><bold>リクエスト有効時間 </bold><gold><bold>%seconds%秒</bold></gold></green>"
+request.expired_from: "<red><bold></bold><gold><bold>%target% </bold><red><bold>からのリクエストが期限切れました</bold></red></gold></red>"
+request.expired_to: "<red><bold></bold><gold><bold>%target% </bold><red><bold>へのリクエストが期限切れました</bold></red></gold></red>"
 
 #=======================
-# ホーム
+# 家
 #=======================
-home.list_header: "&a&l利用可能なホーム："
-home.set_success: "&a&lホーム &6&l<target> &a&lを設定しました"
-home.default_set_success: "&a&lデフォルトホームを &6&l<target> &a&lに設定しました"
-home.delete_success: "&a&lホーム &6&l<target> &a&lを削除しました"
-home.teleport_success: "&a&lホーム &6&l<target> &a&lへテレポートしました"
-home.max_limit_error: "&c&lホームは最大 &6&l<max_home_amount> &c&l個までです"
-error.default_home_already_set: "&6&l<target> &c&lは既にデフォルトホームです"
+home.list_header: "<green><bold>利用可能なホーム：</bold></green>"
+home.set_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>を設定しました</bold></green></gold></green>"
+home.default_tag: "[デフォルト]"
+home.default_set_success: "<green><bold>デフォルトホームを </bold><gold><bold>%target% </bold><green><bold>に設定しました</bold></green></gold></green>"
+home.delete_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>を削除しました</bold></green></gold></green>"
+home.teleport_success: "<green><bold>ホーム </bold><gold><bold>%target% </bold><green><bold>へテレポートしました</bold></green></gold></green>"
+home.max_limit_error: "<red><bold>ホームは最大 </bold><gold><bold>%max_home_amount% </bold><red><bold>個までです</bold></red></gold></red>"
+error.default_home_already_set: "<gold><bold>%target% </bold><red><bold>は既にデフォルトホームです</bold></red></gold>"
 
 #=======================
-# ワープポイント
+# 传送点
 #=======================
-warp.list_header: "&a&l利用可能なワープポイント："
-warp.set_success: "&a&lワープポイント &6&l<target> &a&lを設定しました"
-warp.delete_success: "&a&lワープポイント &6&l<target> &a&lを削除しました"
-warp.teleport_success: "&a&lワープポイント &6&l<target> &a&lへテレポートしました"
+warp.list_header: "<green><bold>利用可能なワープポイント：</bold></green>"
+warp.set_success: "<green><bold>ワープポイント </bold><gold><bold>%target% </bold><green><bold>を設定しました</bold></green></gold></green>"
+warp.delete_success: "<green><bold>ワープポイント </bold><gold><bold>%target% </bold><green><bold>を削除しました</bold></green></gold></green>"
+warp.teleport_success: "<green><bold>ワープポイント </bold><gold><bold>%target% </bold><green><bold>へテレポートしました</bold></green></gold></green>"
 
 #=======================
-# スポーン地点
+# 主城
 #=======================
-spawn.set_success: "&a&lスポーン地点を設定しました"
-spawn.delete_success: "&a&lスポーン地点を削除しました"
-spawn.teleport_success: "&a&lスポーン地点へテレポートしました！"
-
-#=======================
-# 直前の位置
-#=======================
-back.teleport_success: "&a&l直前の位置へテレポートしました！"
+spawn.set_success: "<green><bold>スポーン地点を設定しました</bold></green>"
+spawn.delete_success: "<green><bold>スポーン地点を削除しました</bold></green>"
+spawn.teleport_success: "<green><bold>スポーン地点へテレポートしました！</bold></green>"
 
 #=======================
-# ランダムテレポート
+# 上一次的位置
 #=======================
-rtp.generating: "&a&lランダム地点を生成中..."
-rtp.success: "&a&lランダム地点へテレポートしました！"
-rtp.failed: "&c&lランダムテレポートに失敗しました！"
+back.teleport_success: "<green><bold>直前の位置へテレポートしました！</bold></green>"
 
 #=======================
-# ブラックリスト
+# 随机传送
 #=======================
-blacklist.list_header: "&a&lブラックリスト："
-blacklist.add_success: "&a&l&6&l<target> &a&lをブラックリストに追加しました"
-blacklist.remove_success: "&a&l&6&l<target> &a&lをブラックリストから解除しました"
-
-#=======================
-# エラーメッセージ
-#=======================
-## コマンド状態
-error.command_disabled: "&c&lこのコマンドは無効です"
-error.world_disabled: "&c&lこのワールドでは使用できません"
-error.command_cooldown: "&c&l再使用まで &6&l<seconds>秒&c&l待ってください"
-
-## 権限
-error.console_restricted: "&c&lプレイヤーのみ実行可能です"
-error.permission_denied: "&c&l権限がありません！"
-
-## プレイヤー状態
-error.no_online_players: "&c&lオンラインプレイヤーがいません"
-error.target_offline: "&c&lプレイヤー &6&l<target> &c&lはオフラインです"
-error.self_operation: "&c&l自分自身には実行できません"
-
-## リクエスト状態
-error.no_pending_request: "&c&l保留中のリクエストがありません"
-error.request_pending: "&c&l処理中のリクエストがあります"
-
-## ブラックリスト
-error.already_blacklisted: "&c&l既にブラックリストに登録されています"
-error.blocked_by_target: "&c&l相手にブロックされています"
-error.blacklist_empty: "&c&lブラックリストが空です"
-error.not_blacklisted: "&c&lブラックリストに登録されていません"
-
-## ホーム
-error.home_not_found: "&c&lホーム &6&l<target> &c&lは存在しません"
-error.no_homes_set: "&c&l設定されたホームがありません"
-error.no_default_home: "&c&lデフォルトホームが設定されていません"
-
-## ワープポイント
-error.warp_not_found: "&c&lワープポイント &6&l<target> &c&lは存在しません"
-error.no_warps_set: "&c&l利用可能なワープポイントがありません"
-
-## 位置情報
-error.last_location_missing: "&c&l直前の位置が記録されていません"
-error.logout_location_missing: "&c&l最終ログアウト位置がありません"
-error.spawn_not_set: "&c&lスポーン地点が設定されていません"
-
-## コマンド構文
-error.syntax_generic: "&c&l構文エラー！正しい使い方：/<command>"
-error.syntax_tpa: "&c&l構文エラー！正しい使い方：/<command> <プレイヤー名>"
-error.syntax_tpall: "&c&l構文エラー！正しい使い方：/<command> [player/warp/spawn] [名前]"
-error.syntax_warp: "&c&l構文エラー！正しい使い方：/<command> <ワープポイント>"
-error.syntax_home: "&c&l構文エラー！正しい使い方：/<command> <ホーム名>"
-
-## システムエラー
-error.config_not_found: "&c&l設定ファイルを再生成しました"
-error.runtime: "&c&lプラグインエラー：<message>"
-error.forwarded_error: "&c&l&6&l<target> &c&lからのエラー："
+rtp.generating: "<green><bold>ランダム地点を生成中...</bold></green>"
+rtp.success: "<green><bold>ランダム地点へテレポートしました！</bold></green>"
+rtp.failed: "<red><bold>ランダムテレポートに失敗しました！</bold></red>"
 
 #=======================
-# テレポート処理
+# 黑名单
 #=======================
-teleport.accept.self: "&a&l&6&l<target> &a&lのリクエストを承諾しました"
-teleport.accept.target: "&a&l&6&l<target> &a&lがリクエストを承諾しました"
-teleport.deny.self: "&c&l&6&l<target> &c&lのリクエストを拒否しました"
-teleport.deny.target: "&c&l&6&l<target> &c&lがリクエストを拒否しました"
-teleport.countdown: "&a&l&6&l<seconds>秒&a&l後に &6&l<target> &a&lへテレポートします"
-teleport.cancel_on_move: "&a&l移動するとキャンセルされます"
-teleport.canceled.self: "&c&lテレポートをキャンセルしました"
-teleport.canceled.target: "&c&l相手がキャンセルしました"
-teleport.generic_success: "&a&l&6&l<target> &a&lへテレポートしました"
-teleport.tpall.to_target: "&a&l管理者があなたを &6&l<target> &a&lへテレポートさせました"
-teleport.tpall.to_self: "&a&l管理者が全プレイヤーをあなたの位置へテレポートさせました"
-teleport.tpall.success: "&a&l全プレイヤーを &6&l<target> &a&lへテレポートしました"
-teleport.logout_location: "&a&l&6&l<target> &a&lの最終ログアウト位置へテレポートしました"
+blacklist.list_header: "<green><bold>ブラックリスト：</bold></green>"
+blacklist.add_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>をブラックリストに追加しました</bold></green></gold></green>"
+blacklist.remove_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>をブラックリストから解除しました</bold></green></gold></green>"
 
 #=======================
-# システムメッセージ
+# 错误提示
 #=======================
-system.config_reloaded: "&a&l設定ファイルをリロードしました"
-system.plugin_loaded: "&a&lプラグイン読み込み完了！バージョン：&6&l<target>"
-system.plugin_unloaded: "&c&lプラグインをアンロードしました"
-system.config_migrated_success: "&a&l設定ファイルの移行が完了しました"
-system.config_migrated: "&a&l旧設定ファイルを検出、自動バックアップ後に移行します"
-system.debug_warning: "&c&lデバッグモードが有効です（使用後は無効にしてください）"
+## 命令状态
+error.command_disabled: "<red><bold>このコマンドは無効です</bold></red>"
+error.world_disabled: "<red><bold>このワールドでは使用できません</bold></red>"
+error.command_cooldown: "<red><bold>再使用まで </bold><gold><bold>%seconds%秒</bold><red><bold>待ってください</bold></red></gold></red>"
+
+## 权限与执行
+error.console_restricted: "<red><bold>プレイヤーのみ実行可能です</bold></red>"
+error.permission_denied: "<red><bold>権限がありません！</bold></red>"
+
+## 玩家状态
+error.no_online_players: "<red><bold>オンラインプレイヤーがいません</bold></red>"
+error.target_offline: "<red><bold>プレイヤー </bold><gold><bold>%target% </bold><red><bold>はオフラインです</bold></red></gold></red>"
+error.self_operation: "<red><bold>自分自身には実行できません</bold></red>"
+
+## 请求状态
+error.no_pending_request: "<red><bold>保留中のリクエストがありません</bold></red>"
+error.request_pending: "<red><bold>処理中のリクエストがあります</bold></red>"
+
+## 黑名单
+error.already_blacklisted: "<red><bold>既にブラックリストに登録されています</bold></red>"
+error.blocked_by_target: "<red><bold>相手にブロックされています</bold></red>"
+error.blacklist_empty: "<red><bold>ブラックリストが空です</bold></red>"
+error.not_blacklisted: "<red><bold>ブラックリストに登録されていません</bold></red>"
+
+## 家
+error.home_not_found: "<red><bold>ホーム </bold><gold><bold>%target% </bold><red><bold>は存在しません</bold></red></gold></red>"
+error.no_homes_set: "<red><bold>設定されたホームがありません</bold></red>"
+error.no_default_home: "<red><bold>デフォルトホームが設定されていません</bold></red>"
+
+## 传送点
+error.warp_not_found: "<red><bold>ワープポイント </bold><gold><bold>%target% </bold><red><bold>は存在しません</bold></red></gold></red>"
+error.no_warps_set: "<red><bold>利用可能なワープポイントがありません</bold></red>"
+
+## 位置记录
+error.last_location_missing: "<red><bold>直前の位置が記録されていません</bold></red>"
+error.logout_location_missing: "<red><bold>最終ログアウト位置がありません</bold></red>"
+error.spawn_not_set: "<red><bold>スポーン地点が設定されていません</bold></red>"
+
+## 余额不足
+error.cost_insufficient: "<bold><red>残高が不足しています！このテレポートには</red> <gold>{cost}</gold> {currency}<red>が必要で、現在の残高は</red> <gold>{balance}</gold>です</bold>"
+error.cost_teleport_blocked: "<bold><red><gold>%target%</gold> の残高不足のため、テレポートをキャンセルしました</red></bold>"
+
+## 命令语法
+error.syntax_generic: "<red><bold>構文エラー！正しい使い方：/%command%</bold></red>"
+error.syntax_tpa: "<red><bold>構文エラー！正しい使い方：/%command% <プレイヤー名></bold></red>"
+error.syntax_tpall: "<red><bold>構文エラー！正しい使い方：/%command% [player/warp/spawn] [名前]</bold></red>"
+error.syntax_warp: "<red><bold>構文エラー！正しい使い方：/%command% <ワープポイント></bold></red>"
+error.syntax_home: "<red><bold>構文エラー！正しい使い方：/%command% <ホーム名></bold></red>"
+
+## 系统错误
+error.config_not_found: "<red><bold>設定ファイルを再生成しました</bold></red>"
+error.runtime: "<red><bold>プラグインエラー：%message%</bold></red>"
+error.forwarded_error: "<red><bold></bold><gold><bold>%target% </bold><red><bold>からのエラー：</bold></red></gold></red>"
 
 #=======================
-# アップデート
+# 传送过程提示
 #=======================
-update.checking: "&a&lアップデート確認中..."
-update.available: "&a&l新しいバージョン &6&lTPA-v<target> &a&lが利用可能です：https://modrinth.com/plugin/tpa.66666/versions"
-update.latest: "&a&l最新バージョンです"
-update.failed: "&c&lアップデート確認に失敗しました"
+teleport.accept.self: "<green><bold></bold><gold><bold>%target% </bold><green><bold>のリクエストを承諾しました</bold></green></gold></green>"
+teleport.accept.target: "<green><bold></bold><gold><bold>%target% </bold><green><bold>がリクエストを承諾しました</bold></green></gold></green>"
+teleport.deny.self: "<red><bold></bold><gold><bold>%target% </bold><red><bold>のリクエストを拒否しました</bold></red></gold></red>"
+teleport.deny.target: "<red><bold></bold><gold><bold>%target% </bold><red><bold>がリクエストを拒否しました</bold></red></gold></red>"
+teleport.countdown: "<green><bold></bold><gold><bold>%seconds%秒</bold><green><bold>後に </bold><gold><bold>%target% </bold><green><bold>へテレポートします</bold></green></gold></green></gold></green>"
+teleport.cancel_on_move: "<green><bold>移動するとキャンセルされます</bold></green>"
+teleport.canceled.self: "<red><bold>テレポートをキャンセルしました</bold></red>"
+teleport.canceled.target: "<red><bold>相手がキャンセルしました</bold></red>"
+teleport.generic_success: "<green><bold></bold><gold><bold>%target% </bold><green><bold>へテレポートしました</bold></green></gold></green>"
+teleport.tpall.to_target: "<green><bold>管理者があなたを </bold><gold><bold>%target% </bold><green><bold>へテレポートさせました</bold></green></gold></green>"
+teleport.tpall.to_self: "<green><bold>管理者が全プレイヤーをあなたの位置へテレポートさせました</bold></green>"
+teleport.tpall.success: "<green><bold>全プレイヤーを </bold><gold><bold>%target% </bold><green><bold>へテレポートしました</bold></green></gold></green>"
+teleport.logout_location: "<green><bold></bold><gold><bold>%target% </bold><green><bold>の最終ログアウト位置へテレポートしました</bold></green></gold></green>"
+teleport.cost_charged: "<bold><green>このテレポートで</green> <gold>{cost}</gold> {currency}<green>を消費しました。現在の残高は</green> <gold>{balance}</gold>です</bold>"
+
+#=======================
+# 系统消息
+#=======================
+system.config_reloaded: "<green><bold>設定ファイルをリロードしました</bold></green>"
+system.currency_money: "<bold><gold>マネー</gold></bold>"
+system.currency_points: "<bold><green>ポイント</green></bold>"
+system.plugin_loaded: "<green><bold>プラグイン読み込み完了！バージョン：</bold><gold><bold>%target%</bold></gold></green>"
+system.plugin_unloaded: "<red><bold>プラグインをアンロードしました</bold></red>"
+system.config_migrated_success: "<green><bold>設定ファイルの移行が完了しました</bold></green>"
+system.config_migrated: "<green><bold>旧設定ファイルを検出、自動バックアップ後に移行します</bold></green>"
+system.debug_warning: "<red><bold>デバッグモードが有効です（使用後は無効にしてください）</bold></red>"
+
+## 后台日志（开发者日志，变量以 {0} {1} {2} 顺序填充）
+system.log.language_missing_key: "言語ファイル {0} にキー {1} がありません（旧バージョンのファイルの可能性があります。plugins/TPA/language ディレクトリを削除して再起動すると再生成されます。または手動で該当キーを追加してください）"
+system.log.config_migrated_detail: "旧バージョンの設定を移行しました（{0} → {1}）：ユーザーのカスタム値は保持され、旧言語ファイルは plugins/TPA/backup/{0}/ にバックアップし、新バージョンの言語ファイルを再生成しました"
+## 数据库（DatabaseManager）
+system.log.database_disabled: "データベース保存が無効です（use_database: false）。プレイヤーデータは playerdata ディレクトリに保存されます"
+system.log.database_pool_initialized: "データベース接続プールを初期化しました（{0}）"
+system.log.database_connect_failed: "データベースへの接続に失敗しました（{0}）: {1}"
+system.log.database_fallback_sqlite: "ローカルの SQLite ストレージへフォールバックしました（{0}）。データは一時的にローカルに保存されます。設定を修正して /tpac reload を実行すると、自動的にデータベースへ移行されます"
+system.log.database_fallback_create_failed: "フォールバック用 SQLite 接続プールの作成に失敗しました: {0}"
+system.log.database_memory_only: "データベースが利用できずフォールバックにも失敗したため、データはメモリキャッシュにのみ保存されます（再起動すると失われます）"
+system.log.database_get_connection_failed: "データベース接続の取得に失敗しました: {0}"
+system.log.database_pool_closed: "データベース接続プールを閉じました"
+system.log.database_table_created: "{0} テーブルを作成しました"
+system.log.database_table_exists: "{0} テーブルは既に存在します"
+system.log.database_table_points_created: "tpa_points テーブルを作成しました（spawn/warp の統一テレポートポイント保存用）"
+system.log.database_column_added: "player_data テーブルにカラム {0} を追加しました"
+system.log.database_column_add_failed: "player_data テーブルへのカラム {0} の追加に失敗しました: {1}"
+system.log.unsupported_database_type: "未対応のデータベースタイプ: {0}"
+## 经济挂钩（EconomyHook / TPA）
+system.log.vault_hooked: "Vault 経済システムにフックしました（金銭料金が利用可能）"
+system.log.playerpoints_hooked: "PlayerPoints ポイントシステムにフックしました（ポイント料金が利用可能）"
+system.log.cost_without_currency: "テレポート料金が有効（cost.enable: true）ですが、通貨システム（{0}）が利用できません：{1} がインストールされていないか経済/ポイントサービスを提供していないため、料金は請求されません"
+## 存储迁移（StorageMigrator）
+system.log.backup_failed: "{0} のバックアップに失敗しました: {1}"
+system.log.fallback_migrate_players_failed: "フォールバックデータベースのプレイヤーデータ移行に失敗しました（player_data テーブルが存在しない可能性があります）: {0}"
+system.log.fallback_migrate_points_failed: "フォールバックデータベースのテレポートポイントデータ移行に失敗しました（tpa_points テーブルが存在しない可能性があります）: {0}"
+system.log.fallback_migrated_back: "フォールバックデータベースのデータをデータベースへ移行しました：プレイヤー {0} 件、テレポートポイント {1} 件"
+system.log.fallback_backup_removed: "フォールバックデータベースを {0} にバックアップして削除しました"
+system.log.fallback_migrate_back_failed: "フォールバックデータベースからデータベースへのデータ移行に失敗しました: {0}"
+system.log.spawn_migrated_to_db: "spawn データをデータベース（tpa_points）へ移行しました"
+system.log.spawn_yml_backed_up: "旧 spawn.yml を backup/{0} にバックアップしました"
+system.log.warp_migrated_to_db: "{0} 件の warp データをデータベース（tpa_points）へ移行しました"
+system.log.warp_yml_backed_up: "旧 warp.yml を backup/{0} にバックアップしました"
+system.log.players_migrated_to_db: "{0} 人のプレイヤーの yml データをデータベースへ移行しました（元のファイルは playerdata ディレクトリに保持されます）"
+system.log.db_file_backed_up: "元のデータベースファイルを backup/{0} にバックアップしました"
+system.log.points_migrated_to_yml: "データベース内のテレポートポイントデータを yml ファイル（spawn.yml/warp.yml）へ移行しました：{0} 件"
+## 基岩弹窗挂钩（BedrockFormHook）
+system.log.floodgate_missing: "Floodgate プラグインが検出されません。統合版プレイヤーはチャットでの操作を使用します"
+system.log.floodgate_hook_failed: "Floodgate のフックに失敗しました。統合版プレイヤーはチャットでの操作を使用します: {0}: {1}"
+system.log.floodgate_hooked: "Floodgate にフックしました（統合版プレイヤー向けのクリック系メッセージはポップアップのボタンとして表示されます）"
+system.log.bedrock_check_failed: "統合版プレイヤーの判定中にエラーが発生（非統合版として処理）: {0}: {1}"
+system.log.bedrock_identified_debug: "[debug] 統合版プレイヤーを識別しました: {0}"
+system.log.form_send_false: "ポップアップの送信が false を返しました（対象 {0} はオフラインか統合版プレイヤーではない可能性があります）"
+system.log.form_send_failed: "ポップアップの送信中に例外が発生しました: {0}: {1}"
+## 异常兜底（SafeGuard）
+system.log.command_exception_caught: "コマンド処理中に例外が発生しました（キャッチ済み）: {0}: {1}"
+system.log.event_exception_caught: "{0} イベント処理中に例外が発生しました（キャッチ済み）: {1}: {2}"
+
+#=======================
+# 更新
+#=======================
+update.checking: "<green><bold>アップデート確認中...</bold></green>"
+update.available: "<green><bold>新しいバージョン </bold><gold><bold>TPA-v%target% </bold><green><bold>が利用可能です：https://modrinth.com/plugin/tpa.66666/versions</bold></green></gold></green>"
+update.latest: "<green><bold>最新バージョンです</bold></green>"
+update.failed: "<red><bold>アップデート確認に失敗しました</bold></red>"
