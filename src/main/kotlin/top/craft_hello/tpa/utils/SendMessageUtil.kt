@@ -19,9 +19,9 @@ import java.util.UUID
 // 消息发送工具。语言文件采用 MiniMessage；按钮的点击/悬浮交互内嵌于语言文本。
 class SendMessageUtil {
     companion object {
-        // 发送消息
+        // 发送消息（经 Adventure 桥接，1.8.8+ 全版本一致）
         fun sendMessage(sender: CommandSender?, message: Component) {
-            sender?.sendMessage(message)
+            if (sender != null) AdventureBridge.sender(sender)?.sendMessage(message)
         }
 
         // 根据 path 读取配置文件中的消息并发送
@@ -515,28 +515,33 @@ class SendMessageUtil {
             if ("last_location" == target || "rtp_name" == target || "spawn_name" == target) target = language.getMessage(target)
             val title = language.getFormatMessage(executor, "teleport.countdown", target, delay)
             val subTitle = language.getFormatMessage(executor, "teleport.cancel_on_move")
-            executor.showTitle(Title.title(title, subTitle))
+            AdventureBridge.player(executor)?.showTitle(Title.title(title, subTitle))
         }
 
-        // 传送音效组：仅受 enable_sound 控制（独立于 title 设置），音效/音量/音调从配置读取
+        // 传送音效组：仅受 enable_sound 控制（独立于 title 设置），音效/音量/音调从配置读取；
+        // 音效名称在当前服务器不可用时（如 1.8.x）跳过播放
         fun playTeleportCountdownSound(executor: Player) {
             val config = top.craft_hello.tpa.objects.ConfigManager.config
-            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundCountdown, config.soundCountdownVolume, config.soundCountdownPitch)
+            val sound = config.soundCountdown
+            if (config.enableSound && sound != null) PlayerSchedulerUtil.playSound(executor, sound, config.soundCountdownVolume, config.soundCountdownPitch)
         }
 
         fun playTeleportSuccessSound(executor: Player) {
             val config = top.craft_hello.tpa.objects.ConfigManager.config
-            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundSuccess, config.soundSuccessVolume, config.soundSuccessPitch)
+            val sound = config.soundSuccess
+            if (config.enableSound && sound != null) PlayerSchedulerUtil.playSound(executor, sound, config.soundSuccessVolume, config.soundSuccessPitch)
         }
 
         fun playTeleportFailSound(executor: Player) {
             val config = top.craft_hello.tpa.objects.ConfigManager.config
-            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundFail, config.soundFailVolume, config.soundFailPitch)
+            val sound = config.soundFail
+            if (config.enableSound && sound != null) PlayerSchedulerUtil.playSound(executor, sound, config.soundFailVolume, config.soundFailPitch)
         }
 
         fun playTeleportCancelSound(executor: Player) {
             val config = top.craft_hello.tpa.objects.ConfigManager.config
-            if (config.enableSound) PlayerSchedulerUtil.playSound(executor, config.soundCancel, config.soundCancelVolume, config.soundCancelPitch)
+            val sound = config.soundCancel
+            if (config.enableSound && sound != null) PlayerSchedulerUtil.playSound(executor, sound, config.soundCancelVolume, config.soundCancelPitch)
         }
 
         // title 样式的传送完成消息
@@ -545,14 +550,14 @@ class SendMessageUtil {
             val language = LanguageManager.getLanguage(executor)
             if ("last_location" == target || "rtp_name" == target || "spawn_name" == target) target = language.getMessage(target)
             val title = language.getFormatMessage(executor, "teleport.generic_success", target)
-            executor.showTitle(Title.title(title, Component.empty()))
+            AdventureBridge.player(executor)?.showTitle(Title.title(title, Component.empty()))
         }
 
         // title 样式的正在生成随机传送点消息
         fun titleGenerateRandomLocationMessage(executor: Player) {
             val language = LanguageManager.getLanguage(executor)
             val title = language.getFormatMessage(executor, "rtp.generating")
-            executor.showTitle(Title.title(title, Component.empty()))
+            AdventureBridge.player(executor)?.showTitle(Title.title(title, Component.empty()))
         }
 
         // =============== 列表消息 ===============

@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -22,7 +23,7 @@ object WarpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("warp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.WARP) }
-            .executes { context -> SafeGuard.command(context) { executeWarp(context) } }
+            .executes { context -> SafeGuard.command(context) { executeWarp(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("warp", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -32,13 +33,17 @@ object WarpCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeWarp(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeWarp(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("warp")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeWarp(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /warp [名称]：传送到传送点；无参数显示传送点列表（Brigadier 与 legacy 路由共用）
+    fun executeWarp(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.WARP)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.WARP)) return SendMessageUtil.permissionDeniedError(sender)
@@ -46,7 +51,7 @@ object WarpCommand {
             return SendMessageUtil.commandCooldownError(sender, TeleportRequest.getCommandDelayRemaining(sender.uniqueId).toString())
         }
 
-        val warpName = context.getArgumentOrNull<String>("warp")
+        val warpName = args.getOrNull(0)
         if (warpName == null) {
             SendMessageUtil.warpListMessage(sender, ConfigManager.warpConfig.getWarpNames())
             return Command.SINGLE_SUCCESS

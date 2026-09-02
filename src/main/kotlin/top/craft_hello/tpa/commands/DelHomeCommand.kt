@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
@@ -21,7 +22,7 @@ object DelHomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("delhome")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DEL_HOME) }
-            .executes { context -> SafeGuard.command(context) { executeDelHome(context) } }
+            .executes { context -> SafeGuard.command(context) { executeDelHome(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -34,18 +35,22 @@ object DelHomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeDelHome(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeDelHome(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("home")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeDelHome(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /delhome <名称>：删除家（Brigadier 与 legacy 路由共用）
+    fun executeDelHome(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.DEL_HOME)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.DEL_HOME)) return SendMessageUtil.permissionDeniedError(sender)
 
-        val homeName = context.getArgumentOrNull<String>("home")
+        val homeName = args.getOrNull(0)
             ?: return SendMessageUtil.syntaxHomeError(sender, "delhome")
         val playerData = PlayerDataManager.get(sender)
         if (!playerData.delHome(homeName)) return SendMessageUtil.homeNotFoundError(sender, homeName)

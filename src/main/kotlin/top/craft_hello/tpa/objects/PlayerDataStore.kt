@@ -35,14 +35,22 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         data.setlang = config.getBoolean("setlang", false)
         data.defaultHomeName = config.getString("default_home")
         for (name in config.getConfigurationSection("homes")?.getKeys(false) ?: emptySet()) {
-            // getLocation 只认 == 序列化格式；3.x 手工分键（world=世界名）走兜底解析，确保开库迁移/未迁移旧文件不丢家
-            val location = config.getLocation("homes.$name") ?: readManualLocation(config, "homes.$name") ?: continue
+            val location = readLocation(config, "homes.$name") ?: continue
             data.homes[name] = location
         }
         data.denyList.addAll(config.getStringList("deny_list"))
-        data.lastLocation = config.getLocation("last_location") ?: readManualLocation(config, "last_location")
-        data.logoutLocation = config.getLocation("logout_location") ?: readManualLocation(config, "logout_location")
+        data.lastLocation = readLocation(config, "last_location")
+        data.logoutLocation = readLocation(config, "logout_location")
         return data
+    }
+
+    // Location 读取双路径：手工分键（3.x 格式 + 本插件 save 补写）优先；
+    // == 序列化格式回退反射 getLocation（该 API 自 1.13+ 才有，1.8 编译兜底下不可直接引用）
+    private fun readLocation(config: YamlConfiguration, path: String): Location? {
+        readManualLocation(config, path)?.let { return it }
+        return runCatching {
+            config.javaClass.getMethod("getLocation", String::class.java).invoke(config, path) as? Location
+        }.getOrNull()
     }
 
     // 3.x 手工分键 Location 读取兜底（<path>.world=世界名字符串 + x/y/z/yaw/pitch）
@@ -77,11 +85,31 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         config.set("language", data.language)
         config.set("setlang", data.setlang)
         config.set("default_home", data.defaultHomeName)
-        for ((name, location) in data.homes) config.set("homes.$name", location)
+        // 双写：Location 对象（== 序列化，老数据兼容）+ 手工分键（1.8 兼容读取与 3.x 格式互通）
+        for ((name, location) in data.homes) {
+            config.set("homes.$name", location)
+            writeManualLocation(config, "homes.$name", location)
+        }
         config.set("deny_list", data.denyList)
         config.set("last_location", data.lastLocation)
+        writeManualLocation(config, "last_location", data.lastLocation)
         config.set("logout_location", data.logoutLocation)
+        writeManualLocation(config, "logout_location", data.logoutLocation)
         config.save(fileOf(data.uuid))
+    }
+
+    // 手工分键 Location 写入（location 为 null 时清除该节）
+    private fun writeManualLocation(config: YamlConfiguration, path: String, location: Location?) {
+        if (location == null) {
+            config.set(path, null)
+            return
+        }
+        config.set("$path.world", location.world?.name)
+        config.set("$path.x", location.x)
+        config.set("$path.y", location.y)
+        config.set("$path.z", location.z)
+        config.set("$path.yaw", location.yaw.toDouble())
+        config.set("$path.pitch", location.pitch.toDouble())
     }
 }
 

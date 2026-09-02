@@ -39,7 +39,7 @@ object ConfigUpdater {
         val oldConfig = YamlConfiguration.loadConfiguration(configFile)
         // 对齐 3.x configVersionCheck：version 缺失视为 "1.0"（最老），旧于当前版本则迁移
         val configVersion = oldConfig.getString("version") ?: "1.0"
-        val currentVersion = plugin.pluginMeta.version
+        val currentVersion = plugin.description.version
         if (!VersionUtil.versionComparison(currentVersion, configVersion)) return
 
         // 对齐 3.x：迁移开始消息

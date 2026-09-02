@@ -11,6 +11,7 @@ import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.objects.TeleportCost
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.TeleportUtil
+import top.craft_hello.tpa.utils.TpaVersion
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -325,14 +326,15 @@ class TeleportRequest private constructor(
 
         // 黑名单方块由配置 rtp.blacklisted_blocks 提供（默认排除岩浆/水/火/灵魂火/岩浆块）
         // y 为脚部层：ground(y-1) 必须为实体且不在黑名单，feet(y)/head(y+1) 必须可穿越且不在黑名单
+        // 方块实体判定走 Material.isSolid（Block.isSolid 为新版本 API，1.8 不可用）
         private fun isSafeStanding(world: World, x: Int, y: Int, z: Int): Boolean {
             val blacklisted = ConfigManager.config.rtpBlacklistedBlocks
             val ground = world.getBlockAt(x, y - 1, z)
             val feet = world.getBlockAt(x, y, z)
             val head = world.getBlockAt(x, y + 1, z)
-            if (!ground.isSolid || ground.type in blacklisted) return false
-            if (feet.isSolid || feet.type in blacklisted) return false
-            if (head.isSolid || head.type in blacklisted) return false
+            if (!ground.type.isSolid || ground.type in blacklisted) return false
+            if (feet.type.isSolid || feet.type in blacklisted) return false
+            if (head.type.isSolid || head.type in blacklisted) return false
             return true
         }
 
@@ -366,33 +368,67 @@ class TeleportRequest private constructor(
             // 硬夹双保险：无论上层收缩如何失效，落点物理上不可能超过 chunk 系统合法范围
             val x = (centerX + (Math.random() * 2 - 1) * effLimitX).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
             val z = (centerZ + (Math.random() * 2 - 1) * effLimitZ).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
-            world.getChunkAtAsync(x shr 4, z shr 4).thenAccept { _ ->
-                var found: Location? = null
-                if (!isScanningWorld) {
-                    // getHighestBlockYAt 返回最高实体方块所在层（站立地面层），脚层是其上一格
-                    val groundY = world.getHighestBlockYAt(x, z)
-                    // 虚空：整列为空或低于世界最低可用高度
-                    if (groundY > world.minHeight && isSafeStanding(world, x, groundY + 1, z)) {
-                        found = Location(world, x + 0.5, (groundY + 1).toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
-                    }
-                } else {
-                    // 下界/末地：同一 chunk 列内自低向高找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
-                    var y = world.minHeight + 1
-                    while (y < world.maxHeight - 2) {
-                        if (isSafeStanding(world, x, y, z)) {
-                            found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
-                            break
+            if (TpaVersion.supportsAsyncChunk) {
+                // 必须先异步加载目标列所在 chunk（Folia 禁止跨 region 同步取 chunk；
+                // World.getChunkAtAsync 为 Paper 1.13+ API，反射调用兼容 1.8 编译兜底）
+                val future = runCatching {
+                    world.javaClass
+                        .getMethod("getChunkAtAsync", Integer.TYPE, Integer.TYPE)
+                        .invoke(world, x shr 4, z shr 4) as? java.util.concurrent.CompletableFuture<*>
+                }.getOrNull()
+                if (future != null) {
+                    future.thenAccept { _ ->
+                        scanColumn(world, x, z, isScanningWorld, onResult) {
+                            attemptRandomLocation(world, centerX, centerZ, limitX, limitZ, maxAttempts, remaining - 1, onResult)
                         }
-                        y++
                     }
+                    return
                 }
-                if (found != null) {
-                    onResult(found)
-                } else {
-                    // 本列不可用，异步尝试下一列
+            }
+            // 1.8-1.12 无 getChunkAtAsync：调度回主线程同步扫描（同步取 chunk 自动加载）
+            HandySchedulerUtil.runTask {
+                scanColumn(world, x, z, isScanningWorld, onResult) {
                     attemptRandomLocation(world, centerX, centerZ, limitX, limitZ, maxAttempts, remaining - 1, onResult)
                 }
             }
+        }
+
+        // 扫描单个 chunk 列：主世界取地表最高点，下界/末地扫描首个安全柱；不可用则走 retry 尝试下一列
+        private fun scanColumn(world: World, x: Int, z: Int, isScanningWorld: Boolean, onResult: (Location?) -> Unit, retry: () -> Unit) {
+            var found: Location? = null
+            val minHeight = worldMinHeight(world)
+            if (!isScanningWorld) {
+                // getHighestBlockYAt 返回最高实体方块所在层（站立地面层），脚层是其上一格
+                val groundY = world.getHighestBlockYAt(x, z)
+                // 虚空：整列为空或低于世界最低可用高度
+                if (groundY > minHeight && isSafeStanding(world, x, groundY + 1, z)) {
+                    found = Location(world, x + 0.5, (groundY + 1).toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                }
+            } else {
+                // 下界/末地：同一 chunk 列内自低向高找首个安全落点（岩浆海等危险柱被 isSafeStanding 排除）
+                var y = minHeight + 1
+                while (y < world.maxHeight - 2) {
+                    if (isSafeStanding(world, x, y, z)) {
+                        found = Location(world, x + 0.5, y.toDouble(), z + 0.5, Math.random().toFloat() * 360f, 0f)
+                        break
+                    }
+                    y++
+                }
+            }
+            if (found != null) {
+                onResult(found)
+            } else {
+                retry()
+            }
+        }
+
+        // 世界下限：1.17+ 用世界真实下限（反射，World.getMinHeight 为 1.17+ API），
+        // 旧版本恒为 0
+        private fun worldMinHeight(world: World): Int {
+            if (!TpaVersion.supportsWorldMinHeight) return 0
+            return runCatching {
+                world.javaClass.getMethod("getMinHeight").invoke(world) as? Int
+            }.getOrNull() ?: 0
         }
     }
 }

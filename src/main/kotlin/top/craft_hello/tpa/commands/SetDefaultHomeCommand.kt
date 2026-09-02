@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
@@ -21,7 +22,7 @@ object SetDefaultHomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("setdefaulthome")
             .requires { ConfigManager.config.isEnableCommand(CommandType.SET_DEFAULT_HOME) }
-            .executes { context -> SafeGuard.command(context) { executeSetDefaultHome(context) } }
+            .executes { context -> SafeGuard.command(context) { executeSetDefaultHome(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -34,18 +35,22 @@ object SetDefaultHomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeSetDefaultHome(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeSetDefaultHome(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("home")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeSetDefaultHome(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /setdefaulthome <名称>：设置默认家（Brigadier 与 legacy 路由共用）
+    fun executeSetDefaultHome(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.SET_DEFAULT_HOME)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.SET_DEFAULT_HOME)) return SendMessageUtil.permissionDeniedError(sender)
 
-        val homeName = context.getArgumentOrNull<String>("home")
+        val homeName = args.getOrNull(0)
             ?: return SendMessageUtil.syntaxHomeError(sender, "setdefaulthome")
         val playerData = PlayerDataManager.get(sender)
         if (!playerData.homes.containsKey(homeName)) return SendMessageUtil.homeNotFoundError(sender, homeName)

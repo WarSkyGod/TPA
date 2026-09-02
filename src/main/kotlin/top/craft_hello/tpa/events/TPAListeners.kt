@@ -15,17 +15,19 @@ import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.datas.TeleportRequest
+import top.craft_hello.tpa.utils.LocaleUtil
 import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.TeleportUtil
 import top.craft_hello.tpa.utils.VersionUtil
 
 // 玩家死亡：记录死亡位置为"上一次的位置"
+// （getEntity() 全版本可用；getPlayer() 为 1.9+ API，1.8 编译兜底不可用）
 object TPAPlayerDeathEvent : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerDeath(event: PlayerDeathEvent) {
         SafeGuard.event("onPlayerDeath") {
-            val player = event.player
+            val player = event.entity
             PlayerDataManager.get(player).lastLocation = player.location
             PlayerDataManager.save(player)
         }
@@ -42,15 +44,9 @@ object TPAPlayerJoinEvent : Listener {
             playerData.playerName = player.name
             PlayerDataManager.save(player)
 
-            // 未手动设置语言时跟随客户端语言
+            // 未手动设置语言时跟随客户端语言（1.11 及以下无法获取，回退配置默认）
             if (!playerData.setlang) {
-                val clientLanguage = LanguageManager.formatLangStr(
-                    buildString {
-                        append(player.locale().language)
-                        append("_")
-                        append(player.locale().country)
-                    }
-                )
+                val clientLanguage = LanguageManager.formatLangStr(LocaleUtil.playerLocale(player) ?: "")
                 if (LanguageManager.hasLanguage(clientLanguage)) {
                     playerData.language = clientLanguage
                     PlayerDataManager.save(player)

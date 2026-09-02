@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -19,12 +20,12 @@ object RtpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("rtp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.RTP) }
-            .executes { context -> SafeGuard.command(context) { executeRtp(context) } }
+            .executes { context -> SafeGuard.command(context) { executeRtp(context.source.sender, emptyList()) } }
             .build()
     }
 
-    private fun executeRtp(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /rtp：随机传送（Brigadier 与 legacy 路由共用）
+    fun executeRtp(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.RTP)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.RTP)) return SendMessageUtil.permissionDeniedError(sender)

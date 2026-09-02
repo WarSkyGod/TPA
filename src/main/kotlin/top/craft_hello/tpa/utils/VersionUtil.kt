@@ -18,7 +18,7 @@ object VersionUtil {
 
     fun init(plugin: TPA) {
         this.plugin = plugin
-        oldVersion = versionComparison(plugin.pluginMeta.version, "4.0")
+        oldVersion = versionComparison(plugin.description.version, "4.0")
     }
 
     fun isOldVersion(): Boolean = oldVersion
@@ -52,7 +52,7 @@ object VersionUtil {
             SendMessageUtil.updateFailedError(sender)
             return
         }
-        if (versionComparison(latestVersion, plugin.pluginMeta.version)) {
+        if (versionComparison(latestVersion, plugin.description.version)) {
             SendMessageUtil.pluginUpdateMessage(sender, latestVersion)
         } else {
             SendMessageUtil.pluginLatestVersion(sender)
@@ -67,7 +67,7 @@ object VersionUtil {
                 connectTimeout = 8000
                 readTimeout = 8000
                 requestMethod = "GET"
-                setRequestProperty("User-Agent", "TPA-Plugin/${plugin.pluginMeta.version}")
+                setRequestProperty("User-Agent", "TPA-Plugin/${plugin.description.version}")
                 setRequestProperty("Accept", "application/vnd.github+json")
             }
             if (connection.responseCode != HttpURLConnection.HTTP_OK) return null

@@ -9,6 +9,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
@@ -25,7 +26,7 @@ object TpAllCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tpall")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_ALL) }
-            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
+            .executes { context -> SafeGuard.command(context) { executeTpAll(context.source.sender, emptyList()) } }
             .then(
                 Commands.literal("player")
                     .then(
@@ -37,7 +38,11 @@ object TpAllCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
+                            .executes { context ->
+                                SafeGuard.command(context) {
+                                    executeTpAll(context.source.sender, listOfNotNull("player", context.getArgumentOrNull<String>("player")))
+                                }
+                            }
                     )
             )
             .then(
@@ -51,43 +56,47 @@ object TpAllCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
+                            .executes { context ->
+                                SafeGuard.command(context) {
+                                    executeTpAll(context.source.sender, listOfNotNull("warp", context.getArgumentOrNull<String>("warp")))
+                                }
+                            }
                     )
             )
             .then(
                 Commands.literal("spawn")
-                    .executes { context -> SafeGuard.command(context) { executeTpAll(context) } }
+                    .executes { context -> SafeGuard.command(context) { executeTpAll(context.source.sender, listOf("spawn")) } }
             )
             .build()
     }
 
-    private fun executeTpAll(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /tpall [player/warp/spawn] [名称]：将在线玩家传送到指定位置（Brigadier 与 legacy 路由共用）
+    // args 形如 [player, 名称] / [warp, 名称] / [spawn] / []
+    fun executeTpAll(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.TP_ALL)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.TP_ALL)) return SendMessageUtil.permissionDeniedError(sender)
 
-        val nodeNames = context.nodes.map { it.node.name }
         val onlinePlayers = Bukkit.getOnlinePlayers().toList()
         if (onlinePlayers.isEmpty()) return SendMessageUtil.noOnlinePlayersError(sender)
 
         return when {
-            "player" in nodeNames -> {
-                val playerName = context.getArgumentOrNull<String>("player")
+            "player".equals(args.getOrNull(0), ignoreCase = true) -> {
+                val playerName = args.getOrNull(1)
                     ?: return SendMessageUtil.syntaxTpAllError(sender, "tpall")
                 val target = Bukkit.getPlayerExact(playerName)
                     ?: return SendMessageUtil.targetOfflineError(sender, playerName)
                 tpAllToPlayer(sender, onlinePlayers, target)
             }
-            "warp" in nodeNames -> {
-                val warpName = context.getArgumentOrNull<String>("warp")
+            "warp".equals(args.getOrNull(0), ignoreCase = true) -> {
+                val warpName = args.getOrNull(1)
                     ?: return SendMessageUtil.syntaxTpAllError(sender, "tpall")
                 if (ConfigManager.warpConfig.getWarpNames().isEmpty()) return SendMessageUtil.noWarpsSetError(sender)
                 val location = ConfigManager.warpConfig.getWarpLocation(warpName)
                     ?: return SendMessageUtil.warpNotFoundError(sender, warpName)
                 tpAllToLocation(sender, onlinePlayers, location, warpName)
             }
-            "spawn" in nodeNames -> {
+            "spawn".equals(args.getOrNull(0), ignoreCase = true) -> {
                 val location = ConfigManager.spawnConfig.getLocation()
                     ?: return SendMessageUtil.spawnNotSetError(sender)
                 tpAllToLocation(sender, onlinePlayers, location, "spawn_name")

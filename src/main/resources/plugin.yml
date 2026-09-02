@@ -1,34 +1,83 @@
 name: TPA
 version: '${version}'
 main: top.craft_hello.tpa.TPA
-description: 一个支持 Folia 的简易传送插件，支持 Paper/Folia
-api-version: '1.21'
+description: 一个支持 Folia 的简易传送插件，兼容 Spigot/Paper 1.8.8+ 与 Folia
 author: WarSkyGod
 website: https://github.com/WarSkyGod/TPA
 folia-supported: true
 
 # 可选依赖：PlaceholderAPI 存在时提供 %tpa_*% 占位符；
 # Vault/PlayerPoints 存在时提供传送费用货币支持（金钱/点券）；
-# Floodgate 存在时基岩玩家使用弹窗按钮交互
-dependencies:
-  server:
-    PlaceholderAPI:
-      load: BEFORE
-      required: false
-      join-classpath: true
-    Vault:
-      load: OMIT
-      required: false
-      join-classpath: true
-    PlayerPoints:
-      load: OMIT
-      required: false
-      join-classpath: true
-    # 注意：Floodgate 插件注册名为小写 "floodgate"，依赖名必须与其一致，否则 join-classpath 不生效
-    floodgate:
-      load: BEFORE
-      required: false
-      join-classpath: true
+# Floodgate 存在时基岩玩家使用弹窗按钮交互。
+# 注意：Floodgate 插件注册名为小写 "floodgate"，依赖名必须与其一致
+softdepend: [PlaceholderAPI, Vault, PlayerPoints, floodgate]
+
+# 命令执行统一入口为 LegacyCommandRouter（兼容 1.8.8+）；
+# 在 Paper 1.20.6+ 上会改为 Brigadier 注册，并从 CommandMap 移除这里的同名声明避免重复
+commands:
+  tpa:
+    description: 请求传送到指定玩家的位置
+    usage: /tpa <玩家>
+  tphere:
+    description: 请求指定玩家传送到你的位置
+    usage: /tphere <玩家>
+  tpaccept:
+    description: 接受传送请求
+    usage: /tpaccept [玩家]
+  tpdeny:
+    description: 拒绝传送请求
+    usage: /tpdeny [玩家]
+  tpall:
+    description: 将在线玩家传送到指定位置
+    usage: /tpall [player|warp|spawn] [名称]
+  tplogout:
+    description: 传送到玩家最后下线的位置
+    usage: /tplogout <玩家>
+  rtp:
+    description: 随机传送
+    usage: /rtp
+  back:
+    description: 返回上一次的位置
+    usage: /back
+  denys:
+    description: 管理黑名单
+    usage: /denys [add|remove] [玩家]
+  tpac:
+    description: 插件管理命令
+    usage: /tpac [version/setlang/reload]
+  warp:
+    description: 传送到传送点
+    usage: /warp [名称]
+  setwarp:
+    description: 在当前位置设置传送点
+    usage: /setwarp <名称>
+  delwarp:
+    description: 删除传送点
+    usage: /delwarp <名称>
+  home:
+    description: 传送到家
+    usage: /home [名称]
+  homes:
+    description: 查看家列表
+    usage: /homes
+  sethome:
+    description: 在当前位置设置家
+    usage: /sethome [名称]
+  setdefaulthome:
+    description: 设置默认家
+    usage: /setdefaulthome <名称>
+  delhome:
+    description: 删除家
+    usage: /delhome <名称>
+  spawn:
+    description: 传送到主城
+    usage: /spawn
+  setspawn:
+    description: 设置主城位置
+    usage: /setspawn
+  delspawn:
+    description: 删除主城位置
+    usage: /delspawn
 
 permissions:
   tpa.admin:

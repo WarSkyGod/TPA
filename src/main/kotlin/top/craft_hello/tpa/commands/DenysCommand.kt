@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -23,7 +24,7 @@ object DenysCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("denys")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DENYS) }
-            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
+            .executes { context -> SafeGuard.command(context) { executeDenys(context.source.sender, emptyList()) } }
             .then(
                 Commands.literal("add")
                     .then(
@@ -39,7 +40,11 @@ object DenysCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
+                            .executes { context ->
+                                SafeGuard.command(context) {
+                                    executeDenys(context.source.sender, listOfNotNull("add", context.getArgumentOrNull<String>("player")))
+                                }
+                            }
                     )
             )
             .then(
@@ -57,24 +62,26 @@ object DenysCommand {
                                 }
                                 builder.buildFuture()
                             }
-                            .executes { context -> SafeGuard.command(context) { executeDenys(context) } }
+                            .executes { context ->
+                                SafeGuard.command(context) {
+                                    executeDenys(context.source.sender, listOfNotNull("remove", context.getArgumentOrNull<String>("player")))
+                                }
+                            }
                     )
             )
             .build()
     }
 
-    private fun executeDenys(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /denys [add/remove] <玩家>：黑名单管理；/denys：查看黑名单（Brigadier 与 legacy 路由共用）
+    fun executeDenys(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.DENYS)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.DENYS)) return SendMessageUtil.permissionDeniedError(sender)
 
         val playerData = PlayerDataManager.get(sender)
-        val action = context.getArgumentOrNull<String>("player")
-        // 判断当前命中的子命令：检查解析树节点名
-        val nodeNames = context.nodes.map { it.node.name }
+        val action = args.getOrNull(1)
         return when {
-            "add" in nodeNames -> {
+            "add".equals(args.getOrNull(0), ignoreCase = true) -> {
                 val playerName = action ?: return SendMessageUtil.syntaxGenericError(sender, "denys add <player>")
                 val target = Bukkit.getPlayerExact(playerName)
                     ?: return SendMessageUtil.targetOfflineError(sender, playerName)
@@ -86,7 +93,7 @@ object DenysCommand {
                 PlayerDataManager.save(sender)
                 SendMessageUtil.addDenysSuccess(sender, target.name)
             }
-            "remove" in nodeNames -> {
+            "remove".equals(args.getOrNull(0), ignoreCase = true) -> {
                 val playerName = action ?: return SendMessageUtil.syntaxGenericError(sender, "denys remove <player>")
                 val denyUuid = playerData.denyList.firstOrNull {
                     SendMessageUtil.denyDisplayName(it).equals(playerName, ignoreCase = true)

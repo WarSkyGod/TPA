@@ -24,7 +24,7 @@ class TpaExpansion : PlaceholderExpansion() {
 
     override fun getAuthor(): String = "WarSkyGod"
 
-    override fun getVersion(): String = TPA.plugin.pluginMeta.version
+    override fun getVersion(): String = TPA.plugin.description.version
 
     override fun persist(): Boolean = true
 
@@ -38,7 +38,7 @@ class TpaExpansion : PlaceholderExpansion() {
             "pending" -> (TeleportRequest.requestQueue.containsKey(player.uniqueId)).toString()
             "language" -> data.language ?: ""
             "deny_amount" -> data.denyList.size.toString()
-            "version" -> TPA.plugin.pluginMeta.version
+            "version" -> TPA.plugin.description.version
             else -> null
         }
     }

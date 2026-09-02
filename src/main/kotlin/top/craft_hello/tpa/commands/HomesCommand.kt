@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.CommandType
 import top.craft_hello.tpa.enums.PermissionType
@@ -19,12 +20,12 @@ object HomesCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("homes")
             .requires { ConfigManager.config.isEnableCommand(CommandType.HOMES) }
-            .executes { context -> SafeGuard.command(context) { executeHomes(context) } }
+            .executes { context -> SafeGuard.command(context) { executeHomes(context.source.sender, emptyList()) } }
             .build()
     }
 
-    private fun executeHomes(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /homes：显示家列表（含交互按钮）（Brigadier 与 legacy 路由共用）
+    fun executeHomes(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.HOMES)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.HOMES)) return SendMessageUtil.permissionDeniedError(sender)

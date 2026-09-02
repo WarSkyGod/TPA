@@ -18,13 +18,22 @@ object TeleportUtil {
     // 已结束，此时再调度 playSound 等玩家实体任务不会被迁移窗口吞掉）
     fun teleport(player: Player, location: Location, onDone: () -> Unit = {}) {
         HandySchedulerUtil.runTaskAsynchronously {
-            if (HandySchedulerUtil.isFolia()) {
-                // teleportAsync 线程安全（Folia 文档允许任意线程调用），完成后回调
-                player.teleportAsync(location).thenAccept { result -> if (result) onDone() }
-            } else {
-                EntitySchedulerUtil.syncTeleport(player, location)
-                onDone()
+            if (TpaVersion.supportsAsyncChunk) {
+                // teleportAsync 为 Paper API（1.9+ 提供编译期签名）：
+                // 反射调用兼容 1.8 编译兜底（Player 接口解析到 1.8 版，直接引用会编译失败）
+                val future = runCatching {
+                    player.javaClass
+                        .getMethod("teleportAsync", Location::class.java)
+                        .invoke(player, location) as? java.util.concurrent.CompletableFuture<Boolean>
+                }.getOrNull()
+                if (future != null) {
+                    future.thenAccept { result -> if (result) onDone() }
+                    return@runTaskAsynchronously
+                }
             }
+            // Folia 之外的普通服务器（含 1.8.8）：同步传送
+            EntitySchedulerUtil.syncTeleport(player, location)
+            onDone()
         }
     }
 

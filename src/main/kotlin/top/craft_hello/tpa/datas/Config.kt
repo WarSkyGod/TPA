@@ -25,17 +25,18 @@ data class Config(var config: FileConfiguration) {
     var forceSpawn = config.getBoolean("force_spawn")
     var enableTitleMessage = config.getBoolean("enable_title_message")
     var enableSound = config.getBoolean("enable_sound")
-    // 传送音效组：倒计时/成功/失败/取消（非法名称回退默认）
-    var soundCountdown: Sound = loadSound("sound.countdown.name", "ENTITY_EXPERIENCE_ORB_PICKUP")
+    // 传送音效组：倒计时/成功/失败/取消（非法名称回退默认；默认名也不被当前服务器
+    // 支持时（如 1.8.x 无 ENTITY_ 前缀新命名）返回 null，播放点判空跳过，不再崩溃）
+    var soundCountdown: Sound? = loadSound("sound.countdown.name", "ENTITY_EXPERIENCE_ORB_PICKUP")
     var soundCountdownVolume = config.getDouble("sound.countdown.volume", 1.0).toFloat()
     var soundCountdownPitch = config.getDouble("sound.countdown.pitch", 1.0).toFloat()
-    var soundSuccess: Sound = loadSound("sound.success.name", "ENTITY_ENDERMAN_TELEPORT")
+    var soundSuccess: Sound? = loadSound("sound.success.name", "ENTITY_ENDERMAN_TELEPORT")
     var soundSuccessVolume = config.getDouble("sound.success.volume", 1.0).toFloat()
     var soundSuccessPitch = config.getDouble("sound.success.pitch", 1.0).toFloat()
-    var soundFail: Sound = loadSound("sound.fail.name", "ENTITY_VILLAGER_NO")
+    var soundFail: Sound? = loadSound("sound.fail.name", "ENTITY_VILLAGER_NO")
     var soundFailVolume = config.getDouble("sound.fail.volume", 1.0).toFloat()
     var soundFailPitch = config.getDouble("sound.fail.pitch", 1.0).toFloat()
-    var soundCancel: Sound = loadSound("sound.cancel.name", "BLOCK_NOTE_BLOCK_BASS")
+    var soundCancel: Sound? = loadSound("sound.cancel.name", "BLOCK_NOTE_BLOCK_BASS")
     var soundCancelVolume = config.getDouble("sound.cancel.volume", 1.0).toFloat()
     var soundCancelPitch = config.getDouble("sound.cancel.pitch", 1.0).toFloat()
     // 传送费用（非管理传送命令）：money=Vault 金钱 / points=PlayerPoints 点券；
@@ -127,7 +128,7 @@ data class Config(var config: FileConfiguration) {
     // 黑名单方块列表：非法名称忽略；旧配置缺失本项时使用默认危险方块规则；显式空列表 = 关闭黑名单
     var rtpBlacklistedBlocks: Set<Material> = if (config.contains("rtp.blacklisted_blocks")) {
         config.getStringList("rtp.blacklisted_blocks")
-            .mapNotNull { name -> runCatching { Material.valueOf(name.uppercase(Locale.ROOT)) }.getOrNull() }
+            .mapNotNull { name -> resolveMaterial(name.uppercase(Locale.ROOT)) }
             .toSet()
     } else {
         DEFAULT_RTP_BLACKLIST
@@ -136,34 +137,73 @@ data class Config(var config: FileConfiguration) {
     var rtpCenterOnPlayer = config.getBoolean("rtp.center_on_player", true)
 
     companion object {
+        // 逐级尝试的 Material 名称解析：兼容 1.9/1.13/1.14/1.16/1.17 各批枚举改名，
+        // 旧版服务器解析不到的名字安全跳过（不参与黑名单）
+        private fun resolveMaterial(vararg names: String): Material? {
+            for (name in names) {
+                runCatching { return Material.valueOf(name) }
+            }
+            return null
+        }
+
         // rtp 黑名单方块默认规则（与 config.yml 默认项保持一致）：
         // 站立/触碰会受伤、产生负面效果、误触发传送或被困的方块
-        val DEFAULT_RTP_BLACKLIST = setOf(
-            Material.LAVA,              // 岩浆：烧灼
-            Material.WATER,             // 水：溺水/湿身
-            Material.FIRE,              // 火：烧灼
-            Material.SOUL_FIRE,         // 灵魂火：烧灼
-            Material.MAGMA_BLOCK,       // 岩浆块：站立烧灼
-            Material.BEDROCK,           // 基岩：基岩层上方无可站立空间
-            Material.CACTUS,            // 仙人掌：站立扎伤
-            Material.CAMPFIRE,          // 营火：站立烧灼
-            Material.SOUL_CAMPFIRE,     // 灵魂营火：站立烧灼
-            Material.POINTED_DRIPSTONE, // 滴水石锥：坠落刺伤
-            Material.POWDER_SNOW,       // 细雪：陷入冻伤
-            Material.SWEET_BERRY_BUSH,  // 甜浆果丛：穿行扎伤
-            Material.WITHER_ROSE,       // 凋零玫瑰：凋零效果
-            Material.NETHER_PORTAL,     // 下界传送门：误触发维度传送
-            Material.END_PORTAL,        // 末地传送门：误触发维度传送
-            Material.END_GATEWAY,       // 末地折跃门：误触发维度传送
-            Material.BUBBLE_COLUMN,     // 气泡柱：卷入水柱
-            Material.COBWEB,            // 蜘蛛网：被困
-        )
+        // 括号内标注各名字在新旧服务器的可用范围，1.8.8 起全版本安全加载
+        val DEFAULT_RTP_BLACKLIST: Set<Material> = listOfNotNull(
+            resolveMaterial("LAVA"),                    // 岩浆：烧灼
+            resolveMaterial("WATER"),                   // 水：溺水/湿身
+            resolveMaterial("FIRE"),                    // 火：烧灼
+            resolveMaterial("SOUL_FIRE"),               // 灵魂火：烧灼（1.16+）
+            resolveMaterial("MAGMA_BLOCK", "MAGMA"),    // 岩浆块：站立烧灼（1.8-1.12: MAGMA）
+            resolveMaterial("BEDROCK"),                 // 基岩：基岩层上方无可站立空间
+            resolveMaterial("CACTUS"),                  // 仙人掌：站立扎伤
+            resolveMaterial("CAMPFIRE"),                // 营火：站立烧灼（1.14+）
+            resolveMaterial("SOUL_CAMPFIRE"),           // 灵魂营火：站立烧灼（1.16+）
+            resolveMaterial("POINTED_DRIPSTONE"),       // 滴水石锥：坠落刺伤（1.17+）
+            resolveMaterial("POWDER_SNOW"),             // 细雪：陷入冻伤（1.17+）
+            resolveMaterial("SWEET_BERRY_BUSH"),        // 甜浆果丛：穿行扎伤（1.14+）
+            resolveMaterial("WITHER_ROSE"),             // 凋零玫瑰：凋零效果（1.14+）
+            resolveMaterial("NETHER_PORTAL", "PORTAL"), // 下界传送门：误触发维度传送（1.8-1.12: PORTAL）
+            resolveMaterial("END_PORTAL"),              // 末地传送门：误触发维度传送
+            resolveMaterial("END_GATEWAY"),             // 末地折跃门：误触发维度传送（1.9+）
+            resolveMaterial("BUBBLE_COLUMN"),           // 气泡柱：卷入水柱（1.13+）
+            resolveMaterial("COBWEB", "WEB"),           // 蜘蛛网：被困（1.8-1.12: WEB）
+        ).toSet()
     }
 
 
     // 读取配置中的音效名称，非法或缺失回退默认
-    private fun loadSound(path: String, defaultName: String): Sound =
-        runCatching { Sound.valueOf(config.getString(path, defaultName)!!.uppercase(Locale.ROOT)) }.getOrDefault(Sound.valueOf(defaultName))
+    private fun loadSound(path: String, defaultName: String): Sound? {
+        // 候选顺序：配置值 → 默认名 → 各自的旧版名（1.8.x 无 ENTITY_/BLOCK_ 前缀新命名）
+        // 全部无效时返回 null（播放点判空跳过），避免 Sound.valueOf 抛异常拖垮配置初始化
+        val candidates = buildList {
+            config.getString(path)?.trim()?.takeIf { it.isNotEmpty() }?.uppercase(Locale.ROOT)?.let { add(it) }
+            add(defaultName.uppercase(Locale.ROOT))
+            addAll(legacySoundNames(defaultName))
+            addAll(legacySoundNames(config.getString(path) ?: ""))
+        }
+        for (name in candidates.distinct()) {
+            runCatching { return Sound.valueOf(name) }
+        }
+        return null
+    }
+
+    // 1.9 音效改名对照：新枚举名去掉实体/方块前缀并按旧规则简化（覆盖配置可再自定义的常见场景）
+    private fun legacySoundNames(name: String): List<String> {
+        val upper = name.uppercase(Locale.ROOT)
+        return when (upper) {
+            "ENTITY_EXPERIENCE_ORB_PICKUP" -> listOf("EXPERIENCE_ORB_PICKUP")
+            "ENTITY_ENDERMAN_TELEPORT" -> listOf("ENDERMAN_TELEPORT")
+            "ENTITY_VILLAGER_NO" -> listOf("VILLAGER_NO")
+            "BLOCK_NOTE_BLOCK_BASS" -> listOf("NOTE_BASS")
+            "BLOCK_NOTE_BLOCK_PLING" -> listOf("NOTE_PLING")
+            else -> listOfNotNull(
+                upper.removePrefix("ENTITY_").takeIf { it != upper },
+                upper.removePrefix("BLOCK_").takeIf { it != upper },
+                upper.removePrefix("AMBIENT_").takeIf { it != upper }
+            )
+        }
+    }
 
     fun isEnableCommand(vararg commandTypes: CommandType): Boolean {
         for (commandType in commandTypes) if ((enableCommands[commandType] ?: true)) return true

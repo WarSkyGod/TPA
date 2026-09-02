@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -21,12 +22,12 @@ object BackCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("back")
             .requires { ConfigManager.config.isEnableCommand(CommandType.BACK) }
-            .executes { context -> SafeGuard.command(context) { executeBack(context) } }
+            .executes { context -> SafeGuard.command(context) { executeBack(context.source.sender, emptyList()) } }
             .build()
     }
 
-    private fun executeBack(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /back：返回上一次的位置；没有记录时尝试返回主城（Brigadier 与 legacy 路由共用）
+    fun executeBack(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.BACK)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.BACK)) return SendMessageUtil.permissionDeniedError(sender)

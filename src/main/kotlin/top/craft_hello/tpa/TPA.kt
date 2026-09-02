@@ -1,31 +1,10 @@
 package top.craft_hello.tpa
 
 import cn.handyplus.lib.adapter.HandySchedulerUtil
-import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import top.craft_hello.tpa.commands.BackCommand
-import top.craft_hello.tpa.commands.DelHomeCommand
-import top.craft_hello.tpa.commands.DelSpawnCommand
-import top.craft_hello.tpa.commands.DelWarpCommand
-import top.craft_hello.tpa.commands.DenysCommand
-import top.craft_hello.tpa.commands.HomeCommand
-import top.craft_hello.tpa.commands.HomesCommand
-import top.craft_hello.tpa.commands.RtpCommand
-import top.craft_hello.tpa.commands.SetDefaultHomeCommand
-import top.craft_hello.tpa.commands.SetHomeCommand
-import top.craft_hello.tpa.commands.SetSpawnCommand
-import top.craft_hello.tpa.commands.SetWarpCommand
-import top.craft_hello.tpa.commands.SpawnCommand
-import top.craft_hello.tpa.commands.TpaCommand
-import top.craft_hello.tpa.commands.TpacCommand
-import top.craft_hello.tpa.commands.TpacceptCommand
-import top.craft_hello.tpa.commands.TpAllCommand
-import top.craft_hello.tpa.commands.TpdenyCommand
-import top.craft_hello.tpa.commands.TphereCommand
-import top.craft_hello.tpa.commands.TpLogoutCommand
-import top.craft_hello.tpa.commands.WarpCommand
+import top.craft_hello.tpa.commands.LegacyCommandRouter
 import top.craft_hello.tpa.events.TPAPlayerDeathEvent
 import top.craft_hello.tpa.events.TPAPlayerJoinEvent
 import top.craft_hello.tpa.events.TPAPlayerLocaleChangeEvent
@@ -39,9 +18,11 @@ import top.craft_hello.tpa.objects.EconomyHook
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.objects.StorageMigrator
+import top.craft_hello.tpa.utils.AdventureBridge
 import top.craft_hello.tpa.utils.BedrockFormHook
 import top.craft_hello.tpa.utils.PapiHook
 import top.craft_hello.tpa.utils.SendMessageUtil
+import top.craft_hello.tpa.utils.TpaVersion
 import top.craft_hello.tpa.utils.VersionUtil
 
 class TPA : JavaPlugin() {
@@ -49,6 +30,8 @@ class TPA : JavaPlugin() {
     override fun onEnable() {
         plugin = this
         HandySchedulerUtil.init(this)
+        // Adventure 桥接（1.8.8+ 全版本统一消息发送层）
+        AdventureBridge.init(this)
         Metrics(this, 26417)
 
         // 老版本配置自动迁移（version 键判断，幂等）：必须在 ConfigManager/LanguageManager
@@ -89,51 +72,31 @@ class TPA : JavaPlugin() {
         // 更新检查（GitHub Releases Latest）
         VersionUtil.init(this)
 
-        // 注册命令（Paper Brigadier，LifecycleEvents）
-        lifecycleManager.registerEventHandler(LifecycleEvents.COMMANDS) { event ->
-            val registrar = event.registrar()
-            registrar.register(TpaCommand.registerCommands())
-            registrar.register(TpacCommand.registerCommands())
-            registrar.register(TphereCommand.registerCommands())
-            registrar.register(TpacceptCommand.registerCommands())
-            registrar.register(TpdenyCommand.registerCommands())
-            registrar.register(DenysCommand.registerCommands())
-            registrar.register(TpAllCommand.registerCommands())
-            registrar.register(TpLogoutCommand.registerCommands())
-            registrar.register(RtpCommand.registerCommands())
-            registrar.register(BackCommand.registerCommands())
-            registrar.register(WarpCommand.registerCommands())
-            registrar.register(SetWarpCommand.registerCommands())
-            registrar.register(DelWarpCommand.registerCommands())
-            registrar.register(HomeCommand.registerCommands())
-            registrar.register(HomesCommand.registerCommands())
-            registrar.register(SetHomeCommand.registerCommands())
-            registrar.register(SetDefaultHomeCommand.registerCommands())
-            registrar.register(DelHomeCommand.registerCommands())
-            registrar.register(SpawnCommand.registerCommands())
-            registrar.register(SetSpawnCommand.registerCommands())
-            registrar.register(DelSpawnCommand.registerCommands())
-        }
+        // 注册命令：全版本统一走 plugin.yml 声明 + LegacyCommandRouter 传统路由
+        // （Paper 1.19+ 自动把 plugin.yml 命令桥接进 Brigadier 树，TabCompleter 补全正常；
+        //   1.8-1.18 为原生 SimpleCommandMap 路径；业务实现两路共用）
+        LegacyCommandRouter.register(this)
 
-        // 注册事件监听
+        // 注册事件监听（PlayerLocaleChangeEvent 为 1.12+ API，低版本跳过注册以免类加载失败）
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(TPAPlayerDeathEvent, this)
         pluginManager.registerEvents(TPAPlayerJoinEvent, this)
         pluginManager.registerEvents(TPAPlayerQuitEvent, this)
         pluginManager.registerEvents(TPAPlayerRespawnEvent, this)
         pluginManager.registerEvents(TPAPlayerTeleportEvent, this)
-        pluginManager.registerEvents(TPAPlayerLocaleChangeEvent, this)
+        if (TpaVersion.supportsLocaleEvent) pluginManager.registerEvents(TPAPlayerLocaleChangeEvent, this)
 
         // 启动更新检查
         VersionUtil.startAsyncUpdateCheck()
 
-        SendMessageUtil.pluginLoaded(Bukkit.getConsoleSender(), pluginMeta.version)
+        SendMessageUtil.pluginLoaded(Bukkit.getConsoleSender(), description.version)
     }
 
     override fun onDisable() {
         PlayerDataManager.unloadAll()
         DatabaseManager.closeDataSource()
         SendMessageUtil.pluginUnLoaded(Bukkit.getConsoleSender())
+        AdventureBridge.close()
     }
 
     companion object {

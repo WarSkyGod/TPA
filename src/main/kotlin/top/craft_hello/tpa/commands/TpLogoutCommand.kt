@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -24,7 +25,7 @@ object TpLogoutCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("tplogout")
             .requires { ConfigManager.config.isEnableCommand(CommandType.TP_LOGOUT) }
-            .executes { context -> SafeGuard.command(context) { executeTpLogout(context) } }
+            .executes { context -> SafeGuard.command(context) { executeTpLogout(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("player", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -35,13 +36,17 @@ object TpLogoutCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeTpLogout(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeTpLogout(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("player")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeTpLogout(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /tplogout <玩家>：传送到目标玩家最后下线的位置（Brigadier 与 legacy 路由共用）
+    fun executeTpLogout(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.TP_LOGOUT)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.TP_LOGOUT)) return SendMessageUtil.permissionDeniedError(sender)
@@ -50,7 +55,7 @@ object TpLogoutCommand {
         }
         if (TeleportRequest.isQueued(sender.uniqueId)) return SendMessageUtil.requestPendingError(sender)
 
-        val playerName = context.getArgumentOrNull<String>("player")
+        val playerName = args.getOrNull(0)
             ?: return SendMessageUtil.syntaxGenericError(sender, "tplogout <player>")
         val targetData = PlayerDataManager.getByName(playerName)
             ?: return SendMessageUtil.targetOfflineError(sender, playerName)

@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.datas.TeleportRequest
 import top.craft_hello.tpa.enums.CommandType
@@ -23,7 +24,7 @@ object HomeCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("home")
             .requires { ConfigManager.config.isEnableCommand(CommandType.HOME) }
-            .executes { context -> SafeGuard.command(context) { executeHome(context) } }
+            .executes { context -> SafeGuard.command(context) { executeHome(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("home", StringArgumentType.word())
                     .suggests { context, builder ->
@@ -36,13 +37,17 @@ object HomeCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeHome(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeHome(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("home")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeHome(context: CommandContext<CommandSourceStack>): Int {
-        val sender = context.source.sender
+    // /home [名称]：传送到家；无参数传送默认家（Brigadier 与 legacy 路由共用）
+    fun executeHome(sender: CommandSender, args: List<String>): Int {
         if (sender !is Player) return SendMessageUtil.consoleRestrictedError()
         if (!ConfigManager.config.isEnableCommand(CommandType.HOME)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.HOME)) return SendMessageUtil.permissionDeniedError(sender)
@@ -51,7 +56,7 @@ object HomeCommand {
         }
 
         val playerData = PlayerDataManager.get(sender)
-        val homeName = context.getArgumentOrNull<String>("home") ?: playerData.defaultHomeName
+        val homeName = args.getOrNull(0) ?: playerData.defaultHomeName
         if (homeName == null) {
             return SendMessageUtil.noDefaultHomeError(sender)
         }

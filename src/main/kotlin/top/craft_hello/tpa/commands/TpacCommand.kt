@@ -14,6 +14,7 @@ import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.objects.LanguageManager
 import top.craft_hello.tpa.objects.PlayerDataManager
 import top.craft_hello.tpa.utils.BrigadierUtil.getArgumentOrNull
+import top.craft_hello.tpa.utils.LocaleUtil
 import top.craft_hello.tpa.utils.SafeGuard
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.VersionUtil
@@ -56,6 +57,20 @@ object TpacCommand {
             .build()
     }
 
+    // legacy 路由分发：/tpac [version/setlang/reload]（Brigadier 树为字面子命令，legacy 按首参分发）
+    fun route(sender: CommandSender, args: List<String>): Int {
+        return when (args.getOrNull(0)?.lowercase()) {
+            "version" -> executeVersion(sender)
+            "setlang" -> {
+                val language = args.getOrNull(1)
+                    ?: return SendMessageUtil.syntaxGenericError(sender, "tpac setlang <language/clear>")
+                executeSetLang(sender, language)
+            }
+            "reload" -> executeReload(sender)
+            else -> executeHelp(sender)
+        }
+    }
+
     // 无参数：提示正确用法
     fun executeHelp(sender: CommandSender): Int {
         return SendMessageUtil.syntaxGenericError(sender, "tpac [version/setlang/reload]")
@@ -79,13 +94,7 @@ object TpacCommand {
         if (language.equals("clear", ignoreCase = true)) {
             playerData.setlang = false
             // 同步 language 为当前客户端语言（老服务器无法获取客户端语言时由跟随逻辑回退配置默认）
-            val clientLanguage = LanguageManager.formatLangStr(
-                buildString {
-                    append(sender.locale().language)
-                    append("_")
-                    append(sender.locale().country)
-                }
-            )
+            val clientLanguage = LanguageManager.formatLangStr(LocaleUtil.playerLocale(sender) ?: "")
             if (LanguageManager.hasLanguage(clientLanguage)) playerData.language = clientLanguage
             PlayerDataManager.save(sender)
             SendMessageUtil.setLangCommandSuccess(sender, LanguageManager.getLanguage(sender).languageFile.nameWithoutExtension)

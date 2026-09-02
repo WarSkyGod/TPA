@@ -22,7 +22,7 @@ object DelWarpCommand {
     fun registerCommands(): LiteralCommandNode<CommandSourceStack> {
         return Commands.literal("delwarp")
             .requires { ConfigManager.config.isEnableCommand(CommandType.DEL_WARP) }
-            .executes { context -> SafeGuard.command(context) { executeDelWarp(context) } }
+            .executes { context -> SafeGuard.command(context) { executeDelWarp(context.source.sender, emptyList()) } }
             .then(
                 Commands.argument("warp", StringArgumentType.word())
                     .suggests { _, builder ->
@@ -32,17 +32,21 @@ object DelWarpCommand {
                         }
                         builder.buildFuture()
                     }
-                    .executes { context -> SafeGuard.command(context) { executeDelWarp(context) } }
+                    .executes { context ->
+                        SafeGuard.command(context) {
+                            executeDelWarp(context.source.sender, listOfNotNull(context.getArgumentOrNull<String>("warp")))
+                        }
+                    }
             )
             .build()
     }
 
-    private fun executeDelWarp(context: CommandContext<CommandSourceStack>): Int {
-        val sender: CommandSender = context.source.sender
+    // /delwarp <名称>：删除传送点（Brigadier 与 legacy 路由共用）
+    fun executeDelWarp(sender: CommandSender, args: List<String>): Int {
         if (!ConfigManager.config.isEnableCommand(CommandType.DEL_WARP)) return SendMessageUtil.commandDisabledError(sender)
         if (!ConfigManager.config.hasPermission(sender, PermissionType.DEL_WARP)) return SendMessageUtil.permissionDeniedError(sender)
 
-        val warpName = context.getArgumentOrNull<String>("warp")
+        val warpName = args.getOrNull(0)
             ?: return SendMessageUtil.syntaxWarpError(sender, "delwarp")
         if (!ConfigManager.warpConfig.delWarpLocation(warpName)) return SendMessageUtil.warpNotFoundError(sender, warpName)
         return SendMessageUtil.delWarpSuccess(sender, warpName)

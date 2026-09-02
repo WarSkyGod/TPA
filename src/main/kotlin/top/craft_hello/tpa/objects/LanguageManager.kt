@@ -5,6 +5,7 @@ import org.bukkit.entity.Player
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.datas.Language
 import top.craft_hello.tpa.enums.LanguageType
+import top.craft_hello.tpa.utils.LocaleUtil
 import java.io.File
 
 object LanguageManager {
@@ -56,12 +57,7 @@ object LanguageManager {
             if (playerData.setlang && !playerData.language.isNullOrBlank()) {
                 return getLanguage(playerData.language!!)
             }
-            val locale = sender.locale()
-            val clientLanguage = buildString {
-                append(locale.language)
-                append("_")
-                append(locale.country)
-            }
+            val clientLanguage = LocaleUtil.playerLocale(sender) ?: ""
             if (languages.containsKey(clientLanguage)) return languages[clientLanguage]!!
         }
         return getLanguage(ConfigManager.config.language)
