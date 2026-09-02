@@ -368,6 +368,12 @@ class TeleportRequest private constructor(
             // 硬夹双保险：无论上层收缩如何失效，落点物理上不可能超过 chunk 系统合法范围
             val x = (centerX + (Math.random() * 2 - 1) * effLimitX).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
             val z = (centerZ + (Math.random() * 2 - 1) * effLimitZ).toInt().coerceIn(-WORLD_SAFE_LIMIT_INT, WORLD_SAFE_LIMIT_INT)
+            // 末地虚空列占比极高（1.8-1.15 仅小主岛、无外岛，大范围随机点几乎必然落空），
+            // 重试时随机范围以玩家为中心逐次减半，让后续尝试收敛到有地形的区域；
+            // 下界地形连续、主世界取地表最高点，均不收缩
+            val isEndWorld = world.environment == World.Environment.THE_END
+            val nextLimitX = if (isEndWorld) maxOf(16, limitX / 2) else limitX
+            val nextLimitZ = if (isEndWorld) maxOf(16, limitZ / 2) else limitZ
             if (TpaVersion.supportsAsyncChunk) {
                 // 必须先异步加载目标列所在 chunk（Folia 禁止跨 region 同步取 chunk；
                 // World.getChunkAtAsync 为 Paper 1.13+ API，反射调用兼容 1.8 编译兜底）
@@ -379,7 +385,7 @@ class TeleportRequest private constructor(
                 if (future != null) {
                     future.thenAccept { _ ->
                         scanColumn(world, x, z, isScanningWorld, onResult) {
-                            attemptRandomLocation(world, centerX, centerZ, limitX, limitZ, maxAttempts, remaining - 1, onResult)
+                            attemptRandomLocation(world, centerX, centerZ, nextLimitX, nextLimitZ, maxAttempts, remaining - 1, onResult)
                         }
                     }
                     return
@@ -388,7 +394,7 @@ class TeleportRequest private constructor(
             // 1.8-1.12 无 getChunkAtAsync：调度回主线程同步扫描（同步取 chunk 自动加载）
             HandySchedulerUtil.runTask {
                 scanColumn(world, x, z, isScanningWorld, onResult) {
-                    attemptRandomLocation(world, centerX, centerZ, limitX, limitZ, maxAttempts, remaining - 1, onResult)
+                    attemptRandomLocation(world, centerX, centerZ, nextLimitX, nextLimitZ, maxAttempts, remaining - 1, onResult)
                 }
             }
         }

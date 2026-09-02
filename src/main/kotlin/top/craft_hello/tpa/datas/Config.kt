@@ -125,14 +125,15 @@ data class Config(var config: FileConfiguration) {
     var rtpLimitZ = config.getInt("rtp.limit.z")
     // 旧配置文件缺失此键时回退默认 5 次
     var rtpGenerateAttempts = config.getInt("rtp.generate_attempts", 5).coerceAtLeast(1)
-    // 黑名单方块列表：非法名称忽略；旧配置缺失本项时使用默认危险方块规则；显式空列表 = 关闭黑名单
+    // 黑名单方块列表：非法名称忽略；旧配置缺失本项时使用默认危险方块规则；显式空列表 = 关闭黑名单。
+    // 旧服务器水/岩浆分流动/静止两种 Material，命中任一形态时同步扩展另一形态（见 expandLegacyLiquids）
     var rtpBlacklistedBlocks: Set<Material> = if (config.contains("rtp.blacklisted_blocks")) {
         config.getStringList("rtp.blacklisted_blocks")
             .mapNotNull { name -> resolveMaterial(name.uppercase(Locale.ROOT)) }
             .toSet()
     } else {
         DEFAULT_RTP_BLACKLIST
-    }
+    }.let { expandLegacyLiquids(it) }
     // 随机传送中心：true=玩家当前位置（默认），false=世界出生点
     var rtpCenterOnPlayer = config.getBoolean("rtp.center_on_player", true)
 
@@ -157,6 +158,17 @@ data class Config(var config: FileConfiguration) {
                 }
             }
             return null
+        }
+
+        // 1.8-1.12 的水/岩浆分"流动/静止"两种 Material（1.13+ 合并为 WATER/LAVA）：
+        // 黑名单含流动/静止任一形态时，同步排除旧服务器的另一形态——否则落点脚/头层的
+        // 静止岩浆（isSolid=false 且不在黑名单）会漏判，1.8 下界概率性传送进岩浆海。
+        // 新版服务器 STATIONARY_* 枚举不存在，resolveMaterial 返回 null 自然跳过
+        private fun expandLegacyLiquids(blocks: Set<Material>): Set<Material> {
+            val expanded = blocks.toMutableSet()
+            if (Material.WATER in blocks) resolveMaterial("STATIONARY_WATER")?.let { expanded.add(it) }
+            if (Material.LAVA in blocks) resolveMaterial("STATIONARY_LAVA")?.let { expanded.add(it) }
+            return expanded
         }
 
         // rtp 黑名单方块默认规则（与 config.yml 默认项保持一致）：

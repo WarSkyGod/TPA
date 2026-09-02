@@ -79,4 +79,15 @@
 - **现象**：config 的 `rtp.blacklisted_blocks` 全是现代 Material 名，1.8 上 13 个名字解析不到被静默丢弃（如 COBWEB/NETHER_PORTAL 在 1.8 有旧名却没被用上）。
 - **修复**：按指定逻辑重构 `resolveMaterial`——读到当前版本没有的方块名时**先查新旧名对照表**（MAGMA_BLOCK→MAGMA[1.10-1.12]、NETHER_PORTAL→PORTAL、COBWEB→WEB、END_PORTAL→ENDER_PORTAL），**低版本没有对应方块则直接略过**（营火/细雪/滴水石锥等 1.8 确实不存在）。已用 1.8.8 spigot-api 的真实 Material 枚举逐项验证：18 项 = 8 项解析成功（含 3 项对照表换名）+ 10 项安全略过，无异常、无意外陆地方块混入。
 
+### ⑥ 1.8 下界 RTP 概率性传送进岩浆（已修复）
+
+- **根因**：1.8–1.12 的水/岩浆分"流动/静止"两种 Material（`LAVA`/`STATIONARY_LAVA`、`WATER`/`STATIONARY_WATER`，1.13+ 合并）。黑名单只有流动形态；`isSafeStanding` 的地面层靠 `isSolid` 挡住了静止岩浆，但**脚/头层的静止岩浆 `isSolid=false` 且不在黑名单** → 漏判。下界岩浆海边缘"固体地面 + 脚层静止岩浆"的列型常见，故概率性触发。
+- **修复**：`expandLegacyLiquids`——黑名单命中 WATER/LAVA 任一形态时自动扩展对应 `STATIONARY_*` 形态（新版服务器该枚举不存在，解析为 null 自然跳过）。已用 1.8.8 枚举验证四种液体 Material 均存在且 `isSolid=false`。
+
+### ⑦ 1.8 末地 RTP 百分百失败（已修复）
+
+- **根因**：末地走自低向高柱扫描，逻辑本身正确；但 1.8–1.15 的末地**只有小主岛、无外岛**（探针佐证：1.8 连 `END_STONE` 都还没有，1.9 才改入），随机范围 ±limit（默认数千格）内的随机点几乎必然落在虚空列——整列 ground/feet/head 全为空气，5 次尝试全部落空。
+- **修复**：末地的重试范围以玩家为中心**逐次减半**（`limit/2`，下限 16），让后续尝试收敛到有地形的区域；下界地形连续、主世界取地表最高点，均不收缩。5 次默认尝试下范围收敛到 1/16，配合 attempt 内 effLimit 实时计算正常生效。
+
+
 
