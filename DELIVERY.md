@@ -28,3 +28,11 @@
 3. **冒烟（Paper 26.2）**：插件启用 → `[TPA] 插件已成功加载！` → 控制台执行 `tpa`/`tpac reload`/`warp`/`denys` 全部有预期响应（含控制台限制分支）→ `stop` 后 `[TPA] 插件已成功卸载！`，全程零 `[TPA] ERROR`。
 4. **jar 审计**：kyori 全部 relocate；`com.mojang.brigadier` 保持原签名（与 Paper API 一致）；包内含 `plugin.yml`，不含 `paper-plugin.yml`。
 5. **工作区**：untracked=0 / modified=0 / missing=0，提交历史接续 `9041501`（i18n）。
+
+## 语言文件 MiniMessage 标签修复（86bd9ae）
+
+- **hover 颜色闭合错配**：`<red><bold>…</green>` 误配共 **25 份语言文件 × 3 处 = 75 处**，全部改为 `</red>`。
+- **拼写错误**：zh_CN `deny_button` 的 `insert:/tpadeny` → `/tpdeny`（其余 24 份本就正确）。
+- **未闭合标签**：全量 strict 解析发现 **1937 行**依赖宽松模式隐式闭合（如 `<green><bold>…<gold><bold>%target%</bold>` 行尾无 `</green>`），按 strict 异常自动逆序补齐。
+- **最终校验**：25 份文件 **3626 条值全部通过 MiniMessage strict 解析**（failures=0）；标签开合配对审计 200 条 hover 全部正确；修复后重新打包并冒烟通过（语言文件加载正常、零 ERROR）。
+- 说明：宽松模式下未闭合标签会自动闭合、逐条解析亦无样式泄漏（渲染不受影响），本次补齐消除的是对宽松行为的隐式依赖。
