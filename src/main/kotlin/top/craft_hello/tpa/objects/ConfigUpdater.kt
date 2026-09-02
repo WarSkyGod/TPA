@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.VersionUtil
+import top.craft_hello.tpa.utils.YamlIO
 import java.io.File
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
@@ -36,7 +37,7 @@ object ConfigUpdater {
         // 首次安装：无旧配置，saveDefaultConfig 会生成当前版本配置，无需迁移
         if (!configFile.exists()) return
 
-        val oldConfig = YamlConfiguration.loadConfiguration(configFile)
+        val oldConfig = YamlIO.load(configFile)
         // 对齐 3.x configVersionCheck：version 缺失视为 "1.0"（最老），旧于当前版本则迁移
         val configVersion = oldConfig.getString("version") ?: "1.0"
         val currentVersion = plugin.description.version
@@ -66,7 +67,7 @@ object ConfigUpdater {
         mergeSection(oldConfig, newConfig)
         // 对齐 3.x：写回当前版本号，下次启动不再触发
         newConfig.set("version", currentVersion)
-        newConfig.save(configFile)
+        YamlIO.save(newConfig, configFile)
 
         // 对齐 3.x offUpdateConfiguration：迁移完成消息
         SendMessageUtil.configMigratedSuccessNotice()
@@ -83,7 +84,7 @@ object ConfigUpdater {
         val files = folder.listFiles { file -> file.extension.equals("yml", ignoreCase = true) } ?: return
         val playerdataBackup = File(backupDir, folder.name)
         for (file in files) {
-            val config = YamlConfiguration.loadConfiguration(file)
+            val config = YamlIO.load(file)
             var migrated = false
             // 对齐 3.x 旧迁移逻辑的键名变更（更老版本直接升级的场景）
             for ((oldKey, newKey) in listOf("lang" to "language", "denys" to "deny_list")) {
@@ -104,7 +105,7 @@ object ConfigUpdater {
             if (migrated) {
                 playerdataBackup.mkdirs()
                 file.copyTo(File(playerdataBackup, file.name), overwrite = true)
-                config.save(file)
+                YamlIO.save(config, file)
             }
         }
     }

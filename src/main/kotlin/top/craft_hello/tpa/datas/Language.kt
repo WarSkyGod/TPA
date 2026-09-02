@@ -5,16 +5,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.objects.ConfigManager
 import top.craft_hello.tpa.utils.PapiHook
 import top.craft_hello.tpa.utils.SendMessageUtil
+import top.craft_hello.tpa.utils.YamlIO
 import java.io.File
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 
 // 语言文件封装（MiniMessage 格式）。
 // 占位符采用 4.0 重构设计：%target%、%seconds%、%command%、%message%、%max_home_amount%。
@@ -44,11 +41,7 @@ data class Language(var languageFile: File, var isReplace: Boolean) {
                 }, isReplace)
             }
         }
-        return YamlConfiguration.loadConfiguration(
-            InputStreamReader(
-                Files.newInputStream(languageFile.toPath()), StandardCharsets.UTF_8
-            )
-        )
+        return YamlIO.load(languageFile)
     }
 
     private fun formatText(text: String): Component {

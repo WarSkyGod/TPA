@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import top.craft_hello.tpa.TPA
+import top.craft_hello.tpa.utils.YamlIO
 import java.io.File
 import java.sql.Connection
 
@@ -41,7 +42,7 @@ class YamlPointStore(private val plugin: TPA) : PointStore {
 
     fun hasSpawnData(): Boolean {
         if (!spawnFile.exists()) return false
-        val config = YamlConfiguration.loadConfiguration(spawnFile)
+        val config = YamlIO.load(spawnFile)
         return config.getConfigurationSection("spawn") != null && config.getString("spawn.world") != null && config.getString("spawn.world") != "null"
     }
 
@@ -51,7 +52,7 @@ class YamlPointStore(private val plugin: TPA) : PointStore {
     // warp.yml 全部条目名（4.0 warps 节 + 3.x 根级），不含解析
     private fun rawWarpNames(): Set<String> {
         if (!warpFile.exists()) return emptySet()
-        val config = YamlConfiguration.loadConfiguration(warpFile)
+        val config = YamlIO.load(warpFile)
         val names = linkedSetOf<String>()
         config.getConfigurationSection("warps")?.getKeys(false)?.let { names.addAll(it) }
         // 3.x 根级格式：根键即传送点名（排除 4.0 的 warps 容器键）
@@ -65,7 +66,7 @@ class YamlPointStore(private val plugin: TPA) : PointStore {
 
     override fun loadSpawn(): Location? {
         if (!spawnFile.exists()) return null
-        val config = YamlConfiguration.loadConfiguration(spawnFile)
+        val config = YamlIO.load(spawnFile)
         val worldName = config.getString("spawn.world") ?: return null
         if (worldName == "null") return null
         return PointLocationCodec.loadLocation(
@@ -79,27 +80,27 @@ class YamlPointStore(private val plugin: TPA) : PointStore {
     }
 
     override fun saveSpawn(location: Location) {
-        val config = if (spawnFile.exists()) YamlConfiguration.loadConfiguration(spawnFile) else YamlConfiguration()
+        val config = if (spawnFile.exists()) YamlIO.load(spawnFile) else YamlConfiguration()
         config.set("spawn.world", location.world.name)
         config.set("spawn.x", location.x)
         config.set("spawn.y", location.y)
         config.set("spawn.z", location.z)
         config.set("spawn.yaw", location.yaw.toDouble())
         config.set("spawn.pitch", location.pitch.toDouble())
-        config.save(spawnFile)
+        YamlIO.save(config, spawnFile)
     }
 
     override fun deleteSpawn() {
         if (!spawnFile.exists()) return
-        val config = YamlConfiguration.loadConfiguration(spawnFile)
+        val config = YamlIO.load(spawnFile)
         config.set("spawn", null)
-        config.save(spawnFile)
+        YamlIO.save(config, spawnFile)
     }
 
     override fun loadWarps(): Map<String, Location> {
         val locations = linkedMapOf<String, Location>()
         if (!warpFile.exists()) return locations
-        val config = YamlConfiguration.loadConfiguration(warpFile)
+        val config = YamlIO.load(warpFile)
         // 4.0 格式：warps.<名> = Location（YamlConfiguration 依 == 标记自动反序列化为 Location 对象）
         for (name in config.getConfigurationSection("warps")?.getKeys(false) ?: emptySet()) {
             when (val raw = config.get("warps.$name")) {
@@ -127,17 +128,17 @@ class YamlPointStore(private val plugin: TPA) : PointStore {
     override fun containsWarp(name: String): Boolean = rawWarpNames().contains(name)
 
     override fun saveWarp(name: String, location: Location) {
-        val config = if (warpFile.exists()) YamlConfiguration.loadConfiguration(warpFile) else YamlConfiguration()
+        val config = if (warpFile.exists()) YamlIO.load(warpFile) else YamlConfiguration()
         config.set("warps.$name", location)
-        config.save(warpFile)
+        YamlIO.save(config, warpFile)
     }
 
     override fun deleteWarp(name: String) {
         if (!warpFile.exists()) return
-        val config = YamlConfiguration.loadConfiguration(warpFile)
+        val config = YamlIO.load(warpFile)
         config.set("warps.$name", null)
         config.set(name, null) // 兼容清理 3.x 根级残留
-        config.save(warpFile)
+        YamlIO.save(config, warpFile)
     }
 
     override fun warpNames(): List<String> = rawWarpNames().toList()

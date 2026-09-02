@@ -1,7 +1,6 @@
 package top.craft_hello.tpa.utils
 
 import cn.handyplus.lib.adapter.HandySchedulerUtil
-import com.google.gson.JsonParser
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import top.craft_hello.tpa.TPA
@@ -72,7 +71,11 @@ object VersionUtil {
             }
             if (connection.responseCode != HttpURLConnection.HTTP_OK) return null
             val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            JsonParser.parseString(body).asJsonObject.get("tag_name")?.asString?.removePrefix("v")?.removePrefix("V")
+            // 不用 gson：1.8 服务器内嵌 gson 2.2.4 没有 JsonParser.parseString（编译期
+            // classpath 被 paper-api 携带的新版 gson 调解提升导致编译通过、运行时炸），
+            // 只需 tag_name，正则提取即可
+            return Regex("\"tag_name\"\\s*:\\s*\"([^\"]+)\"").find(body)
+                ?.groupValues?.get(1)?.removePrefix("v")?.removePrefix("V")
         } catch (ignored: Exception) {
             null
         } finally {

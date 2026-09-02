@@ -3,6 +3,8 @@ package top.craft_hello.tpa
 import cn.handyplus.lib.adapter.HandySchedulerUtil
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
+import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import top.craft_hello.tpa.commands.LegacyCommandRouter
 import top.craft_hello.tpa.events.TPAPlayerDeathEvent
@@ -24,8 +26,36 @@ import top.craft_hello.tpa.utils.PapiHook
 import top.craft_hello.tpa.utils.SendMessageUtil
 import top.craft_hello.tpa.utils.TpaVersion
 import top.craft_hello.tpa.utils.VersionUtil
+import top.craft_hello.tpa.utils.YamlIO
+import java.io.File
+import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 
 class TPA : JavaPlugin() {
+
+    // 1.8-1.12 的 JavaPlugin.getConfig/reloadConfig/saveConfig 按 JVM 系统编码
+    // （中文 Windows 为 GBK）读写 config.yml，UTF-8 中文值会读乱/写坏；
+    // 覆盖为 YamlIO 统一 UTF-8 读取（含 3.x 系统编码旧档回退）
+    private var utf8Config: FileConfiguration? = null
+
+    override fun getConfig(): FileConfiguration {
+        if (utf8Config == null) reloadConfig()
+        return utf8Config!!
+    }
+
+    override fun reloadConfig() {
+        val config = YamlIO.load(File(dataFolder, "config.yml"))
+        getResource("config.yml")?.let { stream ->
+            config.setDefaults(
+                YamlConfiguration.loadConfiguration(InputStreamReader(stream, StandardCharsets.UTF_8))
+            )
+        }
+        utf8Config = config
+    }
+
+    override fun saveConfig() {
+        utf8Config?.let { YamlIO.save(it, File(dataFolder, "config.yml")) }
+    }
 
     override fun onEnable() {
         plugin = this

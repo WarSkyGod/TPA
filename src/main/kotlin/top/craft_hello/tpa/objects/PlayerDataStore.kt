@@ -7,6 +7,7 @@ import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import top.craft_hello.tpa.TPA
 import top.craft_hello.tpa.datas.PlayerData
+import top.craft_hello.tpa.utils.YamlIO
 import java.io.File
 import java.util.UUID
 
@@ -28,7 +29,7 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
     override fun load(uuid: UUID): PlayerData? {
         val file = fileOf(uuid)
         if (!file.exists()) return null
-        val config = YamlConfiguration.loadConfiguration(file)
+        val config = YamlIO.load(file)
         val data = PlayerData(uuid)
         data.playerName = config.getString("player_name")
         data.language = config.getString("language")
@@ -72,7 +73,7 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         val files = folder.listFiles { file -> file.extension.equals("yml", ignoreCase = true) } ?: return null
         for (file in files) {
             val uuid = runCatching { UUID.fromString(file.nameWithoutExtension) }.getOrNull() ?: continue
-            val playerName = YamlConfiguration.loadConfiguration(file).getString("player_name") ?: continue
+            val playerName = YamlIO.load(file).getString("player_name") ?: continue
             if (playerName.equals(name, ignoreCase = true)) return uuid
         }
         return null
@@ -95,7 +96,7 @@ class YamlPlayerDataStore(private val plugin: TPA) : PlayerDataStore {
         writeManualLocation(config, "last_location", data.lastLocation)
         config.set("logout_location", data.logoutLocation)
         writeManualLocation(config, "logout_location", data.logoutLocation)
-        config.save(fileOf(data.uuid))
+        YamlIO.save(config, fileOf(data.uuid))
     }
 
     // 手工分键 Location 写入（location 为 null 时清除该节）
