@@ -22,9 +22,6 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/") {
         name = "papermc-repo"
     }
-    maven("https://nexus.handyplus.cn/releases") {
-        name = "handy-repository"
-    }
     // PlaceholderAPI（可选依赖，仅编译期）
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
         name = "placeholderapi-repo"
