@@ -29,8 +29,7 @@ enum class PermissionType(val permissionName: String) {
     TP_LOGOUT("tpa.tplogout"),
     RTP("tpa.rtp"),
     DENYS("tpa.denys"),
-    BACK("tpa.back"),
-    NO_DELAY("tpa.nodelay");
+    BACK("tpa.back");
 
     companion object {
         fun hasPermission(sender: CommandSender, permissionType: PermissionType): Boolean {

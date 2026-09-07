@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "top.craft_hello"
-version = "4.0.0"
+version = "4.0.1"
 
 repositories {
     maven("https://mirrors.tuna.tsinghua.edu.cn/maven/repos/public") {

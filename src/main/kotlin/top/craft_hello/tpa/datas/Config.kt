@@ -249,13 +249,13 @@ data class Config(var config: FileConfiguration) {
     }
 
     fun isEnableTeleportDelay(sender: CommandSender) : Boolean {
-        // issue #58：tpa.nodelay 权限不再绕过分组倒计时（OP 默认拥有全部权限，
-        // 会把管理员显式配置的 admin 分组倒计时吞掉）；免等待请将所在分组 teleport 设为 0
+        // 4.0.1：tpa.nodelay 权限已移除（OP 默认拥有全部权限，会吞掉管理员显式
+        // 配置的 admin 分组倒计时）；免等待请将玩家所在分组的 teleport 设为 0
         return enableTeleportDelay and (getTeleportDelay(sender) != 0)
     }
 
     fun isEnableCommandDelay(sender: CommandSender) : Boolean {
-        return enableCommandDelay and !PermissionType.hasPermission(sender, PermissionType.NO_DELAY) and (getCommandDelay(sender) != 0)
+        return enableCommandDelay and (getCommandDelay(sender) != 0)
     }
 
     fun isNonTpaOrTphereDisableCheck(): Boolean {

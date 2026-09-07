@@ -89,9 +89,6 @@ permissions:
   tpa.version:
     default: op
     description: "拥有这个权限的玩家会收到插件更新通知，可使用 /tpac version 来检查插件更新"
-  tpa.nodelay:
-    default: false
-    description: "拥有这个权限的玩家传送将不受命令使用后的等待时间限制"
   tpa.setwarp:
     default: op
     description: "可使用 /setwarp 命令设置传送点"

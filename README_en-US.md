@@ -87,8 +87,6 @@ A simple teleportation plugin that supports **Folia**, compatible with **Bukkit/
   Allows using the `/tpac reload` command to reload the configuration file.
 - **tpa.version**  
   Players with this permission will receive plugin update notifications and can use `/tpac version` to check for updates.
-- **tpa.nodelay**  
-  Players with this permission are not restricted by command cooldowns.
 
 ### Teleportation
 - **tpa.tpa**  
