@@ -111,6 +111,8 @@ delay:
   accept: 30
 
   # 是否启用传送前间隔（传送前需要等待指定时间才能传送）
+  # 免除传送等待：将玩家所在分组的 teleport 设为 0 即可
+  #（tpa.nodelay 权限不再绕过此处分组设置，避免管理员显式配置的倒计时被 OP 权限吞掉）
   enable_teleport: true
 
   # 是否启用命令执行间隔（使用命令后需要等待指定时间才能再次使用命令）
@@ -174,6 +176,14 @@ delay:
 
     # 使用命令后需要等待多长时间才能再次使用命令？（为 0 关闭）
     command: 0
+
+# 基岩版（Geyser/Floodgate）设置
+# 需要可选前置 Floodgate；未安装时本段配置不生效
+bedrock:
+  # 是否启用传送请求弹窗菜单（Cumulus 表单）
+  # 基岩玩家收到传送请求时以弹窗按钮交互；关闭后改用与 Java 版相同的聊天消息交互
+  # 战斗中弹窗会遮挡操作时（issue #59），可将此项设为 false
+  teleport_request_form: true
 
 # tpa 命令设置
 tpa:

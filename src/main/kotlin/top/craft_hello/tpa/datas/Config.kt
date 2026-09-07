@@ -25,6 +25,9 @@ data class Config(var config: FileConfiguration) {
     var forceSpawn = config.getBoolean("force_spawn")
     var enableTitleMessage = config.getBoolean("enable_title_message")
     var enableSound = config.getBoolean("enable_sound")
+    // 基岩版（Geyser/Floodgate）：传送请求是否使用 Cumulus 弹窗菜单（issue #59）
+    // false 时基岩玩家与 Java 版一致走聊天消息交互；旧配置缺失本键时默认 true 保持既有行为
+    var bedrockTeleportRequestForm = config.getBoolean("bedrock.teleport_request_form", true)
     // 传送音效组：倒计时/成功/失败/取消（非法名称回退默认；默认名也不被当前服务器
     // 支持时（如 1.8.x 无 ENTITY_ 前缀新命名）返回 null，播放点判空跳过，不再崩溃）
     var soundCountdown: Sound? = loadSound("sound.countdown.name", "ENTITY_EXPERIENCE_ORB_PICKUP")
@@ -246,7 +249,9 @@ data class Config(var config: FileConfiguration) {
     }
 
     fun isEnableTeleportDelay(sender: CommandSender) : Boolean {
-        return enableTeleportDelay and !PermissionType.hasPermission(sender, PermissionType.NO_DELAY) and (getTeleportDelay(sender) != 0)
+        // issue #58：tpa.nodelay 权限不再绕过分组倒计时（OP 默认拥有全部权限，
+        // 会把管理员显式配置的 admin 分组倒计时吞掉）；免等待请将所在分组 teleport 设为 0
+        return enableTeleportDelay and (getTeleportDelay(sender) != 0)
     }
 
     fun isEnableCommandDelay(sender: CommandSender) : Boolean {

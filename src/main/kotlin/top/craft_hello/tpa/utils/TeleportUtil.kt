@@ -77,6 +77,9 @@ object TeleportUtil {
                     onComplete()
                     return
                 }
+                // issue #58：聊天栏倒计时此前只在开始时发一次，每秒同步刷新剩余秒数
+                //（title 与音效原本就在此处按秒刷新）
+                SendMessageUtil.teleportCountdownUpdate(player, targetName, remaining.toString())
                 if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownMessage(player, targetName, remaining.toString())
                 SendMessageUtil.playTeleportCountdownSound(player)
             }

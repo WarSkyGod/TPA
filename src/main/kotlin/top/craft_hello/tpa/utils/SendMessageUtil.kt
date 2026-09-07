@@ -438,8 +438,8 @@ class SendMessageUtil {
         fun requestTeleportToTarget(executor : Player, target : Player, delay : String) {
             val executorName = executor.name
             val targetName = target.name
-            // 基岩玩家：聊天栏点击组件无效，改用 Cumulus 弹窗按钮（发送失败回退聊天路径）
-            if (!BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = false)) {
+            // 基岩玩家：聊天栏点击组件无效，改用 Cumulus 弹窗按钮（配置关闭 issue #59 或发送失败时回退聊天路径）
+            if (!top.craft_hello.tpa.objects.ConfigManager.config.bedrockTeleportRequestForm || !BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = false)) {
                 sendMessageForPath(target, "request.to_here", executorName, delay)
                 acceptOrDeny(target, executorName)
             }
@@ -450,7 +450,7 @@ class SendMessageUtil {
         fun requestTargetTeleportToHere(executor : Player, target : Player, delay : String) {
             val executorName = executor.name
             val targetName = target.name
-            if (!BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = true)) {
+            if (!top.craft_hello.tpa.objects.ConfigManager.config.bedrockTeleportRequestForm || !BedrockFormHook.sendTeleportRequestForm(target, executorName, delay, toHere = true)) {
                 sendMessageForPath(target, "request.to_target", executorName, delay)
                 acceptOrDeny(target, executorName)
             }
@@ -506,6 +506,15 @@ class SendMessageUtil {
             if ("last_location" == target || "rtp_name" == target || "spawn_name" == target) target = language.getMessage(target)
             sendMessageForPath(executor, "teleport.countdown", target, delay)
             sendMessageForPath(executor, "teleport.cancel_on_move")
+        }
+
+        // 传送倒计时的每秒更新消息（issue #58：倒计时此前只在开始发一次，聊天栏不再刷新）
+        // 只发倒计时行，不重复发"移动取消"提示（该提示仅在倒计时开始时提示一次）
+        fun teleportCountdownUpdate(executor: Player, target: String, delay: String) {
+            var target = target
+            val language = LanguageManager.getLanguage(executor)
+            if ("last_location" == target || "rtp_name" == target || "spawn_name" == target) target = language.getMessage(target)
+            sendMessageForPath(executor, "teleport.countdown", target, delay)
         }
 
         // title 样式的传送倒计时消息
