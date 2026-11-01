@@ -1,9 +1,11 @@
 package top.craft_hello.tpa.datas
 
+import cn.handyplus.lib.adapter.EntitySchedulerUtil
 import cn.handyplus.lib.adapter.HandyRunnable
 import cn.handyplus.lib.adapter.HandySchedulerUtil
 import org.bukkit.Location
 import org.bukkit.World
+import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import top.craft_hello.tpa.enums.RequestType
 import top.craft_hello.tpa.objects.ConfigManager
@@ -123,8 +125,8 @@ class TeleportRequest private constructor(
             }
             SendMessageUtil.acceptMessage(requester, accepter)
             when (request.requestType) {
-                RequestType.TPA -> delayedTeleportTo(mover = requester, destination = accepter.location, opponent = accepter, costPayer = requester, costKey = "tpa")
-                RequestType.TPA_HERE -> delayedTeleportTo(mover = accepter, destination = requester.location, opponent = requester, costPayer = requester, costKey = "tphere")
+                RequestType.TPA -> delayedTeleportTo(mover = requester, destinationPlayer = accepter, costPayer = requester, costKey = "tpa")
+                RequestType.TPA_HERE -> delayedTeleportTo(mover = accepter, destinationPlayer = requester, costPayer = requester, costKey = "tphere")
                 else -> {}
             }
             return true
@@ -246,24 +248,39 @@ class TeleportRequest private constructor(
 
         // 玩家对玩家的延迟传送（tpaccept 后）：移动者倒计时，移动取消则通知双方。
         // costPayer/costKey：传送执行前扣费的付费人与费用键（发起者付费，mover 可能≠付费人）
-        private fun delayedTeleportTo(mover: Player, destination: Location, opponent: Player, costPayer: Player?, costKey: String?) {
-            val opponentName = opponent.name
+        // issue #62：目的地有两层坑——
+        //  1) 不能在 tpaccept 那一刻把坐标锁成快照：倒计时默认 5 秒，目标若骑着快乐恶魂
+        //     在空中飞，早已移动数十格，沿用旧坐标会把人送进半空的过期位置；
+        //  2) 目标若"骑"在坐骑上，Player#getLocation() 拿到的是坐垫挂点而非可站立面
+        //     （快乐恶魂的座位悬在坐骑侧面/内部的空中），照着挂点丢过去会与坐骑碰撞、
+        //     被挤开后坠落——这也是"站在恶魂上没事、骑着恶魂却被传送就会掉下去"的原因
+        //     （站着只是物理支撑，没有载具，getLocation() 就在顶面上）。
+        // 因此传送执行时才取目标当前位置，并对骑乘中的目标改落到坐骑碰撞箱顶部；
+        // 目标中途下线才回退到最后已知位置，保证请求方仍能完成这次传送而非抛异常。
+        private fun delayedTeleportTo(mover: Player, destinationPlayer: Player, costPayer: Player?, costKey: String?) {
+            val opponentName = destinationPlayer.name
+            val lastKnown = destinationPlayer.location
             if (ConfigManager.config.isEnableTeleportDelay(mover)) {
                 TeleportUtil.delayTeleport(
-                    mover, destination, opponentName,
+                    mover, lastKnown, opponentName,
                     onComplete = {
                         // 倒计时结束：先扣费，扣费失败则取消传送（付费人与移动者不是同一人时分别提示）
                         if (costPayer == null || costKey == null || TeleportCost.charge(costPayer, costKey)) {
-                            TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
-                            if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
-                            startCommandDelay(mover)
+                            runOnDestination(mover, destinationPlayer, lastKnown) { destination ->
+                                TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
+                                if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
+                                startCommandDelay(mover)
+                            }
                         } else if (mover !== costPayer) {
                             SendMessageUtil.costTeleportBlockedError(mover, costPayer.name)
                         }
                     },
                     onCancel = {
-                        SendMessageUtil.playTeleportCancelSound(mover)
-                        SendMessageUtil.move(mover, opponent)
+                        // 取消回调同样运行在异步定时器线程，音效与提示要回到 mover 的 region 线程
+                        runOnEntity(mover) {
+                            SendMessageUtil.playTeleportCancelSound(mover)
+                            SendMessageUtil.move(mover, destinationPlayer)
+                        }
                     }
                 )
             } else {
@@ -272,11 +289,55 @@ class TeleportRequest private constructor(
                     if (mover !== costPayer) SendMessageUtil.costTeleportBlockedError(mover, costPayer.name)
                     return
                 }
-                TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
-                if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
-                SendMessageUtil.youTeleportedToMessage(mover, opponentName)
-                startCommandDelay(mover)
+                runOnDestination(mover, destinationPlayer, lastKnown) { destination ->
+                    TeleportUtil.teleport(mover, destination) { SendMessageUtil.playTeleportSuccessSound(mover) }
+                    if (ConfigManager.config.enableTitleMessage) SendMessageUtil.titleCountdownOverMessage(mover, opponentName)
+                    SendMessageUtil.youTeleportedToMessage(mover, opponentName)
+                    startCommandDelay(mover)
+                }
             }
+        }
+
+        // 落点解析会读到目标实体的碰撞箱，而 Folia 不允许跨 region 读取实体状态
+        //（Moonrise TickThread 校验会直接抛 "Accessing entity state off owning region's thread"），
+        // 倒计时回调又运行在异步定时器线程上，因此分两步调度：
+        //   1) 先到目标实体的 region 线程解析落点（读载具碰撞箱必须在这一侧）；
+        //   2) 再到 mover 自己的 region 线程执行传送与提示（showTitle / 分组权限读取
+        //      同样属于"只能在自己 region 上做"的实体操作）。
+        // 目标已下线时退回最后已知位置，保证请求方仍能完成这次传送。
+        private fun runOnDestination(mover: Player, target: Player, fallback: Location, action: (Location) -> Unit) {
+            if (!target.isOnline) {
+                runOnEntity(mover) { action(fallback) }
+                return
+            }
+            runOnEntity(target) {
+                val destination = if (target.isOnline) resolveDestinationLocation(target, fallback) else fallback
+                runOnEntity(mover) { action(destination) }
+            }
+        }
+
+        private fun runOnEntity(player: Player, task: () -> Unit) {
+            EntitySchedulerUtil.runSafeOnEntityScheduler(player, Runnable { task() }, true)
+        }
+
+        // 解析实际传送落点（issue #62）：骑乘中的目标改用坐骑碰撞箱顶部，
+        // 其余情况仍用玩家自身位置（含"站在"坐骑顶面的情况——那时没有载具，位置本就在顶面）
+        private fun resolveDestinationLocation(destinationPlayer: Player, fallback: Location): Location {
+            if (!destinationPlayer.isOnline) return fallback
+            val vehicle = destinationPlayer.vehicle ?: return destinationPlayer.location
+            val vehicleLocation = vehicle.location
+            val topY = vehicleTopY(vehicle) ?: (vehicleLocation.y + 1.0)
+            val facing = destinationPlayer.location
+            return Location(vehicleLocation.world, vehicleLocation.x, topY, vehicleLocation.z, facing.yaw, facing.pitch)
+        }
+
+        // 实体碰撞箱顶面高度：Entity#getBoundingBox() 为 1.13+ API，
+        // 1.8 编译兜底下只能反射；低版本没有快乐恶魂这类大型飞行坐骑，
+        // 取不到碰撞箱时退化为载具位置上方一格
+        private fun vehicleTopY(vehicle: Entity): Double? {
+            val box = runCatching { vehicle.javaClass.getMethod("getBoundingBox").invoke(vehicle) }.getOrNull() ?: return null
+            return runCatching { box.javaClass.getMethod("getMaxY").invoke(box) as Double }.getOrNull()
+                ?: runCatching { box.javaClass.getField("maxY").getDouble(box) }.getOrNull()
         }
 
         // 位置类请求的延迟传送：完成后出队 + 发成功消息

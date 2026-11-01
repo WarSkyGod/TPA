@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "top.craft_hello"
-version = "4.0.1"
+version = "4.0.2"
 
 repositories {
     maven("https://mirrors.tuna.tsinghua.edu.cn/maven/repos/public") {
@@ -65,7 +65,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     // Paper API 仅提供 Brigadier 命令 API（io.papermc.paper.command.brigadier.*），
     // 运行时仅在 Paper 1.20.6+ 上通过独立注册器触达，低版本走 legacy 路由不会加载这些类
-    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
+    compileOnly("io.papermc.paper:paper-api:26.3.build.+")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("cn.handyplus.lib.adapter:FoliaLib:1.3.3")
     implementation("org.bstats:bstats-bukkit:3.2.1")
@@ -93,7 +93,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("26.2")
+        minecraftVersion("26.3")
         jvmArgs = listOf(
             "-Dfile.encoding=UTF-8",
             "-Dconsole.encoding=UTF-8",
@@ -110,6 +110,14 @@ tasks {
         // 静态引用分析会误删低版本服务器的适配类
         relocate("org.bstats", "${project.group}.tpa.other.bstats")
         relocate("cn.handyplus.lib.adapter", "${project.group}.tpa.other.FoliaLib")
+        // issue #63：HikariCP 此前原样打包，com.zaxxer.hikari.HikariConfig 会泄漏到
+        // 服务器 classpath，与新版本 HikariCP 的插件（LibertyBans 等）冲突并触发
+        // "unrelocated library classes" 警告，重定位后与服务器上其他 HikariCP 完全隔离
+        relocate("com.zaxxer.hikari", "${project.group}.tpa.other.hikari")
+        // HikariCP 的日志门面同样随包分发：不重定位会与服务器自带的 slf4j-api
+        // 争用同一批 org.slf4j 类（插件类加载器优先），重定位后由重定位副本承担，
+        // 无 SLF4J provider 时 HikariCP 自动退化为 NOP 日志，不影响连接池功能
+        relocate("org.slf4j", "${project.group}.tpa.libs.slf4j")
         relocate("net.kyori", "${project.group}.tpa.libs.kyori")
         archiveFileName.set("${project.name}-${project.version}.jar")
         exclude("META-INF/**")

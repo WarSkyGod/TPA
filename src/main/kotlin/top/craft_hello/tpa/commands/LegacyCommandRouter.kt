@@ -64,7 +64,7 @@ object LegacyCommandRouter : CommandExecutor, TabCompleter {
         val input = (argList.lastOrNull() ?: "").lowercase()
         return when (name) {
             "tpac" -> suggestTpac(argList, input)
-            "denys" -> suggestDenys(argList, input)
+            "denys" -> suggestDenys(sender, argList, input)
             "tpall" -> suggestTpAll(argList, input)
             "tpa", "tphere" -> if (argList.size == 1) onlineNameSuggestions(sender, input, excludeSelf = true) else emptyList()
             "tplogout" -> if (argList.size == 1) Bukkit.getOfflinePlayers().mapNotNull { it.name }.filter { it.lowercase().contains(input) } else emptyList()
@@ -89,13 +89,30 @@ object LegacyCommandRouter : CommandExecutor, TabCompleter {
         }
     }
 
-    // /denys：add/remove 子命令 + 玩家名参数
-    private fun suggestDenys(argList: List<String>, input: String): List<String> {
+    // /denys：add/remove 子命令 + 玩家名参数。
+    // add 只能选在线玩家且必须排除自己（无法把自己拉黑）；
+    // remove 只能选自己黑名单里的人，同样排除自己（旧数据里可能残留自己）。
+    private fun suggestDenys(sender: CommandSender?, argList: List<String>, input: String): List<String> {
         return when (argList.size) {
             1 -> listOf("add", "remove").filter { it.startsWith(input) }
-            2 -> onlineNameSuggestions(null, input, excludeSelf = false)
+            2 -> when {
+                argList[0].equals("add", ignoreCase = true) ->
+                    onlineNameSuggestions(sender, input, excludeSelf = true)
+                argList[0].equals("remove", ignoreCase = true) ->
+                    blacklistNameSuggestions(sender, input)
+                else -> emptyList()
+            }
             else -> emptyList()
         }
+    }
+
+    // 黑名单成员补全（remove 的目标只能是已在名单里的人）
+    private fun blacklistNameSuggestions(sender: CommandSender?, input: String): List<String> {
+        if (sender !is Player) return emptyList()
+        val selfName = sender.name
+        return PlayerDataManager.get(sender).denyList
+            .map { SendMessageUtil.denyDisplayName(it) }
+            .filter { !it.equals(selfName, ignoreCase = true) && it.lowercase().contains(input) }
     }
 
     // /tpall：player/warp/spawn 子命令 + 对应名称参数

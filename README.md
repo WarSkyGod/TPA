@@ -172,6 +172,8 @@
 - [Minecraft0122](https://github.com/Minecraft0122)
 - [UsefullSpoon](https://github.com/UsefullSpoon)
 - [NewSentientRook131](https://github.com/NewSentientRook131)
+- [DZY-QAQ](https://github.com/DZY-QAQ)
+- [li2012China](https://github.com/li2012China)
 
 
 ### 功能建议者

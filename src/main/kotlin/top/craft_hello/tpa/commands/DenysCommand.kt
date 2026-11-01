@@ -55,9 +55,11 @@ object DenysCommand {
                                 val sender = context.source.sender
                                 val input = builder.remaining.lowercase()
                                 if (sender is Player) {
+                                    val selfName = sender.name
                                     for (denyUuid in PlayerDataManager.get(sender).denyList) {
                                         val name = SendMessageUtil.denyDisplayName(denyUuid)
-                                        if (name.lowercase().contains(input)) builder.suggest(name)
+                                        // 无法拉黑自己：旧数据里若残留自己也不补全
+                                        if (!name.equals(selfName, ignoreCase = true) && name.lowercase().contains(input)) builder.suggest(name)
                                     }
                                 }
                                 builder.buildFuture()
